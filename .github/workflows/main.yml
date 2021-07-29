@@ -7,7 +7,7 @@ jobs:
       - name: Build linux-ck-uksm for arch
         uses: antman666/build-aur-action@mine
         with:
-          repo-name: linux-ck-uksm
+          repo-name: own_kernel
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
