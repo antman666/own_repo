@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=y
+_makenconfig=
 
 # Only compile active modules to VASTLY reduce the number of modules built and
 # the build time.
@@ -106,6 +106,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${pkgver}.tar".{xz,s
         "0017-initramfs.patch::${_patches_url}/initramfs-patches/0001-initramfs-patches.patch"
         "0018-compaction.patch::${_patches_url}/compaction-patches/0001-compaction-patches.patch"
         "0019-fixes-miscellaneous.patch::${_patches_url}/fixes-miscellaneous/0001-fixes-miscellaneous.patch"
+        "0020-ntfs.patch::${_patches_url}/ntfs3-patches-v2/0001-ntfs3-patches.patch"
 )
 
 validpgpkeys=(
@@ -136,7 +137,9 @@ b2sums=('88e4c32cf196662a6a24e72b978019d6f8881a8523918029f4229a995c5fd957a5e01f4
         '79585aa697309a34c169caca2881b39a953f3d7bd0aa901ad372161b285bbea7d3af89e62e63d0ba1821f3bfbcec738a2666c42fcf13a65cfea243646a4d5aa1'
         'ea09f90db718788ee43cce862261c473fc9ad82627eaa851a22fc4307268f93fe4cd33f37b7ac47f5e9fb89284cea9753e455f1539f02bab6a7a484fa58bcd19'
         '1439844e0f64f7a4218abf1841b9cddc679ee3af0957b8d0ca962aaac43d5ebdb8582405bed4474b067bd48f5ec5f83fac04044470e9f2d7aead224975d6ecab'
-        'f6d5e74b0b1b6c8a185312cb82d9908845bfddc0a5618ad55f059fb1d3d7950a78fb4879d1363f9fa9272da54a4374ef66cd5aef4ad006fb20e895bb8374e92b')
+        'f6d5e74b0b1b6c8a185312cb82d9908845bfddc0a5618ad55f059fb1d3d7950a78fb4879d1363f9fa9272da54a4374ef66cd5aef4ad006fb20e895bb8374e92b'
+        '84fcff8ecc1d05704735bd6135c501ca2a2dc91b8a3ef6b9a724d533239302d9047eaaf949662d167e97c646b05bd7baa8ccc0ef74acc5d4f4166e3800862ec9'
+)
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
