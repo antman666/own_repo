@@ -162,6 +162,9 @@ prepare() {
     patch -Np1 < "../$src"
   done
 
+  msg2 "Setting config..."
+  cp ../config .config
+
   msg2 "Enable Futex2 support"
   scripts/config --enable CONFIG_FUTEX2
 
@@ -200,9 +203,6 @@ prepare() {
   scripts/config --set-val CONFIG_TIERS_PER_GEN 4
   scripts/config --enable CONFIG_LRU_GEN_ENABLED
   scripts/config --disable CONFIG_LRU_GEN_STATS
-
-  msg2 "Setting config..."
-  cp ../config .config
 
   # disable CONFIG_DEBUG_INFO=y at build time otherwise memory usage blows up
   # and can easily overwhelm a system with 32 GB of memory using a tmpfs build
