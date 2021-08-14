@@ -14,19 +14,3 @@ jobs:
           tag: "v5.12.19-3_arch"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-  build_for_debian:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build linux-ck-uksm for debian
-        run: |
-          sudo apt update && sudo apt upgrade -y
-          sudo apt install git build-essential ncurses-dev libssl-dev bc kernel-package libelf-dev -y
-          git clone https://github.com/antman666/own_kernel
-          cd own_kernel
-          bash make_kernel.sh
-      - uses: ncipollo/release-action@v1.8.6
-        with:
-          allowUpdates: true
-          tag: "v5.12.19-3_debian"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
