@@ -65,6 +65,11 @@ _localmodcfg=
 #  41. AMD-Native optimizations autodetected by GCC (MNATIVE_AMD) (NEW)
 _subarch=15
 
+## Choose between GCC and CLANG config (default is GCC)
+if [ -z ${_compiler+x} ]; then
+  _compiler=clang
+fi
+
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-ck-uksm
@@ -73,7 +78,7 @@ pkgrel=3
 _major=5.12
 _ckpatchversion=1
 _ckpatch="patch-${_major}-ck${_ckpatchversion}"
-_gcc_more_v=20210610
+_gcc_more_v=20210818
 _patches_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${_major}"
 arch=(x86_64)
 url="https://wiki.archlinux.org/index.php/Linux-ck"
@@ -81,6 +86,10 @@ license=(GPL2)
 makedepends=(
   bc kmod libelf cpio perl tar xz
 )
+if [ "${_compiler}" = "clang" ]; then
+  makedepends+=(clang llvm lld python)
+  _LLVM=1
+fi
 options=('!strip')
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${pkgver}.tar".{xz,sign}
@@ -117,7 +126,7 @@ validpgpkeys=(
 b2sums=('88e4c32cf196662a6a24e72b978019d6f8881a8523918029f4229a995c5fd957a5e01f42de9f53c7980df7e3de5ea6b069cc2c5f93852e615fe8fe78a1b131c6'
         'SKIP'
         'SKIP'
-        '30d1df754608bb423cbc99c2097ad521baa091b9a3b39df4bd5c2d50c57eec54d8fa0e4a4a04b847c3d1b87ba682cadc8db45fabeefdc9ad7caaf8e77b96e41a'
+        '5a191fb995303be264e8721318622bee1d1a3822f805ddf21c1002817ca2e144d6d17e1337f37b32dc3aca1a8754e4354a800c1b4d44417aea0acaf326533b35'
         'c9f729ba1efe6f04e7b2c57d3999bc9675b577596dccb2f227e5b6e444285e1fdd270bf67c0fcf9f5808a4c3a4b1c7a5c13a76f754ad9b9447243ccbaf2ce6a3'
         '2aa7bbea8e526ad080f4fbeef3364749b070e3d0b38f1b724a40796d455452f2c9865c96a25e52edcc8c827ce4dc3046db3cbbb858e899b9dd502673244b05c8'
         'c8a372bdb918ecc8faeb203df3945c664d59bd61864952ea5e354bf6cef6e546f3c548e26887a718d34e51753fad603a2bf10d579f8d5ba9303a7ddfe57ada4e'
@@ -236,7 +245,7 @@ prepare() {
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
   msg2 "Applying config..."
-  make olddefconfig
+  make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
 
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
@@ -245,10 +254,10 @@ prepare() {
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
-    yes "$_subarch" | make oldconfig
+    yes "$_subarch" | make LLVM=$_LLVM LLVM_IAS=$_LLVM oldconfig
   else
     # no subarch defined so allow user to pick one
-    make oldconfig
+    make LLVM=$_LLVM LLVM_IAS=$_LLVM oldconfig
   fi
 
   ### Optionally load needed modules for the make localmodconfig
@@ -256,7 +265,7 @@ prepare() {
     if [ -n "$_localmodcfg" ]; then
       if [ -f $HOME/.config/modprobed.db ]; then
         echo "Running Steven Rostedt's make localmodconfig now"
-        make LSMOD=$HOME/.config/modprobed.db localmodconfig
+        make LLVM=$_LLVM LLVM_IAS=$_LLVM LSMOD=$HOME/.config/modprobed.db localmodconfig
       else
         echo "No modprobed.db data found"
         exit
@@ -266,7 +275,7 @@ prepare() {
   make -s kernelrelease > version
   msg2 "Prepared $pkgbase version $(<version)"
 
-  [[ -z "$_makenconfig" ]] || make nconfig
+  [[ -z "$_makenconfig" ]] || make LLVM=$_LLVM LLVM_IAS=$_LLVM nconfig
 
   # save configuration for later reuse
   cat .config > "${startdir}/config.last"
@@ -277,7 +286,7 @@ prepare() {
 
 build() {
   cd linux-${pkgver}
-  make -j40 all
+  make -j40 LLVM=$_LLVM LLVM_IAS=$_LLVM all
 }
 
 _package() {
