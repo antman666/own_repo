@@ -197,13 +197,13 @@ prepare() {
   scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 
   msg2 "Enable zram compression to ZSTD..."
-  scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE
-  scripts/config --enable CONFIG_ZRAM_DEF_COMP_ZSTD
-  scripts/config --set-str CONFIG_ZRAM_DEF_COMP zstd
+  # scripts/config --disable CONFIG_ZRAM_DEF_COMP_LZORLE
+  # scripts/config --enable CONFIG_ZRAM_DEF_COMP_ZSTD
+  # scripts/config --set-str CONFIG_ZRAM_DEF_COMP zstd
 
-  scripts/config --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4
-  scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
-  scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
+  scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4
+  scripts/config --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
+  scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT lz4
 
   msg2 "Enabling multigenerational LRU..."
   scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
