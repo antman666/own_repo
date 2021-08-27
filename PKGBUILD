@@ -67,7 +67,7 @@ _subarch=15
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=gcc
+  _compiler=clang
 fi
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
