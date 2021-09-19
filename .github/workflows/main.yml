@@ -41,13 +41,13 @@ jobs:
     needs: [build_ck_uksm, build_xanmod_cacule_uksm]
     runs-on: ubuntu-latest
     steps: 
-      - uses: antman666/update-db-for-repo@master
+      - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: True
           tag: "x86_64"
-          artifacts: "./kernels.*"
+          artifacts: "./own-kernels.*"
           token: ${{ secrets.GITHUB_TOKEN }}
 
