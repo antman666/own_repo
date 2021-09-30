@@ -7,7 +7,7 @@ jobs:
       - name: Build linux-ck-uksm for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.6
+        uses: antman666/pkgbuild-action@mine
         with:
           pkgdir: "linux-ck-uksm"
           namcapDisable: 1
@@ -25,7 +25,7 @@ jobs:
       - name: build linux-xanmod-cacule-uksm for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: edlanglois/pkgbuild-action@v1.1.6
+        uses: antman666/pkgbuild-action@mine
         with:
           pkgdir: "linux-xanmod-cacule-uksm"
           namcapDisable: 1
