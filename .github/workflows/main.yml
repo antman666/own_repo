@@ -3,6 +3,24 @@ on:
   push:
   workflow_dispatch:
 jobs:
+  build_antman:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-ck-uksm for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@mine
+        with:
+          pkgdir: "linux"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
   build_ck_uksm:
     runs-on: ubuntu-latest
     steps:
