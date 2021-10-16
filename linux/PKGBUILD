@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-antman
-pkgver=5.14.9.arch2
+pkgver=5.14.12.arch1
 pkgrel=1
 pkgdesc='Linux'
 _srctag=v${pkgver%.*}-${pkgver##*.}
@@ -15,39 +15,49 @@ makedepends=(
   git
 )
 options=('!strip')
+
 _srcname=archlinux-linux
+_commit=e2d48df5def86f498766b22e836a9c2f1bcb3809
+_xan=linux-5.14.y-xanmod
+_gcc_more_v=20210914
+_subarch=15
+
 source=(
   "$_srcname::git+https://github.com/archlinux/linux?signed#tag=$_srctag"
   config         # the main kernel config file
+  "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
+  "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "0001-bbr2.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
   "0002-bfq.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bfq-patches-v2/0001-bfq-patches.patch"
   "0003-block.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/block-patches/0001-block-patches.patch"
-  "0004-btrfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/btrfs-patches-v5/0001-btrfs-patches.patch"
-  "0005-cpu.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/cpu-patches/0001-cpu-patches.patch"
-  "0006-fixes-miscellaneous.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/fixes-miscellaneous-v5/0001-fixes-miscellaneous.patch"
-  "0007-lru.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/lru-patches-v3/0001-lru-patches.patch"
-  "0008-ntfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/ntfs3-patches-v13/0001-ntfs3-patches.patch"
-  "0009-uksm.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/uksm-patches-v2/0001-UKSM-for-5.14.patch"
-  "0010-zstd.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/zstd-upstream-patches-v4/0001-zstd-upstream-patches.patch"
+  "0004-btrfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/btrfs-patches-v7/0001-btrfs-patches.patch"
+  "0005-fixes-miscellaneous.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/fixes-miscellaneous-v6/0001-fixes-miscellaneous.patch"
+  "0006-lru.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/lru-patches-v4/0001-lru-patches.patch"
+  "0007-ntfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/ntfs3-patches-v14/0001-ntfs3-patches.patch"
+  "0008-uksm.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/uksm-patches-v2/0001-UKSM-for-5.14.patch"
+  "0009-zstd.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/zstd-upstream-patches-v6/0001-zstd-upstream-patches.patch"
 )
+
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
   'A2FF3A36AAA56654109064AB19802F8B0D70FC30'  # Jan Alexander Steffens (heftig)
   'C7E7849466FE2358343588377258734B41C31549'  # David Runge <dvzrv@archlinux.org>
 )
+
 sha256sums=('SKIP'
             'f71a0b5c6720b91c3877f8fea97545c032838dd0a7c1f91b1b58335c9e3c7d30'
+            '722b53e72842247eaa4fde397da1889cbbb54b40c7ed1eb0afb95fff80bffbe4'
+            'b70720e7537a0b6455edaeb198d52151fb3b3c3a91631b8f43d2e71b694da611'
             '3d877cbbe4feba054398f3a4b89546e02d3ee7a9254e0efbeba299c7e3139563'
             '8104d5f2d73f46456f6a8ee610bce0812cc5ee936d014d466fdda45a0ad19e5c'
             '549b0c6504c140c187ed45c582576739e4ee6edab263d9633a3e307e33026544'
-            '8097a0096b4e2b21d45abed98fc62e75528a9d1777747ee365c1397d892267ea'
-            '44711a80c7bd9158bf28fa10b3d8eeb35641ba8ebfa88a06c47f28e15d3857d3'
-            'd37ba65e18d512cac094d76d74307709bd94f2f5fd2db531b170336710f9ce72'
-            '12b3eeb99faf4aa1558b2c6e47b307e4cb35655a3b658b9c6cfcf6b25ad6639e'
-            'c318ed5d0e202dc5fea355c27a64515f13adb3b16bb27b17fd39702ce346a28e'
+            '39704460ca7f14ad827b11f9dff252fbadcf6dc327ea3017610718c743d9d617'
+            '10e1833c72ae99aa12d99c1e38b17fb61a2f10a10382175fa090d7ef92f2fd8a'
+            'f7458bd4dc12726127710b86ea2ea3377aa4c26d2c19ba188a6cdeb7373a7ded'
+            '4c820db7abdfa7f99c9ba18d14999b43b72f5b1b4e58837213c7b566eb9d3bd0'
             'fd9b8033a5705a75461fce37f51c3b002eeabe747eee060ddd914d31c8747f4b'
-            '9bdc7b046de1fdf173b51ca0e5cd2af0dc6e241b5dd467b20ca402b118d117cc')
+            'f50757bf9f9e322ee8504edbc10ed15edc419782641340a2255d300779189c84')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -56,7 +66,7 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 prepare() {
   cd $_srcname
 
-  echo "Setting version..."
+  msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
@@ -66,13 +76,46 @@ prepare() {
     src="${src%%::*}"
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
-    echo "Applying patch $src..."
+    msg2 "Applying patch $src..."
     patch -Np1 < "../$src"
   done
+  
+  scripts/config --disable CONFIG_DEBUG_INFO
+  scripts/config --disable CONFIG_CGROUP_BPF
+  scripts/config --disable CONFIG_BPF_LSM
+  scripts/config --disable CONFIG_BPF_PRELOAD
+  scripts/config --disable CONFIG_BPF_LIRC_MODE2
+  scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
 
-  echo "Setting config..."
+  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
+
+  scripts/config --disable CONFIG_LATENCYTOP
+  scripts/config --disable CONFIG_SCHED_DEBUG
+
+  scripts/config --disable CONFIG_KVM_WERROR
+  scripts/config --disable CONFIG_HZ_300
+  scripts/config --enable CONFIG_HZ_1000
+  scripts/config --set-val CONFIG_HZ 1000
+
+  scripts/config --module CONFIG_TCP_CONG_CUBIC
+  scripts/config --disable CONFIG_DEFAULT_CUBIC
+  scripts/config --enable CONFIG_TCP_CONG_BBR2
+  scripts/config --enable CONFIG_DEFAULT_BBR2
+  scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
+
+  msg2 "Patching with ck hrtimer patches..."
+
+  for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
+    patch -Np1 -i $i
+  done
+
+  msg2 "Setting config..."
   cp ../config .config
-  make olddefconfig
+
+  msg2 "Patching to enable GCC optimization for other uarchs..."
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.8-5.14.patch"
+
+  yes ${_subarch} | make oldconfig
 
   # make nconfig
 
@@ -83,11 +126,10 @@ prepare() {
 build() {
   cd $_srcname
   make all
-  make htmldocs
 }
 
 _package() {
-  pkgdesc="The $pkgdesc kernel and modules"
+  pkgdesc="The $pkgdesc-antman kernel and modules with some patches"
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
