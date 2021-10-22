@@ -74,9 +74,9 @@ _use_current=
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 _major=5.14
-_minor=9
+_minor=14
 _srcname=linux-${_major}
-_clr=${_major}.8-1078
+_clr=${_major}.13-1083
 pkgbase=linux-clear
 pkgver=${_major}.${_minor}
 pkgrel=1
@@ -356,7 +356,7 @@ done
 
 sha256sums=('7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2'
             'SKIP'
-            'ce444a50abc335294f6104e075ac2448ee1c677c076031f517dd98c877b4e076'
+            '980f6c10adfb866ec6060fc28a1adc4b2d766ccdf9062a3c6bf618eb16d752d3'
             '58dd768d182beea1ee7bf20f45f2fc0a8fc02a08e4a3e4c803b1e9935c95e7a4'
             'SKIP'
             'b70720e7537a0b6455edaeb198d52151fb3b3c3a91631b8f43d2e71b694da611'
@@ -364,7 +364,7 @@ sha256sums=('7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2'
             'ece72251dacc37d239a5bbf170629c155cee634c05febd8d654b110077d29f28'
             '3d877cbbe4feba054398f3a4b89546e02d3ee7a9254e0efbeba299c7e3139563'
             '549b0c6504c140c187ed45c582576739e4ee6edab263d9633a3e307e33026544'
-            '7a5a966c2ceb32735f4f4d6f87f9e589abac8936aced7c270c820b0444266228')
+            '4c820db7abdfa7f99c9ba18d14999b43b72f5b1b4e58837213c7b566eb9d3bd0')
 
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
