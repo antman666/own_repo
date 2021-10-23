@@ -58,7 +58,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_antman, build_ck_uksm, build_xanmod_cacule_uksm, build_clear]
+    needs: [build_antman, build_ck_uksm, build_clear]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
