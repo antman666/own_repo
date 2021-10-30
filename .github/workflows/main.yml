@@ -39,6 +39,24 @@ jobs:
           tag: "x86_64"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+  build_pds_uksm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build linux-pds-uksm for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@mine
+        with:
+          pkgdir: "linux-pds-uksm"
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 1
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
   build_clear:
     runs-on: ubuntu-latest
     steps:
@@ -58,7 +76,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_antman, build_ck_uksm, build_clear]
+    needs: [build_antman, build_ck_uksm, build_pds_uksm, build_clear]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
