@@ -95,10 +95,14 @@ _kernel_patch_name="more-uarches-for-kernel-5.8-5.14.patch"
 
 _pkgdesc_extra="~ featuring Alfred Chen's PDS CPU scheduler, rebased by TkG"
 
+_commit=e2d48df5def86f498766b22e836a9c2f1bcb3809
+_xan=linux-5.14.y-xanmod
+
 source=(
     "${_reponame}::git+${_repo_url}?signed#tag=$_srcver_tag"
     "git+${_repo_url_kernel_patch}"
     config # kernel config file
+	  "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
     0001-prjc_v5.14-r3.patch
     0002-glitched-pds.patch
 	"0003-bbr2.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
@@ -121,7 +125,8 @@ validpgpkeys=(
 )
 sha512sums=('SKIP'
             'SKIP'
-            'de2d6674b0c0cd5e7c80bdece085d013c7ff72906ce72e3277eaa40010534c7dff59b8990d1ab7990b49b47876b0631ca076a06243b2dc728e3da4183f67e7d6'
+            'd3a226f0dda3df74fbebaa286c6b314131a57c059b1065441c450131d5f14fab797b4c5f6866bd41da1f715b199a23a2d7f3a6e4cc1c3f6c58d83474babbf719'
+            'e037351b1f8e32e2a69727c32d5549be0a7b0e5d6b178c2b4f36a5b107bf7d98827f67ffc1b95bd9de380efd9f1d37ca791cdcbccc39fa0065c0cc7f4aad1056'
             '9719b022a1798a7909cd7160917816c40310eb42fa4144f7b122dd57950c1088f2ab6fb9202f30591d7b793c6634a7b97e77af2e192043b95ae44751451af7cc'
             '889f0a49f326de3f119290256393b09a9e9241c2a297ca0b7967a2884e4e35d71388d2a559e4c206f55f67228b65e8f2013a1ec61f6ff8f1de3b6a725fd5fa57'
             '37beeb799edc0ce9f3cae1307cc5237761b9c2c9ef0bda099f5009e429976b6a2d3a0e9cc9b8ee58298f29a86417d6823fe99fae9257f4c35c4b8450a0f46d1c'
@@ -156,6 +161,15 @@ prepare() {
 		msg2 "Applying patch $src..."
 		patch -Np1 < "../$src"
     done
+
+	msg2 "Patching with ck hrtimer patches..."
+
+    for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
+		patch -Np1 -i $i
+    done
+
+    msg2 "Applying more-uarches-20210914..."
+	patch -Np1 < "../${_reponame_kernel_patch}/${_kernel_patch_name}"
 
     msg2 "Setting config..."
     cp ../config .config
@@ -198,9 +212,6 @@ prepare() {
     scripts/config --set-val CONFIG_TIERS_PER_GEN 4
     scripts/config --enable CONFIG_LRU_GEN_ENABLED
     scripts/config --disable CONFIG_LRU_GEN_STATS
-
-    msg2 "Applying more-uarches-20210914..."
-	patch -Np1 < "../${_reponame_kernel_patch}/${_kernel_patch_name}"
 
     if [ -n "$_subarch" ]; then
         yes "$_subarch" | make oldconfig

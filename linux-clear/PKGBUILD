@@ -1,5 +1,5 @@
-# Maintainer: Josip Ponjavic <josipponjavic at gmail dot com>
-# Contributor:
+# Maintainer: AntMan666 <945360554@qq.com>
+# Contributor: Josip Ponjavic <josipponjavic at gmail dot com>
 
 ### BUILD OPTIONS
 # Set the next two variables to ANYTHING that is not null to enable them
@@ -88,11 +88,14 @@ makedepends=('bc' 'cpio' 'git' 'kmod' 'libelf' 'xmlto')
 options=('!strip')
 _gcc_more_v='20210914'
 _patches_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${_major}"
+_commit=e2d48df5def86f498766b22e836a9c2f1bcb3809
+_xan=linux-5.14.y-xanmod
 source=(
 		"https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${_major}.tar.xz"
 		"https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${_major}.tar.sign"
 		"https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
 		"config"
+		"xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
 		"clearlinux::git+https://github.com/clearlinux-pkgs/linux.git#tag=${_clr}"
 		"more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
 		"0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch::https://raw.githubusercontent.com/xanmod/linux-patches/e2d48df5def86f498766b22e836a9c2f1bcb3809/linux-5.14.y-xanmod/pci_acso/0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch"
@@ -110,16 +113,16 @@ prepare() {
     cd ${_srcname}
 
     ### Add upstream patches
-    echo "Add upstream patches"
+    msg2 "Add upstream patches"
     patch -Np1 -i ../patch-${pkgver}
 
     ### Setting version
-    echo "Setting version..."
+    msg2 "Setting version..."
     scripts/setlocalversion --save-scmversion
     echo "-$pkgrel" > localversion.10-pkgrel
     echo "${pkgbase#linux}" > localversion.20-pkgname
 
-    ### Add Clearlinux patches
+    msg2 Add Clearlinux patches
     for i in $(grep '^Patch' ${srcdir}/clearlinux/linux.spec | sed -n 's/.*: //p'); do
         echo "Applying patch ${i}..."
         patch -Np1 -i "$srcdir/clearlinux/${i}"
@@ -133,13 +136,19 @@ prepare() {
         echo "Applying patch $src..."
         patch -Np1 < "../$src"
     done
+    
+	msg2 "Patching with ck hrtimer patches..."
+
+    for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
+        patch -Np1 -i $i
+    done
 
     ### Setting config
-    echo "Setting config..."
+    msg2 "Setting config..."
     cp -Tf ../config ./.config
 
     ### Enable extra stuff from arch kernel
-    echo "Enable extra stuff from arch kernel..."
+    msg2 "Enable extra stuff from arch kernel..."
 
     # General setup
     scripts/config --enable IKCONFIG \
@@ -156,6 +165,7 @@ prepare() {
 
     # Networking support
     scripts/config --enable NETFILTER_INGRESS
+
 	msg2 "Disabling TCP_CONG_CUBIC..."
 	scripts/config --module CONFIG_TCP_CONG_CUBIC
 	scripts/config --disable CONFIG_DEFAULT_CUBIC
@@ -187,7 +197,7 @@ prepare() {
 
     # https://github.com/graysky2/kernel_compiler_patch
     # make sure to apply after olddefconfig to allow the next section
-    echo "Patching to enable GCC optimization for other uarchs..."
+    msg2 "Patching to enable GCC optimization for other uarchs..."
     patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.8-5.14.patch"
 
     if [ -n "$_subarch" ]; then
@@ -356,15 +366,16 @@ done
 
 sha256sums=('7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2'
             'SKIP'
-            '980f6c10adfb866ec6060fc28a1adc4b2d766ccdf9062a3c6bf618eb16d752d3'
+            'ec985a9c34dde3eaccefef40cb5fe1a7a371fadff21bc47c8a6aee115b6035f9'
             '58dd768d182beea1ee7bf20f45f2fc0a8fc02a08e4a3e4c803b1e9935c95e7a4'
+            '722b53e72842247eaa4fde397da1889cbbb54b40c7ed1eb0afb95fff80bffbe4'
             'SKIP'
             'b70720e7537a0b6455edaeb198d52151fb3b3c3a91631b8f43d2e71b694da611'
             '1c7aee7bccb1d848887b0cef273518badb09021788b148db1c6168d4c761f1fd'
             'ece72251dacc37d239a5bbf170629c155cee634c05febd8d654b110077d29f28'
             '3d877cbbe4feba054398f3a4b89546e02d3ee7a9254e0efbeba299c7e3139563'
             '549b0c6504c140c187ed45c582576739e4ee6edab263d9633a3e307e33026544'
-            '4c820db7abdfa7f99c9ba18d14999b43b72f5b1b4e58837213c7b566eb9d3bd0')
+            '7a5a966c2ceb32735f4f4d6f87f9e589abac8936aced7c270c820b0444266228')
 
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
