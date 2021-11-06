@@ -74,7 +74,7 @@ _use_current=
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 _major=5.14
-_minor=15
+_minor=16
 _srcname=linux-${_major}
 _clr=${_major}.14-1085
 pkgbase=linux-clear

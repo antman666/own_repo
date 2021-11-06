@@ -6,11 +6,11 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux, linux-ck-uksm, linux-clear, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, wine-staging, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux, linux-ck-uksm, linux-clear, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Build linux-antman for arch
+      - name: Build jemalloc packages for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
@@ -18,7 +18,7 @@ jobs:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          aurDeps: 0
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -28,11 +28,11 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, qemu, rtkit, systemd, wpa_supplicant]
+        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, qemu, rtkit, systemd, wpa_supplicant, wine-staging]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Build linux-pds-uksm for arch
+      - name: Build non-jemalloc packages for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
@@ -40,7 +40,7 @@ jobs:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-          aurDeps: 1
+          aurDeps: 0
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true

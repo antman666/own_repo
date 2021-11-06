@@ -74,7 +74,7 @@ fi
 
 pkgbase=linux-ck-uksm
 pkgver=5.12.19
-pkgrel=4
+pkgrel=5
 _major=5.12
 _ckpatchversion=1
 _ckpatch="patch-${_major}-ck${_ckpatchversion}"
