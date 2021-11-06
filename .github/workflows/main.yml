@@ -28,7 +28,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, qemu, rtkit, systemd, wpa_supplicant, wine-staging]
+        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, rtkit, systemd, wpa_supplicant]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
