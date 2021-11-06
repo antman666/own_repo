@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux, linux-ck-uksm, linux-clear, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux, linux-ck-uksm, linux-clear, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, wine-staging, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +28,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, java8-openjdk, polkit, python, qemu, rtkit, systemd, wpa_supplicant]
+        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, qemu, rtkit, systemd, wpa_supplicant]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
