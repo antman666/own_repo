@@ -21,21 +21,21 @@ _commit=8ba6612318090567422d49ccc79bc7bbe5484cfc
 _xan=linux-5.15.y-xanmod
 _gcc_more_v=20210914
 _subarch=15
+_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.15"
 
 source=(
   "$_srcname::git+https://github.com/archlinux/linux?signed#tag=$_srctag"
   config         # the main kernel config file
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "0001-bbr2.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
-  "0002-bfq.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bfq-patches-v2/0001-bfq-patches.patch"
-  "0003-block.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/block-patches/0001-block-patches.patch"
-  "0004-btrfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/btrfs-patches-v9/0001-btrfs-patches.patch"
-  "0005-fixes-miscellaneous.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
-  "0006-lru.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/lru-patches-v4/0001-lru-patches.patch"
-  "0007-ntfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/ntfs3-patches-v14/0001-ntfs3-patches.patch"
-  "0008-uksm.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/uksm-patches-v2/0001-UKSM-for-5.14.patch"
-  "0009-zstd.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/zstd-upstream-patches-v7/0001-zstd-upstream-patches.patch"
+  "0001-bbr2.patch::${_url}/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch"
+  "0002-block.patch::${_url}/block-patches-v2/0001-block-patches.patch"
+  "0003-btrfs.patch::${_url}/btrfs-patches-v2/0001-btrfs-patches.patch"
+  "0004-fixes-miscellaneous.patch::${_url}/fixes-miscellaneous-v5/0001-fixes-miscellaneous.patch"
+  "0005-uksm.patch::${_url}/uksm-patches/0001-UKSM-for-5.15.patch"
+  "0006-zstd.patch::${_url}/zstd-patches/0001-zstd-patches.patch"
+  "0007-futex.patch::${_url}/futex-patches/0001-futex-resync-from-gitlab.collabora.com.patch"
+  "0008-futex2.patch::${_url}/futex2-patches/0001-futex2-resync-from-gitlab.collabora.com.patch"
 )
 
 validpgpkeys=(

@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux, linux-ck-uksm, linux-tt, bash, btrfs-progs, curl, feh, gcc, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux, linux-ck-uksm, linux-tt, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,6 @@ jobs:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-          aurDeps: 0
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -40,7 +39,6 @@ jobs:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-          aurDeps: 0
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
@@ -54,15 +52,14 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Build non-jemalloc packages for arch
+      - name: Build non-lto packages for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-          aurDeps: 0
       - uses: ncipollo/release-action@v1.8.6
         with:
           allowUpdates: true
