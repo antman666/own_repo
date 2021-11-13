@@ -50,7 +50,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nojemalloc: [java8-openjdk, nodejs, python]
+        nojemalloc: [java8-openjdk, nodejs, python, wine-staging]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
