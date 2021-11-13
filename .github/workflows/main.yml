@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux, linux-ck-uksm, linux-clear, linux-tt, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux, linux-ck-uksm, linux-tt, bash, btrfs-progs, curl, feh, gcc, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +28,29 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [linux-pds-uksm, dbus, dhcpcd, polkit, rtkit, systemd, wpa_supplicant]
+        nojemalloc: [dbus, dhcpcd, polkit, rtkit, systemd, wpa_supplicant]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build non-jemalloc packages for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@non-jemalloc
+        with:
+          pkgdir: ${{ matrix.nojemalloc }}
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+          aurDeps: 0
+      - uses: ncipollo/release-action@v1.8.6
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build_no_lto:
+    strategy:
+      matrix:
+        nojemalloc: [java8-openjdk, nodejs, python]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +70,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_jemalloc, build_no_jemalloc]
+    needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
