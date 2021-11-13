@@ -95,23 +95,25 @@ _kernel_patch_name="more-uarches-for-kernel-5.8-5.14.patch"
 
 _pkgdesc_extra="~ featuring Alfred Chen's PDS CPU scheduler, rebased by TkG"
 
+_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14"
+
 source=(
     "${_reponame}::git+${_repo_url}?signed#tag=$_srcver_tag"
     "git+${_repo_url_kernel_patch}"
     config # kernel config file
     0001-prjc_v5.14-r3.patch
     0002-glitched-pds.patch
-	"0003-bbr2.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
-	"0004-bfq.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/bfq-patches-v2/0001-bfq-patches.patch"
-	"0005-block.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/block-patches-v2/0001-block-patches.patch"
-	"0006-btrfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/btrfs-patches-v9/0001-btrfs-patches.patch"
-	"0007-fix-miscellaneous.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
-	"0008-futex.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/futex-xanmod-patches-v2/0001-futex-resync-from-gitlab.collabora.com.patch"
-	"0009-futex2.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/futex2-xanmod-patches-v2/0001-futex2-resync-from-gitlab.collabora.com.patch"
-	"0010-lru.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/lru-patches-v4/0001-lru-patches.patch"
-	"0011-ntfs.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/ntfs3-patches-v14/0001-ntfs3-patches.patch"
-	"0012-uksm.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/uksm-patches-v2/0001-UKSM-for-5.14.patch"
-	"0013-zstd.patch::https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.14/zstd-upstream-patches-v7/0001-zstd-upstream-patches.patch"
+	"0003-bbr2.patch::${_url}/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
+	"0004-bfq.patch::${_url}/bfq-patches-v2/0001-bfq-patches.patch"
+	"0005-block.patch::${_url}/block-patches-v2/0001-block-patches.patch"
+	"0006-btrfs.patch::${_url}/btrfs-patches-v9/0001-btrfs-patches.patch"
+	"0007-fix-miscellaneous.patch::${_url}/fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
+	"0008-futex.patch::${_url}/futex-xanmod-patches-v2/0001-futex-resync-from-gitlab.collabora.com.patch"
+	"0009-futex2.patch::${_url}/futex2-xanmod-patches-v2/0001-futex2-resync-from-gitlab.collabora.com.patch"
+	"0010-lru.patch::${_url}/lru-patches-v4/0001-lru-patches.patch"
+	"0011-ntfs.patch::${_url}/ntfs3-patches-v14/0001-ntfs3-patches.patch"
+	"0012-uksm.patch::${_url}/uksm-patches-v2/0001-UKSM-for-5.14.patch"
+	"0013-zstd.patch::${_url}/zstd-upstream-patches-v7/0001-zstd-upstream-patches.patch"
 	"0014-winesync.patch::https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.14/0001-winesync.patch"
 )
 validpgpkeys=(

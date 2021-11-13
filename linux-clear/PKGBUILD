@@ -73,10 +73,10 @@ _use_current=
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
-_major=5.14
-_minor=16
+_major=5.15
+_minor=2
 _srcname=linux-${_major}
-_clr=${_major}.14-1085
+_clr=${_major}.1-1089
 pkgbase=linux-clear
 pkgver=${_major}.${_minor}
 pkgrel=1
@@ -88,8 +88,8 @@ makedepends=('bc' 'cpio' 'git' 'kmod' 'libelf' 'xmlto')
 options=('!strip')
 _gcc_more_v='20210914'
 _patches_url="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${_major}"
-_commit=e2d48df5def86f498766b22e836a9c2f1bcb3809
-_xan=linux-5.14.y-xanmod
+_commit=8ba6612318090567422d49ccc79bc7bbe5484cfc
+_xan=linux-5.15.y-xanmod
 source=(
 		"https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${_major}.tar.xz"
 		"https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${_major}.tar.sign"
@@ -98,11 +98,10 @@ source=(
 		"xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
 		"clearlinux::git+https://github.com/clearlinux-pkgs/linux.git#tag=${_clr}"
 		"more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-		"0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch::https://raw.githubusercontent.com/xanmod/linux-patches/e2d48df5def86f498766b22e836a9c2f1bcb3809/linux-5.14.y-xanmod/pci_acso/0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch"
-		"0002-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch::https://raw.githubusercontent.com/xanmod/linux-patches/e2d48df5def86f498766b22e836a9c2f1bcb3809/linux-5.14.y-xanmod/userns/0001-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch"
-        "0003-bbr2.patch::${_patches_url}/bbr2-patches/0001-bbr2-5.14-introduce-BBRv2.patch"
-        "0004-block.patch::${_patches_url}/block-patches/0001-block-patches.patch"
-        "0005-ntfs.patch::${_patches_url}/ntfs3-patches-v12/0001-ntfs3-patches.patch"
+		"0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch::https://raw.githubusercontent.com/xanmod/linux-patches/${_commit}/linux-5.15.y-xanmod/pci_acso/0001-pci-Enable-overrides-for-missing-ACS-capabilities.patch"
+		"0002-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch::https://raw.githubusercontent.com/xanmod/linux-patches/${_commit}/linux-5.15.y-xanmod/userns/0001-sysctl-add-sysctl-to-disallow-unprivileged-CLONE_NEW.patch"
+        "0003-bbr2.patch::${_patches_url}/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch"
+        "0004-block.patch::${_patches_url}/block-patches-v2/0001-block-patches.patch"
 )
 
 export KBUILD_BUILD_HOST=archlinux

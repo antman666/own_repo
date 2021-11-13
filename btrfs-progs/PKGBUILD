@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=btrfs-progs
-pkgver=5.14.2
+pkgver=5.15
 pkgrel=1
 pkgdesc='Btrfs filesystem utilities'
 arch=('x86_64')
@@ -18,7 +18,7 @@ conflicts=('btrfs-progs-unstable')
 provides=('btrfs-progs-unstable')
 license=('GPL2')
 validpgpkeys=('F2B41200C54EFB30380C1756C565D5F9D76D583B')
-source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$pkgver.tar."{sign,xz}
+source=("https://cdn.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$pkgver.tar."{sign,xz}
         'initcpio-install-btrfs'
         'initcpio-hook-btrfs'
         'btrfs-scrub@.service'

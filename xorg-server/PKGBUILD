@@ -4,7 +4,7 @@
 pkgbase=xorg-server
 pkgname=('xorg-server' 'xorg-server-xephyr' 'xorg-server-xvfb' 'xorg-server-xnest'
          'xorg-server-common' 'xorg-server-devel')
-pkgver=1.20.13
+pkgver=21.1.1
 pkgrel=3
 arch=('x86_64')
 license=('custom')
@@ -17,11 +17,9 @@ makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl' 'xtrans'
              'xcb-util' 'xcb-util-image' 'xcb-util-renderutil' 'xcb-util-wm' 'xcb-util-keysyms'
              'libxshmfence' 'libunwind' 'systemd' 'meson' 'git')
 source=(https://xorg.freedesktop.org/releases/individual/xserver/${pkgbase}-${pkgver}.tar.xz{,.sig}
-        xserver-autobind-hotplug.patch
-        0001-v2-FS-58644.patch
-        0002-fix-libshadow-2.patch
         xvfb-run # with updates from FC master
-        xvfb-run.1)
+        xvfb-run.1
+		0001_revert_dpi_calculation.patch)
 validpgpkeys=('7B27A3F1A6E18CD9588B4AE8310180050905E40C'
               'C383B778255613DFDB409D91DB221A6900000011'
               'DD38563A8A8224537D1F90E45B8A2D50A0ECD0D3'
@@ -36,16 +34,11 @@ sha512sums=('4e0b7bd4e070dc52cb2c51c2056feb133de2c0487d359392ed63abba9702910cd2e
 
 prepare() {
   cd "${pkgbase}-${pkgver}"
-
-  # patch from Fedora, not yet merged
-  patch -Np1 -i ../xserver-autobind-hotplug.patch
-
-  # Fix rootless xorg - FS#58644
-  # https://bugs.freedesktop.org/show_bug.cgi?id=106588
-  patch -Np1 -i ../0001-v2-FS-58644.patch
-
-  # Fix libshadow.so: libfb.so => not found - merge in master
-  patch -Np1 -i ../0002-fix-libshadow-2.patch
+  
+  # revert dpi calculation that leads to unwanted miscalculation results
+  # https://gitlab.freedesktop.org/xorg/xserver/-/issues/1241
+  # https://bugs.archlinux.org/task/72661
+  patch -Rp1 -i ../0001_revert_dpi_calculation.patch
 }
 
 build() {
@@ -57,7 +50,6 @@ build() {
   export LDFLAGS=${LDFLAGS/,-z,now}
 
   arch-meson ${pkgbase}-$pkgver build \
-    -D os_vendor="Archlinux" \
     -D ipv6=true \
     -D xvfb=true \
     -D xnest=true \
@@ -66,6 +58,7 @@ build() {
     -D xephyr=true \
     -D glamor=true \
     -D udev=true \
+    -D dtrace=false \
     -D systemd_logind=true \
     -D suid_wrapper=true \
     -D xkb_dir=/usr/share/X11/xkb \

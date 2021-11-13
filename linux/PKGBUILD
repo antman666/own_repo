@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-antman
-pkgver=5.14.16.arch1
+pkgver=5.15.2.arch1
 pkgrel=1
 pkgdesc='Linux'
 _srctag=v${pkgver%.*}-${pkgver##*.}
@@ -17,8 +17,8 @@ makedepends=(
 options=('!strip')
 
 _srcname=archlinux-linux
-_commit=e2d48df5def86f498766b22e836a9c2f1bcb3809
-_xan=linux-5.14.y-xanmod
+_commit=8ba6612318090567422d49ccc79bc7bbe5484cfc
+_xan=linux-5.15.y-xanmod
 _gcc_more_v=20210914
 _subarch=15
 
@@ -113,7 +113,7 @@ prepare() {
   scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
 
   msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.8-5.14.patch"
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.15+.patch"
   
   yes ${_subarch} | make oldconfig
 
