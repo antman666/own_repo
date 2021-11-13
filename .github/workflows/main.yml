@@ -18,7 +18,7 @@ jobs:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -39,7 +39,7 @@ jobs:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -60,7 +60,7 @@ jobs:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -73,7 +73,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.8.6
+      - uses: ncipollo/release-action@v1.8.10
         with:
           allowUpdates: True
           tag: "x86_64"
