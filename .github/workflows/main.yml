@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux, linux-ck-uksm, linux-tt, linux-tt-lto, bash, btrfs-progs, curl, feh, git, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux, linux-ck-uksm, linux-tt, linux-tt-lto, bash, btrfs-progs, curl, fcitx5, feh, git, ntfs-3g, numlockx, picom, wayland, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nojemalloc: [java8-openjdk, nodejs, python, wine-staging]
+        nojemalloc: [python]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
