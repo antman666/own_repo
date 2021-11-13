@@ -36,6 +36,7 @@ source=(
   "0006-zstd.patch::${_url}/zstd-patches/0001-zstd-patches.patch"
   "0007-futex.patch::${_url}/futex-patches/0001-futex-resync-from-gitlab.collabora.com.patch"
   "0008-futex2.patch::${_url}/futex2-patches/0001-futex2-resync-from-gitlab.collabora.com.patch"
+  "0009-lru.patch::${_patchsource}/lru-patches-pf/0001-lru-patches.patch"
 )
 
 validpgpkeys=(
