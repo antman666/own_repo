@@ -88,6 +88,8 @@ prepare() {
   msg2 "Setting config..."
   cp ../config .config
   
+  scripts/config --disable CONFIG_WERROR
+  scripts/config --enable CONFIG_STACK_VALIDATION
   scripts/config --disable CONFIG_DEBUG_INFO
   scripts/config --disable CONFIG_CGROUP_BPF
   scripts/config --disable CONFIG_BPF_LSM
