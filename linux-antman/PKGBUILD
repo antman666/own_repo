@@ -45,18 +45,16 @@ validpgpkeys=(
 )
 
 sha256sums=('SKIP'
-            '717ab4d132ab91469e2695e582c9dd3e003de24ad253dee3b41431d70fbe76bd'
-            '722b53e72842247eaa4fde397da1889cbbb54b40c7ed1eb0afb95fff80bffbe4'
+            '6b1ba575985db051cae19b471c8482dd7a95ad5371a5d78558f764348b893751'
+            '2f9ee9dbe95595c91286853c0bee80a562d68eaefbc1b168eb8d5e58fa47cf9b'
             'b70720e7537a0b6455edaeb198d52151fb3b3c3a91631b8f43d2e71b694da611'
-            '3d877cbbe4feba054398f3a4b89546e02d3ee7a9254e0efbeba299c7e3139563'
-            '8104d5f2d73f46456f6a8ee610bce0812cc5ee936d014d466fdda45a0ad19e5c'
-            '549b0c6504c140c187ed45c582576739e4ee6edab263d9633a3e307e33026544'
-            '70828bd0f5292ea2804ba408bd12bac3eaebb31d8163cb179436826ff47a7c90'
-            'a935e249020c86efd33c2becfb9ddf8147a072f828edf6e09adf7c7bd48de91c'
-            'f7458bd4dc12726127710b86ea2ea3377aa4c26d2c19ba188a6cdeb7373a7ded'
-            '4c820db7abdfa7f99c9ba18d14999b43b72f5b1b4e58837213c7b566eb9d3bd0'
-            'fd9b8033a5705a75461fce37f51c3b002eeabe747eee060ddd914d31c8747f4b'
-            'f50757bf9f9e322ee8504edbc10ed15edc419782641340a2255d300779189c84')
+            'b45ab5ea4b37c980d44fa6ace284aa04aee36c61374ec2145c0cd73a791df42a'
+            'e1f4a5cd07737d7567a3dbbb9a37d99c40b71cf0afe8faa6ea23503eaa46c297'
+            'e930fff76d2fa787088ce2fb0c2f4cb88e94a0f9971c65ad30c3adc25bde354f'
+            'a84c86e1a9482bd384b7707ab4a8e79744811022b9c963629a87b8341c3e061b'
+            'cb348cc3ba1a453ac6057ecc08000a2ccddc47b70491caaf71db34a3d630f77c'
+            '74c84814a670c68f0291f94b76fe00eac96b0e7965ed1762dbffd7c938dd9fdc'
+            '4c07123b8b8e95e4ec8fc36371aa7093c5af887b1e61251eb25db8c8ddc6ccf5')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -88,6 +86,7 @@ prepare() {
   msg2 "Setting config..."
   cp ../config .config
   
+  scripts/config --disable CONFIG_PRINTK_INDEX
   scripts/config --disable CONFIG_WERROR
   scripts/config --enable CONFIG_STACK_VALIDATION
   scripts/config --disable CONFIG_DEBUG_INFO
