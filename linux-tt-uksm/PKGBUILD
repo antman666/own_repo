@@ -23,14 +23,14 @@ fi
 
 #  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
 # if you prefer performance over latency.
-_417_HZ_ticks=y
+_417_HZ_ticks=
 
 # 833 Hz is the TT alternative to 1000 Hz. Choose 833 Hz
 #  if you want a balance between latency and performance.
 _833_HZ_ticks=
 
 # ck recommends 1000 Hz tick and the hrtimer patches in lieu of ck1
-_1000_HZ_ticks=
+_1000_HZ_ticks=y
  
 # 1666 Hz is for very high latency bound systems. Choose 1666 Hz
 # if you don't care about overall throughput or performance, but
