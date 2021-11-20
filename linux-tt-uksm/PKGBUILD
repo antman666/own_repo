@@ -21,12 +21,16 @@ if [ -z ${_compiler+x} ]; then
   _compiler=gcc
 fi
 
+#  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
+# if you prefer performance over latency.
+_417_HZ_ticks=y
+
 # 833 Hz is the TT alternative to 1000 Hz. Choose 833 Hz
 #  if you want a balance between latency and performance.
 _833_HZ_ticks=
 
 # ck recommends 1000 Hz tick and the hrtimer patches in lieu of ck1
-_1000_HZ_ticks=y
+_1000_HZ_ticks=
  
 # 1666 Hz is for very high latency bound systems. Choose 1666 Hz
 # if you don't care about overall throughput or performance, but
@@ -84,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.15.2
+pkgver=5.15.3
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -102,45 +106,46 @@ options=('!strip')
 # thankfully xanmod keeps the hrtimer patches up to date
 _commit=8ba6612318090567422d49ccc79bc7bbe5484cfc
 _xan=linux-5.15.y-xanmod
-
 _gcc_more_v=20210914
 _patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.15"
+
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
-  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/v5.15/arch/0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch"
+  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.15/arch/0001-arch-patches-v2.patch"
   "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.15/tt-5.15-r2.patch"
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.15.patch"
   "${_patchsource}/futex-patches/0001-futex-resync-from-gitlab.collabora.com.patch"
   "${_patchsource}/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch"
   "${_patchsource}/block-patches-v2/0001-block-patches.patch"
-  "${_patchsource}/btrfs-patches-v2/0001-btrfs-patches.patch"
-  "${_patchsource}/fixes-miscellaneous-v5/0001-fixes-miscellaneous.patch"
+  "${_patchsource}/btrfs-patches-v5/0001-btrfs-patches.patch"
+  "${_patchsource}/fixes-miscellaneous-v6/0001-fixes-miscellaneous.patch"
   "${_patchsource}/clearlinux-patches/0001-clearlinux-patches.patch"
-  "${_patchsource}/lru-patches-pf/0001-lru-patches.patch"
+  # "${_patchsource}/lru-patches-pf-v3/0001-lru-patches.patch"
   "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
 )
+
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
-b2sums=('e1247057fc57e2f071ff150b5e0651db054a1e15a258ebd198921f7ef0c1e441f0a36c46024298175a8a9a0bb7cc0b6d505d7a77a053c1ce88a720ebea424d89'
+
+b2sums=('93379b68cfe85a979a7a39179e2bf622702d5e4f7a1d5a5bace1e8d11583d77966bce5b0e61f047fcb40c6c2be401e7725b3aa01e602c6ef4ac045a24ebcc2cd'
         'SKIP'
-        '6c8026d5710072b93109157c387b8fc5e8e9b4d5fd58753a236f74debab76b7aa3ca0dbf7894a75afda357aeed776ed0160ca46a3cf1698381f1c6b943d5d4ba'
+        'b7b04974afbc19fb9589c6e2c6453919d2cb8df0aab886166acf31307a015f6b29427a040945c844223bb34c959ebd4d28ede55669253d47de32722f913e258e'
         'd1c083f96f645679c5214e05f906b47f17ac6a8b3dd2faeb219e3ceda3a008e3fe47c4a79b0345978cec5c5e28da9b20727970cf5c788d52c3782dc5b36aa211'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
-        'be54a031935aec05838414f22f650dd3a42d6fa9e029be52f787e2c3fd7defcec78621ce02bb4f89f095012b51bf90c425b94645de3fcf825cc61eed2ce5fff9'
-        '6b6162a7ec9ee4775d27732d7f4ea88e1bb5f653d12ccd565cb824297c4c35cb55a10892b06c0fc1cf66165e8667ba65f3eaa85095a9ed112c281ba2b5881f21'
+        '860a4bf7f5eadad9c5ad5343a4e18ca11271f636a58564e4dec676e5ea9c15429782c3e301eb8fccbd8bb637c2859eae747a8c53903430dd3361cff3ff23d773'
+        '28e25d406834888b0c96797d8dc0541a4b1bf145d62333f3411627cf0f677180f39b4340ff4071a73bfdcf5f57d0b6900481ec4ae64529b409c045969fa4701f'
         '33ecbb3c7c3887b187fe951dd1fb897ab5378ecb1e01fa290c31782b10925b5874f0ded96b7a8a2693497fbee2965e9b5e9ff421934fce8a98508af4425ca260'
         'f092393f34b24439bf43da5433c951477ee34db28db5c328fb0c1be0d8dda0be299891461d06540c95822dd8037a7c6b3caa25cf3b2e7da3dca11f56266c8178'
         'e83b6ae58a6906f97e1ada7369b6dad8ccfb0264537b128e6815d2f47493b20b682c6852621fba75f5a23e92d7c0590bffb7dd7f0960bd33b23434477dde7079'
         'defd550aa7b67834fdf2fce402e3ce260bdaa8a2778d31d6c9d2674e43d0ee5fc609df156752fb7482c7453d34725e6edca9764a183f5011a198f8dc10fc6459'
-        'ebf6cefe955d1d42231a569679eb1b300792a2824ff47cb65d5b75145bbe5a6ef31dc4e95cc05bd85fd4dc24c4dbd7c114ef6758ab316fe1c57a28f46811f92b'
-        'be991d3964ef729028bc65bbdbe1218969512b05c3485e5c82cbe17fa8bb8b69a24be4ba8e46123b1fc02fe58c5e269a3ecb9905a5360446c292c417194ba748'
+        '038c7dcacb9758290bcdf143259e9a319ec2583d0f2d075f672400552a52f9e6d7ae6b76bc361fd52cc7bcfd3f5558c9a3d6604521e4827d64c21719975deb92'
+        '1580eaf425f24811aae6584e35a878bb5c0d942265b7e3072d09f08f2c298609878aa65a255a923f294c77eac78b2a9fecb160ede55aa95be7c90e1d04d6b6e9'
         '790e5def1d2737e888cd8bd5738da391f62fa87989ebc9893d30cd83172bc963b906bd6d4fa4616afa6fe1052bff21ec69c56a7532999b9820b54b7433d7688b'
-        'ff80b74ed8917423fbf74cffe4936104e79c99fd888724e3fa4feeb1dcee1c423c9233246c4241ca0a05c8d841ec7519d5df8e9ef6470ea9aefa8c45937423e5'
         'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2')
 
 export KBUILD_BUILD_HOST=archlinux
@@ -198,11 +203,18 @@ prepare() {
   scripts/config --disable CONFIG_KVM_WERROR
   
   ### Optionally set tickrate 
-  if [ -n "$_1666_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 1666Hz..."
+  if [ -n "$_417_HZ_ticks" ]; then
+    msg2 "Setting tick rate to 417Hz..."
     scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_1666
-    scripts/config --set-val CONFIG_HZ 1666
+    scripts/config --enable CONFIG_HZ_417
+    scripts/config --set-val CONFIG_HZ 417
+  fi 
+  
+  if [ -n "$_833_HZ_ticks" ]; then
+    msg2 "Setting tick rate to 833Hz..."
+    scripts/config --disable CONFIG_HZ_300
+    scripts/config --enable CONFIG_HZ_833
+    scripts/config --set-val CONFIG_HZ 833
   fi
 
   if [ -n "$_1000_HZ_ticks" ]; then
@@ -212,11 +224,11 @@ prepare() {
     scripts/config --set-val CONFIG_HZ 1000
   fi
 
-  if [ -n "$_833_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 833Hz..."
+  if [ -n "$_1666_HZ_ticks" ]; then
+    msg2 "Setting tick rate to 1666Hz..."
     scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_833
-    scripts/config --set-val CONFIG_HZ 833
+    scripts/config --enable CONFIG_HZ_1666
+    scripts/config --set-val CONFIG_HZ 1666
   fi
 
   # BBR2
@@ -286,8 +298,8 @@ _package() {
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
-  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
-  #groups=('ck-generic')
+  provides=(kvm winesync)
+  # groups=('tt-uksm')
 
   cd linux-${pkgver}
 
@@ -319,7 +331,7 @@ _package() {
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   depends=("$pkgbase") # added to keep kernel and headers packages matched
-  #groups=('ck-generic')
+  # groups=('tt-uksm')
 
   cd linux-${pkgver}
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
