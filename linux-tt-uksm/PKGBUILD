@@ -125,6 +125,9 @@ source=(
   "${_patchsource}/clearlinux-patches/0001-clearlinux-patches.patch"
   # "${_patchsource}/lru-patches-pf-v3/0001-lru-patches.patch"
   "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "0001-add-417Hz-timer-interrupt-kernel-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
 validpgpkeys=(
@@ -134,11 +137,11 @@ validpgpkeys=(
 
 b2sums=('93379b68cfe85a979a7a39179e2bf622702d5e4f7a1d5a5bace1e8d11583d77966bce5b0e61f047fcb40c6c2be401e7725b3aa01e602c6ef4ac045a24ebcc2cd'
         'SKIP'
-        '4d23b718fb94f124ccbd9bd2d5561f5a322be55c24179749aab1def609cb97caff10a1d335d55780f711b79495ea8acc99f5f41179ba3db93fccef8d347973b3'
+        '072a50aef7500607694ad5e2b79f367e259201fa6d85d0682d6a03919cc4f4f7c8a4bc8117b8c79ccb6d18283ec0c50e9d4ebc68c0818780f312ca065227b59d'
         'd1c083f96f645679c5214e05f906b47f17ac6a8b3dd2faeb219e3ceda3a008e3fe47c4a79b0345978cec5c5e28da9b20727970cf5c788d52c3782dc5b36aa211'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
         '860a4bf7f5eadad9c5ad5343a4e18ca11271f636a58564e4dec676e5ea9c15429782c3e301eb8fccbd8bb637c2859eae747a8c53903430dd3361cff3ff23d773'
-        '28e25d406834888b0c96797d8dc0541a4b1bf145d62333f3411627cf0f677180f39b4340ff4071a73bfdcf5f57d0b6900481ec4ae64529b409c045969fa4701f'
+        'ed569673f97ec9d8d620bdcd3cf5a5c6f72ef3b0b0a809c2a7041414f0d855f0abc331924e25a3d9f07959959ddb54c0f0304cdaa28182ce4791efc5ca797622'
         '33ecbb3c7c3887b187fe951dd1fb897ab5378ecb1e01fa290c31782b10925b5874f0ded96b7a8a2693497fbee2965e9b5e9ff421934fce8a98508af4425ca260'
         'f092393f34b24439bf43da5433c951477ee34db28db5c328fb0c1be0d8dda0be299891461d06540c95822dd8037a7c6b3caa25cf3b2e7da3dca11f56266c8178'
         'e83b6ae58a6906f97e1ada7369b6dad8ccfb0264537b128e6815d2f47493b20b682c6852621fba75f5a23e92d7c0590bffb7dd7f0960bd33b23434477dde7079'
@@ -146,7 +149,10 @@ b2sums=('93379b68cfe85a979a7a39179e2bf622702d5e4f7a1d5a5bace1e8d11583d77966bce5b
         '038c7dcacb9758290bcdf143259e9a319ec2583d0f2d075f672400552a52f9e6d7ae6b76bc361fd52cc7bcfd3f5558c9a3d6604521e4827d64c21719975deb92'
         '1580eaf425f24811aae6584e35a878bb5c0d942265b7e3072d09f08f2c298609878aa65a255a923f294c77eac78b2a9fecb160ede55aa95be7c90e1d04d6b6e9'
         '790e5def1d2737e888cd8bd5738da391f62fa87989ebc9893d30cd83172bc963b906bd6d4fa4616afa6fe1052bff21ec69c56a7532999b9820b54b7433d7688b'
-        'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2')
+        'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2'
+        'ee3c4ab17ad392fc91d5db2f73d8de6c258aa9b935485d91877f235be3d0addd6594cf6b4a4cf20fbe59b2106db863e307ed78520efb0afd7baf47639cc9b850'
+        '24801a02f2c7fee5561519fa6dda8c694d0dcbf7d6d76a0cb10cca48934db6abdce6163231d3acefa78b0f5a6334109289de9910c750640a2ac50afd86998555'
+        'b73120d0d25335d88006c73000dad2421e4ee64dd0cbc99d4487e65bcdf8e669077c898c286be9ce295b20f43d9e9e5174504c806da485b6d83c133d73d0bbed')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -201,6 +207,10 @@ prepare() {
   # FS#66613
   # https://bugzilla.kernel.org/show_bug.cgi?id=207173#c6
   scripts/config --disable CONFIG_KVM_WERROR
+ 
+  msg2 "Enable O3"
+  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 
   
   ### Optionally set tickrate 
   if [ -n "$_417_HZ_ticks" ]; then
