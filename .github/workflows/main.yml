@@ -3,6 +3,27 @@ on:
   push:
   workflow_dispatch:
 jobs:
+  build_wine:
+    strategy:
+      matrix:
+        wines: [wine]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build kernels packages for arch
+        uses: actions/checkout@v2.3.4
+      - id: makepkg
+        uses: antman666/pkgbuild-action@wine
+        with:
+          pkgdir: ${{ matrix.wines }}
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
   build_kernel:
     strategy:
       matrix:
@@ -88,7 +109,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_kernel, build_jemalloc, build_no_jemalloc, build_no_lto]
+    needs: [build_wine, build_kernel, build_jemalloc, build_no_jemalloc, build_no_lto]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
