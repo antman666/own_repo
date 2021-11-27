@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.15.3
+pkgver=5.15.5
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -106,7 +106,7 @@ options=('!strip')
 # thankfully xanmod keeps the hrtimer patches up to date
 _commit=8ba6612318090567422d49ccc79bc7bbe5484cfc
 _xan=linux-5.15.y-xanmod
-_gcc_more_v=20210914
+_gcc_more_v=20211114
 _patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.15"
 
 source=(
@@ -114,10 +114,11 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
-  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.15/arch/0001-arch-patches-v2.patch"
+  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.15/arch/0001-arch-patches-v5.patch"
   "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.15/tt-5.15-r2.patch"
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.15.patch"
   "${_patchsource}/futex-patches/0001-futex-resync-from-gitlab.collabora.com.patch"
+  # "${_patchsource}/futex2-patches/0001-futex2-resync-from-gitlab.collabora.com.patch"
   "${_patchsource}/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch"
   "${_patchsource}/block-patches-v2/0001-block-patches.patch"
   "${_patchsource}/btrfs-patches-v5/0001-btrfs-patches.patch"
@@ -126,7 +127,6 @@ source=(
   # "${_patchsource}/lru-patches-pf-v3/0001-lru-patches.patch"
   "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "0001-add-417Hz-timer-interrupt-kernel-conf.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
@@ -135,12 +135,12 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('93379b68cfe85a979a7a39179e2bf622702d5e4f7a1d5a5bace1e8d11583d77966bce5b0e61f047fcb40c6c2be401e7725b3aa01e602c6ef4ac045a24ebcc2cd'
+b2sums=('2921b549a44ff4202ab96d35d6b7ce99bef914db5c1dba066fb7c4b146ef987d1aed53d0773fbe07cd6bb3b964d40b6f3f8c47f6a04149ea1c64e2f8f87343bb'
         'SKIP'
-        '072a50aef7500607694ad5e2b79f367e259201fa6d85d0682d6a03919cc4f4f7c8a4bc8117b8c79ccb6d18283ec0c50e9d4ebc68c0818780f312ca065227b59d'
-        'd1c083f96f645679c5214e05f906b47f17ac6a8b3dd2faeb219e3ceda3a008e3fe47c4a79b0345978cec5c5e28da9b20727970cf5c788d52c3782dc5b36aa211'
+        '47d41db2ee729f7a6cb4eb5d4e5d229d413a990260a6b081d8c7b9ad26f076d7a00dbebb12cbb4228c82b8774144052abc925f60ef98f5b7e78594a24142559d'
+        '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
-        '860a4bf7f5eadad9c5ad5343a4e18ca11271f636a58564e4dec676e5ea9c15429782c3e301eb8fccbd8bb637c2859eae747a8c53903430dd3361cff3ff23d773'
+        'e5a9b1d0fc6c3a908db33806933bbb24cb2512e7698c35b1326c0773ce0753dacef1cad7d50069df3b680acc3ba488baa654826778cddecb16a773aeac69df35'
         'ed569673f97ec9d8d620bdcd3cf5a5c6f72ef3b0b0a809c2a7041414f0d855f0abc331924e25a3d9f07959959ddb54c0f0304cdaa28182ce4791efc5ca797622'
         '33ecbb3c7c3887b187fe951dd1fb897ab5378ecb1e01fa290c31782b10925b5874f0ded96b7a8a2693497fbee2965e9b5e9ff421934fce8a98508af4425ca260'
         'f092393f34b24439bf43da5433c951477ee34db28db5c328fb0c1be0d8dda0be299891461d06540c95822dd8037a7c6b3caa25cf3b2e7da3dca11f56266c8178'
@@ -151,7 +151,6 @@ b2sums=('93379b68cfe85a979a7a39179e2bf622702d5e4f7a1d5a5bace1e8d11583d77966bce5b
         '790e5def1d2737e888cd8bd5738da391f62fa87989ebc9893d30cd83172bc963b906bd6d4fa4616afa6fe1052bff21ec69c56a7532999b9820b54b7433d7688b'
         'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2'
         'ee3c4ab17ad392fc91d5db2f73d8de6c258aa9b935485d91877f235be3d0addd6594cf6b4a4cf20fbe59b2106db863e307ed78520efb0afd7baf47639cc9b850'
-        '24801a02f2c7fee5561519fa6dda8c694d0dcbf7d6d76a0cb10cca48934db6abdce6163231d3acefa78b0f5a6334109289de9910c750640a2ac50afd86998555'
         'b73120d0d25335d88006c73000dad2421e4ee64dd0cbc99d4487e65bcdf8e669077c898c286be9ce295b20f43d9e9e5174504c806da485b6d83c133d73d0bbed')
 
 export KBUILD_BUILD_HOST=archlinux

@@ -3,52 +3,10 @@ on:
   push:
   workflow_dispatch:
 jobs:
-  build_wine:
-    strategy:
-      matrix:
-        wines: [wine]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build kernels packages for arch
-        uses: actions/checkout@v2.3.4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@wine
-        with:
-          pkgdir: ${{ matrix.wines }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-  build_kernel:
-    strategy:
-      matrix:
-        kernels: [linux-tt-uksm]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build kernels packages for arch
-        uses: actions/checkout@v2.3.4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@kernel
-        with:
-          pkgdir: ${{ matrix.kernels }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [bash, btrfs-progs, curl, fcitx5, feh, git, ibus, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux-xanmod-rt-uksm, linux-tt-uksm, bash, btrfs-progs, curl, fcitx5, feh, git, ibus, ntfs-3g, numlockx, picom, wget, xorg-server, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -90,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nojemalloc: [gcc, python]
+        nolto: [gcc, python]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -99,7 +57,7 @@ jobs:
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
-          pkgdir: ${{ matrix.nojemalloc }}
+          pkgdir: ${{ matrix.nolto }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
       - uses: ncipollo/release-action@v1.8.10
@@ -109,7 +67,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_wine, build_kernel, build_jemalloc, build_no_jemalloc, build_no_lto]
+    needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
