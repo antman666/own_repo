@@ -18,7 +18,7 @@ _localmodcfg=
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=gcc
+  _compiler=clang
 fi
 
 #  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
@@ -143,7 +143,7 @@ validpgpkeys=(
 
 b2sums=('dedcff13b0829b9bdfc4998a9bedcf932dee48ade3bef722ccbd8fc7bef9832462ac2f1064b77926f86d93c7035634db8ba8f6c1e2d957ff749b34e218c565c7'
         'SKIP'
-        'dcad5cdd1d59de5a26d2b90ee05844038797b17d01530dafb4eefc17120ad2a631bd905a8c11da31db365754b7bcb762ad69f2cd4ff8b50fd32809149c5b162b'
+        'ecaa6cfe362ba4823b5c90c0ffab271f8b2ff09998442a1ffe3507727566522d712d2166a46223b7532bc87de68be6e246eda22691b8bf1648ace1ab7d6dfd8e'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
         '9864fdaa3500347a40ee28e9de3c0438e5b159a865439d375dac180056a1d5a45eed8f64ccd4dc243b550cdfa3e8bf1af37959b37f9c9a608caca0fcd437fa99'
