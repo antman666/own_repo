@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.15.7
-pkgrel=2
+pkgver=5.15.10
+pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)
@@ -142,21 +142,22 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('dedcff13b0829b9bdfc4998a9bedcf932dee48ade3bef722ccbd8fc7bef9832462ac2f1064b77926f86d93c7035634db8ba8f6c1e2d957ff749b34e218c565c7'
+b2sums=('a21e5a965c0a4fe2e014961a6cc8f4c621fd9313a4b170f97fd3f77ae2494e721bf579e68d5836c167ed9fb6674784b20722501f6adc44d634073e74a82da765'
         'SKIP'
         'dcad5cdd1d59de5a26d2b90ee05844038797b17d01530dafb4eefc17120ad2a631bd905a8c11da31db365754b7bcb762ad69f2cd4ff8b50fd32809149c5b162b'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
-        '9864fdaa3500347a40ee28e9de3c0438e5b159a865439d375dac180056a1d5a45eed8f64ccd4dc243b550cdfa3e8bf1af37959b37f9c9a608caca0fcd437fa99'
-        'ed569673f97ec9d8d620bdcd3cf5a5c6f72ef3b0b0a809c2a7041414f0d855f0abc331924e25a3d9f07959959ddb54c0f0304cdaa28182ce4791efc5ca797622'
+        '991264299e61e5c8f43ec0a468029e2e0651a7a40cfd735d90f15cae3d8d00d50ef232054c1a08f35e40a256a025d442a3d888b5d12875d3ea6efd131098a3eb'
+        'bd68d3d59677556489433a8186c2c25861eb725c1a2e20baafb1b2edd9dc0656b1fefc80416fab096af61ff2cc7848569b0029c19ae7d0b2de3a93b7d328bf10'
         '33ecbb3c7c3887b187fe951dd1fb897ab5378ecb1e01fa290c31782b10925b5874f0ded96b7a8a2693497fbee2965e9b5e9ff421934fce8a98508af4425ca260'
-        'd318a5a38ccb2e8c7950f4b09a3c791be3ddd82f9631354b26e8b03cef28ddd2d02b2df4a7fdae9d491ff3006e7c787f961a5f6da8666828de622425ede16e6e'
+        '71a178d53b58fb993ed8df4408a254ce819be84fe6f54ddb0684459d6290e7e11010816e95950dfb60f92c582fe3f604fbbbce6d8ec856d15ac000137f7ec995'
         'e83b6ae58a6906f97e1ada7369b6dad8ccfb0264537b128e6815d2f47493b20b682c6852621fba75f5a23e92d7c0590bffb7dd7f0960bd33b23434477dde7079'
         'defd550aa7b67834fdf2fce402e3ce260bdaa8a2778d31d6c9d2674e43d0ee5fc609df156752fb7482c7453d34725e6edca9764a183f5011a198f8dc10fc6459'
         '038c7dcacb9758290bcdf143259e9a319ec2583d0f2d075f672400552a52f9e6d7ae6b76bc361fd52cc7bcfd3f5558c9a3d6604521e4827d64c21719975deb92'
-        '1580eaf425f24811aae6584e35a878bb5c0d942265b7e3072d09f08f2c298609878aa65a255a923f294c77eac78b2a9fecb160ede55aa95be7c90e1d04d6b6e9'
+        '4cd66b098206daaa4588dae075f2e189cbd589c67605ccf93a3ad9f0fadc40b478da8411f7bee49e58ecb37248a5ba3f7921e17569215f39cd659b5c17bc7ee5'
         '790e5def1d2737e888cd8bd5738da391f62fa87989ebc9893d30cd83172bc963b906bd6d4fa4616afa6fe1052bff21ec69c56a7532999b9820b54b7433d7688b'
         'f1832b1c123f2815b56e312129f642848ca3c7780cd7fb352358b9c2eb1ff27478f9929fd309a639947f859491261de6c4425dfcd28f6e342431a6e34e80a05a'
+        'dc7c45d57d50c4b019cb2fd5bf3d4ec019a7d3dd4a4e62bef324f75319d7bd9ed4c7faf96941d4f85c3504352b403fa5696c34878df08c62cbb17927648e0900'
         '6fd101072267ba38701495cf6b317653d78c01a98563fae8cf4135033c01f79062d1a548504d5d03ee7c9ebd694a6b4e4aee03d53d7995a450c947b12117fe84'
         'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2'
         'ee3c4ab17ad392fc91d5db2f73d8de6c258aa9b935485d91877f235be3d0addd6594cf6b4a4cf20fbe59b2106db863e307ed78520efb0afd7baf47639cc9b850'
@@ -203,6 +204,7 @@ prepare() {
   # partition ... this was introduced by FS#66260, see:
   # https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=663b08666b269eeeeaafbafaee07fd03389ac8d7
   scripts/config --disable CONFIG_DEBUG_INFO
+  scripts/config --disable CONFIG_DEBUG_KERNEL
   scripts/config --disable CONFIG_CGROUP_BPF
   scripts/config --disable CONFIG_BPF_LSM
   scripts/config --disable CONFIG_BPF_PRELOAD
@@ -307,13 +309,13 @@ prepare() {
   scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
 
   msg2 "Setting performance governor..."
-  scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
   scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
   scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
   scripts/config --enable CONFIG_CPU_FREQ_GOV_CONSERVATIVE
   scripts/config --enable CONFIG_CPU_FREQ_GOV_USERSPACE
   scripts/config --enable CONFIG_CPU_FREQ_GOV_SCHEDUTIL
+  scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
+  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND
 
   scripts/config --disable CONFIG_NUMA
 
@@ -325,9 +327,8 @@ prepare() {
   scripts/config --enable CONFIG_LRU_GEN_ENABLED
   scripts/config --disable CONFIG_LRU_GEN_STATS
 
-  # these are ck's htrimer patches
+# these are ck's htrimer patches
   msg2 "Patching with ck hrtimer patches..."
-
   for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
     patch -Np1 -i $i
   done

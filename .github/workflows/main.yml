@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [gcc, python]
+        nolto: [gcc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -66,8 +66,17 @@ jobs:
           tag: "x86_64"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: antman666/update-db-for-repo@mine
+        with: 
+          tag: x86_64
+      - uses: ncipollo/release-action@v1.8.10
+        with:
+          allowUpdates: True
+          tag: "x86_64"
+          artifacts: "./own-repo.*"
+          token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
+    needs: [build_jemalloc, build_no_jemalloc]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
