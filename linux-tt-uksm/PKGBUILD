@@ -311,11 +311,9 @@ prepare() {
   msg2 "Setting performance governor..."
   scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
   scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
-  scripts/config --enable CONFIG_CPU_FREQ_GOV_CONSERVATIVE
-  scripts/config --enable CONFIG_CPU_FREQ_GOV_USERSPACE
   scripts/config --enable CONFIG_CPU_FREQ_GOV_SCHEDUTIL
   scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND
+  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 
   scripts/config --disable CONFIG_NUMA
 
