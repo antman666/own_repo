@@ -3,7 +3,7 @@
 pkgbase=ibus
 pkgname=(ibus libibus)
 pkgver=1.5.25
-pkgrel=6
+pkgrel=7
 pkgdesc="Next Generation Input Bus for Linux"
 arch=('x86_64')
 url="https://github.com/ibus/ibus/wiki"
@@ -44,7 +44,7 @@ build() {
     --disable-python2 \
     --with-python=python3 \
     --with-ucd-dir=/usr/share/unicode/
-  sed -i 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all,-ljemalloc\0/g' libtool
+  sed -i 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--hash-style=gnu,--strip-all,-ljemalloc\0/g' libtool
   make
 }
 
