@@ -45,36 +45,6 @@ jobs:
           tag: "x86_64"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-  build_wine:
-    strategy:
-      matrix:
-        wine: [wine-staging]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build wine for arch
-        uses: actions/checkout@v2.3.4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@wine
-        with:
-          pkgdir: ${{ matrix.wine }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: antman666/update-db-for-repo@mine
-        with: 
-          tag: x86_64
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: True
-          tag: "x86_64"
-          artifacts: "./own-repo.*"
-          token: ${{ secrets.GITHUB_TOKEN }}
   build_no_lto:
     strategy:
       matrix:

@@ -123,7 +123,7 @@ else
   pkgbase=linux-bore
 fi
 _major=5.15
-_minor=10
+_minor=11
 pkgver=${_major}.${_minor}
 _srcname=linux-${pkgver}
 arch=(x86_64)
@@ -148,7 +148,6 @@ source=(
   "config"
   "${_patchsource}/bore/0001-bore-sched.patch"
   "${_patchsource}/0001-arch-patches.patch"
-  # "${_patchsource}/0001-page-table-check.patch"
   "${_patchsource}/0001-lru-patches.patch"
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0001-block-patches.patch"
@@ -530,15 +529,15 @@ for _p in "${pkgname[@]}"; do
 done
 
 
-md5sums=('b661040d70e3c6da4844dc4ecbf30555'
-         '77a0e908df4877cf576e135e56d59823'
-         'bd7d37c1f6b7bd0bfec044046025cf93'
-         '2627c6fcd9760b0e7a3553500db0a7e1'
-         '4bfca774a71e7228f5b8bb31660521af'
+md5sums=('7fcbea316f8439d092040996295c8f9d'
+         '61ceca2bb47252b8f087c0646efc50ae'
+         'f385734d0f81e3d93c4e0fd8595c276c'
+         '41066f8b3a2f26ae652551eace4c20fc'
+         '1f3becd94390729d940a60b1e9b872b1'
          '2a8097ba46be56fbbe3967e9c34c9a0b'
          '56ceaed8bfb44eca93298ccc5fe11ca7'
          '67764a5824b567b49bcce19c01d4e1b3'
-         '68e3ce199650ac9530ca8a30c920da99'
+         'a5de61b14e9ff7bfb4cb6548b6ee1c93'
          '41887f2f959068e41756f4c39671ca79'
          'b04c8a3f01b3dfba1410e2c26ec7d975'
          '8cf507777e20cd4d75a0627eef10c10d'
