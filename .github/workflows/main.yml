@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [dbus, dhcpcd, polkit, rtkit, systemd, wayland, wpa_supplicant]
+        nojemalloc: [dbus, dhcpcd, jack2, polkit, rtkit, systemd, wayland, wpa_supplicant]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
