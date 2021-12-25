@@ -348,6 +348,10 @@ prepare() {
     scripts/config --disable CONFIG_LTO_NONE
   fi
 
+  scripts/config --enable CONFIG_CGROUPS
+  scripts/config --enable CONFIG_CGROUP_SCHED
+  scripts/config --enable CONFIG_RT_GROUP_SCHED
+
   echo "Enable BORE Scheduler"
   scripts/config --enable CONFIG_BS_SCHED
   echo "Disabling TCP_CONG_CUBIC..."

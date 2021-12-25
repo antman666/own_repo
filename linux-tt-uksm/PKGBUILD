@@ -199,6 +199,10 @@ prepare() {
     scripts/config --enable CONFIG_LTO_CLANG_FULL
   fi
 
+  scripts/config --enable CONFIG_CGROUPS
+  scripts/config --enable CONFIG_CGROUP_SCHED
+  scripts/config --enable CONFIG_RT_GROUP_SCHED
+
   # disable CONFIG_DEBUG_INFO=y at build time otherwise memory usage blows up
   # and can easily overwhelm a system with 32 GB of memory using a tmpfs build
   # partition ... this was introduced by FS#66260, see:
