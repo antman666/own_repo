@@ -3,7 +3,7 @@
 
 pkgname=xorg-xinit
 pkgver=1.4.1
-pkgrel=5
+pkgrel=6
 pkgdesc="X.Org initialisation program "
 arch=('x86_64')
 license=('custom')
