@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.15.11
-pkgrel=2
+pkgver=5.15.12
+pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)
@@ -142,9 +142,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('37a264e50069e5b195b99a355944893e42c6fc05eb5fef7907855de4d31c693421e6fc578575ed141534b52ab9105dfd7697bdfec238cfa88e16a6c41f138ebd'
+b2sums=('6e201ffe5832a998b9bc8f63e9fcbf7f0384d4e4abb1a68c2299b8362b51ddcfbc35639bfc836a84202bec3705f5bca1616396c16daa05d778659d286f63b6a8'
         'SKIP'
-        'b4182769ede477ab0538a6c876a8c891b724b4098a3fb31f0cf399f015c85b6dfbce1fe4658be7d05512a6cff2ed5e5ab869905d6e8c2be30b53be3f5846770f'
+        'b04f4d39bb4ee381ae8a75105653b2e590337213d13ad4f931eba4b77ef9e1801dd9b7d2517494606bdbe0ecebb48dcf77c91a455fe799ac0d91a6ca6a6d643e'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         'cf589ec357a96b9e573bce298bb1d64fa50339ea047767f2a730a8dc9808e2316b3e7c885d730233ba50d570725d4c72632d1b74a371ef02ac471d4c944fe63e'
         '991264299e61e5c8f43ec0a468029e2e0651a7a40cfd735d90f15cae3d8d00d50ef232054c1a08f35e40a256a025d442a3d888b5d12875d3ea6efd131098a3eb'
