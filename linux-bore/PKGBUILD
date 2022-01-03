@@ -156,7 +156,7 @@ source=(
   "${_patchsource}/0001-clearlinux-patches.patch"
   "${_patchsource}/0001-intel-patches.patch"
   "${_patchsource}/0001-ntfs3.patch"
-  "${_patchsource}/0001-ck-hrtimer.patch"
+  # "${_patchsource}/0001-ck-hrtimer.patch"
   "${_patchsource}/0001-fixes-miscellaneous.patch"
   "${_patchsource}/0001-futex-wait.v-fsync-winesync.patch"
   "${_patchsource}/0001-pf-patches.patch"
