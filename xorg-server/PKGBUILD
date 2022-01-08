@@ -4,8 +4,8 @@
 pkgbase=xorg-server
 pkgname=('xorg-server' 'xorg-server-xephyr' 'xorg-server-xvfb' 'xorg-server-xnest'
          'xorg-server-common' 'xorg-server-devel')
-pkgver=21.1.2
-pkgrel=3
+pkgver=21.1.3
+pkgrel=1
 arch=('x86_64')
 license=('custom')
 groups=('xorg')

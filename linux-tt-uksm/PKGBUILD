@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.15.12
+pkgver=5.15.13
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -115,7 +115,7 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
-  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.15/arch/0001-arch-patches-v9.patch"
+  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.15/arch/0001-arch-patches-v11.patch"
   "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.15/tt-5.15.patch"
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.15.patch"
   # "${_patchsource}/futex-patches/0001-futex-resync-from-gitlab.collabora.com.patch"
@@ -124,8 +124,8 @@ source=(
   "${_patchsource}/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch"
   "${_patchsource}/block-patches-v2/0001-block-patches.patch"
   "${_patchsource}/btrfs-patches-v5/0001-btrfs-patches.patch"
-  "${_patchsource}/fixes-miscellaneous-v8/0001-fixes-miscellaneous.patch"
-  "${_patchsource}/clearlinux-patches/0001-clearlinux-patches.patch"
+  "${_patchsource}/fixes-miscellaneous-v9/0001-fixes-miscellaneous.patch"
+  "${_patchsource}/clearlinux-patches-v2/0001-clearlinux-patches.patch"
   "${_patchsources}/0001-mm-lru.patch"
   "${_patchsources}/0001-intel-patches.patch"
   "${_patchsources}/0001-lrng-patches.patch"

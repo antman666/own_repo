@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm-lto
-pkgver=5.15.12
+pkgver=5.15.13
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -128,7 +128,6 @@ source=(
   "${_patchsources}/0001-mm-lru.patch"
   "${_patchsources}/0001-intel-patches.patch"
   "${_patchsources}/0001-lrng-patches.patch"
-  "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
