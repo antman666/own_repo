@@ -128,11 +128,12 @@ source=(
   "${_patchsources}/0001-mm-lru.patch"
   "${_patchsources}/0001-intel-patches.patch"
   "${_patchsources}/0001-lrng-patches.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0013-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0005-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0007-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0009-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0010-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0011-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.15.y-xanmod/xanmod/0012-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
 )
 
 validpgpkeys=(
@@ -140,7 +141,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('6e201ffe5832a998b9bc8f63e9fcbf7f0384d4e4abb1a68c2299b8362b51ddcfbc35639bfc836a84202bec3705f5bca1616396c16daa05d778659d286f63b6a8'
+b2sums=('ea8775ffb1e25107b62dfe7acac4e9098094f7e1cd9846566cdf9fc1f0a6e2520f27dc48ce85c29e91032eb21a6f6682f6698a91b02b9424f2d895b5c9b468ec'
         'SKIP'
         'd5deb436fa134eb26a05161ae03fc9e23f07d941d525f3ffc724c83d2ae7a8af19e0d1cf151a9c8d7561cd85c7d548c263d7e933917b970971477e42c768ed07'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
@@ -156,12 +157,12 @@ b2sums=('6e201ffe5832a998b9bc8f63e9fcbf7f0384d4e4abb1a68c2299b8362b51ddcfbc35639
         'f1832b1c123f2815b56e312129f642848ca3c7780cd7fb352358b9c2eb1ff27478f9929fd309a639947f859491261de6c4425dfcd28f6e342431a6e34e80a05a'
         'dc7c45d57d50c4b019cb2fd5bf3d4ec019a7d3dd4a4e62bef324f75319d7bd9ed4c7faf96941d4f85c3504352b403fa5696c34878df08c62cbb17927648e0900'
         '6fd101072267ba38701495cf6b317653d78c01a98563fae8cf4135033c01f79062d1a548504d5d03ee7c9ebd694a6b4e4aee03d53d7995a450c947b12117fe84'
-        'af67842113cb345e731b12d4709ddc127a73001e8f49f9391f4351904de82825f13e1895be092048329c46af44504e824ace4a4fa4a9af200d247eba1a12f2d2'
-        'ee3c4ab17ad392fc91d5db2f73d8de6c258aa9b935485d91877f235be3d0addd6594cf6b4a4cf20fbe59b2106db863e307ed78520efb0afd7baf47639cc9b850'
-        'b73120d0d25335d88006c73000dad2421e4ee64dd0cbc99d4487e65bcdf8e669077c898c286be9ce295b20f43d9e9e5174504c806da485b6d83c133d73d0bbed'
-        '5b59e0d9e02a48c861c612162788cfc9f8e6bd6cf6f545eaa2cd708d35b4ba45140e871dfd0cc0bf72e77704f1d8f614f316f6e95f88f2f291b1b26e4f096e7f'
-        '9265b92eff7f4b5d4b4bf5599887e59b9de231b28729af1f2bd80aa716422495ba22739a6a4cc4ac883e955ce466335046a4f4f0a8a8237b25c4fa8ddd61c737'
-        '8126286317f20ed26ed1cf2e07f7024a51f2b0bc44aaa887bad350291b2102febd625f8984ae2dcc0f605e0db557c74b0eef256c9df8056373d41adf39b59930')
+        'b6418b1667850cf71e2fd7cdcf7957449e384e074a7c93bd0dbcc9089a3495fce0ef85ffcfe344d779fcbb6997f7b87b397de1642f03e05672e2ee19ed766a50'
+        'e84924d2c565620672f64a19d43af010140a59c4eac8757185433a65be00d40523497e3c2921679cc0a01dcfaf0e24261770ad33deecd75f0b2a0eaa7e85fe9c'
+        '6379f9ec290bfcbad3c88a58f75cc69ef13763d2a02aba9d0bc369c83f976e5450ad6b72cc0163201c88fc6214cb9b49784e2a10709dd6e7790acab703bbe236'
+        'b8b19aee5e36c2823b8adb5df0a5c4bccae058353e64dbb3e90ecb02be9fa0211951f38578d024f0833b0766cff6549e72979572aba5d409850f8910267b15d5'
+        '2ea5be8cdbac050ac4ac500d50ac5d34698d9e76ca2c2bbe12ffe10fd677607eeeedbcfdbca95c044f63e910a0e1402da0e903623829c41358d302d86408f500'
+        'fddc079d10b65d9b2396aaa0f18098895c4527dc53dd4a0e7c93329ef874ac810af3a0f87565ec0b2cadd0f56c95ccc76e430221f8b56cd8af9b174935f4f28c')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
