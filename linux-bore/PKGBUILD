@@ -120,9 +120,9 @@ _use_cfi=
 
 
 if [ -n "$_use_llvm_lto" ]; then
-  pkgbase=linux-bore-lto
+  pkgbase=linux-bore-uksm-lto
 else
-  pkgbase=linux-bore
+  pkgbase=linux-bore-uksm
 fi
 _major=5.16
 _minor=0
@@ -156,7 +156,7 @@ source=(
   "${_patchsource}/0001-sched-perf-fix.patch"
   "${_patchsource}/0001-btrfs.patch"
   "${_patchsource}/0001-clearlinux.patch"
-  "${_patchsource}/0001-ntfs3.patch"
+  # "${_patchsource}/0001-ntfs3.patch"
   # "${_patchsource}/0001-ck-hrtimer.patch"
   "${_patchsource}/0001-fixes-miscellaneous.patch"
   "${_patchsource}/0001-futex-winesync.patch"
@@ -164,6 +164,7 @@ source=(
   "${_patchsource}/0001-lqx-patches.patch"
   "${_patchsource}/0001-lrng-patches.patch"
   # "${_patchsource}/0001-zstd.patch"
+  "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.16/uksm-patches/0001-UKSM-for-5.16.patch"
 )
 
 
