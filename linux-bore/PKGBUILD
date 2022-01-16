@@ -182,7 +182,7 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 
 prepare() {
 
-  cd $_srcname
+  cd $_major
 
   ### Setting version
   msg2 "Setting version..."

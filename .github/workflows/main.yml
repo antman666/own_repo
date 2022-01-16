@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, gcc]
+        nolto: [binutils, gcc, glibc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
