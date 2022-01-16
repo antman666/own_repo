@@ -444,7 +444,7 @@ prepare() {
 }
 
 build() {
-  cd $_srcname
+  cd linux-$_major
   make $LLVMOPTS -j$(nproc) all
 }
 
