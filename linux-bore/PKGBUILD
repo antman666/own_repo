@@ -144,7 +144,7 @@ if [ -n "$_use_llvm_lto" ]; then
 fi
 _patchsource="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.16"
 source=(
-  "https://git.kernel.org/torvalds/t/linux-${_stable}.tar.gz"
+  "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
   "config"
   "${_patchsource}/sched/0001-bore-sched.patch"
   "${_patchsource}/0001-arch-patches.patch"
