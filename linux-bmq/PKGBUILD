@@ -141,7 +141,6 @@ source=(
   "${_patchsource}/0001-futex-winesync.patch"
   "${_patchsource}/0001-rcu.patch"
   "${_patchsource}/0001-zen-patches.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
   "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.16/uksm-patches/0001-UKSM-for-5.16.patch"
 )
 
@@ -178,7 +177,7 @@ prepare() {
     src="${src%%::*}"
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
-    echo "Applying patch $src..."
+    msg2 "Applying patch $src..."
     patch -Np1 < "../$src"
   done
 
