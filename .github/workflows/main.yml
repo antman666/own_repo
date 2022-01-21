@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [dbus, dhcpcd, rtkit, systemd, wayland, wpa_supplicant]
+        nojemalloc: [dbus, dhcpcd, lib32-systemd, rtkit, systemd, wayland, wpa_supplicant, zstd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Build non-jemalloc packages for arch
+      - name: Build polkit packages for arch
         uses: actions/checkout@v2.3.4
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
@@ -69,7 +69,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, gcc]
+        nolto: [binutils, gcc, glibc, openssl]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

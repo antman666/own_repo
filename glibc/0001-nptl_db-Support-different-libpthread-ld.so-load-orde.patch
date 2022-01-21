@@ -1,0 +1,52 @@
+From a64afc225240b2b27129ccfb0516d7c958b98040 Mon Sep 17 00:00:00 2001
+From: Florian Weimer <fweimer@redhat.com>
+Date: Wed, 21 Apr 2021 11:50:43 +0200
+Subject: [PATCH 364/576] nptl_db: Support different libpthread/ld.so load
+ orders (bug 27744)
+
+libthread_db is loaded once GDB encounters libpthread, and at this
+point, ld.so may not have been processed by GDB yet. As a result,
+_rtld_global cannot be accessed by regular means from libthread_db.
+To make this work until GDB can be fixed, acess _rtld_global through
+a pointer stored in libpthread.
+
+The new test does not reproduce bug 27744 with
+--disable-hardcoded-path-in-tests, but is still a valid smoke test.
+With --enable-hardcoded-path-in-tests, it is necessary to avoid
+add-symbol-file because this can tickle a GDB bug.
+
+Fixes commit 1daccf403b1bd86370eb94edca794dc106d02039 ("nptl: Move
+stack list variables into _rtld_global").
+
+Tested-by: Emil Velikov <emil.velikov@collabora.com>
+---
+ nptl/Makefile                        |  13 ++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+diff --git a/nptl/Makefile b/nptl/Makefile
+index 8fe92d43fa..e665d37e52 100644
+--- a/nptl/Makefile
++++ b/nptl/Makefile
+@@ -359,6 +360,19 @@ CPPFLAGS-test-cond-printers.c := $(CFLAGS-printers-tests)
+ CPPFLAGS-test-rwlockattr-printers.c := $(CFLAGS-printers-tests)
+ CPPFLAGS-test-rwlock-printers.c := $(CFLAGS-printers-tests)
+ 
++# Reuse the CFLAGS setting for the GDB attaching test.  It needs
++# debugging information.
++CFLAGS-tst-pthread-gdb-attach.c := $(CFLAGS-printers-tests)
++CPPFLAGS-tst-pthread-gdb-attach.c := $(CFLAGS-printers-tests)
++ifeq ($(build-shared)$(build-hardcoded-path-in-tests),yesno)
++CPPFLAGS-tst-pthread-gdb-attach.c += -DDO_ADD_SYMBOL_FILE=1
++else
++CPPFLAGS-tst-pthread-gdb-attach.c += -DDO_ADD_SYMBOL_FILE=0
++endif
++CFLAGS-tst-pthread-gdb-attach-static.c := $(CFLAGS-printers-tests)
++CPPFLAGS-tst-pthread-gdb-attach-static.c := \
++  $(CFLAGS-printers-tests) -DDO_ADD_SYMBOL_FILE=0
++
+ ifeq ($(build-shared),yes)
+ tests-printers-libs := $(shared-thread-library)
+ else
+-- 
+2.31.1
+
