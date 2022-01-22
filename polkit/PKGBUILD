@@ -20,8 +20,17 @@ pkgver() {
 }
 
 build() {
-  meson build $pkgname \
+  meson setup $pkgname build \
     --prefix=/usr \
+    --libexecdir lib \
+    --sbindir bin \
+    --auto-features enabled \
+    --wrap-mode nodownload \
+    -D debug=false \
+    -D optimization=3 \
+    -D b_ndebug=true \
+    -D b_lto=true \
+    -D b_pie=true \
     -D session_tracking=libsystemd-login \
     -D os_type=redhat \
     -D tests=true \

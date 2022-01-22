@@ -1,0 +1,150 @@
+90c0429f668be1cb675da26eba0ef505e6e3f123	not-for-merge	branch 'gdbus' of https://gitlab.freedesktop.org/polkit/polkit
+92b910ce2273daf6a76038f6bd764fa6958d4e8e	not-for-merge	branch 'master' of https://gitlab.freedesktop.org/polkit/polkit
+467dbe6d0a55325f28d7aea45615f07a5096a396	not-for-merge	branch 'mozjs52' of https://gitlab.freedesktop.org/polkit/polkit
+f664666137fb85c19b636a2e0bfd4de0e7d59b56	not-for-merge	branch 'polkit-0-96' of https://gitlab.freedesktop.org/polkit/polkit
+7dd61b9ccf44a4811ae1257d9ff4fecfd40894bd	not-for-merge	branch 'revert-2c8287fb' of https://gitlab.freedesktop.org/polkit/polkit
+fb817188ae28d9df8d1208b160089a19779ec29e	not-for-merge	branch 'wip/halfline/new-release' of https://gitlab.freedesktop.org/polkit/polkit
+bdc6fd7f84d2c99604a790faa622ba84ac9fde59	not-for-merge	branch 'wip/js-rule-files' of https://gitlab.freedesktop.org/polkit/polkit
+637c9918ddc14968cd701a40d69b3bd257e75b95	not-for-merge	branch 'wip/mozjs17' of https://gitlab.freedesktop.org/polkit/polkit
+778bb45e0e0cbabe2b04adf67a500af1dab09768	not-for-merge	'refs/merge-requests/10/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/10/merge' of https://gitlab.freedesktop.org/polkit/polkit
+7ba07551dfcd4ef9a87b8f0d9eb8b91fabcb41b3	not-for-merge	'refs/merge-requests/100/head' of https://gitlab.freedesktop.org/polkit/polkit
+d55f66d636250c214a1bfef3d671ad2a9ae257aa	not-for-merge	'refs/merge-requests/100/merge' of https://gitlab.freedesktop.org/polkit/polkit
+9eb27517327b97ca430b96502f4d2948a10fa5ca	not-for-merge	'refs/merge-requests/101/head' of https://gitlab.freedesktop.org/polkit/polkit
+624bfc811115cc0a733a075d1801da0750c03b94	not-for-merge	'refs/merge-requests/101/merge' of https://gitlab.freedesktop.org/polkit/polkit
+d7cce0ae660f514d7ea829c6b8e4deb4ec75e990	not-for-merge	'refs/merge-requests/102/head' of https://gitlab.freedesktop.org/polkit/polkit
+72c1b699922aafb2cb3eb20e0e9187c8b22fed97	not-for-merge	'refs/merge-requests/102/merge' of https://gitlab.freedesktop.org/polkit/polkit
+ea34d74e62c107fa5df8fa5f903590731d202bf8	not-for-merge	'refs/merge-requests/16/head' of https://gitlab.freedesktop.org/polkit/polkit
+ca08978bc00b727a607f25e9ed2518a279f62ed1	not-for-merge	'refs/merge-requests/16/merge' of https://gitlab.freedesktop.org/polkit/polkit
+c22c63e0b141baff23551c77edb933eef86f6102	not-for-merge	'refs/merge-requests/18/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/18/merge' of https://gitlab.freedesktop.org/polkit/polkit
+ebbe9e811dde6b797cb2e1ff73005d9821318ed8	not-for-merge	'refs/merge-requests/21/head' of https://gitlab.freedesktop.org/polkit/polkit
+00ca75633e541ee8f09adbead8b507823eab9504	not-for-merge	'refs/merge-requests/21/merge' of https://gitlab.freedesktop.org/polkit/polkit
+75945c2c27cab4af838c988fe34e68aeba554602	not-for-merge	'refs/merge-requests/22/head' of https://gitlab.freedesktop.org/polkit/polkit
+74eca19614c969b672592afa9dfb203caaea6e5c	not-for-merge	'refs/merge-requests/22/merge' of https://gitlab.freedesktop.org/polkit/polkit
+2a89d95dca784758e63d49a67cf9ad4fa75efacd	not-for-merge	'refs/merge-requests/26/head' of https://gitlab.freedesktop.org/polkit/polkit
+3500796f3e8d83c2331401b5a7de49a488e58fb8	not-for-merge	'refs/merge-requests/26/merge' of https://gitlab.freedesktop.org/polkit/polkit
+d3366e8f23e3fb8300e187312dfe5ee9bd8064cf	not-for-merge	'refs/merge-requests/28/head' of https://gitlab.freedesktop.org/polkit/polkit
+b008c002ac7da4377f1634875350c19c7d493bdb	not-for-merge	'refs/merge-requests/28/merge' of https://gitlab.freedesktop.org/polkit/polkit
+ba3b43f1d64a6f62a32b7307b70d94b551bf7b6c	not-for-merge	'refs/merge-requests/30/head' of https://gitlab.freedesktop.org/polkit/polkit
+ef417c3263fef5a18499396ad26e0834ea625704	not-for-merge	'refs/merge-requests/30/merge' of https://gitlab.freedesktop.org/polkit/polkit
+a538a6a70d797ceb76c6ce876b9f17d4bb93fa03	not-for-merge	'refs/merge-requests/33/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/33/merge' of https://gitlab.freedesktop.org/polkit/polkit
+94b3bac15825148c15a3d41db1aca90d09ce3b87	not-for-merge	'refs/merge-requests/35/head' of https://gitlab.freedesktop.org/polkit/polkit
+4e380157951892a913ac3428410e589279bd0fe3	not-for-merge	'refs/merge-requests/35/merge' of https://gitlab.freedesktop.org/polkit/polkit
+f3d4f5aeaabd11c3471ec3181d39dc62e4caad59	not-for-merge	'refs/merge-requests/45/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/45/merge' of https://gitlab.freedesktop.org/polkit/polkit
+1fcb3b24b95b5c5506222832d75b452ff7987123	not-for-merge	'refs/merge-requests/47/head' of https://gitlab.freedesktop.org/polkit/polkit
+978a12f1cb14f48789ce64c3dc4e88608abeb7a6	not-for-merge	'refs/merge-requests/47/merge' of https://gitlab.freedesktop.org/polkit/polkit
+cee8536148456139ff914205ab0f5218e9b51f70	not-for-merge	'refs/merge-requests/52/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/52/merge' of https://gitlab.freedesktop.org/polkit/polkit
+03d98fb047aabbe4ef0263f1d646cd23eefb1723	not-for-merge	'refs/merge-requests/53/head' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/53/merge' of https://gitlab.freedesktop.org/polkit/polkit
+9e71305d44a7009565998a2114f00f00c4d66420	not-for-merge	'refs/merge-requests/54/head' of https://gitlab.freedesktop.org/polkit/polkit
+fb10c1889b9fcd60a6707ac8fd848244007a2998	not-for-merge	'refs/merge-requests/54/merge' of https://gitlab.freedesktop.org/polkit/polkit
+500f7321783eba7b5d1f34597d749815f70ffd94	not-for-merge	'refs/merge-requests/57/head' of https://gitlab.freedesktop.org/polkit/polkit
+f9b86962454306c1aead656bc14cce6e5dbc1ea2	not-for-merge	'refs/merge-requests/57/merge' of https://gitlab.freedesktop.org/polkit/polkit
+716a273ce0af467968057f3e107156182bd290b0	not-for-merge	'refs/merge-requests/59/head' of https://gitlab.freedesktop.org/polkit/polkit
+26b70f3a02e063cf20e9918f28f7d379002017a8	not-for-merge	'refs/merge-requests/59/merge' of https://gitlab.freedesktop.org/polkit/polkit
+1c65be126a5507aee275862cd8e3f10cb6151867	not-for-merge	'refs/merge-requests/60/head' of https://gitlab.freedesktop.org/polkit/polkit
+a0bf53a726eeed3d8a48215a86efc6ab4b34d1d3	not-for-merge	'refs/merge-requests/60/merge' of https://gitlab.freedesktop.org/polkit/polkit
+a6f8a43e25fb48f0690198b6dc69bf6d524de981	not-for-merge	'refs/merge-requests/63/head' of https://gitlab.freedesktop.org/polkit/polkit
+20e7026e3ce9ebf90e0febbbc8920eb70e6ccbf9	not-for-merge	'refs/merge-requests/63/merge' of https://gitlab.freedesktop.org/polkit/polkit
+f6be73322f0aebd9e82b3c0dfddb32b199c2e2ec	not-for-merge	'refs/merge-requests/66/head' of https://gitlab.freedesktop.org/polkit/polkit
+cd3710540a01f0683e5e62cc65d1b00af4f3c7bc	not-for-merge	'refs/merge-requests/66/merge' of https://gitlab.freedesktop.org/polkit/polkit
+7248886d4bcc73409631322b0f6e715b25a93f65	not-for-merge	'refs/merge-requests/71/head' of https://gitlab.freedesktop.org/polkit/polkit
+c97f641265c6256f005174a83ef6ac8785ac44b0	not-for-merge	'refs/merge-requests/71/merge' of https://gitlab.freedesktop.org/polkit/polkit
+f986ebcb6c1fa7d37c52af35207eaf2d1214ac22	not-for-merge	'refs/merge-requests/73/head' of https://gitlab.freedesktop.org/polkit/polkit
+5a28b5d72e0c4fc527ab9d12ad248d6613c8ce19	not-for-merge	'refs/merge-requests/73/merge' of https://gitlab.freedesktop.org/polkit/polkit
+0846857109aee1791540a6a90ac888300a89e6b9	not-for-merge	'refs/merge-requests/74/head' of https://gitlab.freedesktop.org/polkit/polkit
+d88382e5c97664cf9a493d1cf359d31c7a7929be	not-for-merge	'refs/merge-requests/74/merge' of https://gitlab.freedesktop.org/polkit/polkit
+840ecd0e831677b35af56917a0087c279a9322da	not-for-merge	'refs/merge-requests/75/head' of https://gitlab.freedesktop.org/polkit/polkit
+0f04d6f630441c95b2b12dd6f243eb0af2a672a2	not-for-merge	'refs/merge-requests/75/merge' of https://gitlab.freedesktop.org/polkit/polkit
+650e9856811e0b4f9ed546609e7fcdea7c03d6a8	not-for-merge	'refs/merge-requests/76/head' of https://gitlab.freedesktop.org/polkit/polkit
+3cd98b059a0a5bdc61e1c35a86128e2f30c42ba0	not-for-merge	'refs/merge-requests/76/merge' of https://gitlab.freedesktop.org/polkit/polkit
+7dd61b9ccf44a4811ae1257d9ff4fecfd40894bd	not-for-merge	'refs/merge-requests/77/head' of https://gitlab.freedesktop.org/polkit/polkit
+4a59c438f9b5d05872e1fba592dce2d5ce8d1fe2	not-for-merge	'refs/merge-requests/77/merge' of https://gitlab.freedesktop.org/polkit/polkit
+ca22c6311b2f54c8aca47d816800c47249e44048	not-for-merge	'refs/merge-requests/78/head' of https://gitlab.freedesktop.org/polkit/polkit
+fb452c3a1deed0503e39bedd914d2c82f9d22ae0	not-for-merge	'refs/merge-requests/78/merge' of https://gitlab.freedesktop.org/polkit/polkit
+a04d13affe0fa53ff618e07aa8f57f4c0e3b9b81	not-for-merge	'refs/merge-requests/79/head' of https://gitlab.freedesktop.org/polkit/polkit
+3efeb827b9d8ac0124b2e72b772b1634faa9fb81	not-for-merge	'refs/merge-requests/79/merge' of https://gitlab.freedesktop.org/polkit/polkit
+2e5348bf4eb0ef984db32f7f96ec6722d441c6ca	not-for-merge	'refs/merge-requests/80/head' of https://gitlab.freedesktop.org/polkit/polkit
+1de990a8f1f3db1bdecef9c6e47404fc5a276543	not-for-merge	'refs/merge-requests/80/merge' of https://gitlab.freedesktop.org/polkit/polkit
+7778f1759dc708df05f43ed1aeca0e5472796083	not-for-merge	'refs/merge-requests/81/head' of https://gitlab.freedesktop.org/polkit/polkit
+5fe8463e09609fe93d5c05472ce3e8475b544b77	not-for-merge	'refs/merge-requests/81/merge' of https://gitlab.freedesktop.org/polkit/polkit
+fe3f850ae19136b8016a939dc852d416fc93fcbb	not-for-merge	'refs/merge-requests/82/head' of https://gitlab.freedesktop.org/polkit/polkit
+0ca84f4c84a76ff1499dd47cd18fd2d09dc231c1	not-for-merge	'refs/merge-requests/82/merge' of https://gitlab.freedesktop.org/polkit/polkit
+025f9a6ba374c77c67f104ed5a4c04a057cc8084	not-for-merge	'refs/merge-requests/83/head' of https://gitlab.freedesktop.org/polkit/polkit
+0857a6d1629000b20fb53dd81499978de3dbae27	not-for-merge	'refs/merge-requests/83/merge' of https://gitlab.freedesktop.org/polkit/polkit
+18ccc08b254822c2a223240a014fdcbe61c4352d	not-for-merge	'refs/merge-requests/84/head' of https://gitlab.freedesktop.org/polkit/polkit
+406211fe0c734a41cc8caa610cc60c45784634e3	not-for-merge	'refs/merge-requests/84/merge' of https://gitlab.freedesktop.org/polkit/polkit
+e9aef13188593ebf06b9dc2d7de5d664c9790d6a	not-for-merge	'refs/merge-requests/85/head' of https://gitlab.freedesktop.org/polkit/polkit
+100a2690bd6eede6e03d5945ac54a16cae201907	not-for-merge	'refs/merge-requests/85/merge' of https://gitlab.freedesktop.org/polkit/polkit
+4bb2157adae620c8b07caf5a24b177d1f90f2fbb	not-for-merge	'refs/merge-requests/86/head' of https://gitlab.freedesktop.org/polkit/polkit
+fd7401ce835de22e65fe86410fb670576ac204c1	not-for-merge	'refs/merge-requests/86/merge' of https://gitlab.freedesktop.org/polkit/polkit
+e336bf86d8b8489a4643500925e4da4eeb9000ba	not-for-merge	'refs/merge-requests/87/head' of https://gitlab.freedesktop.org/polkit/polkit
+4c8aea341cbcd2ee9b46ded3ace454456ced90d7	not-for-merge	'refs/merge-requests/87/merge' of https://gitlab.freedesktop.org/polkit/polkit
+0f8cc7de7528f0b34de2492e0a2e5046894f8477	not-for-merge	'refs/merge-requests/88/head' of https://gitlab.freedesktop.org/polkit/polkit
+c13e89fb96eb2ed6cf7a389df67b17533e8c73e6	not-for-merge	'refs/merge-requests/88/merge' of https://gitlab.freedesktop.org/polkit/polkit
+c5ac9e404227f0d732965ddeec021b7062c231ab	not-for-merge	'refs/merge-requests/89/head' of https://gitlab.freedesktop.org/polkit/polkit
+e629e7bab8295bcff6708be29dbd3b8f24a4a486	not-for-merge	'refs/merge-requests/89/merge' of https://gitlab.freedesktop.org/polkit/polkit
+b1bee3c8e615c42bc423fe8dd2d907250f13e42a	not-for-merge	'refs/merge-requests/9/head' of https://gitlab.freedesktop.org/polkit/polkit
+2c8287fbd55c5d092370428a1bdbbf0a9fd7d537	not-for-merge	'refs/merge-requests/9/merge' of https://gitlab.freedesktop.org/polkit/polkit
+d6d7ac19b62ed40b43095769d9b032c8bfbe0f45	not-for-merge	'refs/merge-requests/90/head' of https://gitlab.freedesktop.org/polkit/polkit
+b0fee8606ae710099c2ca0ff6c7f369b5edca9b7	not-for-merge	'refs/merge-requests/90/merge' of https://gitlab.freedesktop.org/polkit/polkit
+00e158e958e4788e7d6907e1d7733f7a2bd2c9e3	not-for-merge	'refs/merge-requests/91/head' of https://gitlab.freedesktop.org/polkit/polkit
+7e672d6ac9439e8e7237ce8f394eb46068b79650	not-for-merge	'refs/merge-requests/91/merge' of https://gitlab.freedesktop.org/polkit/polkit
+7a99b67429b48357b36d29b3b650783af4b51ac1	not-for-merge	'refs/merge-requests/92/head' of https://gitlab.freedesktop.org/polkit/polkit
+d9df600370bf8832f17c3104f1dc9eda5de3efaf	not-for-merge	'refs/merge-requests/92/merge' of https://gitlab.freedesktop.org/polkit/polkit
+acd21244afe880f284530be4c5f5437330f42785	not-for-merge	'refs/merge-requests/93/head' of https://gitlab.freedesktop.org/polkit/polkit
+8339e772c432eb4e7ef4de691873db05a88bbc4d	not-for-merge	'refs/merge-requests/93/merge' of https://gitlab.freedesktop.org/polkit/polkit
+8234381e7f1f62ab79737ccdd54ecf3241f28840	not-for-merge	'refs/merge-requests/94/head' of https://gitlab.freedesktop.org/polkit/polkit
+872470c8ea1cda0bc69b0abf0aedfed03ebb15e9	not-for-merge	'refs/merge-requests/94/merge' of https://gitlab.freedesktop.org/polkit/polkit
+3dbce5ea3f597734ea4efe73949ba3a872f4a87b	not-for-merge	'refs/merge-requests/95/head' of https://gitlab.freedesktop.org/polkit/polkit
+3b187b61dca6a8f3e7f2bc7bbdcbb2eb8159933a	not-for-merge	'refs/merge-requests/95/merge' of https://gitlab.freedesktop.org/polkit/polkit
+96c6fc83538fc28d1b3923b8be1eba2648f30e28	not-for-merge	'refs/merge-requests/96/head' of https://gitlab.freedesktop.org/polkit/polkit
+82959f2c3e823c8787803d7d60975c94e351cce5	not-for-merge	'refs/merge-requests/96/merge' of https://gitlab.freedesktop.org/polkit/polkit
+478bcc0b6b4fb44d4199c475d1581d78a8b6c30b	not-for-merge	'refs/merge-requests/97/head' of https://gitlab.freedesktop.org/polkit/polkit
+9d2922d3293cac016e5a0a78195a0de539693b58	not-for-merge	'refs/merge-requests/97/merge' of https://gitlab.freedesktop.org/polkit/polkit
+92b910ce2273daf6a76038f6bd764fa6958d4e8e	not-for-merge	'refs/merge-requests/98/head' of https://gitlab.freedesktop.org/polkit/polkit
+c489ae3f8227d1f9279d3024e27607ce167c3078	not-for-merge	'refs/merge-requests/98/merge' of https://gitlab.freedesktop.org/polkit/polkit
+e7f3d9e8341df64e2abc3910dafb1113a84bff07	not-for-merge	'refs/merge-requests/99/head' of https://gitlab.freedesktop.org/polkit/polkit
+2ae10cb50f3e952a391a0544768b42b73369f1e5	not-for-merge	'refs/merge-requests/99/merge' of https://gitlab.freedesktop.org/polkit/polkit
+3518dc4eb143c6d4f6d05ed9d4a2a6cf22de48dd	not-for-merge	tag '0.100' of https://gitlab.freedesktop.org/polkit/polkit
+51258233e5ed32df1c3f6bf216e777f3fe469b77	not-for-merge	tag '0.101' of https://gitlab.freedesktop.org/polkit/polkit
+665cf92aab01b4e5e7875261e7c1ff74815f49d7	not-for-merge	tag '0.102' of https://gitlab.freedesktop.org/polkit/polkit
+c4b675a370b7da8355f318e4529693ff02a965f5	not-for-merge	tag '0.103' of https://gitlab.freedesktop.org/polkit/polkit
+ddf52513c26d3e2b4329d188b0b317b5542c3665	not-for-merge	tag '0.104' of https://gitlab.freedesktop.org/polkit/polkit
+ac6c6b32a83ee976a69651fa054653f656f33ccd	not-for-merge	tag '0.105' of https://gitlab.freedesktop.org/polkit/polkit
+94d84f0ad1a2947b607667f3245760e5ef10daee	not-for-merge	tag '0.106' of https://gitlab.freedesktop.org/polkit/polkit
+c189025d06d2ef2acae82e7b1d582236f51a0916	not-for-merge	tag '0.107' of https://gitlab.freedesktop.org/polkit/polkit
+88183589137400f491e9f07599813feab04a32de	not-for-merge	tag '0.108' of https://gitlab.freedesktop.org/polkit/polkit
+831a123903715a2e3da0336e6d4a57445600f2e2	not-for-merge	tag '0.109' of https://gitlab.freedesktop.org/polkit/polkit
+851d7a042e10c989a56b8f0809de105596127a73	not-for-merge	tag '0.110' of https://gitlab.freedesktop.org/polkit/polkit
+3507f8510ef705cfd2e4a91beed905112208b90a	not-for-merge	tag '0.111' of https://gitlab.freedesktop.org/polkit/polkit
+ff71ff1132c5559042007d659f44fb4d73e7dea3	not-for-merge	tag '0.112' of https://gitlab.freedesktop.org/polkit/polkit
+1f2a35c72a8be2a701b56fa369f7080bd6d5abfa	not-for-merge	tag '0.113' of https://gitlab.freedesktop.org/polkit/polkit
+b88ce20ca5763e36a6fd65a7647ec65b2e0e1dff	not-for-merge	tag '0.114' of https://gitlab.freedesktop.org/polkit/polkit
+2e60ba6f6e82d07b2528db467c37e08b2904bdf2	not-for-merge	tag '0.115' of https://gitlab.freedesktop.org/polkit/polkit
+941e9329f8d3d43ace8335d206365b212824e686	not-for-merge	tag '0.116' of https://gitlab.freedesktop.org/polkit/polkit
+585f4f2715639394e36319d4918389d26e250e7b	not-for-merge	tag '0.117' of https://gitlab.freedesktop.org/polkit/polkit
+ff4c2144f0fb1325275887d9e254117fcd8a1b52	not-for-merge	tag '0.118' of https://gitlab.freedesktop.org/polkit/polkit
+2e5348bf4eb0ef984db32f7f96ec6722d441c6ca	not-for-merge	tag '0.119' of https://gitlab.freedesktop.org/polkit/polkit
+92b910ce2273daf6a76038f6bd764fa6958d4e8e	not-for-merge	tag '0.120' of https://gitlab.freedesktop.org/polkit/polkit
+9e8a666b098f404ba20d47c7284a974ced769637	not-for-merge	tag '0.91' of https://gitlab.freedesktop.org/polkit/polkit
+3cd0bdbf8af192a2928717091719f8a0664038c8	not-for-merge	tag '0.92' of https://gitlab.freedesktop.org/polkit/polkit
+5958e0124066944a608424705757740516f80c4a	not-for-merge	tag '0.93' of https://gitlab.freedesktop.org/polkit/polkit
+752fe42333cacc299f7d27465a67124d0b111bf1	not-for-merge	tag '0.94' of https://gitlab.freedesktop.org/polkit/polkit
+57aa040b8aa960d9096c703cf24f1f36476401ac	not-for-merge	tag '0.95' of https://gitlab.freedesktop.org/polkit/polkit
+3918f360f5faf56975ea777826ea7498a9df11fe	not-for-merge	tag '0.96' of https://gitlab.freedesktop.org/polkit/polkit
+366f5b2677e47ae7b6d23cfd1e4f1a293665bc82	not-for-merge	tag '0.97' of https://gitlab.freedesktop.org/polkit/polkit
+8a23c4abee6f50d5fc106517804c220e91912f3f	not-for-merge	tag '0.98' of https://gitlab.freedesktop.org/polkit/polkit
+5e5ae8560c5e5ecd7cf65a7abcee64f7424a4c4b	not-for-merge	tag '0.99' of https://gitlab.freedesktop.org/polkit/polkit
+919a8c7521dd69b72fcc3b4d2b68d31b891078fc	not-for-merge	tag 'POLICY_KIT_0_3' of https://gitlab.freedesktop.org/polkit/polkit
+fd109fc8870356e5bc391141731d4a605b88d708	not-for-merge	tag 'POLICY_KIT_0_4' of https://gitlab.freedesktop.org/polkit/polkit
+5a1fc8df0b9d32ad9f833dfdffca0d138abde9e8	not-for-merge	tag 'POLICY_KIT_0_5' of https://gitlab.freedesktop.org/polkit/polkit
+6cbe1a71031870543e671246bfe33cebd477843c	not-for-merge	tag 'POLICY_KIT_0_6' of https://gitlab.freedesktop.org/polkit/polkit
+51c0e2fcb8e7d65745533bddc0321cef6de073c4	not-for-merge	tag 'POLICY_KIT_0_7' of https://gitlab.freedesktop.org/polkit/polkit
+1940b9d8416e8d25497e72e8d953c9de4e64a794	not-for-merge	tag 'POLICY_KIT_0_8' of https://gitlab.freedesktop.org/polkit/polkit
+1fd0da259288f2c01179ae3b91e41feab846904c	not-for-merge	tag 'POLICY_KIT_0_9' of https://gitlab.freedesktop.org/polkit/polkit
+ad38877e473b0c61a320d9d514edeb127187ae67	not-for-merge	tag 'start' of https://gitlab.freedesktop.org/polkit/polkit

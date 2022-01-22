@@ -1,5 +1,4 @@
 /* <sys/sdt.h> - Systemtap static probe definition macros.
-
    This file is dedicated to the public domain, pursuant to CC0
    (https://creativecommons.org/publicdomain/zero/1.0/)
 */
@@ -9,31 +8,24 @@
 
 /*
   This file defines a family of macros
-
        STAP_PROBEn(op1, ..., opn)
-
   that emit a nop into the instruction stream, and some data into an auxiliary
   note section.  The data in the note section describes the operands, in terms
   of size and location.  Each location is encoded as assembler operand string.
   Consumer tools such as gdb or systemtap insert breakpoints on top of
   the nop, and decode the location operand-strings, like an assembler,
   to find the values being passed.
-
   The operand strings are selected by the compiler for each operand.
   They are constrained by gcc inline-assembler codes.  The default is:
-
   #define STAP_SDT_ARG_CONSTRAINT nor
-
   This is a good default if the operands tend to be integral and
   moderate in number (smaller than number of registers).  In other
   cases, the compiler may report "'asm' requires impossible reload" or
   similar.  In this case, consider simplifying the macro call (fewer
   and simpler operands), reduce optimization, or override the default
   constraints string via:
-
   #define STAP_SDT_ARG_CONSTRAINT g
   #include <sys/sdt.h>
-
   See also:
   https://sourceware.org/systemtap/wiki/UserSpaceProbeImplementation
   https://gcc.gnu.org/onlinedocs/gcc/Constraints.html
@@ -325,11 +317,9 @@ __extension__ extern unsigned long long __sdt_unsp;
    number of probe arguments is not known until compile time.  Since
    variadic macro support may vary with compiler options, you must
    pre-#define SDT_USE_VARIADIC to enable this type of probe.
-
    The trick to count __VA_ARGS__ was inspired by this post by
    Laurent Deniau <laurent.deniau@cern.ch>:
        http://groups.google.com/group/comp.std.c/msg/346fc464319b1ee5
-
    Note that our _SDT_NARG is called with an extra 0 arg that's not
    counted, so we don't have to worry about the behavior of macros
    called without any arguments.  */
@@ -345,41 +335,31 @@ __extension__ extern unsigned long long __sdt_unsp;
 
 /* These macros are for use in asm statements.  You must compile
    with -std=gnu99 or -std=c99 to use the STAP_PROBE_ASM macro.
-
    The STAP_PROBE_ASM macro generates a quoted string to be used in the
    template portion of the asm statement, concatenated with strings that
    contain the actual assembly code around the probe site.
-
    For example:
-
 	asm ("before\n"
 	     STAP_PROBE_ASM(provider, fooprobe, %eax 4(%esi))
 	     "after");
-
    emits the assembly code for "before\nafter", with a probe in between.
    The probe arguments are the %eax register, and the value of the memory
    word located 4 bytes past the address in the %esi register.  Note that
    because this is a simple asm, not a GNU C extended asm statement, these
    % characters do not need to be doubled to generate literal %reg names.
-
    In a GNU C extended asm statement, the probe arguments can be specified
    using the macro STAP_PROBE_ASM_TEMPLATE(n) for n arguments.  The paired
    macro STAP_PROBE_ASM_OPERANDS gives the C values of these probe arguments,
    and appears in the input operand list of the asm statement.  For example:
-
 	asm ("someinsn %0,%1\n" // %0 is output operand, %1 is input operand
 	     STAP_PROBE_ASM(provider, fooprobe, STAP_PROBE_ASM_TEMPLATE(3))
 	     "otherinsn %[namedarg]"
 	     : "r" (outvar)
 	     : "g" (some_value), [namedarg] "i" (1234),
 	       STAP_PROBE_ASM_OPERANDS(3, some_value, some_ptr->field, 1234));
-
     This is just like writing:
-
 	STAP_PROBE3(provider, fooprobe, some_value, some_ptr->field, 1234));
-
     but the probe site is right between "someinsn" and "otherinsn".
-
     The probe arguments in STAP_PROBE_ASM can be given as assembly
     operands instead, even inside a GNU C extended asm statement.
     Note that these can use operand templates like %0 or %[name],
