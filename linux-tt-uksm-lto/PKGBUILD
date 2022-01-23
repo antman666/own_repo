@@ -87,7 +87,7 @@ _1666_HZ_ticks=
 _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
-pkgbase=linux-tt-uksm
+pkgbase=linux-tt-uksm-lto
 pkgver=5.16.2
 pkgrel=1
 arch=(x86_64)
@@ -116,7 +116,8 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
   "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.16/arch/0001-arch-patches.patch"
-  "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-5.16.patch"
+  # "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-5.16.patch"
+  "${_patchsources}/sched/0001-tt.patch"
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
   "${_patchsources}/0001-futex-winesync.patch"
   "${_patchsource}/bbr2-patches-v2/0001-bbr2-patches.patch"
@@ -127,7 +128,8 @@ source=(
   "${_patchsources}/0001-lru-patches.patch"
   # "${_patchsources}/0001-intel-patches.patch"
   "${_patchsources}/0001-lrng.patch"
-  "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
+  # "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
+  "${_patchsources}/0001-zstd-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
