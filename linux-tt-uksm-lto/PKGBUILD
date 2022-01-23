@@ -114,23 +114,20 @@ source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
-  # "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.16/arch/0001-arch-patches.patch"
-# "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-5.16.patch"
-  "${_patchsources}/0001-arch-patches.patch"
-  "${_patchsources}/sched/0001-tt.patch"
+  "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
+  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.16/arch/0001-arch-patches.patch"
+  "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-5.16.patch"
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
   "${_patchsources}/0001-futex-winesync.patch"
   "${_patchsources}/0001-bbr2-patches.patch"
-  # "${_patchsource}/block-patches/0001-block-patches.patch"
+  "${_patchsource}/block-patches/0001-block-patches.patch"
   "${_patchsources}/0001-btrfs.patch"
   "${_patchsources}/0001-fixes-miscellaneous.patch"
   "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-lru-patches.patch"
   # "${_patchsources}/0001-intel-patches.patch"
   "${_patchsources}/0001-lrng.patch"
-  # "${_patchsource}/zstd-patches/0001-zstd-patches.patch"
-  "${_patchsources}/0001-zstd-patches.patch"
+  # "${_patchsources}/0001-zstd-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
@@ -146,7 +143,7 @@ validpgpkeys=(
 
 b2sums=('6f07d9da86101ab72eadd53a9f58a4740037608a006fc622a923d4dd9578ce62cc9959711dca2e953e3fb68286f55fb14be04a4a00fc49a33c2c28bd5944532f'
         'SKIP'
-        '9fc32f2efe1e71b08af3383e849a3ad66771f70211823b3659efe94bc4179a9b87583ac5cdbcacc8904bb3c1d69445d291ac0637344a689fce232a385587e547'
+        'db2264c4615df69e7b6d0b62068c332e39862d08e9e266cd1b6bdd9d936bd58f5e43d77fd1767938fd4ab7bc28a6c6f36b964e6982a78483d40158ad0593609b'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         '7e12da62ddc8535b044f57447e15b550dc2d1421bba4fc830dfad7b328b01f21190f63c5534b9af6a8c09f56bfb9c21014b07645569a6c7b93b950aca07ade5a'
         'b450eb15cfb2beb3277c85656f319b063206a305ca99b38f695289889ae6f94c47f48483e4f3502705dbe7a7854b912767ce0d8296c0124c5968676e3cf64c6a'
@@ -155,12 +152,11 @@ b2sums=('6f07d9da86101ab72eadd53a9f58a4740037608a006fc622a923d4dd9578ce62cc99597
         '8c35fe0a14d8aad8ec68a4f56211040c01ea2bb662eb35f201a6a8ee4649fa3c3c4355ba154ca78f1000e4da2fae3eee552a342c0bcc74c2b2f14a363b92ba76'
         '36d2b9fda4230c54c7bf64f1ef8e4ee8e3c9f0c04c57ac47a3640353b32df36b24e86d39c33cc82d87f0a42d2e2627fc4c7d312644f2d218ec365332e4224611'
         'ede2f6ade748cac8e2ed46e092c7551f93cebe32b98b61911908d7d3ab2ee0ea08091b17723ebb2016c92b0488c74bb13b4c4453ea4fcc57c3cf38231c7eefbf'
-        '00d3124491b6563752e35988926de75349a4010ec05289407675f9332c9753c25799288dee9ecb88bde14d5766c36d44f7844f3868ea70c72c0972d5556f8797'
-        '580c874542d4c194775b74ff78903d4dfa1ee25deb97327263dc61cdf7eb1531ec0361b2f544e90b28ec47a743b7d1b2afeffaef6fc4f616ffc4834d7f0a05da'
+        '7b793c77f753e5b7d272e9f01cb6aa7b5b92d32add59de976d7093d385dbd33057bba8f950672b369a22cc693d699612af474f15fb289fd2cac26a55925cb6a0'
+        '46ec5beb029c50d82097d0804f3af07f647ab2d73cef562fd35d25175423a16dedacb9afcb9210dc1b26222d2c656ca977c6594527813c9e71be4058cd690d17'
         '4778fc0c6c0a03b6bd13e8b337c5c7e2e330132317e673efa45d643a489bc7c68c3e524ff72eca5cb12bee0f0043c03ca5795fd4aef2c2d6cbbb6d45fa682dea'
         'ce3707a5c4e933810c5fbedf9ebdebf227496e8dc131503e373727fdeab48594c76d7039baa5efcb102f18a5ee3e5ae6c12d64ad333c450d0c4b3331173975be'
         'b5b5e7466a0f25074990006ab0fa2dccbe1c8bba21383fc87762bec9ae33b679e4a2a7dbaf0ff197d4345fbaf2918240faf6f842b004de2e3db6842db73504c4'
-        '3cbf8e8c42521e3cc8edf46a4e56e28cb9b01ac9a1c9aefa768c5f4994a2f29c6712b20eb821751c2c64139b95efffc08bff5cc2b1d4c57f96e09207039eb305'
         '7909cc383f46e4ea804c8ec54f42bc636923e3b7ee786d55b9932c7ff16edb3f704db21161dc9380801902dc950cf6ed2aed428ed3290a552d5955999504ecea'
         'aeaf662a0aca322221874fbd6ce5799a0485985149944ad73be7769ef748baa664299ddebfd59cbf2cd8d6360c7600289f656c3cf522ec06805b40c2702aeaa0'
         '406d3540321c6a5139924eb7a36ab9e3f8df0b597a3cd4635678d21e3847084076bede188d8fac1a5a55cb9bdcbc7afbe183276dc86632920167f5c9f0bed68e'
