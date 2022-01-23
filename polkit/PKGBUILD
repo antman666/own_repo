@@ -1,26 +1,34 @@
-# Maintainer: Jan de Groot <jgc@archlinux.org>
-
 pkgname=polkit
 pkgver=0.120
-pkgrel=5
+pkgrel=6
 pkgdesc="Application development toolkit for controlling system-wide privileges"
 arch=(x86_64)
 license=(LGPL)
 url="https://www.freedesktop.org/wiki/Software/polkit/"
+provides=('polkit' "polkit=${pkgver}")
 depends=(glib2 pam expat systemd js78)
 makedepends=(meson gtk-doc gobject-introspection git)
+checkdepends=(python-dbusmock)
 backup=(etc/pam.d/polkit-1)
 _commit=92b910ce2273daf6a76038f6bd764fa6958d4e8e
-source=("git+https://gitlab.freedesktop.org/polkit/polkit.git#commit=$_commit")
+source=("git+https://gitlab.freedesktop.org/polkit/polkit.git#commit=${_commit}")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd $pkgname
+
+  cd "${srcdir:?}/polkit" || (
+    echo -e "\E[1;31mCan't cd to ${srcdir:?}/polkit directory! PkgVer Failed! \E[0m"
+    exit 1
+  )
+
   git describe --tags | sed 's/-/+/g'
+
 }
 
 build() {
-  meson setup $pkgname build \
+  _extra_lto_flag='-D b_lto_mode=full'
+
+  meson setup polkit build \
     --prefix=/usr \
     --libexecdir lib \
     --sbindir bin \
@@ -29,7 +37,7 @@ build() {
     -D debug=false \
     -D optimization=3 \
     -D b_ndebug=true \
-    -D b_lto=true \
+    -D b_lto=true ${_extra_lto_flag} \
     -D b_pie=true \
     -D session_tracking=libsystemd-login \
     -D os_type=redhat \
@@ -37,23 +45,27 @@ build() {
     -D gtk_doc=true \
     -D man=true \
     -D examples=true
+
   meson compile -C build
+
 }
 
 check() {
-  meson test -C build ||:
+
+  meson test -C build --print-errorlogs -t 3
+
 }
 
 package() {
-  meson install -C build --destdir "$pkgdir"
 
-  install -d -o root -g 102 -m 750 "$pkgdir"/{etc,usr/share}/polkit-1/rules.d
-  mv "$pkgdir"/{etc,usr/share}/polkit-1/rules.d/50-default.rules
+  meson install -C build --destdir "${pkgdir:?}"
 
-  install -Dm644 /dev/stdin "$pkgdir/usr/lib/sysusers.d/$pkgname.conf" <<END
+  install -d -o root -g 102 -m 750 "${pkgdir:?}"/{etc,usr/share}/polkit-1/rules.d
+  mv "${pkgdir:?}"/{etc,usr/share}/polkit-1/rules.d/50-default.rules
+
+  install -Dm644 /dev/stdin "${pkgdir:?}/usr/lib/sysusers.d/${pkgname}.conf" <<END
 u polkitd 102 "PolicyKit daemon"
 m polkitd proc
 END
-}
 
-# vim: ts=2 sw=2 et:
+}
