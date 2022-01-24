@@ -6,10 +6,10 @@
 # NOTE: libtool requires rebuilt with each new gcc version
 
 pkgname=(gcc gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go lib32-gcc-libs gcc-d)
-pkgver=11.2.0
+pkgver=11.2.1
 _majorver=${pkgver%%.*}
 _islver=0.24
-pkgrel=4
+pkgrel=1
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -18,34 +18,43 @@ makedepends=(binutils libmpc gcc-ada doxygen lib32-glibc lib32-gcc-libs python g
 checkdepends=(dejagnu inetutils)
 options=(!emptydirs)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-# _commit=6beb39ee6c465c21d0cc547fd66b445100cdcc35
-# source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
-source=(https://sourceware.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz{,.sig}
-        https://sourceforge.net/projects/libisl/files/isl-${_islver}.tar.xz
+_commit=e41308252e835ddedcabfd4a98240080c6583a43
+source=("git://gcc.gnu.org/git/gcc.git#commit=${_commit}"
+# source=(https://sourceware.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz{,.sig}
+        "https://sourceforge.net/projects/libisl/files/isl-${_islver}.tar.xz"
+		# "http://isl.gforge.inria.fr/isl-${_islver}.tar.xz"
         c89 c99
         gdc_phobos_path.patch
-        fs64270.patch
-        ipa-fix-bit-CPP-when-combined-with-IPA-bit-CP.patch
-        ipa-fix-ICE-in-get_default_value.patch
         gcc-ada-repro.patch
         gcc11-Wno-format-security.patch
+		gcc11-libgomp-omp_h-multilib.patch
+		gcc11-foffload-default.patch
+		gcc11-generate-missing-build-notes.patch
+		gcc11-stringify-__VA_OPT__.patch
+		gcc11-stringify-__VA_OPT__-2.patch
+		gcc11-libgcc-link.patch
+		gcc11-pr101786.patch
 		gcc11-add-mold-support.patch
 )
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
               D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62) # Jakub Jelinek <jakub@redhat.com>
-sha256sums=('4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf'
-            'SKIP'
+sha256sums=('SKIP'
             '043105cc544f416b48736fff8caf077fb0663a717d06b1113f16e391ac99ebad'
             'de48736f6e4153f03d0a5d38ceb6c6fdb7f054e8f47ddd6af0a3dbf14f27b931'
             '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
             'c86372c207d174c0918d4aedf1cb79f7fc093649eb1ad8d9450dccc46849d308'
-            '1ef190ed4562c4db8c1196952616cd201cfdd788b65f302ac2cc4dabb4d72cee'
-            'fcb11c9bcea320afd202b031b48f8750aeaedaa4b0c5dddcd2c0a16381e927e4'
-            '42865f2af3f48140580c4ae70b6ea03b5bdca0f29654773ef0d42ce00d60ea16'
             '1773f5137f08ac1f48f0f7297e324d5d868d55201c03068670ee4602babdef2f'
-            '504e4b5a08eb25b6c35f19fdbe0c743ae4e9015d0af4759e74150006c283585e')
+            '504e4b5a08eb25b6c35f19fdbe0c743ae4e9015d0af4759e74150006c283585e'
+            '58837a6070cbaab4a5453843d4ce12f595948129c04c78af272aefce7c15573d'
+            '23897d6da54e392f09a9ed63fd45e3e656e465624bf83644f257dd7382980984'
+            'f758e7bc1e013a96b00afc70354d0da81d15de75c98c1cb20df5158dda5d936d'
+            'f5d5a0bd59fe61072a3d058c7184edfeefcc53592f7515e83b9558887227139f'
+            'e10989e95c14e612bc64fdbd9f1859e5696bca285cc8d17fa81322425692f730'
+            '95a7ef8f98a5135a0071978d5a2927f7b4fe397355c9c8050fbf05b5683aeed6'
+            'cbacb7c8e128e1722a379c295ef761a3a92563ebd614af3ceefc8f193fa04392'
+            'd8f2d00f0a3b55d8a7f19824835a2ee75b6f8852e75f4f0054244ca8bb55f49c')
 
 prepare() {
   [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
@@ -72,8 +81,15 @@ prepare() {
   # configure.ac: When adding -Wno-format, also add -Wno-format-security
   patch -Np0 < "$srcdir/gcc11-Wno-format-security.patch"
 
+  patch -Np0 < "$srcdir/gcc11-libgomp-omp_h-multilib.patch"
+  patch -Np0 < "$srcdir/gcc11-foffload-default.patch"
+  patch -Np0 < "$srcdir/gcc11-generate-missing-build-notes.patch"
+  patch -Np0 < "$srcdir/gcc11-stringify-__VA_OPT__.patch"
+  patch -Np0 < "$srcdir/gcc11-libgcc-link.patch"
+  patch -Np0 < "$srcdir/gcc11-pr101786.patch"
+
   # Add mold linker support
-  patch -Np1 < "$srcdir/gcc11-add-mold-support.patch"
+  patch -p1 < "$srcdir/gcc11-add-mold-support.patch"
 
   mkdir -p "$srcdir/gcc-build"
 }
