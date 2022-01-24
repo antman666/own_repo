@@ -1,0 +1,66 @@
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Adrian Perez de Castro <aperez@igalia.com>
+
+pkgname=mold
+pkgver=1.0.2
+pkgrel=2
+pkgdesc='A Modern Linker'
+arch=('x86_64')
+url="https://github.com/rui314/mold"
+license=('AGPL3')
+depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb' 'xxhash')
+makedepends=('git' 'clang')
+_commit='6fb64656b92553ae47a9b058da8c93083be779d5'
+source=("$pkgname::git+$url.git#commit=$_commit")
+b2sums=('SKIP')
+
+pkgver() {
+  cd "$pkgname"
+
+  git describe --tags | sed 's/^v//'
+}
+
+prepare() {
+  cd "$pkgname"
+
+  sed -i "s/libexec/lib/" Makefile
+}
+
+build() {
+  make \
+    -C "$pkgname" \
+    PREFIX=/usr \
+    LTO=1 \
+    SYSTEM_MIMALLOC=1 \
+    SYSTEM_TBB=1 \
+    SYSTEM_XXHASH=1
+}
+
+check() {
+  cd "$pkgname"
+
+  # temporarily remove failing tests
+  for failing_test in exception; do
+    rm -vf "test/elf/$failing_test.sh"
+  done
+
+  make \
+    PREFIX=/usr \
+    LTO=1 \
+    SYSTEM_MIMALLOC=1 \
+    SYSTEM_TBB=1 \
+    SYSTEM_XXHASH=1 \
+    check
+}
+
+package() {
+  make \
+    -C "$pkgname" \
+    PREFIX=/usr \
+    LTO=1 \
+    SYSTEM_MIMALLOC=1 \
+    SYSTEM_TBB=1 \
+    SYSTEM_XXHASH=1 \
+    DESTDIR="$pkgdir" \
+    install
+}

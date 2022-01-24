@@ -72,6 +72,9 @@ prepare() {
   # configure.ac: When adding -Wno-format, also add -Wno-format-security
   patch -Np0 < "$srcdir/gcc11-Wno-format-security.patch"
 
+  # Add mold linker support
+  patch -Np1 < "$srcdir/gcc11-add-mold-support.patch"
+
   mkdir -p "$srcdir/gcc-build"
 }
 
