@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [dbus, dhcpcd, lib32-systemd, mold, rtkit, systemd, util-linux, wayland, wpa_supplicant, zstd]
+        nojemalloc: [dbus, dhcpcd, glib2, lib32-systemd, mesa, mold, rtkit, systemd, util-linux, wayland, wpa_supplicant, zstd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +69,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, gcc, glibc, mesa, openssl]
+        nolto: [binutils, gcc, glibc, openssl]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
