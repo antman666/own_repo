@@ -5,7 +5,7 @@
 pkgbase=wayland
 pkgname=(wayland wayland-docs)
 pkgver=1.20.0
-pkgrel=4
+pkgrel=5
 pkgdesc='A computer display server protocol'
 arch=('x86_64')
 url='https://wayland.freedesktop.org/'
@@ -20,7 +20,13 @@ sha256sums=('b8a034154c7059772e0fdbd27dbfcda6c732df29cae56a82274f6ec5d7cd8725'
             'SKIP')
 
 build() {
-  meson build $pkgbase-$pkgver --buildtype=release --prefix=/usr
+  meson build $pkgbase-$pkgver \
+    --buildtype=release \
+    --prefix=/usr \
+    -D debug=false \
+    -D b_lto=true \
+    -D b_ndebug=true \
+    -D optimization=3
   ninja -C build
 }
 

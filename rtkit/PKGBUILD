@@ -3,7 +3,7 @@
 
 pkgname=rtkit
 pkgver=0.13
-pkgrel=4
+pkgrel=5
 pkgdesc="Realtime Policy and Watchdog Daemon"
 arch=(x86_64)
 url="https://github.com/heftig/rtkit"
@@ -25,7 +25,12 @@ prepare() {
 }
 
 build() {
-  arch-meson $pkgname build -D installed_tests=false
+  arch-meson $pkgname build \
+    -D installed_tests=false \
+	-D debug=false \
+	-D b_ndebug=true \
+	-D optimization=3 \
+	-D b_lto=true
 }
 
 check() {

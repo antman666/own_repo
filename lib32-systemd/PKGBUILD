@@ -7,7 +7,7 @@ _pkgbasename=systemd
 _tag='d066a4f747b225d47c5f5c97a8843d30878995b8' # git rev-parse v${_tag_name}
 _tag_name=250.3
 pkgver="${_tag_name/-/}"
-pkgrel=1
+pkgrel=2
 pkgdesc='system and service manager (32-bit)'
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
@@ -86,7 +86,7 @@ build() {
     -Dlibcryptsetup=false
     -Dlibidn2=true
     -Dlibiptc=false
-    -Dlz4=false
+    -Dlz4=true
     -Dmicrohttpd=false
     -Dpam=false
     -Dseccomp=false
@@ -147,6 +147,12 @@ build() {
     -Drpmmacrosdir=no
     -Dsysvinit-path=
     -Dsysvrcnd-path=
+
+	-D debug=false
+    -D b_lto=true
+    -D b_ndebug=true
+    -D optimization=3
+
   )
 
   arch-meson "$_pkgbasename-stable" build "${_meson_options[@]}"
