@@ -86,7 +86,7 @@ build() {
     -Dlibcryptsetup=false
     -Dlibidn2=true
     -Dlibiptc=false
-    -Dlz4=true
+    -Dlz4=false
     -Dmicrohttpd=false
     -Dpam=false
     -Dseccomp=false
@@ -147,12 +147,6 @@ build() {
     -Drpmmacrosdir=no
     -Dsysvinit-path=
     -Dsysvrcnd-path=
-
-	-D debug=false
-    -D b_lto=true
-    -D b_ndebug=true
-    -D optimization=3
-
   )
 
   arch-meson "$_pkgbasename-stable" build "${_meson_options[@]}"
