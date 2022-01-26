@@ -24,10 +24,10 @@ validpgpkeys+=('34FF9526CFEF0E97A340E2E40FDE7BE0E88F5E48') # emersion <contact@e
 build() {
   arch-meson $pkgname-$pkgver build \
     -Dudev=false \
-	-D debug=false \
-	-D b_ndebug=true \
-	-D optimization=3 \
-	-D b_lto=true 
+    -D debug=false \
+    -D b_ndebug=true \
+    -D optimization=3 \
+    -D b_lto=true 
   ninja -C build
 }
 

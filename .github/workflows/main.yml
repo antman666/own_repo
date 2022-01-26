@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [dbus, dhcpcd, glib2, lib32-systemd, libdrm, mesa, mold, rtkit, systemd, util-linux, wayland, wpa_supplicant, zstd]
+        nojemalloc: [dbus, dhcpcd, glib2, lib32-systemd, libdrm, mesa, mold, polkit, rtkit, systemd, util-linux, wayland, wpa_supplicant, zstd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -45,27 +45,27 @@ jobs:
           tag: "x86_64"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-  build_polkit:
-    strategy:
-      matrix:
-        nojemalloc: [polkit]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build polkit packages for arch
-        uses: actions/checkout@v2.3.4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
-        with:
-          pkgdir: ${{ matrix.nojemalloc }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
+  # build_polkit:
+  #   strategy:
+  #     matrix:
+  #       nojemalloc: [polkit]
+  #     fail-fast: false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Build polkit packages for arch
+  #       uses: actions/checkout@v2.3.4
+  #     - id: makepkg
+  #       uses: antman666/pkgbuild-action@non-jemalloc
+  #       with:
+  #         pkgdir: ${{ matrix.nojemalloc }}
+  #         namcapDisable: 1
+  #         makepkgArgs: "--skippgpcheck"
+  #     - uses: ncipollo/release-action@v1.8.10
+  #       with:
+  #         allowUpdates: true
+  #         tag: "x86_64"
+  #         artifacts: "./*/*.zst"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
   build_no_lto:
     strategy:
       matrix:
