@@ -128,6 +128,7 @@ _patchsource="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
   "config"
+  "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0001-lru-patches.patch"
   "${_patchsource}/0001-arch-patches.patch"
   "${_patchsource}/0001-bfq-patches.patch"
@@ -139,8 +140,10 @@ source=(
   "${_patchsource}/0001-fixes-miscellaneous.patch"
   "${_patchsource}/0001-pf-patches.patch"
   "${_patchsource}/0001-futex-winesync.patch"
-  "${_patchsource}/0001-rcu.patch"
-  "${_patchsource}/0001-zen-patches.patch"
+  # "${_patchsource}/0001-rcu.patch"
+  # "${_patchsource}/0001-zen-patches.patch"
+  "${_patchsource}/misc/0001-cc.patch"
+  "${_patchsource}/misc/0010-ELF.patch"
 )
 
 
