@@ -4,8 +4,8 @@
 # Contributor: Valère Monseur <valere.monseur@ymail.com>
 
 pkgname=picom
-pkgver=8.2
-pkgrel=4
+pkgver=9.0
+pkgrel=1
 pkgdesc='X compositor that may fix tearing issues'
 arch=(x86_64)
 url='https://github.com/yshui/picom'
@@ -21,7 +21,7 @@ optdepends=('dbus:          For controlling picom via D-Bus'
             'python:        For running picom-convgen.py'
             'xorg-xwininfo: For picom-trans'
             'xorg-xprop:    For picom-trans')
-source=("git+$url?signed#commit=dac85eac10082dfc3df463aaa74b811144e22122") # tag: v8.2
+source=("git+$url?signed#commit=1cf01ec5611e139058538612503e4105fdb55be6") # tag: v9
 validpgpkeys=('A22F5C0F4FCF9C7C89A167462C965E9E5D45D730') # Yuxuan Shui <yshuiv7@gmail.com>
 sha256sums=('SKIP')
 
@@ -43,8 +43,8 @@ package() {
   install -Dm644 $pkgname/picom.sample.conf "$pkgdir/usr/share/doc/picom/picom.conf.example"
 
   # Man pages and license files
-  install -Dm644 build/man/picom.1 "$pkgdir/usr/share/man/man1/picom.1"
-  install -Dm644 build/man/picom-trans.1 "$pkgdir/usr/share/man/man1/picom-trans.1"
+  install -Dm644 build/man/picom.1.asciidoc "$pkgdir/usr/share/man/man1/picom.1"
+  install -Dm644 build/man/picom-trans.1.asciidoc "$pkgdir/usr/share/man/man1/picom-trans.1"
   install -Dm644 $pkgname/LICENSES/MIT "$pkgdir/usr/share/licenses/$pkgname/MIT"
   install -Dm644 $pkgname/LICENSES/MPL-2.0 "$pkgdir/usr/share/licenses/$pkgname/MPL-2.0"
 }

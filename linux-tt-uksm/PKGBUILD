@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.16.5
+pkgver=5.16.6
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -115,18 +115,19 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
-  "https://raw.githubusercontent.com/RiverOnVenus/kernel-patches/master/5.16/arch/0001-arch-patches.patch"
   "https://raw.githubusercontent.com/hamadmarri/TT-CPU-Scheduler/master/patches/5.16/tt-5.16.patch"
-  "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
-  "${_patchsources}/0001-futex-winesync.patch"
-  "${_patchsources}/0001-bbr2-patches.patch"
   "${_patchsource}/block-patches/0001-block-patches.patch"
-  "${_patchsources}/0001-btrfs.patch"
-  "${_patchsources}/0001-fixes-miscellaneous.patch"
+  "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
+  "${_patchsources}/0001-arch-patches.patch"
+  "${_patchsources}/0001-bbr2-patches.patch"
+  "${_patchsources}/0001-boot.patch"
   "${_patchsources}/0001-clearlinux.patch"
-  "${_patchsources}/0001-lru-patches.patch"
-  # "${_patchsources}/0001-intel-patches.patch"
+  "${_patchsources}/0001-f2fs-xfs-ext4-btrfs.patch"
+  "${_patchsources}/0001-futex-winesync.patch"
   "${_patchsources}/0001-lrng.patch"
+  "${_patchsources}/0001-lru-le9-patches.patch"
+  "${_patchsources}/misc/0010-ELF.patch"
+  "${_patchsources}/0001-pf-patches.patch"
   "${_patchsources}/0001-zstd-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -141,23 +142,25 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('6f07d9da86101ab72eadd53a9f58a4740037608a006fc622a923d4dd9578ce62cc9959711dca2e953e3fb68286f55fb14be04a4a00fc49a33c2c28bd5944532f'
+b2sums=('ad852ae600f033fbdec4d507a523dc12d0b230c9c498d5147d39c707516b6bccc15fc23bca75c6b1ca17a02647de3074b1a8d03fc62ac8081ff78c1507e7f504'
         'SKIP'
         '57d19737b40ff5bd03e8b3a10609310abc147f19b6f5626d68ce7f28213459d4a61c3e5d07275ed507cb2ca8cd064fb7ea96d7ab9a5d3b7b3f576b3950a4d343'
         '534091fb5034226d48f18da2114305860e67ee49a1d726b049a240ce61df83e840a9a255e5b8fa9279ec07dd69fb0aea6e2e48962792c2b5367db577a4423d8d'
         '7e12da62ddc8535b044f57447e15b550dc2d1421bba4fc830dfad7b328b01f21190f63c5534b9af6a8c09f56bfb9c21014b07645569a6c7b93b950aca07ade5a'
-        'b450eb15cfb2beb3277c85656f319b063206a305ca99b38f695289889ae6f94c47f48483e4f3502705dbe7a7854b912767ce0d8296c0124c5968676e3cf64c6a'
-        'ecc740bb302b67ab1228be17c9c2e81259b19aef5efe50d887cb7224a750fedf6c01d7446f8b96b4ddd7eaf7097750108046e46b4afb13f93bf7fc30a3397799'
-        '9139215eb0d7af1448c1b1722059430f8aa95b4c8d7611776599cc94064e9ec7e09b02c2fd07487a3aa1b73ecefad09c7944eec73a2f0a422cda049aaed58847'
-        '8c35fe0a14d8aad8ec68a4f56211040c01ea2bb662eb35f201a6a8ee4649fa3c3c4355ba154ca78f1000e4da2fae3eee552a342c0bcc74c2b2f14a363b92ba76'
-        '36d2b9fda4230c54c7bf64f1ef8e4ee8e3c9f0c04c57ac47a3640353b32df36b24e86d39c33cc82d87f0a42d2e2627fc4c7d312644f2d218ec365332e4224611'
+        '1c8581b22af6f00ed59acf45c3998eef6cd6c5ca76af29527b07aacf1b6923aad0444951c20019580a857c9d7761be21ab351829028c4c6d660f00854206e55a'
         'ede2f6ade748cac8e2ed46e092c7551f93cebe32b98b61911908d7d3ab2ee0ea08091b17723ebb2016c92b0488c74bb13b4c4453ea4fcc57c3cf38231c7eefbf'
-        '7b793c77f753e5b7d272e9f01cb6aa7b5b92d32add59de976d7093d385dbd33057bba8f950672b369a22cc693d699612af474f15fb289fd2cac26a55925cb6a0'
-        '46ec5beb029c50d82097d0804f3af07f647ab2d73cef562fd35d25175423a16dedacb9afcb9210dc1b26222d2c656ca977c6594527813c9e71be4058cd690d17'
+        '9139215eb0d7af1448c1b1722059430f8aa95b4c8d7611776599cc94064e9ec7e09b02c2fd07487a3aa1b73ecefad09c7944eec73a2f0a422cda049aaed58847'
+        'f342bff2e44d4d9d1b2b70681d6e9a8fc229bba3e348a8e8197fe6b012a3a24cd46724353a98a96e7703485a4f0924a52608141e2ea582dc37feeda715097ed8'
+        '36d2b9fda4230c54c7bf64f1ef8e4ee8e3c9f0c04c57ac47a3640353b32df36b24e86d39c33cc82d87f0a42d2e2627fc4c7d312644f2d218ec365332e4224611'
+        '328eff28291b8ccac5e6a17f7908d968c1cfb91f0b39159b0e46421706fc118189417c49d8bd62ce25bcce621331c4619ff526cd66388d074f012ddabab34638'
         '4778fc0c6c0a03b6bd13e8b337c5c7e2e330132317e673efa45d643a489bc7c68c3e524ff72eca5cb12bee0f0043c03ca5795fd4aef2c2d6cbbb6d45fa682dea'
-        'ce3707a5c4e933810c5fbedf9ebdebf227496e8dc131503e373727fdeab48594c76d7039baa5efcb102f18a5ee3e5ae6c12d64ad333c450d0c4b3331173975be'
+        'a172f7283ddf4f59f00de01f55a960ddac85d3cc72afa2d64c69ac55fea5ca2be5f7953d80ebd94aecf913f182a7598941f5535c3f5b3a2955b9a37d49f0558a'
+        '8c35fe0a14d8aad8ec68a4f56211040c01ea2bb662eb35f201a6a8ee4649fa3c3c4355ba154ca78f1000e4da2fae3eee552a342c0bcc74c2b2f14a363b92ba76'
         'b5b5e7466a0f25074990006ab0fa2dccbe1c8bba21383fc87762bec9ae33b679e4a2a7dbaf0ff197d4345fbaf2918240faf6f842b004de2e3db6842db73504c4'
-        '8dd6393124edc5cef3b30f95ae2f13e1054cac1e45f2773e062699e299173d676f53b29a87c0af1eb2d51421e168e0f38682bdaab9b97db509f5295a149c3714'
+        '1e318f8a322c72b5a5c0397cf675c65183f8eadca490886d39887e0dd6608fb7a4a399b01ee53b8ba67ae002748c1f577bc135e79aa170877f50c26b0f508070'
+        'b30408041effab7040a41dd45b9afd63181b9801d86113105db3bae070df8180db2189ef290d8cf79ba63e5903e0774bdb6c6f6a0b2859c67d03197c5a8109e0'
+        '3c0930d8a002971dc6055494f032a8bd11d9411eec131b800382ee36589c19b730590cdf2096f28471e7eddd8e30566bff3e362d6a2696f14e2246a27679300d'
+        '008da585198f4bd179bf8052348c24d93d2964e4e55386c183473e8b2edd868bb5d5bf54195d9be0f5c7110b140e9a7db812fc4252d48875b1113038d717a3f7'
         '7909cc383f46e4ea804c8ec54f42bc636923e3b7ee786d55b9932c7ff16edb3f704db21161dc9380801902dc950cf6ed2aed428ed3290a552d5955999504ecea'
         'aeaf662a0aca322221874fbd6ce5799a0485985149944ad73be7769ef748baa664299ddebfd59cbf2cd8d6360c7600289f656c3cf522ec06805b40c2702aeaa0'
         '406d3540321c6a5139924eb7a36ab9e3f8df0b597a3cd4635678d21e3847084076bede188d8fac1a5a55cb9bdcbc7afbe183276dc86632920167f5c9f0bed68e'
