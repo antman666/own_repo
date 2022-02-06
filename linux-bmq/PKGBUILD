@@ -134,7 +134,7 @@ source=(
   "${_patchsource}/0001-boot.patch"
   "${_patchsource}/0001-cpu.patch"
   "${_patchsource}/0001-clearlinux.patch"
-  "${_patchsource}/0001-f2fs-xfs-ext4-btrfs.patch"
+  # "${_patchsource}/0001-f2fs-xfs-ext4-btrfs.patch"
   "${_patchsource}/0001-fixes-miscellaneous.patch"
   "${_patchsource}/0001-pf-patches.patch"
   "${_patchsource}/0001-futex-winesync.patch"

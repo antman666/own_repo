@@ -27,7 +27,7 @@ sha256sums=('SKIP')
 
 build() {
   mkdir -p build
-  arch-meson build $pkgname -D b_ndebug=true -D with_docs=true
+  arch-meson build $pkgname -D b_ndebug=true -D with_docs=true -D b_lto=true -D b_lto_mode=full -D optimization=3
   ninja -v -C build
 }
 
@@ -43,8 +43,8 @@ package() {
   install -Dm644 $pkgname/picom.sample.conf "$pkgdir/usr/share/doc/picom/picom.conf.example"
 
   # Man pages and license files
-  install -Dm644 build/man/picom.1.asciidoc "$pkgdir/usr/share/man/man1/picom.1"
-  install -Dm644 build/man/picom-trans.1.asciidoc "$pkgdir/usr/share/man/man1/picom-trans.1"
+  install -Dm644 build/man/picom.1 "$pkgdir/usr/share/man/man1/picom.1"
+  install -Dm644 build/man/picom-trans.1 "$pkgdir/usr/share/man/man1/picom-trans.1"
   install -Dm644 $pkgname/LICENSES/MIT "$pkgdir/usr/share/licenses/$pkgname/MIT"
   install -Dm644 $pkgname/LICENSES/MPL-2.0 "$pkgdir/usr/share/licenses/$pkgname/MPL-2.0"
 }
