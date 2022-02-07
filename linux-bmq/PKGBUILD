@@ -131,7 +131,6 @@ source=(
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0001-arch-patches.patch"
   "${_patchsource}/0001-bbr2-patches.patch"
-  "${_patchsource}/0001-boot.patch"
   "${_patchsource}/0001-cpu.patch"
   "${_patchsource}/0001-clearlinux.patch"
   # "${_patchsource}/0001-f2fs-xfs-ext4-btrfs.patch"

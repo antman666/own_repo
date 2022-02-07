@@ -120,7 +120,6 @@ source=(
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
   "${_patchsources}/0001-arch-patches.patch"
   "${_patchsources}/0001-bbr2-patches.patch"
-  "${_patchsources}/0001-boot.patch"
   "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-f2fs-xfs-ext4-btrfs.patch"
   "${_patchsources}/0001-futex-winesync.patch"
