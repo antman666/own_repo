@@ -57,7 +57,7 @@ _600_HZ_ticks=
 _500_HZ_ticks=
 
 ### Disable MQ-Deadline I/O scheduler
-_mq_deadline_disable=y
+_mq_deadline_disable=
 
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
@@ -125,7 +125,7 @@ else
   pkgbase=linux-bore-uksm
 fi
 _major=5.16
-_minor=6
+_minor=7
 pkgver=${_major}.${_minor}
 _stable=${_major}.${_minor}
 _srcname=linux-${_major}
@@ -377,6 +377,7 @@ prepare() {
   elif [ "$_cpusched" = "bore" ]; then
     msg2 "Selecting BORE Scheduler..."
     scripts/config --disable CONFIG_SCHED_ALT
+	scripts/config --enable CONFIG_SCHED_BORE
   elif [ "$_cpusched" = "cfs" ]; then
     msg2 "Selecting Completely Fair Scheduler..."
     scripts/config --disable CONFIG_SCHED_ALT
