@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -32,14 +32,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-jemalloc packages for arch
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
         with:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -53,14 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.nolto }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -69,7 +69,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: True
           tag: "x86_64"
@@ -82,7 +82,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.8.10
+      - uses: ncipollo/release-action@v1.9.0
         with:
           allowUpdates: True
           tag: "x86_64"
