@@ -22,7 +22,7 @@ _commit=19d0e7645eb2f65afe0505022331c57e7095c52e
 source=("git://gcc.gnu.org/git/gcc.git#commit=${_commit}"
 		"https://libisl.sourceforge.io/isl-${_islver}.tar.xz"
         c89 c99
-        gcc-gdc_phobos_path.patch
+        gdc_phobos_path.patch
         gcc-ada-repro.patch
         gcc-Wno-format-security.patch
         gcc11-libgomp-omp_h-multilib.patch

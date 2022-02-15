@@ -13,7 +13,7 @@ license=(MIT MPL)
 replaces=(compton)
 provides=(compton)
 conflicts=(compton)
-makedepends=(asciidoc git mesa meson ninja uthash)
+makedepends=(asciidoc git mesa meson ninja setconf uthash)
 depends=(hicolor-icon-theme libconfig libdbus libev libgl pcre pixman
          xcb-util-image xcb-util-renderutil)
 backup=(etc/xdg/picom.conf)
