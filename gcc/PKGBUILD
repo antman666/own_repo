@@ -96,14 +96,20 @@ prepare() {
 build() {
   cd gcc-build
 
+  # Credits @allanmcrae
+  # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
+  # TODO: properly deal with the build issues resulting from this
+  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  CFLAGS=${CFLAGS/-Werror=format-security/}
+  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+
   # using -pipe causes spurious test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
-  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
-  CFLAGS=${CFLAGS/-pipe/}
-  CXXFLAGS=${CXXFLAGS/-pipe/}
+  # CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  # CFLAGS=${CFLAGS/-pipe/}
+  # CXXFLAGS=${CXXFLAGS/-pipe/}
 
-  "$srcdir/gcc/configure" 
-      --prefix=/usr \
+  "$srcdir/gcc/configure" --prefix=/usr \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       --mandir=/usr/share/man \
@@ -114,29 +120,34 @@ build() {
       --with-linker-hash-style=gnu \
       --with-system-zlib \
       --enable-__cxa_atexit \
-      --disable-cet \
+      --enable-cet=auto \
       --enable-checking=release \
       --enable-clocale=gnu \
       --enable-default-pie \
       --enable-default-ssp \
       --enable-gnu-indirect-function \
       --enable-gnu-unique-object \
-      --enable-install-libiberty \
       --enable-linker-build-id \
       --enable-lto \
       --enable-multilib \
+      --enable-pgo-build=lto \
       --enable-plugin \
       --enable-shared \
       --enable-threads=posix \
-      --enable-64-bit-bfd \
-      --disable-bootstrap \
+      --disable-libssp \
+      --disable-libstdcxx-pch \
       --disable-werror \
+      --with-build-config=bootstrap-lto \
+      --enable-link-serialization=1 \
       gdc_include_dir=/usr/include/dlang/gdc
 
-  make
+  make -O STAGE1_CFLAGS="-O2" \
+          BOOT_CFLAGS="$CFLAGS" \
+          BOOT_LDFLAGS="$LDFLAGS" \
+          LDFLAGS_FOR_TARGET="$LDFLAGS"
 
   # make documentation
-  make -C $CHOST/libstdc++-v3/doc doc-man-doxygen
+  make -O -C $CHOST/libstdc++-v3/doc doc-man-doxygen
 }
 
 check() {

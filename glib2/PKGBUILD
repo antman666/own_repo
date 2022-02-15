@@ -36,11 +36,6 @@ prepare() {
 build() {
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
   arch-meson glib build \
-    --prefix /usr \
-    --libexecdir lib \
-    --sbindir bin \
-    --auto-features enabled \
-    --wrap-mode nodownload \
     -D debug=false \
     -D b_ndebug=true \
     -D optimization=3 \
