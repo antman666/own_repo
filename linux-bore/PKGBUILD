@@ -125,7 +125,7 @@ else
   pkgbase=linux-bore-uksm
 fi
 _major=5.16
-_minor=8
+_minor=9
 pkgver=${_major}.${_minor}
 _stable=${_major}.${_minor}
 _srcname=linux-${_major}

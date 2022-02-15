@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.16.8
+pkgver=5.16.9
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
