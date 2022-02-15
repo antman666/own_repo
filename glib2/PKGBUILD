@@ -30,7 +30,7 @@ prepare() {
   git cherry-pick -n ab895d91d570a18ac74d6f4f6390488210d8fb15
 
   # Suppress noise from glib-compile-schemas.hook
-  git apply -3 ../noisy-glib-compile-schemas.diff
+  git apply -3 ../0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
 }
 
 build() {
