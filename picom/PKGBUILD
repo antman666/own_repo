@@ -4,8 +4,8 @@
 # Contributor: Valère Monseur <valere.monseur@ymail.com>
 
 pkgname=picom
-pkgver=9.0
-pkgrel=1
+pkgver=9.1
+pkgrel=2
 pkgdesc='X compositor that may fix tearing issues'
 arch=(x86_64)
 url='https://github.com/yshui/picom'
@@ -21,9 +21,18 @@ optdepends=('dbus:          For controlling picom via D-Bus'
             'python:        For running picom-convgen.py'
             'xorg-xwininfo: For picom-trans'
             'xorg-xprop:    For picom-trans')
-source=("git+$url?signed#commit=1cf01ec5611e139058538612503e4105fdb55be6") # tag: v9
+source=("git+$url?signed#commit=7e56843ebfc0837d70deb9d73b36ae706462bd21") # tag: v9.1
 validpgpkeys=('A22F5C0F4FCF9C7C89A167462C965E9E5D45D730') # Yuxuan Shui <yshuiv7@gmail.com>
 sha256sums=('SKIP')
+
+prepare() {
+  cd $pkgname
+  # More subtle transparency in the default settings
+  setconf picom.sample.conf 'frame-opacity=0.9;'
+  setconf picom.sample.conf 'inactive-opacity=0.95;'
+  # Improve performance (recommended option)
+  setconf -u picom.sample.conf 'glx-no-stencil=true;'
+}
 
 build() {
   mkdir -p build

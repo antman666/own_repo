@@ -5,9 +5,9 @@
 pkgbase=util-linux
 pkgname=(util-linux util-linux-libs)
 _pkgmajor=2.37
-_realver=${_pkgmajor}.3
+_realver=${_pkgmajor}.4
 pkgver=${_realver/-/}
-pkgrel=2
+pkgrel=1
 pkgdesc='Miscellaneous system utilities for Linux'
 url='https://github.com/karelzak/util-linux'
 arch=('x86_64')

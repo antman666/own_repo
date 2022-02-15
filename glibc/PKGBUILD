@@ -7,26 +7,25 @@
 pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.35
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
 makedepends=(git gd lib32-gcc-libs python)
 optdepends=('perl: for mtrace')
-options=(staticlibs)
-_commit=811124ce08306021a85834a0ddf60f122a050a59
+options=(!strip staticlibs)
+_commit=9e94f57484a2aba0fe67ea2059b5843f651887c2
 source=("git+https://sourceware.org/git/glibc.git#commit=${_commit}"
-#source=(https://ftp.gnu.org/gnu/glibc/glibc-$pkgver.tar.xz{,.sig}
         locale.gen.txt
         locale-gen
         lib32-glibc.conf
         sdt.h sdt-config.h
-		glibc-fedora-linux-tcsetattr.patch
-		glibc-newlocale-error.patch
-		glibc-cs-path.patch
-		glibc-relative-relocations.patch
-		glibc-clang.patch
-        )
+        glibc-newlocale-error.patch
+        glibc-cs-path.patch
+        glibc-relative-relocations.patch
+        glibc-clang.patch
+        glibc-set-text-section-in-memset-vec-unaligned-erms.patch
+)
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8 # Carlos O'Donell
               BC7C7372637EC10C57D7AA6579C43DFBF1CF2187) # Siddhesh Poyarekar
 md5sums=('SKIP'
@@ -49,9 +48,9 @@ prepare() {
 
   patch -p1 -i "$srcdir"/glibc-relative-relocations.patch
   patch -p1 -i "$srcdir"/glibc-clang.patch
-  patch -p1 -i "$srcdir"/glibc-fedora-linux-tcsetattr.patch
   patch -p1 -i "$srcdir"/glibc-newlocale-error.patch
   patch -p1 -i "$srcdir"/glibc-cs-path.patch
+  patch -p1 -i "$srcdir"/glibc-set-text-section-in-memset-vec-unaligned-erms.patch
 }
 
 build() {
@@ -59,7 +58,7 @@ build() {
       --prefix=/usr
       --with-headers=/usr/include
       --with-bugurl=https://bugs.archlinux.org/
-	  --enable-add-ons
+      --enable-add-ons
 	  --enable-bind-now
 	  --enable-tunables
 	  --enable-kernel=5.10.1

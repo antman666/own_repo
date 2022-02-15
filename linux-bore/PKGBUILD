@@ -150,6 +150,8 @@ source=(
   "${_patchsource}/sched/0001-bore-sched.patch"
   "${_patchsource}/0001-arch-patches-v3.patch"
   "${_patchsource}/0001-bbr2-patches.patch"
+  "${_patchsource}/0001-bitmap.patch"
+  "${_patchsource}/0001-cachy.patch"
   "${_patchsource}/0001-clearlinux.patch"
   "${_patchsource}/0001-cpu.patch"
   "${_patchsource}/0001-fs-patches.patch"

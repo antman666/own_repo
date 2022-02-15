@@ -120,6 +120,7 @@ source=(
   "${_patchsources}/misc/0010-ELF.patch"
   "${_patchsources}/0001-arch-patches-v3.patch"
   "${_patchsources}/0001-bbr2-patches.patch"
+  "${_patchsources}/0001-bitmap.patch"
   "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-fs-patches.patch"
   "${_patchsources}/0001-futex-winesync.patch"

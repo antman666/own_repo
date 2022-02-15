@@ -2,14 +2,14 @@
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Daniel Kozak <kozzi11@gmail.com>
 
-# toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
+# toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->libtool->glibc
 # NOTE: libtool requires rebuilt with each new gcc version
 
 pkgname=(gcc gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go lib32-gcc-libs gcc-d)
 pkgver=11.2.1
 _majorver=${pkgver%%.*}
 _islver=0.24
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -17,23 +17,22 @@ url='https://gcc.gnu.org'
 makedepends=(binutils libmpc gcc-ada doxygen lib32-glibc lib32-gcc-libs python git libxcrypt)
 checkdepends=(dejagnu inetutils)
 options=(!emptydirs)
-_libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=e41308252e835ddedcabfd4a98240080c6583a43
+_libdir="usr/lib/gcc/$CHOST/${pkgver%%+*}"
+_commit=19d0e7645eb2f65afe0505022331c57e7095c52e
 source=("git://gcc.gnu.org/git/gcc.git#commit=${_commit}"
-# source=(https://sourceware.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz{,.sig}
-        "https://sourceforge.net/projects/libisl/files/isl-${_islver}.tar.xz"
-		# "http://isl.gforge.inria.fr/isl-${_islver}.tar.xz"
+		"https://libisl.sourceforge.io/isl-${_islver}.tar.xz"
         c89 c99
-        gdc_phobos_path.patch
+        gcc-gdc_phobos_path.patch
         gcc-ada-repro.patch
-        gcc11-Wno-format-security.patch
-		gcc11-libgomp-omp_h-multilib.patch
-		gcc11-foffload-default.patch
-		gcc11-generate-missing-build-notes.patch
-		gcc11-stringify-__VA_OPT__.patch
-		gcc11-stringify-__VA_OPT__-2.patch
-		gcc11-libgcc-link.patch
-		gcc11-pr101786.patch
+        gcc-Wno-format-security.patch
+        gcc11-libgomp-omp_h-multilib.patch
+        gcc11-foffload-default.patch
+        gcc11-generate-missing-build-notes.patch
+        gcc11-stringify-__VA_OPT__.patch
+        gcc11-stringify-__VA_OPT__-2.patch
+        gcc11-libgcc-link.patch
+        gcc11-pr101786.patch
+        gcc-11.2.0-cross-compile-include.patch
 )
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
@@ -72,23 +71,24 @@ prepare() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
 
   # D hacks
-  patch -p1 -i "$srcdir/gdc_phobos_path.patch"
+  patch -p1 -i ../gcc-gdc_phobos_path.patch
 
   # Reproducible gcc-ada
-  patch -Np0 < "$srcdir/gcc-ada-repro.patch"
+  patch -p0 -i ../gcc-ada-repro.patch
 
   # configure.ac: When adding -Wno-format, also add -Wno-format-security
-  patch -Np0 < "$srcdir/gcc11-Wno-format-security.patch"
+  patch -p0 -i ../gcc-Wno-format-security.patch
 
-  patch -Np0 < "$srcdir/gcc11-libgomp-omp_h-multilib.patch"
-  patch -Np0 < "$srcdir/gcc11-foffload-default.patch"
-  patch -Np0 < "$srcdir/gcc11-generate-missing-build-notes.patch"
-  patch -Np0 < "$srcdir/gcc11-stringify-__VA_OPT__.patch"
-  patch -Np0 < "$srcdir/gcc11-libgcc-link.patch"
-  patch -Np0 < "$srcdir/gcc11-pr101786.patch"
-
-  # Add mold linker support
-  # patch -p1 < "$srcdir/gcc11-add-mold-support.patch"
+  patch -p0 -i ../gcc11-libgomp-omp_h-multilib.patch
+  patch -p0 -i ../gcc11-foffload-default.patch
+  patch -p0 -i ../gcc11-generate-missing-build-notes.patch
+  patch -p0 -i ../gcc11-stringify-__VA_OPT__.patch
+  patch -p0 -i ../gcc11-libgcc-link.patch
+  patch -p0 -i ../gcc11-pr101786.patch
+  # https://bugs.gentoo.org/803371
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80196
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017
+  patch -p1 -i ../gcc-11.2.0-cross-compile-include.patch
 
   mkdir -p "$srcdir/gcc-build"
 }
@@ -98,10 +98,12 @@ build() {
 
   # using -pipe causes spurious test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
+  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
   CFLAGS=${CFLAGS/-pipe/}
   CXXFLAGS=${CXXFLAGS/-pipe/}
 
-  "$srcdir/gcc/configure" --prefix=/usr \
+  "$srcdir/gcc/configure" 
+      --prefix=/usr \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       --mandir=/usr/share/man \
@@ -112,7 +114,7 @@ build() {
       --with-linker-hash-style=gnu \
       --with-system-zlib \
       --enable-__cxa_atexit \
-      --enable-cet=auto \
+      --disable-cet \
       --enable-checking=release \
       --enable-clocale=gnu \
       --enable-default-pie \
@@ -122,14 +124,12 @@ build() {
       --enable-install-libiberty \
       --enable-linker-build-id \
       --enable-lto \
-	  --enable-pgo-build \
       --enable-multilib \
       --enable-plugin \
       --enable-shared \
       --enable-threads=posix \
-      --disable-libssp \
-      --disable-libstdcxx-pch \
-      --disable-libunwind-exceptions \
+      --enable-64-bit-bfd \
+      --disable-bootstrap \
       --disable-werror \
       gdc_include_dir=/usr/include/dlang/gdc
 

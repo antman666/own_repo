@@ -3,7 +3,7 @@
 
 pkgbase=glib2
 pkgname=(glib2 glib2-docs)
-pkgver=2.70.3
+pkgver=2.70.4
 pkgrel=1
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -33,6 +33,11 @@ prepare() {
 build() {
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
   arch-meson glib build \
+    --prefix /usr \
+    --libexecdir lib \
+    --sbindir bin \
+    --auto-features enabled \
+    --wrap-mode nodownload \
     -D debug=false \
     -D b_ndebug=true \
     -D optimization=3 \

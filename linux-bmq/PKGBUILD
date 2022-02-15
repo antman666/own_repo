@@ -103,7 +103,7 @@ else
   pkgbase=linux-bmq-uksm
 fi
 _major=5.16
-_minor=8
+_minor=9
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -132,6 +132,8 @@ source=(
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0001-arch-patches-v3.patch"
   "${_patchsource}/0001-bbr2-patches.patch"
+  "${_patchsource}/0001-bitmap.patch"
+  "${_patchsource}/0001-cachy.patch"
   "${_patchsource}/0001-clearlinux.patch"
   "${_patchsource}/0001-cpu.patch"
   "${_patchsource}/0001-fs-patches.patch"
