@@ -103,7 +103,7 @@ else
   pkgbase=linux-bmq-uksm
 fi
 _major=5.16
-_minor=9
+_minor=10
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
