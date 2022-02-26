@@ -2,13 +2,13 @@
 # Contributor: Adrian Perez de Castro <aperez@igalia.com>
 
 pkgname=mold
-pkgver=1.0.3
+pkgver=1.1
 pkgrel=2
 pkgdesc='A Modern Linker'
 arch=('x86_64')
 url="https://github.com/rui314/mold"
 license=('AGPL3')
-depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb' 'xxhash')
+depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb')
 makedepends=('git' 'clang')
 _commit='bda68f94a4cb6b01649bb15865d6a6fecbef9db9'
 source=("$pkgname::git+$url.git#commit=$_commit")
@@ -23,6 +23,7 @@ pkgver() {
 prepare() {
   cd "$pkgname"
 
+  # use /usr/lib instead of /usr/libexec
   sed -i "s/libexec/lib/" Makefile
 }
 
@@ -32,8 +33,7 @@ build() {
     PREFIX=/usr \
     LTO=1 \
     SYSTEM_MIMALLOC=1 \
-    SYSTEM_TBB=1 \
-    SYSTEM_XXHASH=1
+    SYSTEM_TBB=1
 }
 
 check() {
@@ -49,7 +49,6 @@ check() {
     LTO=1 \
     SYSTEM_MIMALLOC=1 \
     SYSTEM_TBB=1 \
-    SYSTEM_XXHASH=1 \
     check
 }
 
@@ -60,7 +59,6 @@ package() {
     LTO=1 \
     SYSTEM_MIMALLOC=1 \
     SYSTEM_TBB=1 \
-    SYSTEM_XXHASH=1 \
     DESTDIR="$pkgdir" \
     install
 }

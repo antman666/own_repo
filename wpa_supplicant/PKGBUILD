@@ -1,10 +1,11 @@
-# Maintainer:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Maintainer: 
+# Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Thomas Bächler <thomas@archlinux.org>
 # Contributor: loqs
 
 pkgname=wpa_supplicant
 pkgver=2.10
-pkgrel=3
+pkgrel=4
 epoch=2
 pkgdesc='A utility providing key negotiation for WPA wireless networks'
 url='https://w1.fi/wpa_supplicant/'
@@ -45,27 +46,22 @@ build() {
 
 package() {
   cd "$srcdir/$pkgname-$pkgver/$pkgname"
+
   make LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$pkgdir" install
   install -Dm755 eapol_test "$pkgdir/usr/bin/eapol_test"
 
-  install -d -m755 "$pkgdir/etc/wpa_supplicant"
-  install -Dm644 wpa_supplicant.conf \
-    "$pkgdir/usr/share/doc/wpa_supplicant/wpa_supplicant.conf"
+  install -dm755 "$pkgdir/etc/wpa_supplicant"
+  install -Dm644 wpa_supplicant.conf -t "$pkgdir/usr/share/doc/wpa_supplicant"
 
+  install -Dm644 dbus/fi.w1.wpa_supplicant1.service \
+    -t "$pkgdir/usr/share/dbus-1/system-services"
 
-install -d -m755 "$pkgdir"/usr/share/dbus-1/{system.d,system-services}
-install -m644 \
-dbus/fi.w1.wpa_supplicant1.service \
-"$pkgdir/usr/share/dbus-1/system-services/"
+  install -Dm644 dbus/dbus-wpa_supplicant.conf \
+    "$pkgdir/usr/share/dbus-1/system.d/wpa_supplicant.conf"
 
- install -Dm644 dbus/dbus-wpa_supplicant.conf \
-"$pkgdir/usr/share/dbus-1/system.d/wpa_supplicant.conf"
+  install -Dm644 doc/docbook/*.5 -t "$pkgdir/usr/share/man/man5"
+  install -Dm644 doc/docbook/*.8 -t "$pkgdir/usr/share/man/man8"
+  rm "$pkgdir"/usr/share/man/man8/wpa_{priv,gui}.8
 
-  install -d -m755 "$pkgdir/usr/share/man/man"{5,8}
-  install -m644 doc/docbook/*.5 "$pkgdir/usr/share/man/man5/"
-  install -m644 doc/docbook/*.8 "$pkgdir/usr/share/man/man8/"
-  rm -f "$pkgdir/usr/share/man/man8/wpa_"{priv,gui}.8
-
-  install -d -m755 "$pkgdir/usr/lib/systemd/system"
-  install -m644 systemd/*.service "$pkgdir/usr/lib/systemd/system/"
+  install -Dm644 systemd/*.service -t "$pkgdir/usr/lib/systemd/system"
 }

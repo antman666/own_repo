@@ -7,14 +7,14 @@
 pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.35
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
 makedepends=(git gd lib32-gcc-libs python)
 optdepends=('perl: for mtrace')
 options=(!strip staticlibs)
-_commit=9e94f57484a2aba0fe67ea2059b5843f651887c2
+_commit=0f88a5c66e1cbb574bf37d953bf7155c0a1f5ae7
 source=("git+https://sourceware.org/git/glibc.git#commit=${_commit}"
         locale.gen.txt
         locale-gen

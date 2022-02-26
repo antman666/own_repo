@@ -6,7 +6,7 @@
 pkgbase=mesa
 pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-swrast' 'libva-mesa-driver' 'mesa-vdpau' 'mesa')
 pkgdesc="An open-source implementation of the OpenGL specification"
-pkgver=21.3.6
+pkgver=21.3.7
 pkgrel=1
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
@@ -30,8 +30,8 @@ validpgpkeys=('8703B6700E7EE06D7A39B8D6EDAE37B02CEB490D'  # Emil Velikov <emil.l
 build() {
   arch-meson mesa-$pkgver build \
     -D b_lto=true \
-	-D b_lto_mode=full \
-	-D optimization=3 \
+    -D b_lto_mode=full \
+    -D optimization=3 \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
     -D dri-drivers=i915,i965,r100,r200,nouveau \

@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm-lto
-pkgver=5.16.10
+pkgver=5.16.11
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -119,7 +119,6 @@ source=(
   "${_patchsource}/uksm-patches/0001-UKSM-for-5.16.patch"
   "${_patchsources}/0001-arch-patches-v3.patch"
   "${_patchsources}/0001-bbr2-patches.patch"
-  "${_patchsources}/0001-bitmap.patch"
   "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-fs-patches.patch"
   "${_patchsources}/0001-futex-winesync.patch"
@@ -128,8 +127,10 @@ source=(
   "${_patchsources}/misc/0010-ELF.patch"
   "${_patchsources}/0001-pf-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"

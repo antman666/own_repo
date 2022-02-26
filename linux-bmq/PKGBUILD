@@ -103,7 +103,7 @@ else
   pkgbase=linux-bmq-uksm
 fi
 _major=5.16
-_minor=10
+_minor=11
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -132,7 +132,6 @@ source=(
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0001-arch-patches-v3.patch"
   "${_patchsource}/0001-bbr2-patches.patch"
-  "${_patchsource}/0001-bitmap.patch"
   "${_patchsource}/0001-cachy.patch"
   "${_patchsource}/0001-clearlinux.patch"
   "${_patchsource}/0001-cpu.patch"
@@ -143,6 +142,14 @@ source=(
   "${_patchsource}/0001-MG-LRU-v7.patch"
   "${_patchsource}/0001-xanmod-patches.patch"
   "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.16/uksm-patches/0001-UKSM-for-5.16.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0002-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
 

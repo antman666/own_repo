@@ -19,7 +19,13 @@ makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl' 'xtrans'
 source=(https://xorg.freedesktop.org/releases/individual/xserver/${pkgbase}-${pkgver}.tar.xz{,.sig}
         xvfb-run # with updates from FC master
         xvfb-run.1
-		0001-xkb-fix-XkbSetMap-when-changing-a-keysym-without-cha.patch)
+		xorg-use-intel-only-on-pre-gen4.diff
+        xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
+        xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
+        xorg-xephyr_Dont_check_for_SeatId_anymore.patch
+        xorg-dix_Correctly_save_replayed_event_into_GrabInfoRec.patch
+        xorg-present_Check_for_NULL_to_prevent_crash.patch
+)
 validpgpkeys=('FD0004A26EADFE43A4C3F249C6F7AE200374452D') # Povilas Kanapickas <povilas@radix.lt>
 sha512sums=('cf5fed023eadda62ae732f8c4d427c272ebe005188341290f3d03147042c103b00cbb94d86a0256da815fb9b9a3da315c21a05ee0c926c1a2ff0c54ab0c0638b'
             'SKIP'
@@ -29,8 +35,20 @@ sha512sums=('cf5fed023eadda62ae732f8c4d427c272ebe005188341290f3d03147042c103b00c
 prepare() {
   cd ${pkgbase}-$pkgver
 
-  # merged in main
-  patch -Np1 -i ../0001-xkb-fix-XkbSetMap-when-changing-a-keysym-without-cha.patch
+  # From Debian use intel ddx driver only for gen4 and older chipsets
+  patch -p1 -i  xorg-use-intel-only-on-pre-gen4.diff
+
+  # Default to xf86-video-modesetting on GeForce 8 and newer
+  patch -p1 -i  xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
+
+  patch -p1 -i  xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
+
+  # FS#73274
+  patch -p1 -i  xorg-xephyr_Dont_check_for_SeatId_anymore.patch
+
+  # Fix crash with closed nvidia FS#73875
+  patch -p1 -i  xorg-dix_Correctly_save_replayed_event_into_GrabInfoRec.patch
+  patch -p1 -i  xorg-present_Check_for_NULL_to_prevent_crash.patch
 }
 
 build() {
@@ -40,11 +58,17 @@ build() {
   # export CFLAGS=${CFLAGS/-fno-plt}
   # export CXXFLAGS=${CXXFLAGS/-fno-plt}
   # export LDFLAGS=${LDFLAGS/,-z,now}
-  arch-meson ${pkgbase}-$pkgver build \
+  meson setup ${pkgbase}-$pkgver build \
+    --prefix /usr \
+    --libexecdir lib \
+    --sbindir bin \
+    --auto-features enabled \
+    --wrap-mode nodownload \
     -D debug=false \
-	-D optimization=3 \
+    -D optimization=3 \
     -D b_ndebug=true \
-	-D b_lto=true \
+    -D b_lto=true \
+	-D b_lto_mode=full \
     -D ipv6=true \
     -D xvfb=true \
     -D xnest=true \
@@ -53,9 +77,9 @@ build() {
     -D xephyr=true \
     -D glamor=true \
     -D udev=true \
-    -D dtrace=false \
     -D systemd_logind=true \
     -D suid_wrapper=true \
+    -D docs=false \
     -D xkb_dir=/usr/share/X11/xkb \
     -D xkb_output_dir=/var/lib/xkb
 
