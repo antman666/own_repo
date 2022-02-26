@@ -148,7 +148,6 @@ source=(
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
