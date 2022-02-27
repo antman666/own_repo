@@ -19,8 +19,6 @@ makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl' 'xtrans'
 source=(https://xorg.freedesktop.org/releases/individual/xserver/${pkgbase}-${pkgver}.tar.xz{,.sig}
         xvfb-run # with updates from FC master
         xvfb-run.1
-        xorg-use-intel-only-on-pre-gen4.diff
-        xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
         xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
         xorg-xephyr_Dont_check_for_SeatId_anymore.patch
         xorg-dix_Correctly_save_replayed_event_into_GrabInfoRec.patch
@@ -38,12 +36,6 @@ sha512sums=('cf5fed023eadda62ae732f8c4d427c272ebe005188341290f3d03147042c103b00c
 
 prepare() {
   cd ${pkgbase}-$pkgver
-
-  # From Debian use intel ddx driver only for gen4 and older chipsets
-  patch -Np1 -i  ../xorg-use-intel-only-on-pre-gen4.diff
-
-  # Default to xf86-video-modesetting on GeForce 8 and newer
-  patch -Np1 -i  ../xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
 
   patch -Np1 -i  ../xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
 
