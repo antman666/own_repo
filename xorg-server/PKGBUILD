@@ -36,19 +36,19 @@ prepare() {
   cd ${pkgbase}-$pkgver
 
   # From Debian use intel ddx driver only for gen4 and older chipsets
-  patch -p1 -i  xorg-use-intel-only-on-pre-gen4.diff
+  patch -Np1 -i  ../xorg-use-intel-only-on-pre-gen4.diff
 
   # Default to xf86-video-modesetting on GeForce 8 and newer
-  patch -p1 -i  xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
+  patch -Np1 -i  ../xorg-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
 
-  patch -p1 -i  xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
+  patch -Np1 -i  ../xorg-xkb-fix-XkbSetMap-when-changing-a-keysym.patch
 
   # FS#73274
-  patch -p1 -i  xorg-xephyr_Dont_check_for_SeatId_anymore.patch
+  patch -Np1 -i  ../xorg-xephyr_Dont_check_for_SeatId_anymore.patch
 
   # Fix crash with closed nvidia FS#73875
-  patch -p1 -i  xorg-dix_Correctly_save_replayed_event_into_GrabInfoRec.patch
-  patch -p1 -i  xorg-present_Check_for_NULL_to_prevent_crash.patch
+  patch -Np1 -i  ../xorg-dix_Correctly_save_replayed_event_into_GrabInfoRec.patch
+  patch -Np1 -i  ../xorg-present_Check_for_NULL_to_prevent_crash.patch
 }
 
 build() {
