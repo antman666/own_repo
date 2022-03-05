@@ -9,7 +9,7 @@ pkgname=(gcc gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go lib32-gcc-libs gcc-d)
 pkgver=11.2.1
 _majorver=${pkgver%%.*}
 _islver=0.24
-pkgrel=3
+pkgrel=4
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -18,7 +18,7 @@ makedepends=(binutils libmpc gcc-ada doxygen lib32-glibc lib32-gcc-libs python g
 checkdepends=(dejagnu inetutils)
 options=(!emptydirs)
 _libdir="usr/lib/gcc/$CHOST/${pkgver%%+*}"
-_commit=c08d4266e48d52b7f8d16c79d3471be40ff56acc
+_commit=79fddacc4e8cce9590b52f58a25db2129376adc3
 source=("git://gcc.gnu.org/git/gcc.git#commit=${_commit}"
 		"https://libisl.sourceforge.io/isl-${_islver}.tar.xz"
         c89 c99
@@ -100,8 +100,8 @@ build() {
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
-  CFLAGS=${CFLAGS/-Werror=format-security/}
-  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  CFLAGS=${CFLAGS/-pipe/}
+  CXXFLAGS=${CXXFLAGS/-pipe/}
 
   # using -pipe causes spurious test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
@@ -109,42 +109,39 @@ build() {
   # CFLAGS=${CFLAGS/-pipe/}
   # CXXFLAGS=${CXXFLAGS/-pipe/}
 
-  "$srcdir/gcc/configure" --prefix=/usr \
-      --libdir=/usr/lib \
-      --libexecdir=/usr/lib \
-      --mandir=/usr/share/man \
-      --infodir=/usr/share/info \
-      --with-bugurl=https://bugs.archlinux.org/ \
-      --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d \
-      --with-isl \
-      --with-linker-hash-style=gnu \
-      --with-system-zlib \
-      --enable-__cxa_atexit \
-      --enable-cet=auto \
-      --enable-checking=release \
-      --enable-clocale=gnu \
-      --enable-default-pie \
-      --enable-default-ssp \
-      --enable-gnu-indirect-function \
-      --enable-gnu-unique-object \
-      --enable-linker-build-id \
-      --enable-lto \
-      --enable-multilib \
-      --enable-pgo-build=lto \
-      --enable-plugin \
-      --enable-shared \
-      --enable-threads=posix \
-      --disable-libssp \
-      --disable-libstdcxx-pch \
-      --disable-werror \
-      --with-build-config=bootstrap-lto \
-      --enable-link-serialization=1 \
-      gdc_include_dir=/usr/include/dlang/gdc
+  "$srcdir/gcc/configure" \
+    --host=${CHOST} \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info \
+    --with-bugurl=https://bugs.archlinux.org/ \
+    --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d \
+    --with-isl \
+    --with-linker-hash-style=gnu \
+    --with-system-zlib \
+    --enable-__cxa_atexit \
+    --disable-cet \
+    --enable-checking=release \
+    --enable-clocale=gnu \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-gnu-indirect-function \
+    --enable-gnu-unique-object \
+    --enable-install-libiberty \
+    --enable-linker-build-id \
+    --enable-lto \
+    --enable-multilib \
+    --enable-plugin \
+    --enable-shared \
+    --enable-threads=posix \
+    --enable-64-bit-bfd \
+    --enable-bootstrap \
+    --disable-werror \
+    gdc_include_dir=/usr/include/dlang/gdc
 
-  make -O STAGE1_CFLAGS="-O2" \
-          BOOT_CFLAGS="$CFLAGS" \
-          BOOT_LDFLAGS="$LDFLAGS" \
-          LDFLAGS_FOR_TARGET="$LDFLAGS"
+  make
 
   # make documentation
   make -O -C $CHOST/libstdc++-v3/doc doc-man-doxygen

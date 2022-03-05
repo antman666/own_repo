@@ -7,7 +7,7 @@
 pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.35
-pkgrel=3
+pkgrel=4
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
@@ -24,7 +24,6 @@ source=("git+https://sourceware.org/git/glibc.git#commit=${_commit}"
         glibc-cs-path.patch
         glibc-relative-relocations.patch
         glibc-clang.patch
-        # glibc-set-text-section-in-memset-vec-unaligned-erms.patch
 )
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8 # Carlos O'Donell
               BC7C7372637EC10C57D7AA6579C43DFBF1CF2187) # Siddhesh Poyarekar
@@ -64,7 +63,6 @@ build() {
 	  --enable-systemtap
 	  --disable-nscd
 	  --disable-cet
-	  --disable-stackguard-randomization
 	  --disable-lock-elision
 	  --disable-profile
 	  --disable-werror

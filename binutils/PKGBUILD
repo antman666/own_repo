@@ -5,7 +5,7 @@
 
 pkgname=binutils
 pkgver=2.38
-pkgrel=1
+pkgrel=2
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -17,20 +17,21 @@ conflicts=(binutils-multilib)
 replaces=(binutils-multilib)
 options=(staticlibs)
 source=(https://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz{,.sig}
-        binutils-2.38-fix-build.patch
-        binutils-CVE-2019-1010204.patch
-        binutils-autoconf-version.patch
-        binutils-fix-testsuite-failures.patch
-        binutils-gold-i386-gnu-property-notes.patch
-        binutils-gold-mismatched-section-flags.patch
-        binutils-gold-warn-unsupported.patch
-        binutils-ld-default-entry-of-0-for-shared.patch
         binutils-no-config-h-check.patch
-        binutils-readelf-other-sym-info.patch
         binutils-revert-PLT-elision.patch
         binutils-special-sections-in-groups.patch
+        binutils-fix-testsuite-failures.patch
+        binutils-gold-mismatched-section-flags.patch
+        binutils-CVE-2019-1010204.patch
+        binutils-gold-warn-unsupported.patch
         binutils-use-long-long.patch
+        binutils-gold-i386-gnu-property-notes.patch
+        binutils-autoconf-version.patch
+        binutils-ld-default-entry-of-0-for-shared.patch
+        binutils-readelf-other-sym-info.patch
         gcc12-libtool-no-rpath.patch
+        binutils-section-type.patch
+        binutils-2.38-fix-build.patch
 )
 sha256sums=('0e661641bbcf15ac8d3d3dbff802ccd9c475309a8fcdcc0294e2d3e2001252d2'
             '199b4044d06f8daa2197a7a4d03cf8b2a63f2e7b8493e709c6a016c1e3f902d1'
@@ -137,6 +138,10 @@ prepare() {
   # Purpose:  Stop libtool from inserting useless runpaths into binaries.
   # Lifetime: Who knows.
   patch -p1 -i ../gcc12-libtool-no-rpath.patch
+
+  # Purpose:  Add support for specifying section types in linker scripts.
+  # Lifetime: Fixed in 2.39
+  patch -p1 -i ../binutils-section-type.patch
 
   # My patch to fix build 2.38
   patch -p1 -i ../binutils-2.38-fix-build.patch

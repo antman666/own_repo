@@ -53,13 +53,9 @@ build() {
   # See https://bugs.archlinux.org/task/55102 / https://bugs.archlinux.org/task/54845
   export CFLAGS=${CFLAGS/-fno-plt}
   export CXXFLAGS=${CXXFLAGS/-fno-plt}
-  # export LDFLAGS=${LDFLAGS/,-z,now}
-  meson setup ${pkgbase}-$pkgver build \
-    --prefix /usr \
-    --libexecdir lib \
-    --sbindir bin \
-    --auto-features enabled \
-    --wrap-mode nodownload \
+  export LDFLAGS=${LDFLAGS/,-z,now}
+
+  arch-meson ${pkgbase}-$pkgver build \
     -D debug=false \
     -D optimization=3 \
     -D b_ndebug=true \

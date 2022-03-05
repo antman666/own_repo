@@ -4,14 +4,14 @@
 pkgbase=glib2
 pkgname=(glib2 glib2-docs)
 pkgver=2.70.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
 license=(LGPL)
 arch=(x86_64)
 depends=(pcre libffi util-linux-libs zlib libsysprof-capture)
-makedepends=(gettext gtk-doc shared-mime-info python libelf git util-linux
-             meson dbus)
+makedepends=(gettext gtk-doc shared-mime-info 
+  python libelf git util-linux meson dbus)
 checkdepends=(desktop-file-utils)
 source=("git+https://gitlab.gnome.org/GNOME/glib.git?signed#tag=$pkgver"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
@@ -35,16 +35,20 @@ prepare() {
 
 build() {
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
-  arch-meson glib build \
+  meson setup glib build \
+    --prefix /usr \
+    --libexecdir lib \
+    --sbindir bin \
+    --auto-features enabled \
+    --wrap-mode nodownload \
     -D debug=false \
-    -D b_ndebug=true \
     -D optimization=3 \
+    -D b_ndebug=true \
     -D b_lto=true \
     -D glib_debug=disabled \
     -D selinux=disabled \
     -D man=true \
-    -D gtk_doc=true \
-    -D sysprof=enabled
+    -D gtk_doc=true
 
   meson compile -C build
 }
