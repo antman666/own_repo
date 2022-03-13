@@ -68,7 +68,7 @@ _lru_enable=y
 _page_table_check=
 
 ### Enable DAMON
-_damon=
+_damon=y
 
 ### Enable Linux Random Number Generator
 _lrng_enable=y
@@ -103,7 +103,7 @@ else
   pkgbase=linux-bmq-uksm
 fi
 _major=5.16
-_minor=12
+_minor=14
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -128,24 +128,22 @@ _patchsource="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
   "config"
-  "${_patchsource}/misc/0010-ELF.patch"
   "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/0001-arch-patches-v3.patch"
+  "${_patchsource}/0001-arch-patches.patch"
   "${_patchsource}/0001-bbr2-patches.patch"
   "${_patchsource}/0001-cachy.patch"
   "${_patchsource}/0001-clearlinux.patch"
   "${_patchsource}/0001-cpu.patch"
-  "${_patchsource}/0001-fs-patches.patch"
-  "${_patchsource}/0001-futex-winesync.patch"
-  "${_patchsource}/0001-pf-patches.patch"
   "${_patchsource}/0001-lrng.patch"
   "${_patchsource}/0001-MG-LRU-v7.patch"
+  "${_patchsource}/0001-misc-new.patch"
+  "${_patchsource}/0001-net-patches.patch"
+  "${_patchsource}/0001-pf-patches.patch"
   "${_patchsource}/0001-xanmod-patches.patch"
   "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.16/uksm-patches/0001-UKSM-for-5.16.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0002-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
@@ -538,18 +536,24 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-md5sums=('274c41accec2bf95425ddbd7cbf31127'
-         '6f2ac40c320f651cc9109f0bcc046aaf'
-         '9fa22cd65133c4cefb99a7897fc0bf7c'
-         '3cbc8878b3125172907140b12b977715'
+md5sums=('e972cda9b33bbd70737bfccb365410f8'
+         '39c8232991f6d5fb2dd098e449627113'
+         '0eca4c1c082003dadf34618d0244ad63'
+         'ff463ed4a91f6e683afc5f038be8c0e8'
          'd194311161f8f44755e532db738f4a2d'
-         'd4c38ce51fb9a69aa92ad9b9e0199122'
+         '1fdc013ffcc929bc599057826a4fdb25'
          'a687c26c262ccb9ad7cb54697a1476bc'
-         'f02b14c360bc325e221ee407858ec2e9'
-         'be1e00d93e9c2ba91ee6017b82e64194'
-         '28dcc1fe3029c6c316773bbcbe82954d'
+         'd4c38ce51fb9a69aa92ad9b9e0199122'
          '9f86c3b9e6271cfc4440864a6857b256'
-         'c463c17e1bf27df35f05eb1004c2ba48'
-         'a05b47e1970509a27f36501534751a9b'
+         '08f9350773b1ece062f20eb9ccfc101d'
+         '35ea21c3f5f613e51d863f90bce5bbe4'
+         'bf010dff1d7a48191d491eba2dde1227'
+         'fe3559842f39a751d89a0871fc6f9eaf'
          'b7a0bcd57dac3b39f00e7694249b6efb'
-         '4103bf519cb6de32312aed2ee671d224')
+         '4103bf519cb6de32312aed2ee671d224'
+         'cedba00a8b3025f4b323115d10574cad'
+         'ab318989b7d041b9e128e291560fb503'
+         'c446f9e7d61b41e13090c0f184b42bac'
+         'ed86cb6a22b4039f0a25e057eb142543'
+         'ef11b0a2b50428f4bba79f5a52aa20af'
+         '29dde7e89e7fe8353aac3f0d4eb6c525')
