@@ -138,7 +138,7 @@ source=(
   "${_patchsource}/0001-MG-LRU-v7.patch"
   "${_patchsource}/0001-misc-new.patch"
   "${_patchsource}/0001-net-patches.patch"
-  "${_patchsource}/0001-pf-patches.patch"
+  # "${_patchsource}/0001-pf-patches.patch"
   "${_patchsource}/0001-xanmod-patches.patch"
   "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.16/uksm-patches/0001-UKSM-for-5.16.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.16.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
