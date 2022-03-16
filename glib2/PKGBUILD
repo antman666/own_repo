@@ -35,6 +35,10 @@ prepare() {
 
 build() {
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
+  export CFLAGS=${CFLAGS/-fno-plt}
+  export CXXFLAGS=${CXXFLAGS/-fno-plt}
+  export CFLAGS=${CFLAGS/-fno-semantic-interposition}
+  export CXXFLAGS=${CXXFLAGS/-fno-semantic-interposition}
   meson setup glib build \
     --prefix /usr \
     --libexecdir lib \

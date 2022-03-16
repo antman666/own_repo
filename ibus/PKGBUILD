@@ -2,8 +2,8 @@
 
 pkgbase=ibus
 pkgname=(ibus libibus)
-pkgver=1.5.25
-pkgrel=8
+pkgver=1.5.26
+pkgrel=1
 pkgdesc="Next Generation Input Bus for Linux"
 arch=('x86_64')
 url="https://github.com/ibus/ibus/wiki"
