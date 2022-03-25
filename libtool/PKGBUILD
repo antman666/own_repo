@@ -7,8 +7,8 @@
 # NOTE: requires rebuilt with each new gcc version
 
 pkgname=libtool
-pkgver=2.4.6+63+gf5eb6f11
-pkgrel=3
+pkgver=2.4.7
+pkgrel=1
 pkgdesc='A generic library support script'
 arch=(x86_64)
 url='https://www.gnu.org/software/libtool'
@@ -20,7 +20,7 @@ checkdepends=(gcc-fortran)
 provides=("libltdl=$pkgver" "libtool-multilib=$pkgver")
 conflicts=(libltdl libtool-multilib)
 replaces=(libltdl libtool-multilib)
-_commit=f5eb6f11698c65e550bfdcc1a0a1943df6d70f28
+_commit=6d7ce133ce54898cf28abd89d167cccfbc3c9b2b
 source=(git+https://git.savannah.gnu.org/git/libtool.git#commit=$_commit
         git+https://git.savannah.gnu.org/git/gnulib.git
         gnulib-bootstrap::git+https://github.com/gnulib-modules/bootstrap.git
