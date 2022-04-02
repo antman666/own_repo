@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17
+pkgver=5.17.1
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -102,10 +102,6 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
-# https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
-# thankfully xanmod keeps the hrtimer patches up to date
-_commit=c8fd0bce08e6219df068e717c53aa08a7fbb496d
-_xan=linux-5.15.y-xanmod
 _gcc_more_v=20220315
 _patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.17"
 _patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.17"
@@ -114,22 +110,19 @@ source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "xanmod-patches-from-ck-$_commit.tar.gz::https://github.com/xanmod/linux-patches/archive/$_commit.tar.gz"
   "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  #"${_patchsources}/0001-arch-patches.patch"
   "${_patchsources}/0001-bbr2.patch"
   "${_patchsources}/0001-block-patches.patch"
   "${_patchsources}/0001-btrfs-patches.patch"
   "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-fixes-miscellaneous.patch"
   "${_patchsources}/0001-lrng.patch"
-  #"${_patchsources}/0001-misc-new.patch"
   "${_patchsources}/0001-MG-LRU.patch"
-  #"${_patchsources}/0001-net-patches.patch"
   "${_patchsources}/0001-pf-patches.patch"
   "${_patchsources}/sched/0001-tt.patch"
+  "${_patchsources}/0001-spf-lru-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
@@ -323,6 +316,7 @@ prepare() {
   scripts/config --disable CONFIG_ZSWAP
 
   msg2 "Setting performance governor..."
+  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
   scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
   scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
   scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL

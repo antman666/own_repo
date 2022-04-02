@@ -6,7 +6,7 @@
 pkgbase=mesa
 pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-swrast' 'libva-mesa-driver' 'mesa-vdpau' 'mesa')
 pkgdesc="An open-source implementation of the OpenGL specification"
-pkgver=22.0.0
+pkgver=22.0.1
 pkgrel=1
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
@@ -57,6 +57,7 @@ build() {
     -D lmsensors=enabled \
     -D osmesa=true \
     -D shared-glapi=enabled \
+	-D zstd=disabled \
     -D microsoft-clc=disabled \
     -D valgrind=enabled
 

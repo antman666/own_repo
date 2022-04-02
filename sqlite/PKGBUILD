@@ -6,8 +6,8 @@ pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
 _srcver=3380100
 _docver=${_srcver}
 #_docver=3330000
-pkgver=3.38.1
-pkgrel=2
+pkgver=3.38.2
+pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
 license=('custom:Public Domain')
@@ -31,7 +31,7 @@ prepare() {
   # https://src.fedoraproject.org/rpms/sqlite/blob/master/f/sqlite.spec
   patch -Np1 -i ../sqlite-lemon-system-template.patch
 
-  #autoreconf -vfi
+  autoreconf -vfi
 }
 
 build() {
@@ -57,7 +57,7 @@ build() {
 	--enable-rtree \
 	--enable-json1 \
 	TCLLIBDIR=/usr/lib/sqlite$pkgver
-  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  sed -i -e 's/ -shared / -Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu\0/g' libtool
   make
   # build additional tools
   make showdb showjournal showstat4 showwal sqldiff sqlite3_analyzer

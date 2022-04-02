@@ -5,7 +5,7 @@
 
 pkgname=binutils
 pkgver=2.38
-pkgrel=2
+pkgrel=3
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -32,21 +32,30 @@ source=(https://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz{,.sig}
         gcc12-libtool-no-rpath.patch
         binutils-section-type.patch
         binutils-2.38-fix-build.patch
+        binutils-do-not-use-debuginfod.patch
+        binutils-gas-loc-view.patch
+        fix-incorrect-undefined-symbol.patch
 )
-sha256sums=('0e661641bbcf15ac8d3d3dbff802ccd9c475309a8fcdcc0294e2d3e2001252d2'
-            '199b4044d06f8daa2197a7a4d03cf8b2a63f2e7b8493e709c6a016c1e3f902d1'
-            '915c02b0e5df3c6849e170304a2ee16f5741b74fdb6e5ad755a38364d06afc62'
-            '49e01577e2f95926441642d2e798bcfc4ea08a9c83e4d28bbb9d563d569b7ef3'
-            '72ba8f1a0c9d8ec0f443f11d1a3bea8fff5d7b6ff6cdbd0fd02ded747959503d'
-            '1939d75dbaa43a917e3388a6b9382ae0ba200b6f65b95979e226281be507394c'
-            '2d430b66f84a19c154725ec535280c493be1d34f1a90f95208dce02fecd0e4e4'
-            'e6ffa1b8452ae74293523140a9eb767b3b30b73d9e466709fcf8c478a05bd455'
+sha256sums=('e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024'
+            'SKIP'
             'c842f958c26c56b868ca7e9a56012490aef4ff29a4956c06ab422955758a9af6'
-            '995f16f70b4b2be12f0c8dec4bdc5e074c831f35751b99de2c2f47053621745f'
             'cf9fd37b33332866a2cebb8e090b51fa6ed5ac3defbff8787d8953056b5b3ba9'
             '143f53ebe64cf7640d8bce44446995c2d1b393fd3c5a4dbd0a82c24352e0e8f4'
+            '49e01577e2f95926441642d2e798bcfc4ea08a9c83e4d28bbb9d563d569b7ef3'
+            '1939d75dbaa43a917e3388a6b9382ae0ba200b6f65b95979e226281be507394c'
+            '199b4044d06f8daa2197a7a4d03cf8b2a63f2e7b8493e709c6a016c1e3f902d1'
+            '2d430b66f84a19c154725ec535280c493be1d34f1a90f95208dce02fecd0e4e4'
             '73af103882e23936b5423e5756a6edf485ef327091e0b9aaa2a51be55764e98e'
-            'e60f198bb49f29dfca2355e6ca2fae24c2a933a55ab567fedfa55ca5ae57aad4')
+            '72ba8f1a0c9d8ec0f443f11d1a3bea8fff5d7b6ff6cdbd0fd02ded747959503d'
+            '915c02b0e5df3c6849e170304a2ee16f5741b74fdb6e5ad755a38364d06afc62'
+            'e6ffa1b8452ae74293523140a9eb767b3b30b73d9e466709fcf8c478a05bd455'
+            '995f16f70b4b2be12f0c8dec4bdc5e074c831f35751b99de2c2f47053621745f'
+            'e60f198bb49f29dfca2355e6ca2fae24c2a933a55ab567fedfa55ca5ae57aad4'
+            '2ac235c2218e36c3d3154f1d7923fe1518601de0d4714aa1754277674737b8ea'
+            '0e661641bbcf15ac8d3d3dbff802ccd9c475309a8fcdcc0294e2d3e2001252d2'
+            '796ed0a124c7f93cd6f6f4063c915b455cf999fd619d8faa0f593c71ede22564'
+            '31954c5a617a9c985a991ffb12be74f60de0d062cb63627629baa1e844439c79'
+            'fd33b2f8cac7561cecf3fdbb5a50fd2f2dfa6420516cbe57c47784a06fa16bf6')
 validpgpkeys=(3A24BC1E8FB409FA9F14371813FCEF89DD9E3C4F)
 
 prepare() {
@@ -135,6 +144,10 @@ prepare() {
   #           no longer being maintained.
   patch -p1 -i ../binutils-readelf-other-sym-info.patch
 
+  # Purpose:  Simplify the evaluation of assembler loc view expression chains.
+  # Lifetime: Fixed in 2.39
+  patch -p1 -i ../binutils-gas-loc-view.patch
+
   # Purpose:  Stop libtool from inserting useless runpaths into binaries.
   # Lifetime: Who knows.
   patch -p1 -i ../gcc12-libtool-no-rpath.patch
@@ -143,9 +156,17 @@ prepare() {
   # Lifetime: Fixed in 2.39
   patch -p1 -i ../binutils-section-type.patch
 
+  # Purpose:  Add an option to disable access to debuginfod servers.
+  # Lifetime: Fixed in 2.39
+  patch -p1 -i ../binutils-do-not-use-debuginfod.patch
+
+  # fix incorrect "undefined reference" errors
+  # https://sourceware.org/bugzilla/show_bug.cgi?id=28879
+  patch -p1 -i ../fix-incorrect-undefined-symbol.patch
+
   # My patch to fix build 2.38
   patch -p1 -i ../binutils-2.38-fix-build.patch
-
+  
   # Turn off development mode (-Werror, gas run-time checks, date in sonames)
   sed -i '/^development=/s/true/false/' bfd/development.sh
 

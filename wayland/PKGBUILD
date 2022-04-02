@@ -5,7 +5,7 @@
 pkgbase=wayland
 pkgname=(wayland wayland-docs)
 pkgver=1.20.0
-pkgrel=4
+pkgrel=5
 pkgdesc='A computer display server protocol'
 arch=('x86_64')
 url='https://wayland.freedesktop.org/'
@@ -20,16 +20,18 @@ sha256sums=('b8a034154c7059772e0fdbd27dbfcda6c732df29cae56a82274f6ec5d7cd8725'
             'SKIP')
 
 build() {
-  meson build $pkgbase-$pkgver --buildtype=release --prefix=/usr
-  ninja -C build
+  arch-meson $pkgbase-$pkgver build
+  meson compile -C build
 }
 
 check() {
-  ninja -C build test
+  meson test -C build --print-errorlogs
 }
 
 package_wayland() {
-  DESTDIR="$pkgdir" ninja -C build install
+  provides=(libwayland-{client,cursor,egl,server}.so)
+
+  meson install -C build --destdir "$pkgdir"
   mkdir -p docs/share
   mv "$pkgdir"/usr/share/{doc,man} docs/share
   install -Dm 644 $pkgbase-$pkgver/COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
