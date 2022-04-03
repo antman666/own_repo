@@ -32,11 +32,11 @@ sha256sums=('6a0764c1aae7fb607ef8a6dd2c0f6c47d5e5fd27aa08820abaad9ec14e28e9d9'
             '8ccec10a22523f6b9d55e0d6cbf91905a39881446710aa083e935e8073323376'
             'a22e0a037e702170c7d88460cc9c9c2ab1d3e5c54a6985cd4a164ea7beff1b36')
 
-prepare() {
-  cd "${pkgbase}-${_realver}"
+# prepare() {
+#   cd "${pkgbase}-${_realver}"
 
-  patch -Np1 < ../0001-agetty-resolve-tty-name-even-if-stdin-is-specified.patch
-}
+#   patch -Np1 < ../0001-agetty-resolve-tty-name-even-if-stdin-is-specified.patch
+# }
 
 build() {
   cd "${pkgbase}-${_realver}"

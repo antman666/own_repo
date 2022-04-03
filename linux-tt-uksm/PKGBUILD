@@ -120,9 +120,9 @@ source=(
   "${_patchsources}/0001-MG-LRU.patch"
   "${_patchsources}/0001-pf-patches.patch"
   "${_patchsources}/sched/0001-tt.patch"
-  "${_patchsources}/0001-spf-lru-patches.patch"
+  # "${_patchsources}/0001-spf-lru-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
@@ -136,22 +136,21 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('82dc4a45cc25c781ac67aa6ed1e4c369544154960f41c4634d47621f381159687a227054976d078524cda28884d395a15f7542fe44ca74ce98ca6ff54a81d6d0'
+b2sums=('1275903955f014d0a0b4cad9074710d36825b274814cde457cf9e1f9acc188b21da7de01100f99cfe9644fb7fd182a95257d124a6992ac3be47adb907e230616'
         'SKIP'
         '9ee936d2e384066eb2ab95f80b442baffc5d22d0369c0b2d358aa073fbbcaf64be79356030f6989bf60b2a2b145775e42d3e35cd5c8b58c74209b04d00032b3d'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
         '2a1e03f82e6901b730051408d76795021de2b425b6efb724b1f4a0d36f1b09e44ba478a7e929a3c5475dbfade152ce317c732d3a507b4b5e93ec62f539130d9c'
         'e757f54942093cb1eace6c0db779272399b98ce0c5f59f65410a6dd05c7f8d870d4bcc160525637f101a9c5e2d268681517a48bd6d0d8f0fb91511db59219f37'
         'ff708a10ed723b644cbe9eae86d96f5d4f54bc87be87d63cb6dd59505ca671b012085482bbcd8e9946ab1cfb69741731452d8edab1e3c2212f159138ae532fc0'
-        'bf1e39492545261b0a94a92abe23d4ddf1b80677b9d54a2e5de8f5309ea1eacf6b83f3eb78b2533d4e30fe647ce62bd8a9b75f35a10f51afce1bf1a5143eb9c2'
+        '0e417392e72991d86bc1b9aa69c7b22b4ae75c1ed1daf542f9c229558227bb0906c938bc1029d488072a53ae2193de8a1c68b0f0502ce8342fccb1d5f83b8259'
         '9afc555a5aec1a0aec658fe1d2bb3595a9a47b9e82016fe63248a68095eb8ee2698cffb90e7c5895c847c4a1a543d8570909404d23768d5114896b8e861a6f62'
-        '7ec12e127db5a9fbaa65ea83145a6ac9dbdf0556a4c33b37a544b5612646fd6421709ead9aabc17e9e161edd6640467a57ca41b6e39e7a2e050cb52dd967dd20'
-        '04b71bbc4512fb65b3e6bb9e06a447f65d3c88f035879ce55b027e5073dc0e9c99889434899aa8296040cd56bccef53b97b5e6d8a0a1b4bc7bf9ba48d699edf6'
-        '0c60aa8dc9557b78efe823ee1c5451a50ca2bac2cdaf49992b93d5106e8c908c57bd3a00de56f84b086a7baaef9026d131f8c925ecb68a0d51008a988f3d45a8'
-        '8fe4c194e590f44f80d20f61bbcadc66ead8a37de4b1887515e25b9e1f80ecd77994b5afbc0327568190c019518d3fd59f5fdc9c909cbcce5f34d737e1fce4a3'
+        '47b7805c66ec58a19bfca63930a7c557cfec8d8db279bf9d2ae639b4abaf763372ff55122fe42e78c4e2fdba13a1e695515c192820dee31296292a3819b3efa3'
+        '51abb770cb34a3d88f48ebe8a96e147b55432e9176a717fc9de03f6b08acb2c92d2ec9eab061eefe94f24053bbd61685d2a6358fe5e931ca79c476cbccc065ca'
+        '2c3077e3dc5698fce0f782df0fa8631cf4e3417987820259d95fea3c494585ce4b222a555f313591873aeb71753f4deebb89d4c93db3abc8f1ea7062a765ecf0'
+        '48ac85dfd52d3133894d909c6658b549775e5e5eabaf41dbebce668adedc70f40a37153fe523256cf5ed9113ee1425293d4d2077968049d8d362a0e626e4c2d2'
         'd88a1ca68a97c21d8cf5c5bd3ed67718b286f7f80cf9ee927c4a25dbceaef8cde7686c294421cbce039cb44397327d04cc2114d751b2ac8c9fec892790524490'
         '9a3222c9a56f173b051be294ad4189949d29dce1c152eae94b1b05cd6a798909fe2fe42f7699be93b3a845f0ebf673d98c3b16757a15fd1e08d86a5f297b338c'
-        'd0dd0e8f3a1ad6683ae2f4e0e88a3b323ba0bfc3cf2c559ed6223f7ab979b2485506c5e5e7ac94626cbd2ad671da3f2d33cfbcc6d8759514d371ac5569703744'
         'e185a1dc68462e0deba3374dece3ee3a22db7e0c8abf42906366d4cf869d216648c402ce745fbb7c9d2096a77d6b5ff858f5f672b4bbca7d2716cdc2647f10a1'
         '11645a4a6215b1e90db285f9953301ed9d859436138d017d1437992c4fac73ed42df527fdc6c9a46920504ec2f11de0d2363da4d2b73e2478df67169a368e13f'
         '69a67d53b4a2f95d3cbd61cdf231f8a2475076220a2c623ec1d8d93caa9137ea66587c498cddface2fa76417a3d59a1ae38324c21822d90099709e26c2413722'
