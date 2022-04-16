@@ -4,7 +4,7 @@ pkgname=openssl
 _ver=1.1.1n
 # use a pacman compatible version scheme
 pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
-pkgrel=1
+pkgrel=2
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -15,6 +15,7 @@ optdepends=('ca-certificates' 'perl')
 replaces=('openssl-perl' 'openssl-doc')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"{,.asc}
+    https://github.com/openssl/openssl/commit/d6bf4a2218aeb246ba7d34f02e895c37569c8265.patch
 	'ca-dir.patch')
 sha256sums=('f89199be8b23ca45fc7cb9f1d8d3ee67312318286ad030f5316aca6462db6c96'
             'SKIP'
@@ -27,6 +28,14 @@ prepare() {
 
 	# set ca dir to /etc/ssl by default
 	patch -p0 -i "$srcdir/ca-dir.patch"
+	
+	# Fix undefined symbol: EVP_PKEY_get_base_id
+    # https://github.com/openssl/openssl/issues/17962
+    patch -p1 -i "${srcdir:?}/d6bf4a2218aeb246ba7d34f02e895c37569c8265.patch"
+	
+	# set ca dir to /etc/ssl by default
+    sed -i -e 's/\.\/demoCA/\/etc\/ssl/g' apps/CA.pl.in
+    sed -i -e 's/\.\/demoCA/\/etc\/ssl/g' apps/openssl.cnf
 }
 
 build() {

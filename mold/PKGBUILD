@@ -2,7 +2,7 @@
 # Contributor: Adrian Perez de Castro <aperez@igalia.com>
 
 pkgname=mold
-pkgver=1.1.1
+pkgver=1.2.0
 pkgrel=1
 pkgdesc='A Modern Linker'
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="https://github.com/rui314/mold"
 license=('AGPL3')
 depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb')
 makedepends=('git' 'clang')
-_commit='c1af9c97e763a1d521889191a83b27bd6c43b351' # v1.1.1
+_commit='5803c3c200f301adc3abdb66df16d3d669712d70' # v1.2.0
 source=("$pkgname::git+$url.git#commit=$_commit")
 b2sums=('SKIP')
 
