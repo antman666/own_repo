@@ -28,9 +28,6 @@ validpgpkeys=('8703B6700E7EE06D7A39B8D6EDAE37B02CEB490D'  # Emil Velikov <emil.l
               '57551DE15B968F6341C248F68D8E31AFC32428A6') # Eric Engestrom <eric@engestrom.ch>
 
 build() {
-  export CC=clang
-  export CXX=clang++
-  export LD=lld
   arch-meson mesa-$pkgver build \
     -D b_lto=true \
     -D b_lto_mode=full \

@@ -9,15 +9,17 @@ arch=('x86_64')
 url="https://github.com/rui314/mold"
 license=('AGPL3')
 depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb')
-makedepends=('git' 'clang')
-_commit='5803c3c200f301adc3abdb66df16d3d669712d70' # v1.2.0
+makedepends=('git')
+checkdepends=('clang' 'libdwarf')
+_commit='f86868cb389d9d45fab99e200f51f2682a4f5956'
 source=("$pkgname::git+$url.git#commit=$_commit")
 b2sums=('SKIP')
 
 pkgver() {
   cd "$pkgname"
 
-  git describe --tags | sed 's/^v//'
+  # current commit has multiple tags (v1.2 & v1.2.0)
+  git describe --tags --exclude=v1.2 | sed 's/^v//'
 }
 
 prepare() {
