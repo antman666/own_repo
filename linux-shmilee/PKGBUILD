@@ -58,7 +58,7 @@ pkgbase=linux-shmilee
 pkgname=("${pkgbase}" "${pkgbase}-headers")
 _srcname=linux-${_LLL_VER}
 pkgver=${_LLL_VER}.${_LLL_SUBVER}
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -79,6 +79,7 @@ source=(
         # ${_CJKTTY_PATCH_SRC}
         # ${_CJKTTY_PATCH_PATCH[@]}
         'config'         # the main kernel config file
+		https://gitlab.com/sirlucjan/kernel-patches/-/raw/58f16794766a34135cd4fa8c9d497e52347eefdc/5.10/bbr2-patches-v3/0001-bbr2-5.10-introduce-BBRv2.patch
 )
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
@@ -170,6 +171,49 @@ prepare() {
         -i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
         -i -e '/CONFIG_ACPI_NUMA=y/d' .config
   fi
+
+  echo "Disabling NUMA from kernel config..."
+  scripts/config --disable CONFIG_NUMA
+  scripts/config --disable CONFIG_AMD_NUMA
+  scripts/config --disable CONFIG_X86_64_ACPI_NUMA
+  scripts/config --disable CONFIG_NODES_SPAN_OTHER_NODES
+  scripts/config --disable CONFIG_NUMA_EMU
+  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+  scripts/config --disable CONFIG_USE_PERCPU_NUMA_NODE_ID
+  scripts/config --disable CONFIG_ACPI_NUMA
+  scripts/config --disable CONFIG_ARCH_SUPPORTS_NUMA_BALANCING
+  scripts/config --disable CONFIG_NODES_SHIFT
+  scripts/config --undefine CONFIG_NODES_SHIFT
+  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+  
+  echo "Setting performance governor..."
+  scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
+  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+  echo "Set PCIEASPM DRIVER to performance..."
+  scripts/config --enable CONFIG_PCIEASPM
+  scripts/config --enable CONFIG_PCIEASPM_PERFORMANCE
+  echo "Set CONFIG_PCIE_BUS for performance..."
+  scripts/config --enable CONFIG_PCIE_BUS_PERFORMANCE
+
+  echo "Enabling tickless idle..."
+  scripts/config --disable CONFIG_HZ_PERIODIC
+  scripts/config --disable CONFIG_NO_HZ_IDLE
+  scripts/config --disable CONFIG_CONTEXT_TRACKING_FORCE
+  scripts/config --enable CONFIG_NO_HZ_FULL_NODEF
+  scripts/config --enable CONFIG_NO_HZ_FULL
+  scripts/config --enable CONFIG_NO_HZ
+  scripts/config --enable CONFIG_NO_HZ_COMMON
+  scripts/config --enable CONFIG_CONTEXT_TRACKING
+
+  scripts/config --disable CONFIG_GENERIC_CPU
+  scripts/config --enable CONFIG_MCORE2
+
+  msg2 "Enabling BBR2"
+  scripts/config --module CONFIG_TCP_CONG_CUBIC
+  scripts/config --disable CONFIG_DEFAULT_CUBIC
+  scripts/config --enable CONFIG_TCP_CONG_BBR2
+  scripts/config --enable CONFIG_DEFAULT_BBR2
+  scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
 
   if [ "$_Bisect_debug" != "off" ]; then
     if [ x"$USER" == x"builduser" ]; then

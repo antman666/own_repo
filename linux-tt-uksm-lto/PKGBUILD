@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17.3
+pkgver=5.17.4
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -114,13 +114,13 @@ source=(
   "${_patchsources}/sched/0001-tt.patch"
   "${_patchsources}/0001-arch.patch"
   "${_patchsources}/0003-bbr2.patch"
-  "${_patchsources}/0004-fs-patches.patch"
-  "${_patchsources}/0006-clearlinux.patch"
-  "${_patchsources}/0008-fixes-miscellaneous.patch"
-  "${_patchsources}/0009-fixes.patch"
-  "${_patchsources}/0011-MG-LRU.patch"
-  # "${_patchsources}/0012-spf-lru.patch"
-  "${_patchsources}/0016-lrng.patch"
+  "${_patchsources}/0005-clearlinux.patch"
+  "${_patchsources}/0007-fixes-miscellaneous.patch"
+  "${_patchsources}/0008-fs-patches.patch"
+  "${_patchsources}/0010-MG-LRU.patch"
+  # "${_patchsources}/0011-spf-lru.patch"
+  "${_patchsources}/0014-lrng.patch"
+  "${_patchsources}/0016-ck-hrtimer.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -136,20 +136,20 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('82dc4a45cc25c781ac67aa6ed1e4c369544154960f41c4634d47621f381159687a227054976d078524cda28884d395a15f7542fe44ca74ce98ca6ff54a81d6d0'
+b2sums=('03fd68cd2a9c70fcb20dbec8b62f524f032924cf3ba555d78a2348b80bbe61735e6140d0d38d74bf3051ac19a67be7c62c67dfc9ef697097ed24637427e72dc7'
         'SKIP'
-        'f79275d2339a44d8129729ed0c3c4deb9b71368965b26405669fb0f3d4372793530f48ad6109fb2c4291249906adff347338b1718417d2bbf3b0dbfe237917cb'
+        'b366d5a67a75182e3d1f75360e5991260870a6e6457fabcd44e2db4e07cbb72c15ad921f970c2a6cb294faaf295c68a41c091e191dc9020e79ca7646e10a2124'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
         '2a1e03f82e6901b730051408d76795021de2b425b6efb724b1f4a0d36f1b09e44ba478a7e929a3c5475dbfade152ce317c732d3a507b4b5e93ec62f539130d9c'
-        'e757f54942093cb1eace6c0db779272399b98ce0c5f59f65410a6dd05c7f8d870d4bcc160525637f101a9c5e2d268681517a48bd6d0d8f0fb91511db59219f37'
-        'ff708a10ed723b644cbe9eae86d96f5d4f54bc87be87d63cb6dd59505ca671b012085482bbcd8e9946ab1cfb69741731452d8edab1e3c2212f159138ae532fc0'
-        'bf1e39492545261b0a94a92abe23d4ddf1b80677b9d54a2e5de8f5309ea1eacf6b83f3eb78b2533d4e30fe647ce62bd8a9b75f35a10f51afce1bf1a5143eb9c2'
-        '9afc555a5aec1a0aec658fe1d2bb3595a9a47b9e82016fe63248a68095eb8ee2698cffb90e7c5895c847c4a1a543d8570909404d23768d5114896b8e861a6f62'
-        '7ec12e127db5a9fbaa65ea83145a6ac9dbdf0556a4c33b37a544b5612646fd6421709ead9aabc17e9e161edd6640467a57ca41b6e39e7a2e050cb52dd967dd20'
-        '04b71bbc4512fb65b3e6bb9e06a447f65d3c88f035879ce55b027e5073dc0e9c99889434899aa8296040cd56bccef53b97b5e6d8a0a1b4bc7bf9ba48d699edf6'
-        '0c60aa8dc9557b78efe823ee1c5451a50ca2bac2cdaf49992b93d5106e8c908c57bd3a00de56f84b086a7baaef9026d131f8c925ecb68a0d51008a988f3d45a8'
-        '8fe4c194e590f44f80d20f61bbcadc66ead8a37de4b1887515e25b9e1f80ecd77994b5afbc0327568190c019518d3fd59f5fdc9c909cbcce5f34d737e1fce4a3'
         'd88a1ca68a97c21d8cf5c5bd3ed67718b286f7f80cf9ee927c4a25dbceaef8cde7686c294421cbce039cb44397327d04cc2114d751b2ac8c9fec892790524490'
+        '26b6fcb9615bc8f79486fdbf8a2c8d5e0a985c2da2abe3c3acd00d970a74a70e44ff6615c1685669c5e063b82b9dcf4706004d54a092e6844d406def18d7fc19'
+        '7b3c330dccfc2de26805cda129d8fbf3675250bdb98e9eaeb0a4105d98d40e142dd645be144369fdc52c163ae122e848835f8d9715bef7dd31462bc087e32cb8'
+        '73f5fb5c0d78a3f7aae4048719be4c0dda6442455fce2509aa77d88992e80b1779c2169fa8a5381560f332a252d3190de6420ef60ace850fffe3c3fe322cfbdc'
+        '444b1a4817d8f5145685bd43dedc59fe3691e4fb80ff2ea74b093d77f9de778b691a4ae0eb61565a5ee001b3c7b3b0fbe4fcc86673b579075bbb1f5608a4e700'
+        '1f0026ca081e52e3d9791cde23b86a2d971937cb39360f90dd84c28943fe165a2b79c2d6d0db34077b41d8f723d958ce524e5227e8f68a3ae5b55d3f4eb5425b'
+        '233bcc827c99abcf275833f9fe9b559d4d5da56c6ccc1406bea5443fa4844199a1672264ff6c9a4a8bafde904ca4bab4b8f6d8bbccfa89a999f6d9d4ebd080fd'
+        'f669f0d71c5ba2dcde34ca3e05b85c8b44b238bb51c8c268aef5f926d69e0931e544977df5282db693d35d384aab39e287240b04ab8368186d67146eb6befd91'
+        '369ddce31f27d12bc674d22ca82afaf4e1adb11c5edcf1eea9919b72ecddab64025a8ab4141fcacc35f5766ba5941ce8b7e471ddf9b4077395ec27d10c9fe132'
         '9a3222c9a56f173b051be294ad4189949d29dce1c152eae94b1b05cd6a798909fe2fe42f7699be93b3a845f0ebf673d98c3b16757a15fd1e08d86a5f297b338c'
         'e185a1dc68462e0deba3374dece3ee3a22db7e0c8abf42906366d4cf869d216648c402ce745fbb7c9d2096a77d6b5ff858f5f672b4bbca7d2716cdc2647f10a1'
         '11645a4a6215b1e90db285f9953301ed9d859436138d017d1437992c4fac73ed42df527fdc6c9a46920504ec2f11de0d2363da4d2b73e2478df67169a368e13f'
@@ -185,9 +185,13 @@ prepare() {
   # clang Full LTO
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enable FULL LTO"
-    scripts/config --disable CONFIG_LTO_NONE
-    scripts/config --disable CONFIG_LTO_CLANG_THIN
-    scripts/config --enable CONFIG_LTO_CLANG_FULL
+    scripts/config --disable LTO_NONE \
+      --enable LTO \
+      --enable LTO_CLANG \
+      --enable ARCH_SUPPORTS_LTO_CLANG \
+      --enable HAS_LTO_CLANG \
+      --enable LTO_CLANG \
+      --enable LTO_CLANG_FULL
   fi
 
   scripts/config --enable CONFIG_CGROUPS
@@ -226,7 +230,7 @@ prepare() {
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 
 
   msg2 "Enabling Linux Random Number Generator ..."
-  msg2 "Enabling Linux Random Number Generator with pfkernel config..."
+  scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
   scripts/config --enable CONFIG_LRNG
   scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
   scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
@@ -307,6 +311,20 @@ prepare() {
   scripts/config --enable CONFIG_DEFAULT_BBR2
   scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
   
+  msg2 "Disabling NUMA"
+  scripts/config --disable CONFIG_NUMA
+  scripts/config --disable CONFIG_AMD_NUMA
+  scripts/config --disable CONFIG_X86_64_ACPI_NUMA
+  scripts/config --disable CONFIG_NODES_SPAN_OTHER_NODES
+  scripts/config --disable CONFIG_NUMA_EMU
+  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+  scripts/config --disable CONFIG_USE_PERCPU_NUMA_NODE_ID
+  scripts/config --disable CONFIG_ACPI_NUMA
+  scripts/config --disable CONFIG_ARCH_SUPPORTS_NUMA_BALANCING
+  scripts/config --disable CONFIG_NODES_SHIFT
+  scripts/config --undefine CONFIG_NODES_SHIFT
+  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+
   msg2 "Enable zram compression to LZ4"
   scripts/config --enable CONFIG_ZSMALLOC
   scripts/config --enable CONFIG_ZRAM
@@ -316,15 +334,23 @@ prepare() {
   scripts/config --disable CONFIG_ZSWAP
 
   msg2 "Setting performance governor..."
-  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
   scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
   scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
   scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
   scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 
-  scripts/config --disable CONFIG_NUMA
-
+  msg2 "Enabling tickless idle"
+  scripts/config --disable CONFIG_HZ_PERIODIC
+  scripts/config --disable CONFIG_NO_HZ_IDLE
+  scripts/config --disable CONFIG_CONTEXT_TRACKING_FORCE
+  scripts/config --enable CONFIG_NO_HZ_FULL_NODEF
+  scripts/config --enable CONFIG_NO_HZ_FULL
+  scripts/config --enable CONFIG_NO_HZ
+  scripts/config --enable CONFIG_NO_HZ_COMMON
+  scripts/config --enable CONFIG_CONTEXT_TRACKING
+    
   msg2 "Enabling multigenerational LRU..."
+  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
   scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
   scripts/config --enable CONFIG_LRU_GEN
   scripts/config --set-val CONFIG_NR_LRU_GENS 7
@@ -332,7 +358,26 @@ prepare() {
   scripts/config --enable CONFIG_LRU_GEN_ENABLED
   scripts/config --disable CONFIG_LRU_GEN_STATS
 
-# these are ck's htrimer patches
+  msg2 "Enabling DAMON"
+  scripts/config --enable CONFIG_DAMON
+  scripts/config --disable CONFIG_DAMON_VADDR
+  scripts/config --disable CONFIG_DAMON_DBGFS
+  scripts/config --enable CONFIG_DAMON_PADDR
+  scripts/config --enable CONFIG_DAMON_RECLAIM
+
+  msg2 "disable debugging features to reduce the size..."
+  scripts/config --disable CONFIG_DEBUG_INFO
+  scripts/config --disable CONFIG_CGROUP_BPF
+  scripts/config --disable CONFIG_BPF_LSM
+  scripts/config --disable CONFIG_BPF_PRELOAD
+  scripts/config --disable CONFIG_BPF_LIRC_MODE2
+  scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
+  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
+  scripts/config --disable CONFIG_LATENCYTOP
+  scripts/config --disable CONFIG_SCHED_DEBUG
+  scripts/config --disable CONFIG_KVM_WERROR
+
+  # these are ck's htrimer patches
   # msg2 "Patching with ck hrtimer patches..."
   # for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
   #   patch -Np1 -i $i
