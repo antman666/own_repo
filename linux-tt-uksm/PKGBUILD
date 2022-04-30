@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17.4
+pkgver=5.17.5
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -117,10 +117,11 @@ source=(
   "${_patchsources}/0005-clearlinux.patch"
   "${_patchsources}/0007-fixes-miscellaneous.patch"
   "${_patchsources}/0008-fs-patches.patch"
-  "${_patchsources}/0010-MG-LRU.patch"
+  "${_patchsources}/0010-lru-le9.patch"
   # "${_patchsources}/0011-spf-lru.patch"
-  "${_patchsources}/0014-lrng.patch"
-  "${_patchsources}/0016-ck-hrtimer.patch"
+  "${_patchsources}/0013-lrng.patch"
+  "${_patchsources}/0014-ck-hrtimer.patch"
+  "${_patchsources}/0015-futex-winesync.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -396,7 +397,6 @@ prepare() {
     # no subarch defined so allow user to pick one
     make LLVM=$_LLVM LLVM_IAS=$_LLVM oldconfig
   fi
-  # make LLVM=$_LLVM LLVM_IAS=$_LLVM localyesconfig
 
   ### Optionally load needed modules for the make localmodconfig
   # See https://aur.archlinux.org/packages/modprobed-db
@@ -417,9 +417,6 @@ prepare() {
 
   # save configuration for later reuse
   cat .config > "${startdir}/config.last"
-
-  # uncomment if you want to build with distcc
-  ### sed -i '/HAVE_GCC_PLUGINS/d' arch/x86/Kconfig
 }
 
 build() {

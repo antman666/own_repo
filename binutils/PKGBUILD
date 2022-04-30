@@ -5,7 +5,7 @@
 
 pkgname=binutils
 pkgver=2.38
-pkgrel=3
+pkgrel=4
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -161,6 +161,8 @@ prepare() {
   patch -p1 -i ../binutils-do-not-use-debuginfod.patch
 
   # fix incorrect "undefined reference" errors
+  # Purpose:  Keep indirect symbol from IR if referenced from shared object.
+  # Lifetime: Fixed in 2.39
   # https://sourceware.org/bugzilla/show_bug.cgi?id=28879
   patch -p1 -i ../fix-incorrect-undefined-symbol.patch
 
@@ -170,8 +172,6 @@ prepare() {
   # Turn off development mode (-Werror, gas run-time checks, date in sonames)
   sed -i '/^development=/s/true/false/' bfd/development.sh
 
-  # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
 }
 
 build() {

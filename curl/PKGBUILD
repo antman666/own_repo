@@ -6,8 +6,8 @@
 
 pkgbase=curl
 pkgname=(curl libcurl-compat libcurl-gnutls)
-pkgver=7.82.0
-pkgrel=2
+pkgver=7.83.0
+pkgrel=1
 pkgdesc='An URL retrieval utility and library'
 arch=('x86_64')
 url='https://curl.haxx.se'
@@ -17,10 +17,7 @@ depends=('ca-certificates' 'brotli' 'libbrotlidec.so' 'krb5' 'libgssapi_krb5.so'
          'libidn2' 'libidn2.so' 'libnghttp2' 'libpsl' 'libpsl.so' 'libssh2' 'libssh2.so'
          'openssl' 'zlib' 'zstd' 'libzstd.so')
 provides=('libcurl.so')
-source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz"{,.asc}
-        0001-http2-handle-DONE-called-for-the-paused-stream.patch
-        0002-http-close-the-stream-not-connection-on-time-conditi.patch
-        0003-http2-RST-the-stream-if-we-stop-it-on-our-own-will.patch)
+source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz"{,.asc})
 sha512sums=('d4c4a785876e0d1ba1c1adbe65528d56a8b81fc03ff724e87819cfe51aca60f8a7bf2ac9384f30c3a6bbd28669b2bd3e9a6794737243c836c4902d085a72c474'
             'SKIP'
             '0d883c3fc267c4c5d82078e03689db31f83292cb41f3f6fab26d05fa9cbaa77ae75cfd3bbb4f6953bbc4bc9760c54b49bdfdae219cd48af92312abbb1ba70ec6'
@@ -42,14 +39,6 @@ _configure_options=(
   --with-random='/dev/urandom'
   --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'
 )
-
-prepare() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
-  # https://github.com/curl/curl/issues/8626
-  patch -Np1 -i ../0001-http2-handle-DONE-called-for-the-paused-stream.patch
-  patch -Np1 -i ../0002-http-close-the-stream-not-connection-on-time-conditi.patch
-  patch -Np1 -i ../0003-http2-RST-the-stream-if-we-stop-it-on-our-own-will.patch
-}
 
 build() {
   mkdir build-curl{,-compat,-gnutls}
@@ -104,10 +93,10 @@ package_libcurl-compat() {
 
   make -C lib DESTDIR="${pkgdir}" install
 
-  mv "${pkgdir}"/usr/lib/libcurl{,-compat}.so.4.7.0
+  mv "${pkgdir}"/usr/lib/libcurl{,-compat}.so.4.8.0
   rm "${pkgdir}"/usr/lib/libcurl.{a,so}*
-  for version in 3 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0; do
-    ln -s libcurl-compat.so.4.7.0 "${pkgdir}"/usr/lib/libcurl.so.${version}
+  for version in 3 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0 4.7.0; do
+    ln -s libcurl-compat.so.4.8.0 "${pkgdir}"/usr/lib/libcurl.so.${version}
   done
 
   install -dm 0755 "${pkgdir}"/usr/share/licenses
@@ -122,10 +111,10 @@ package_libcurl-gnutls() {
 
   make -C lib DESTDIR="${pkgdir}" install
 
-  mv "${pkgdir}"/usr/lib/libcurl{,-gnutls}.so.4.7.0
+  mv "${pkgdir}"/usr/lib/libcurl{,-gnutls}.so.4.8.0
   rm "${pkgdir}"/usr/lib/libcurl.{a,so}*
-  for version in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0; do
-    ln -s libcurl-gnutls.so.4.7.0 "${pkgdir}"/usr/lib/libcurl-gnutls.so.${version}
+  for version in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0 4.7.0; do
+    ln -s libcurl-gnutls.so.4.8.0 "${pkgdir}"/usr/lib/libcurl-gnutls.so.${version}
   done
 
   install -dm 0755 "${pkgdir}"/usr/share/licenses

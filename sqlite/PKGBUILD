@@ -3,10 +3,10 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
-_srcver=3380100
+_srcver=3380300
 _docver=${_srcver}
 #_docver=3330000
-pkgver=3.38.2
+pkgver=3.38.3
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')

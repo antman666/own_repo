@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17.4
+pkgver=5.17.5
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -98,7 +98,12 @@ makedepends=(
 )
 if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm lld python)
-  _LLVM=1
+  BUILD_FLAGS=(
+    CC=clang
+    LD=ld.lld
+    LLVM=1
+    LLVM_IAS=1
+  )
 fi
 options=('!strip')
 
@@ -117,10 +122,11 @@ source=(
   "${_patchsources}/0005-clearlinux.patch"
   "${_patchsources}/0007-fixes-miscellaneous.patch"
   "${_patchsources}/0008-fs-patches.patch"
-  "${_patchsources}/0010-MG-LRU.patch"
+  "${_patchsources}/0010-lru-le9.patch"
   # "${_patchsources}/0011-spf-lru.patch"
-  "${_patchsources}/0014-lrng.patch"
-  "${_patchsources}/0016-ck-hrtimer.patch"
+  "${_patchsources}/0013-lrng.patch"
+  "${_patchsources}/0014-ck-hrtimer.patch"
+  "${_patchsources}/0015-futex-winesync.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -395,40 +401,36 @@ prepare() {
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
-    yes "$_subarch" | make LLVM=$_LLVM LLVM_IAS=$_LLVM oldconfig
+    yes "$_subarch" | make ${BUILD_FLAGS[*]} oldconfig
   else
     # no subarch defined so allow user to pick one
-    make LLVM=$_LLVM LLVM_IAS=$_LLVM oldconfig
+    make ${BUILD_FLAGS[*]} oldconfig
   fi
-  # make LLVM=$_LLVM LLVM_IAS=$_LLVM localyesconfig
 
   ### Optionally load needed modules for the make localmodconfig
   # See https://aur.archlinux.org/packages/modprobed-db
   if [ -n "$_localmodcfg" ]; then
     if [ -f $HOME/.config/modprobed.db ]; then
       msg2 "Running Steven Rostedt's make localmodconfig now"
-      make LLVM=$_LLVM LLVM_IAS=$_LLVM LSMOD=$HOME/.config/modprobed.db localmodconfig
+      make ${BUILD_FLAGS[*]} LSMOD=$HOME/.config/modprobed.db localmodconfig
     else
       msg2 "No modprobed.db data found"
       exit
     fi
   fi
 
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM -s kernelrelease > version
+  make ${BUILD_FLAGS[*]} -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
 
-  [[ -z "$_makenconfig" ]] || make LLVM=$_LLVM LLVM_IAS=$_LLVM nconfig
+  [[ -z "$_makenconfig" ]] || make ${BUILD_FLAGS[*]} nconfig
 
   # save configuration for later reuse
   cat .config > "${startdir}/config.last"
-
-  # uncomment if you want to build with distcc
-  ### sed -i '/HAVE_GCC_PLUGINS/d' arch/x86/Kconfig
 }
 
 build() {
   cd linux-${pkgver}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
+  make ${BUILD_FLAGS[*]} all
 }
 
 _package() {

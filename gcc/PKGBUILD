@@ -6,10 +6,10 @@
 # NOTE: libtool requires rebuilt with each new gcc version
 
 pkgname=(gcc gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go lib32-gcc-libs gcc-d)
-pkgver=11.2.1
+pkgver=11.3.1
 _majorver=${pkgver%%.*}
 _islver=0.24
-pkgrel=4
+pkgrel=1
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -18,7 +18,7 @@ makedepends=(binutils libmpc gcc-ada doxygen lib32-glibc lib32-gcc-libs python g
 checkdepends=(dejagnu inetutils)
 options=(!emptydirs)
 _libdir="usr/lib/gcc/$CHOST/${pkgver%%+*}"
-_commit=79fddacc4e8cce9590b52f58a25db2129376adc3
+_commit=977cbabeb1c1a9a28cc45655bdc693e1594642f0
 source=("git://gcc.gnu.org/git/gcc.git#commit=${_commit}"
 		"https://libisl.sourceforge.io/isl-${_islver}.tar.xz"
         c89 c99
