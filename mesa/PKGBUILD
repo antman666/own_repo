@@ -128,6 +128,7 @@ package_vulkan-radeon() {
   optdepends=('vulkan-mesa-layers: additional vulkan layers')
   provides=('vulkan-driver')
 
+  _install fakeinstall/usr/share/drirc.d/00-radv-defaults.conf
   _install fakeinstall/usr/share/vulkan/icd.d/radeon_icd*.json
   _install fakeinstall/usr/lib/libvulkan_radeon.so
 
