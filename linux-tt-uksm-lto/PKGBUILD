@@ -192,9 +192,13 @@ prepare() {
   # clang Full LTO
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enable FULL LTO"
-    scripts/config --disable CONFIG_LTO_NONE
-    scripts/config --disable CONFIG_LTO_CLANG_THIN
-    scripts/config --enable CONFIG_LTO_CLANG_FULL
+    scripts/config --disable LTO_NONE \
+      --enable LTO \
+      --enable LTO_CLANG \
+      --enable ARCH_SUPPORTS_LTO_CLANG \
+      --enable HAS_LTO_CLANG \
+      --enable LTO_CLANG \
+      --enable LTO_CLANG_FULL
   fi
 
   scripts/config --enable CONFIG_CGROUPS
@@ -388,7 +392,7 @@ prepare() {
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
+  make ${BUILD_FLAGS[*]} olddefconfig
   diff -u ../config .config || :
 
   # https://github.com/graysky2/kernel_gcc_patch
