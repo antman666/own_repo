@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17.5
+pkgver=5.17.7
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -119,14 +119,14 @@ source=(
   "${_patchsources}/sched/0001-tt.patch"
   "${_patchsources}/0001-arch.patch"
   "${_patchsources}/0003-bbr2.patch"
-  "${_patchsources}/0005-clearlinux.patch"
-  "${_patchsources}/0007-fixes-miscellaneous.patch"
-  "${_patchsources}/0008-fs-patches.patch"
-  "${_patchsources}/0010-lru-le9.patch"
+  "${_patchsources}/0006-clearlinux.patch"
+  "${_patchsources}/0008-fixes-miscellaneous.patch"
+  "${_patchsources}/0009-fs-patches.patch"
+  "${_patchsources}/0011-lru-le9.patch"
   # "${_patchsources}/0011-spf-lru.patch"
-  "${_patchsources}/0013-lrng.patch"
-  "${_patchsources}/0014-ck-hrtimer.patch"
-  "${_patchsources}/0015-futex-winesync.patch"
+  "${_patchsources}/0014-lrng.patch"
+  "${_patchsources}/0015-ck-hrtimer.patch"
+  "${_patchsources}/0016-futex-winesync.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -193,12 +193,12 @@ prepare() {
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enable FULL LTO"
     scripts/config --disable LTO_NONE \
-      --enable LTO \
-      --enable LTO_CLANG \
-      --enable ARCH_SUPPORTS_LTO_CLANG \
-      --enable HAS_LTO_CLANG \
-      --enable LTO_CLANG \
-      --enable LTO_CLANG_FULL
+                   --enable LTO \
+                   --enable LTO_CLANG \
+                   --enable ARCH_SUPPORTS_LTO_CLANG \
+                   --enable HAS_LTO_CLANG \
+                   --enable LTO_CLANG \
+                   --enable LTO_CLANG_FULL
   fi
 
   scripts/config --enable CONFIG_CGROUPS
@@ -463,7 +463,7 @@ _package() {
   #make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
   # not needed since not building with CONFIG_DEBUG_INFO=y
 
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM INSTALL_MOD_PATH="$pkgdir/usr" modules_install
+  make INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH="$pkgdir/usr" DEPMOD=/doesnt/exist modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
