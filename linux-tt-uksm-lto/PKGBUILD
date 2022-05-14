@@ -87,7 +87,7 @@ _1666_HZ_ticks=
 _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
-pkgbase=linux-tt-uksm
+pkgbase=linux-tt-uksm-lto
 pkgver=5.17.7
 pkgrel=1
 arch=(x86_64)

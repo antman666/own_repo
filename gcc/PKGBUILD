@@ -1,3 +1,7 @@
+# Maintainer:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor: Allan McRae <allan@archlinux.org>
+# Contributor: Daniel Kozak <kozzi11@gmail.com>
+
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->libtool->glibc
 # NOTE: libtool requires rebuilt with each new gcc version
 
@@ -95,11 +99,13 @@ build() {
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
-  #CFLAGS=${CFLAGS/-Werror=format-security/}
-  #CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  CFLAGS=${CFLAGS/-Werror=format-security/}
+  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  CFLAGS=${CFLAGS/-O3/-O2}
+  CXXFLAGS=${CXXFLAGS/-O3/O2}
 
   _flags=(
-    --host="${CHOST:?}"
+    --host="${CHOST}"
     --prefix=/usr
     --libdir=/usr/lib
     --libexecdir=/usr/lib
@@ -126,13 +132,11 @@ build() {
     --enable-threads=posix
     --enable-64-bit-bfd
     --enable-bootstrap
-    --enable-link-serialization=1
     --disable-werror
   )
 
   "${srcdir:?}/gcc/configure" \
     --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
-    --enable-bootstrap \
     "${_flags[@]}"
 
   # see https://bugs.archlinux.org/task/71777 for rationale re *FLAGS handling
