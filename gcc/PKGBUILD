@@ -39,13 +39,12 @@ options=(!emptydirs !lto debug)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
 _commit=03257e7ee31385a364b711898c8f1510fd638efe
 source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
-# source=(https://sourceware.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz{,.sig}
-          c89 c99
-          gcc-ada-repro.patch
-		  gcc-Wno-format-security.patch
-          gcc11-libgomp-omp_h-multilib.patch
-          gcc11-generate-missing-build-notes.patch
-          gcc-11.2.0-cross-compile-include.patch
+        c89 c99
+        gcc-ada-repro.patch
+		gcc-Wno-format-security.patch
+        gcc11-libgomp-omp_h-multilib.patch
+        gcc11-generate-missing-build-notes.patch
+        gcc-11.2.0-cross-compile-include.patch
 )
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
@@ -71,14 +70,14 @@ prepare() {
   patch -Np0 < "$srcdir/gcc-ada-repro.patch"
 
   # configure.ac: When adding -Wno-format, also add -Wno-format-security
-  patch -Np0 -i gcc-Wno-format-security.patch
+  patch -Np0 -i "$srcdir/gcc-Wno-format-security.patch"
 
-  patch -Np0 -i gcc11-libgomp-omp_h-multilib.patch
-  patch -Np0 -i gcc11-generate-missing-build-notes.patch
+  patch -Np0 -i "$srcdir/gcc11-libgomp-omp_h-multilib.patch"
+  patch -Np0 -i "$srcdir/gcc11-generate-missing-build-notes.patch"
   # https://bugs.gentoo.org/803371
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80196
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017
-  patch -Np1 -i gcc-11.2.0-cross-compile-include.patch
+  patch -Np1 -i "$srcdir/gcc-11.2.0-cross-compile-include.patch"
 
   mkdir -p "$srcdir/gcc-build"
   mkdir -p "$srcdir/libgccjit-build"
