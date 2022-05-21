@@ -37,11 +37,11 @@ checkdepends=(
 )
 options=(!emptydirs !lto debug)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=03257e7ee31385a364b711898c8f1510fd638efe
+_commit=57f2ce6a87802906826501b8843013ff2b50713b
 source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
         c89 c99
         gcc-ada-repro.patch
-		gcc-Wno-format-security.patch
+        gcc-Wno-format-security.patch
         gcc11-libgomp-omp_h-multilib.patch
         gcc11-generate-missing-build-notes.patch
         gcc-11.2.0-cross-compile-include.patch
@@ -56,6 +56,13 @@ sha256sums=('62fd634889f31c02b64af2c468f064b47ad1ca78411c45abe6ac4b5f8dd19c7b'
             '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
             '1773f5137f08ac1f48f0f7297e324d5d868d55201c03068670ee4602babdef2f')
 
+_patch() {
+
+  echo -e "\E[1;33m Apply patch: ${2}\E[0m"
+  patch "-p${1}" -i "${srcdir:?}/${2}"
+
+}
+
 prepare() {
   [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
   cd gcc
@@ -67,17 +74,17 @@ prepare() {
   sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
 
   # Reproducible gcc-ada
-  patch -Np0 < "$srcdir/gcc-ada-repro.patch"
+  _patch 0 gcc-ada-repro.patch
 
   # configure.ac: When adding -Wno-format, also add -Wno-format-security
-  patch -Np0 -i "$srcdir/gcc-Wno-format-security.patch"
+  _patch 0 gcc-Wno-format-security.patch
 
-  patch -Np0 -i "$srcdir/gcc11-libgomp-omp_h-multilib.patch"
-  patch -Np0 -i "$srcdir/gcc11-generate-missing-build-notes.patch"
+  _patch 0 gcc11-libgomp-omp_h-multilib.patch
+  _patch 0 gcc11-generate-missing-build-notes.patch
   # https://bugs.gentoo.org/803371
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80196
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017
-  patch -Np1 -i "$srcdir/gcc-11.2.0-cross-compile-include.patch"
+  _patch 1 gcc-11.2.0-cross-compile-include.patch
 
   mkdir -p "$srcdir/gcc-build"
   mkdir -p "$srcdir/libgccjit-build"
@@ -113,11 +120,6 @@ build() {
       --with-build-config=bootstrap-lto
       --enable-link-serialization=1
   )
-
-  unset CFLAGS
-  unset CXXFLAGS
-  export CFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt"
-  export CXXFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt"
 
   cd gcc-build
 

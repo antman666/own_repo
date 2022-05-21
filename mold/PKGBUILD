@@ -8,6 +8,7 @@ pkgdesc='A Modern Linker'
 arch=('x86_64')
 url="https://github.com/rui314/mold"
 license=('AGPL3')
+options=('!lto')
 depends=('gcc-libs' 'mimalloc' 'openssl' 'zlib' 'tbb')
 makedepends=('git')
 checkdepends=('clang' 'libdwarf')
