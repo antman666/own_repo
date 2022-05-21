@@ -114,6 +114,11 @@ build() {
       --enable-link-serialization=1
   )
 
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt"
+  export CXXFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt"
+
   cd gcc-build
 
   # Credits @allanmcrae

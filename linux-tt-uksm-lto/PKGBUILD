@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm-lto
-pkgver=5.17.7
+pkgver=5.17.9
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -118,6 +118,7 @@ source=(
   "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
   "${_patchsources}/sched/0001-tt.patch"
   "${_patchsources}/0001-arch.patch"
+  "${_patchsources}/0001-latency_nice.patch"
   "${_patchsources}/0003-bbr2.patch"
   "${_patchsources}/0006-clearlinux.patch"
   "${_patchsources}/0008-fixes-miscellaneous.patch"
