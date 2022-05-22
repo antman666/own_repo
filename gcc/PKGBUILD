@@ -122,6 +122,10 @@ build() {
   )
 
   cd gcc-build
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
