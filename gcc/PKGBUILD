@@ -17,6 +17,7 @@ license=(GPL3 LGPL FDL custom)
 url='https://gcc.gnu.org'
 makedepends=(
   binutils
+  ccache
   doxygen
   gcc-ada
   git
@@ -35,9 +36,9 @@ checkdepends=(
   python-pytest
   tcl
 )
-options=(!emptydirs !lto debug)
+options=(!emptydirs !lto !debug ccache)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=57f2ce6a87802906826501b8843013ff2b50713b
+_commit=03257e7ee31385a364b711898c8f1510fd638efe
 source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
         c89 c99
         gcc-ada-repro.patch
@@ -124,8 +125,8 @@ build() {
   cd gcc-build
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
+  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD

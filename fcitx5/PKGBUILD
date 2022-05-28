@@ -2,7 +2,7 @@
 # Contributor: csslayer <wengxt AT gmail com>
 
 pkgname=fcitx5
-pkgver=5.0.15
+pkgver=5.0.16
 pkgrel=1
 pkgdesc="Next generation of fcitx"
 arch=('x86_64')

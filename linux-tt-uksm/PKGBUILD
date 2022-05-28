@@ -90,6 +90,7 @@ _subarch=15
 pkgbase=linux-tt-uksm
 pkgver=5.17.9
 pkgrel=1
+pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)

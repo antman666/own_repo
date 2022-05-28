@@ -8,7 +8,7 @@ pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulk
 pkgdesc="An open-source implementation of the OpenGL specification"
 pkgver=22.1.0
 _pkgver=${pkgver//_/-}
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
@@ -62,13 +62,13 @@ build() {
     -D gles2=enabled \
     -D glvnd=true \
     -D glx=dri \
-    -D libunwind=enabled \
+    -D libunwind=disabled \
     -D llvm=enabled \
     -D lmsensors=enabled \
     -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
-    -D valgrind=enabled
+    -D valgrind=disabled
 
   # Print config
   meson configure build
