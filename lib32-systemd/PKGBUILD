@@ -1,16 +1,14 @@
 # Maintainer: Christian Hesse <mail@eworm.de>
-# Maintainer: Dave Reisner <dreisner@archlinux.org>
-# Maintainer: Tom Gundersen <teg@jklm.no>
 
 pkgname=lib32-systemd
 _pkgbasename=systemd
-_tag='a57280c2c63622b0f31b707db0ea13ce0c7ce6a0' # git rev-parse v${_tag_name}
-_tag_name=251.1
+_tag='615e67a0eeb479009f185d2526acf7cc1ed36e62' # git rev-parse v${_tag_name}
+_tag_name=251.2
 pkgver="${_tag_name/-/}"
 pkgrel=1
 pkgdesc='system and service manager (32-bit)'
 arch=('x86_64')
-url='https://github.com/systemd/systemd'
+url='https://www.github.com/systemd/systemd'
 license=('GPL2' 'LGPL2.1')
 depends=('lib32-gcc-libs' 'lib32-libcap' 'lib32-libgcrypt' 'lib32-libxcrypt'
          'lib32-xz' 'lib32-zstd' 'systemd')
@@ -21,6 +19,7 @@ makedepends=('git' 'gperf' 'intltool' 'lib32-acl' 'lib32-bzip2'
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
+              '9A774DB5DB996C154EBBFBFDA0099A18E29326E1'  # Yu Watanabe <watanabe.yu+github@gmail.com>
               '5C251B5FC54EB2F80F407AAAC54CA336CFEB557E') # Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed")
@@ -28,6 +27,8 @@ sha512sums=('SKIP'
             'SKIP')
 
 _backports=(
+  # shared/utmp-wtmp: fix build without utmp
+  'd6e2c2d34d336398f5948a8b731fefff3dc0ff12'
 )
 
 _reverts=(
@@ -67,9 +68,9 @@ build() {
     1.1.1.1#cloudflare-dns.com
     9.9.9.10#dns.quad9.net
     8.8.8.8#dns.google
-    2606:4700:4700::1111 # cloudflare-dns.com
-    2620:fe::10          # dns.quad9.net
-    2001:4860:4860::8888 # dns.google
+    2606:4700:4700::1111#cloudflare-dns.com
+    2620:fe::10#dns.quad9.net
+    2001:4860:4860::8888#dns.google
   )
  
   local _meson_options=(
@@ -79,6 +80,7 @@ build() {
     # internal version comparison is incompatible with pacman:
     #   249~rc1 < 249 < 249.1 < 249rc
     -Dversion-tag="${_tag_name/-/\~}-${pkgrel}-arch"
+    -Dshared-lib-tag="${pkgver}-${pkgrel}"
     -Dmode=release
 
     # features

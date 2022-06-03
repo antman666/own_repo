@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
-pkgver=5.17.11
+pkgver=5.18.2
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -103,34 +103,44 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
+# https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
+# acknowledgment to xanmod for initially keeping the hrtimer patches up to date
+_ckhrtimer=linux-5.17.y
+_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+
 _gcc_more_v=20220315
-_patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.17"
-_patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.17"
+_patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.18"
+_patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.18"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  "${_patchsources}/sched/0001-tt.patch"
+  "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
+  # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
+  "${_patchsources}/sched/0001-tt-5.18.patch"
   "${_patchsources}/0001-arch.patch"
-  "${_patchsources}/0001-latency_nice.patch"
-  "${_patchsources}/0003-bbr2.patch"
-  "${_patchsources}/0006-clearlinux.patch"
-  "${_patchsources}/0008-fixes-miscellaneous.patch"
-  "${_patchsources}/0009-fs-patches.patch"
-  "${_patchsources}/0011-lru-le9.patch"
-  "${_patchsources}/0014-lrng.patch"
-  "${_patchsources}/0015-ck-hrtimer.patch"
-  "${_patchsources}/0016-futex-winesync.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
+  "${_patchsources}/0001-bbr2.patch"
+  "${_patchsources}/0001-clearlinux.patch"
+  "${_patchsources}/0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
+  "${_patchsources}/0001-fixes.patch"
+  "${_patchsources}/0001-futex-winesync.patch"
+  "${_patchsources}/0001-kbuild.patch"
+  "${_patchsources}/0001-lrng.patch"
+  "${_patchsources}/0001-lru-le9-spf.patch"
+  "${_patchsources}/0001-ksm.patch"
+  "${_patchsources}/0001-zram-entropy-calculation.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
 validpgpkeys=(
@@ -138,26 +148,33 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('03fd68cd2a9c70fcb20dbec8b62f524f032924cf3ba555d78a2348b80bbe61735e6140d0d38d74bf3051ac19a67be7c62c67dfc9ef697097ed24637427e72dc7'
+b2sums=('20c17fac495d5c7a9951a6e7693479294bf2ec60d82f7b97d12390a890409a8b7edd3aed346fa478069f91e99b72f86dff7cf223bbb33831953dc13e5fa80738'
         'SKIP'
         'b366d5a67a75182e3d1f75360e5991260870a6e6457fabcd44e2db4e07cbb72c15ad921f970c2a6cb294faaf295c68a41c091e191dc9020e79ca7646e10a2124'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
-        '2a1e03f82e6901b730051408d76795021de2b425b6efb724b1f4a0d36f1b09e44ba478a7e929a3c5475dbfade152ce317c732d3a507b4b5e93ec62f539130d9c'
-        'd88a1ca68a97c21d8cf5c5bd3ed67718b286f7f80cf9ee927c4a25dbceaef8cde7686c294421cbce039cb44397327d04cc2114d751b2ac8c9fec892790524490'
-        '26b6fcb9615bc8f79486fdbf8a2c8d5e0a985c2da2abe3c3acd00d970a74a70e44ff6615c1685669c5e063b82b9dcf4706004d54a092e6844d406def18d7fc19'
-        '7b3c330dccfc2de26805cda129d8fbf3675250bdb98e9eaeb0a4105d98d40e142dd645be144369fdc52c163ae122e848835f8d9715bef7dd31462bc087e32cb8'
-        '73f5fb5c0d78a3f7aae4048719be4c0dda6442455fce2509aa77d88992e80b1779c2169fa8a5381560f332a252d3190de6420ef60ace850fffe3c3fe322cfbdc'
-        '444b1a4817d8f5145685bd43dedc59fe3691e4fb80ff2ea74b093d77f9de778b691a4ae0eb61565a5ee001b3c7b3b0fbe4fcc86673b579075bbb1f5608a4e700'
-        '1f0026ca081e52e3d9791cde23b86a2d971937cb39360f90dd84c28943fe165a2b79c2d6d0db34077b41d8f723d958ce524e5227e8f68a3ae5b55d3f4eb5425b'
-        '233bcc827c99abcf275833f9fe9b559d4d5da56c6ccc1406bea5443fa4844199a1672264ff6c9a4a8bafde904ca4bab4b8f6d8bbccfa89a999f6d9d4ebd080fd'
-        'f669f0d71c5ba2dcde34ca3e05b85c8b44b238bb51c8c268aef5f926d69e0931e544977df5282db693d35d384aab39e287240b04ab8368186d67146eb6befd91'
-        '369ddce31f27d12bc674d22ca82afaf4e1adb11c5edcf1eea9919b72ecddab64025a8ab4141fcacc35f5766ba5941ce8b7e471ddf9b4077395ec27d10c9fe132'
-        '9a3222c9a56f173b051be294ad4189949d29dce1c152eae94b1b05cd6a798909fe2fe42f7699be93b3a845f0ebf673d98c3b16757a15fd1e08d86a5f297b338c'
-        'e185a1dc68462e0deba3374dece3ee3a22db7e0c8abf42906366d4cf869d216648c402ce745fbb7c9d2096a77d6b5ff858f5f672b4bbca7d2716cdc2647f10a1'
-        '11645a4a6215b1e90db285f9953301ed9d859436138d017d1437992c4fac73ed42df527fdc6c9a46920504ec2f11de0d2363da4d2b73e2478df67169a368e13f'
-        '69a67d53b4a2f95d3cbd61cdf231f8a2475076220a2c623ec1d8d93caa9137ea66587c498cddface2fa76417a3d59a1ae38324c21822d90099709e26c2413722'
-        'c9e68387eeea110bedd80a2dd49857793c0e48757ae49e427e38c062b48f58d9274a2ddf39ab2897042aec6fcd93eaae7efcfc85278b6843456e6d84f39e34ae'
-        '1e06251a379d787c84bbaa84b41696672689c4a360c6d96975fc83751808fc7982400e096270c4e9c16289d31d4a23460326ae6d2f47fcf7e2baf0c74963b1a1')
+        '5b8bbc1cea385c8ba635722c7011529bd72b7056b4de607abf18015513426941bac05467072d61529af332b98cae9de19f763b741bff50aa76d5f031339b779e'
+        '7259c51dd97165f2431ad0e5d6156f6a0d44d5cac69a6f8689b3ce9cf2921db1e7c46fb8b738e1fb207f992f5ab2bac921e061db8e38c8152e3e1a92975c0be1'
+        'b9c32c9ebb17d0db67220c1442b39f35e29688482713b4f4ec044adf7335792f49a688f205783fa859cb74ee0217017d89fafe58b0c2ec9ff3dadb09bc963160'
+        'e5da9dd2968a7b46143bff0bd16f196307344c874eecbb25b895775f5cf66fc546118f9b5b3f658accba762310d56eeb98d4a3dc3d026ee0eda331168f970036'
+        '7d44a5feaae8a1239543e43fee8db075894aa38f7d2be373a233111e7a039bdeada341b1b14a2927cc6bbfd2b16128714853dc6e37aa5613acc322d81f20d1c2'
+        '813d22c150903d96e3117892cc192059494d9716403b7704902108d33f908e20536f8f01e4182d4a28c07031631e99e3f8a8d344238f8fd9d9750b9a28ad892e'
+        '36676d3a0cc3a291345037ea33d169dad116d25366e4a29acbe29da183a1a602629f393129e0fa71125b82668a1c9ef9ed829436b9313373c65585de6a64d69c'
+        'fe6cadc0576fb8552bd32aa8124e1ed8ecac4ad546ffb60783659773deff656afb3414bca81bc8f6d389f34f98b1bde4d5eeedf01a8f85194a186bd4bbb0534e'
+        'ae5b2ec8c65a250bff4ab79d8670384d64d366b58e4ea68fa7d1297d62226997795674e7a886e11fc88edfba4ddf0ef46eddd0b52c16007638072b130d9f91c3'
+        '359e508b4b5634d9ad646e20a4b83656c7595972766dbcda4af27c822006716c4c686e72dd3750b50894b07bc61ba03c39f42286192c9a814610ae4a4a79c5ec'
+        'b710b5cba223d20bed2f9a5ceb1a91985aa1b861093afa8c509fb6b4e8ee167eee002bddeea68307aa80d935c4848fd7b6f699fd3e2fbe1e1f1f74e28390b473'
+        'b5760352b7d63399209c582d1ad9746351af8df1bd169735481bc3573f3699971f0b2d100e4aaf493295c2f371d370490ee4eb161d8a7a58969db514d153a1af'
+        '1289371108f7f8f16379739c01fbe34b7ec5fdf81bc4c2eb090c2fc536044cfdf01ef31417b149f2ce51e8957d9db1281c3cd3526f5ef8bd35e9d3e5c8735158'
+        '176ec08b4c0ffefc30a999a269e2790826dfee6011cea597e0ca24f9678faf4be3bd54d10686350f77d06354b5a88811f10d7ea76dc1f6c9d236f5d4664a021e'
+        '748464453a0a8c54bf75f5730d859a5b0bfeb8f1b34879519f04523a2fa582f2a781fdc02af01ab0d2ff5aedca9f99f978e0c7766de0b409450f9661a4c91303'
+        '7ae9141ccc5e3601a0027fc7f7cb30e221a566311b45648181b0c631e5635f7882d4b3ea99cb6d68c20de25be4bceea10568d9b66bca8521600431ed4767a70a'
+        '7763e2bd7b129cb7fd591876d39c22f23eeeed517cfe61e1a167dba280a709a0ec24ab6968fb41b7d750d346ee7c2f08026103bf06ddf8d9ee0c277b0cac2280'
+        'bfcb7e66bdc2a4160f19fc5bdc14caeb2691486fc97624d7d2f89f87f1e73d731743f05dcc28f779b8896a1351bf693a3afba8465962a9cf3002b7d67a31b08f'
+        '916a213214850e512e8ff191c057efa539f1f8d8d450cb1b2f1e29e4eb6ed351450175dede931428e7301b61284a067a9e8e234d40806500146e8d6221a0ef9c'
+        'f2deb5841cb7f64ee523a20968e6b69122fabea2d2d8dfb4ca6660f3a05a4fbc75cecd8f6eff508eae351943a71b5bf38b9e39c24ea25855faaf716e28a5abd6'
+        '2bac7e2552b743663e3da5cb5ccb6a5ef4904c63f09ca72cee4eee2eca5772514435dfb9243599c454ced14b5869d38ec01d16a9eb568c1b79d7df1fca768729'
+        '7136e3534a33f1b547ce221c65302bd63fa25b953fe4609501d54e1d656c676c1e918f434b7100aa49c298cb9d8be2dc0d47b89790bca37b5449bc336a0f4b29'
+        '7fffe7ae58f1cbc67e7f92fd0d358666b32bd836e60b2f015f99439684077c446ffe04daa02f35adc52098cba33fb8da081b2f3e899d3a1bb10c7aa4840ca0e5')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -228,49 +245,53 @@ prepare() {
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 
 
   msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
-  scripts/config --enable CONFIG_LRNG
-  scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
-  scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
-  scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 128
-  scripts/config --enable CONFIG_LRNG_IRQ
-  scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
-  scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
-  scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
-  scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
-  scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
-  scripts/config --enable CONFIG_LRNG_HEALTH_TESTS
-  scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
-  scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
-  scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
-  scripts/config --enable CONFIG_LRNG_JENT
-  scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
-  scripts/config --enable CONFIG_LRNG_CPU
-  scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-  scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
-  scripts/config --enable CONFIG_LRNG_KCAPI_HASH
-  scripts/config --module CONFIG_LRNG_DRBG
-  scripts/config --module CONFIG_LRNG_KCAPI
-  scripts/config --enable CONFIG_LRNG_TESTING_MENU
-  scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_IRQFLAGS_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_ARRAY
-  scripts/config --disable CONFIG_LRNG_IRQ_PERF
-  scripts/config --disable CONFIG_LRNG_ACVT_HASH
-  scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
-  scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
-  scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SELFTEST
-  scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
+  scripts/config --disable RANDOM_DEFAULT_IMPL \
+                 --enable LRNG \
+                 --enable LRNG_OVERSAMPLE_ENTROPY_SOURCES \
+                 --set-val LRNG_OVERSAMPLE_ES_BITS 64 \
+                 --set-val LRNG_SEED_BUFFER_INIT_ADD_BITS 128 \
+                 --enable LRNG_IRQ \
+                 --enable LRNG_CONTINUOUS_COMPRESSION_ENABLED \
+                 --disable LRNG_CONTINUOUS_COMPRESSION_DISABLED \
+                 --enable LRNG_ENABLE_CONTINUOUS_COMPRESSION \
+                 --enable LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
+                 --disable LRNG_COLLECTION_SIZE_512 \
+                 --enable LRNG_COLLECTION_SIZE_1024 \
+                 --disable LRNG_COLLECTION_SIZE_2048 \
+                 --disable LRNG_COLLECTION_SIZE_4096 \
+                 --disable LRNG_COLLECTION_SIZE_8192 \
+                 --set-val LRNG_COLLECTION_SIZE 1024 \
+                 --enable LRNG_HEALTH_TESTS \
+                 --set-val LRNG_RCT_CUTOFF 31 \
+                 --set-val LRNG_APT_CUTOFF 325 \
+                 --set-val LRNG_IRQ_ENTROPY_RATE 256 \
+                 --enable LRNG_JENT \
+                 --set-val LRNG_JENT_ENTROPY_RATE 16 \
+                 --enable LRNG_CPU \
+                 --set-val LRNG_CPU_ENTROPY_RATE 8 \
+                 --enable LRNG_DRNG_SWITCH \
+                 --enable LRNG_KCAPI_HASH \
+                 --module LRNG_DRBG \
+                 --module LRNG_KCAPI \
+                 --enable LRNG_TESTING_MENU \
+                 --disable LRNG_RAW_HIRES_ENTROPY \
+                 --disable LRNG_RAW_JIFFIES_ENTROPY \
+                 --disable LRNG_RAW_IRQ_ENTROPY \
+                 --disable LRNG_RAW_IRQFLAGS_ENTROPY \
+                 --disable LRNG_RAW_RETIP_ENTROPY \
+                 --disable LRNG_RAW_REGS_ENTROPY \
+                 --disable LRNG_RAW_ARRAY \
+                 --disable LRNG_IRQ_PERF \
+                 --disable LRNG_ACVT_HASH \
+                 --enable LRNG_RUNTIME_ES_CONFIG \
+                 --disable LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
+                 --disable LRNG_TEST_CPU_ES_COMPRESSION \
+                 --enable LRNG_SELFTEST \
+                 --disable LRNG_SELFTEST_PANIC
+
+  msg2 "Selecting TT Scheduler..."
+  scripts/config --enable TT_SCHED
+  scripts/config --enable TT_ACCOUNTING_STATS
 
   ### Optionally set tickrate 
   if [ -n "$_417_HZ_ticks" ]; then
@@ -303,25 +324,25 @@ prepare() {
 
   # BBR2
   msg2 "Enable BBR2"
-  scripts/config --module CONFIG_TCP_CONG_CUBIC
-  scripts/config --disable CONFIG_DEFAULT_CUBIC
-  scripts/config --enable CONFIG_TCP_CONG_BBR2
-  scripts/config --enable CONFIG_DEFAULT_BBR2
-  scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
+  scripts/config --module TCP_CONG_CUBIC \
+                 --disable DEFAULT_CUBIC \
+                 --enable TCP_CONG_BBR2 \
+                 --enable DEFAULT_BBR2 \
+                 --set-str DEFAULT_TCP_CONG bbr2
   
   msg2 "Disabling NUMA"
-  scripts/config --disable CONFIG_NUMA
-  scripts/config --disable CONFIG_AMD_NUMA
-  scripts/config --disable CONFIG_X86_64_ACPI_NUMA
-  scripts/config --disable CONFIG_NODES_SPAN_OTHER_NODES
-  scripts/config --disable CONFIG_NUMA_EMU
-  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
-  scripts/config --disable CONFIG_USE_PERCPU_NUMA_NODE_ID
-  scripts/config --disable CONFIG_ACPI_NUMA
-  scripts/config --disable CONFIG_ARCH_SUPPORTS_NUMA_BALANCING
-  scripts/config --disable CONFIG_NODES_SHIFT
-  scripts/config --undefine CONFIG_NODES_SHIFT
-  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+  scripts/config --disable NUMA \
+                 --disable AMD_NUMA \
+                 --disable X86_64_ACPI_NUMA \
+                 --disable NODES_SPAN_OTHER_NODES \
+                 --disable NUMA_EMU \
+                 --disable NEED_MULTIPLE_NODES \
+                 --disable USE_PERCPU_NUMA_NODE_ID \
+                 --disable ACPI_NUMA \
+                 --disable ARCH_SUPPORTS_NUMA_BALANCING \
+                 --disable NODES_SHIFT \
+                 --undefine NODES_SHIFT \
+                 --disable NEED_MULTIPLE_NODES
 
   msg2 "Enable zram compression to LZ4"
   scripts/config --enable CONFIG_ZSMALLOC
@@ -338,48 +359,65 @@ prepare() {
   scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 
   msg2 "Enabling tickless idle"
-  scripts/config --disable CONFIG_HZ_PERIODIC
-  scripts/config --disable CONFIG_NO_HZ_IDLE
-  scripts/config --disable CONFIG_CONTEXT_TRACKING_FORCE
-  scripts/config --enable CONFIG_NO_HZ_FULL_NODEF
-  scripts/config --enable CONFIG_NO_HZ_FULL
-  scripts/config --enable CONFIG_NO_HZ
-  scripts/config --enable CONFIG_NO_HZ_COMMON
-  scripts/config --enable CONFIG_CONTEXT_TRACKING
+  scripts/config --disable HZ_PERIODIC \
+                 --disable NO_HZ_IDLE \
+                 --disable CONTEXT_TRACKING_FORCE \
+                 --enable NO_HZ_FULL_NODEF \
+                 --enable NO_HZ_FULL \
+                 --enable NO_HZ \
+                 --enable NO_HZ_COMMON \
+                 --enable CONTEXT_TRACKING
+
+  msg2 "Enabling low latency preempt..."
+  scripts/config --enable PREEMPT_BUILD \
+                 --disable PREEMPT_NONE \
+                 --disable PREEMPT_VOLUNTARY \
+                 --enable PREEMPT \
+                 --enable PREEMPT_COUNT \
+                 --enable PREEMPTION \
+                 --enable PREEMPT_DYNAMIC
     
   msg2 "Enabling multigenerational LRU..."
-  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
-  scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
-  scripts/config --enable CONFIG_LRU_GEN
-  scripts/config --set-val CONFIG_NR_LRU_GENS 7
-  scripts/config --set-val CONFIG_TIERS_PER_GEN 4
-  scripts/config --enable CONFIG_LRU_GEN_ENABLED
-  scripts/config --disable CONFIG_LRU_GEN_STATS
+  scripts/config --enable ARCH_HAS_NONLEAF_PMD_YOUNG \
+                 --enable LRU_GEN \
+                 --enable LRU_GEN_ENABLED \
+                 --disable LRU_GEN_STATS \
+                 --set-val NR_LRU_GENS 7 \
+                 --set-val TIERS_PER_GEN 4
 
   msg2 "Enabling DAMON"
-  scripts/config --enable CONFIG_DAMON
-  scripts/config --disable CONFIG_DAMON_VADDR
-  scripts/config --disable CONFIG_DAMON_DBGFS
-  scripts/config --enable CONFIG_DAMON_PADDR
-  scripts/config --enable CONFIG_DAMON_RECLAIM
+  scripts/config --enable DAMON \
+                 --disable DAMON_VADDR \
+                 --disable DAMON_DBGFS \
+                 --enable DAMON_SYSFS \
+                 --enable DAMON_PADDR \
+                 --enable DAMON_RECLAIM
 
   msg2 "disable debugging features to reduce the size..."
-  scripts/config --disable CONFIG_DEBUG_INFO
-  scripts/config --disable CONFIG_CGROUP_BPF
-  scripts/config --disable CONFIG_BPF_LSM
-  scripts/config --disable CONFIG_BPF_PRELOAD
-  scripts/config --disable CONFIG_BPF_LIRC_MODE2
-  scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
-  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
-  scripts/config --disable CONFIG_LATENCYTOP
-  scripts/config --disable CONFIG_SCHED_DEBUG
-  scripts/config --disable CONFIG_KVM_WERROR
+  scripts/config --disable DEBUG_INFO \
+                 --disable DEBUG_INFO_BTF \
+                 --disable DEBUG_INFO_DWARF4 \
+                 --disable DEBUG_INFO_DWARF5 \
+                 --disable PAHOLE_HAS_SPLIT_BTF \
+                 --disable DEBUG_INFO_BTF_MODULES \
+                 --disable SLUB_DEBUG \
+                 --disable PM_DEBUG \
+                 --disable PM_ADVANCED_DEBUG \
+                 --disable PM_SLEEP_DEBUG \
+                 --disable ACPI_DEBUG \
+                 --disable SCHED_DEBUG \
+                 --disable LATENCYTOP \
+                 --disable DEBUG_PREEMPT
+
+  msg2 "Enable ZRAM_ENTROPY"
+  scripts/config --enable ZRAM_ENTROPY
 
   # these are ck's htrimer patches
-  # msg2 "Patching with ck hrtimer patches..."
-  # for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
-  #   patch -Np1 -i $i
-  # done
+  msg2 "Patching with ck hrtimer patches..."
+
+  for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
+    patch -Np1 -i $i
+  done
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below

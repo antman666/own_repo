@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm-lto
-pkgver=5.17.11
+pkgver=5.18.2
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -108,35 +108,44 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
+# https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
+# acknowledgment to xanmod for initially keeping the hrtimer patches up to date
+_ckhrtimer=linux-5.17.y
+_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+
 _gcc_more_v=20220315
-_patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.17"
-_patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.17"
+_patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.18"
+_patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.18"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  "${_patchsources}/sched/0001-tt.patch"
+  "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
+  # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
+  "${_patchsources}/sched/0001-tt-5.18.patch"
   "${_patchsources}/0001-arch.patch"
-  "${_patchsources}/0001-latency_nice.patch"
-  "${_patchsources}/0003-bbr2.patch"
-  "${_patchsources}/0006-clearlinux.patch"
-  "${_patchsources}/0008-fixes-miscellaneous.patch"
-  "${_patchsources}/0009-fs-patches.patch"
-  "${_patchsources}/0011-lru-le9.patch"
-  # "${_patchsources}/0011-spf-lru.patch"
-  "${_patchsources}/0014-lrng.patch"
-  "${_patchsources}/0015-ck-hrtimer.patch"
-  "${_patchsources}/0016-futex-winesync.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0003-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0006-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0008-XANMOD-cpufreq-tunes-ondemand-and-conservative-gover.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0009-XANMOD-scripts-disable-the-localversion-tag-of-a-git.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0010-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0011-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.17.y-xanmod/xanmod/0012-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
+  "${_patchsources}/0001-bbr2.patch"
+  "${_patchsources}/0001-clearlinux.patch"
+  "${_patchsources}/0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
+  "${_patchsources}/0001-fixes.patch"
+  "${_patchsources}/0001-futex-winesync.patch"
+  "${_patchsources}/0001-kbuild.patch"
+  "${_patchsources}/0001-lrng.patch"
+  "${_patchsources}/0001-lru-le9-spf.patch"
+  "${_patchsources}/0001-ksm.patch"
+  "${_patchsources}/0001-zram-entropy-calculation.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
 validpgpkeys=(
@@ -239,49 +248,53 @@ prepare() {
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 
 
   msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
-  scripts/config --enable CONFIG_LRNG
-  scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
-  scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
-  scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 128
-  scripts/config --enable CONFIG_LRNG_IRQ
-  scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
-  scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
-  scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
-  scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
-  scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
-  scripts/config --enable CONFIG_LRNG_HEALTH_TESTS
-  scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
-  scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
-  scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
-  scripts/config --enable CONFIG_LRNG_JENT
-  scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
-  scripts/config --enable CONFIG_LRNG_CPU
-  scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-  scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
-  scripts/config --enable CONFIG_LRNG_KCAPI_HASH
-  scripts/config --module CONFIG_LRNG_DRBG
-  scripts/config --module CONFIG_LRNG_KCAPI
-  scripts/config --enable CONFIG_LRNG_TESTING_MENU
-  scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_IRQFLAGS_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_ARRAY
-  scripts/config --disable CONFIG_LRNG_IRQ_PERF
-  scripts/config --disable CONFIG_LRNG_ACVT_HASH
-  scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
-  scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
-  scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SELFTEST
-  scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
+  scripts/config --disable RANDOM_DEFAULT_IMPL \
+                 --enable LRNG \
+                 --enable LRNG_OVERSAMPLE_ENTROPY_SOURCES \
+                 --set-val LRNG_OVERSAMPLE_ES_BITS 64 \
+                 --set-val LRNG_SEED_BUFFER_INIT_ADD_BITS 128 \
+                 --enable LRNG_IRQ \
+                 --enable LRNG_CONTINUOUS_COMPRESSION_ENABLED \
+                 --disable LRNG_CONTINUOUS_COMPRESSION_DISABLED \
+                 --enable LRNG_ENABLE_CONTINUOUS_COMPRESSION \
+                 --enable LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION \
+                 --disable LRNG_COLLECTION_SIZE_512 \
+                 --enable LRNG_COLLECTION_SIZE_1024 \
+                 --disable LRNG_COLLECTION_SIZE_2048 \
+                 --disable LRNG_COLLECTION_SIZE_4096 \
+                 --disable LRNG_COLLECTION_SIZE_8192 \
+                 --set-val LRNG_COLLECTION_SIZE 1024 \
+                 --enable LRNG_HEALTH_TESTS \
+                 --set-val LRNG_RCT_CUTOFF 31 \
+                 --set-val LRNG_APT_CUTOFF 325 \
+                 --set-val LRNG_IRQ_ENTROPY_RATE 256 \
+                 --enable LRNG_JENT \
+                 --set-val LRNG_JENT_ENTROPY_RATE 16 \
+                 --enable LRNG_CPU \
+                 --set-val LRNG_CPU_ENTROPY_RATE 8 \
+                 --enable LRNG_DRNG_SWITCH \
+                 --enable LRNG_KCAPI_HASH \
+                 --module LRNG_DRBG \
+                 --module LRNG_KCAPI \
+                 --enable LRNG_TESTING_MENU \
+                 --disable LRNG_RAW_HIRES_ENTROPY \
+                 --disable LRNG_RAW_JIFFIES_ENTROPY \
+                 --disable LRNG_RAW_IRQ_ENTROPY \
+                 --disable LRNG_RAW_IRQFLAGS_ENTROPY \
+                 --disable LRNG_RAW_RETIP_ENTROPY \
+                 --disable LRNG_RAW_REGS_ENTROPY \
+                 --disable LRNG_RAW_ARRAY \
+                 --disable LRNG_IRQ_PERF \
+                 --disable LRNG_ACVT_HASH \
+                 --enable LRNG_RUNTIME_ES_CONFIG \
+                 --disable LRNG_RUNTIME_MAX_WO_RESEED_CONFIG \
+                 --disable LRNG_TEST_CPU_ES_COMPRESSION \
+                 --enable LRNG_SELFTEST \
+                 --disable LRNG_SELFTEST_PANIC
+
+  msg2 "Selecting TT Scheduler..."
+  scripts/config --enable TT_SCHED
+  scripts/config --enable TT_ACCOUNTING_STATS
 
   ### Optionally set tickrate 
   if [ -n "$_417_HZ_ticks" ]; then
@@ -314,25 +327,25 @@ prepare() {
 
   # BBR2
   msg2 "Enable BBR2"
-  scripts/config --module CONFIG_TCP_CONG_CUBIC
-  scripts/config --disable CONFIG_DEFAULT_CUBIC
-  scripts/config --enable CONFIG_TCP_CONG_BBR2
-  scripts/config --enable CONFIG_DEFAULT_BBR2
-  scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
+  scripts/config --module TCP_CONG_CUBIC \
+                 --disable DEFAULT_CUBIC \
+                 --enable TCP_CONG_BBR2 \
+                 --enable DEFAULT_BBR2 \
+                 --set-str DEFAULT_TCP_CONG bbr2
   
   msg2 "Disabling NUMA"
-  scripts/config --disable CONFIG_NUMA
-  scripts/config --disable CONFIG_AMD_NUMA
-  scripts/config --disable CONFIG_X86_64_ACPI_NUMA
-  scripts/config --disable CONFIG_NODES_SPAN_OTHER_NODES
-  scripts/config --disable CONFIG_NUMA_EMU
-  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
-  scripts/config --disable CONFIG_USE_PERCPU_NUMA_NODE_ID
-  scripts/config --disable CONFIG_ACPI_NUMA
-  scripts/config --disable CONFIG_ARCH_SUPPORTS_NUMA_BALANCING
-  scripts/config --disable CONFIG_NODES_SHIFT
-  scripts/config --undefine CONFIG_NODES_SHIFT
-  scripts/config --disable CONFIG_NEED_MULTIPLE_NODES
+  scripts/config --disable NUMA \
+                 --disable AMD_NUMA \
+                 --disable X86_64_ACPI_NUMA \
+                 --disable NODES_SPAN_OTHER_NODES \
+                 --disable NUMA_EMU \
+                 --disable NEED_MULTIPLE_NODES \
+                 --disable USE_PERCPU_NUMA_NODE_ID \
+                 --disable ACPI_NUMA \
+                 --disable ARCH_SUPPORTS_NUMA_BALANCING \
+                 --disable NODES_SHIFT \
+                 --undefine NODES_SHIFT \
+                 --disable NEED_MULTIPLE_NODES
 
   msg2 "Enable zram compression to LZ4"
   scripts/config --enable CONFIG_ZSMALLOC
@@ -349,48 +362,65 @@ prepare() {
   scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 
   msg2 "Enabling tickless idle"
-  scripts/config --disable CONFIG_HZ_PERIODIC
-  scripts/config --disable CONFIG_NO_HZ_IDLE
-  scripts/config --disable CONFIG_CONTEXT_TRACKING_FORCE
-  scripts/config --enable CONFIG_NO_HZ_FULL_NODEF
-  scripts/config --enable CONFIG_NO_HZ_FULL
-  scripts/config --enable CONFIG_NO_HZ
-  scripts/config --enable CONFIG_NO_HZ_COMMON
-  scripts/config --enable CONFIG_CONTEXT_TRACKING
+  scripts/config --disable HZ_PERIODIC \
+                 --disable NO_HZ_IDLE \
+                 --disable CONTEXT_TRACKING_FORCE \
+                 --enable NO_HZ_FULL_NODEF \
+                 --enable NO_HZ_FULL \
+                 --enable NO_HZ \
+                 --enable NO_HZ_COMMON \
+                 --enable CONTEXT_TRACKING
+
+  msg2 "Enabling low latency preempt..."
+  scripts/config --enable PREEMPT_BUILD \
+                 --disable PREEMPT_NONE \
+                 --disable PREEMPT_VOLUNTARY \
+                 --enable PREEMPT \
+                 --enable PREEMPT_COUNT \
+                 --enable PREEMPTION \
+                 --enable PREEMPT_DYNAMIC
     
   msg2 "Enabling multigenerational LRU..."
-  scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
-  scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
-  scripts/config --enable CONFIG_LRU_GEN
-  scripts/config --set-val CONFIG_NR_LRU_GENS 7
-  scripts/config --set-val CONFIG_TIERS_PER_GEN 4
-  scripts/config --enable CONFIG_LRU_GEN_ENABLED
-  scripts/config --disable CONFIG_LRU_GEN_STATS
+  scripts/config --enable ARCH_HAS_NONLEAF_PMD_YOUNG \
+                 --enable LRU_GEN \
+                 --enable LRU_GEN_ENABLED \
+                 --disable LRU_GEN_STATS \
+                 --set-val NR_LRU_GENS 7 \
+                 --set-val TIERS_PER_GEN 4
 
   msg2 "Enabling DAMON"
-  scripts/config --enable CONFIG_DAMON
-  scripts/config --disable CONFIG_DAMON_VADDR
-  scripts/config --disable CONFIG_DAMON_DBGFS
-  scripts/config --enable CONFIG_DAMON_PADDR
-  scripts/config --enable CONFIG_DAMON_RECLAIM
+  scripts/config --enable DAMON \
+                 --disable DAMON_VADDR \
+                 --disable DAMON_DBGFS \
+                 --enable DAMON_SYSFS \
+                 --enable DAMON_PADDR \
+                 --enable DAMON_RECLAIM
 
   msg2 "disable debugging features to reduce the size..."
-  scripts/config --disable CONFIG_DEBUG_INFO
-  scripts/config --disable CONFIG_CGROUP_BPF
-  scripts/config --disable CONFIG_BPF_LSM
-  scripts/config --disable CONFIG_BPF_PRELOAD
-  scripts/config --disable CONFIG_BPF_LIRC_MODE2
-  scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
-  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
-  scripts/config --disable CONFIG_LATENCYTOP
-  scripts/config --disable CONFIG_SCHED_DEBUG
-  scripts/config --disable CONFIG_KVM_WERROR
+  scripts/config --disable DEBUG_INFO \
+                 --disable DEBUG_INFO_BTF \
+                 --disable DEBUG_INFO_DWARF4 \
+                 --disable DEBUG_INFO_DWARF5 \
+                 --disable PAHOLE_HAS_SPLIT_BTF \
+                 --disable DEBUG_INFO_BTF_MODULES \
+                 --disable SLUB_DEBUG \
+                 --disable PM_DEBUG \
+                 --disable PM_ADVANCED_DEBUG \
+                 --disable PM_SLEEP_DEBUG \
+                 --disable ACPI_DEBUG \
+                 --disable SCHED_DEBUG \
+                 --disable LATENCYTOP \
+                 --disable DEBUG_PREEMPT
+
+  msg2 "Enable ZRAM_ENTROPY"
+  scripts/config --enable ZRAM_ENTROPY
 
   # these are ck's htrimer patches
-  # msg2 "Patching with ck hrtimer patches..."
-  # for i in ../linux-patches-"$_commit"/"$_xan"/ck-hrtimer/0*.patch; do
-  #   patch -Np1 -i $i
-  # done
+  msg2 "Patching with ck hrtimer patches..."
+
+  for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
+    patch -Np1 -i $i
+  done
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
