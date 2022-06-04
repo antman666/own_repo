@@ -10,7 +10,7 @@
 pkgname=(gcc gcc-libs lib32-gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go libgccjit)
 pkgver=12.1.1
 _majorver=${pkgver%%.*}
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
@@ -123,16 +123,18 @@ build() {
   )
 
   cd gcc-build
-  unset CFLAGS
-  unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  # export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
   CFLAGS=${CFLAGS/-Werror=format-security/}
   CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  CFLAGS=${CFLAGS/-O3/-O2}
+  CXXFLAGS=${CXXFLAGS/-O3/-O2}
 
   "$srcdir/gcc/configure" \
     --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \

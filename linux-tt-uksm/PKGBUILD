@@ -89,7 +89,7 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-uksm
 pkgver=5.18.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -126,6 +126,7 @@ source=(
   "${_patchsources}/0001-fixes.patch"
   "${_patchsources}/0001-futex-winesync.patch"
   "${_patchsources}/0001-kbuild.patch"
+  "${_patchsources}/0001-hwmon.patch"
   "${_patchsources}/0001-lrng.patch"
   "${_patchsources}/0001-lru-le9-spf.patch"
   "${_patchsources}/0001-ksm.patch"
@@ -161,6 +162,7 @@ b2sums=('20c17fac495d5c7a9951a6e7693479294bf2ec60d82f7b97d12390a890409a8b7edd3ae
         '36676d3a0cc3a291345037ea33d169dad116d25366e4a29acbe29da183a1a602629f393129e0fa71125b82668a1c9ef9ed829436b9313373c65585de6a64d69c'
         'fe6cadc0576fb8552bd32aa8124e1ed8ecac4ad546ffb60783659773deff656afb3414bca81bc8f6d389f34f98b1bde4d5eeedf01a8f85194a186bd4bbb0534e'
         'ae5b2ec8c65a250bff4ab79d8670384d64d366b58e4ea68fa7d1297d62226997795674e7a886e11fc88edfba4ddf0ef46eddd0b52c16007638072b130d9f91c3'
+        '9e9c3c17c20790f39f25b3bf399d921586cb0df1e236a84833f6fb72b162afd1b31edab27e0de52166740ab2000425586181fe871b81bf8f6595f599d983176d'
         '359e508b4b5634d9ad646e20a4b83656c7595972766dbcda4af27c822006716c4c686e72dd3750b50894b07bc61ba03c39f42286192c9a814610ae4a4a79c5ec'
         'b710b5cba223d20bed2f9a5ceb1a91985aa1b861093afa8c509fb6b4e8ee167eee002bddeea68307aa80d935c4848fd7b6f699fd3e2fbe1e1f1f74e28390b473'
         'b5760352b7d63399209c582d1ad9746351af8df1bd169735481bc3573f3699971f0b2d100e4aaf493295c2f371d370490ee4eb161d8a7a58969db514d153a1af'
