@@ -112,46 +112,10 @@ build() {
     _extra_build_flags+=(-DLLVM_USE_LINKER=lld)
   fi
 
-  while true; do
-    echo -ne "\n\E[1;33mSkip build tests? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
-    [Yy] | "")
-      _build_tests=0
-      _extra_build_flags+=(-DLLVM_BUILD_TESTS=OFF)
-      break
-      ;;
-    [Nn])
-      _build_tests=1
-      _extra_build_flags+=(-DLLVM_BUILD_TESTS=ON)
-      break
-      ;;
-    *) echo -e "\E[1;31mPlease answer Y or N! \E[0m" ;;
-    esac
-  done
-
-  while true; do
-    echo -ne "\n\E[1;33mSkip build documentation? [Y/n] \E[0m"
-    read -r yn
-    case ${yn} in
-    [Yy] | "")
-      _build_documentation=0
-      _extra_build_flags+=(-DLLVM_BUILD_DOCS=OFF)
-      break
-      ;;
-    [Nn])
-      _build_documentation=1
-      _extra_build_flags+=(
-        -DLLVM_BUILD_DOCS=ON
-        -DLLVM_ENABLE_SPHINX=ON
-        -DLLVM_ENABLE_DOXYGEN=OFF
-        -DSPHINX_WARNINGS_AS_ERRORS=OFF
-      )
-      break
-      ;;
-    *) echo -e "\E[1;31mPlease answer Y or N! \E[0m" ;;
-    esac
-  done
+  _build_tests=0
+  _extra_build_flags+=(-DLLVM_BUILD_TESTS=OFF)
+  _build_documentation=0
+  _extra_build_flags+=(-DLLVM_BUILD_DOCS=OFF)
 
   cmake -S llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
