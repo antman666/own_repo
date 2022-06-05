@@ -40,7 +40,7 @@ source=(
 sha256sums=('SKIP'
   '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
 
-options=('staticlibs')
+options=('staticlibs' '!ccache')
 
 _extra_build_flags=()
 _build_documentation=0
