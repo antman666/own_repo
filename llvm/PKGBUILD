@@ -76,6 +76,12 @@ prepare() {
 
 build() {
 
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  LDFLAGS=${LDFLAGS/-O3/-O2}
+
   cd "${srcdir:?}/llvm-project" || (
     echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Build Failed! \E[0m"
     exit 1
