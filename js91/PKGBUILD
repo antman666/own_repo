@@ -58,6 +58,18 @@ build() {
   CFLAGS="${CFLAGS} -fno-semantic-interposition"
   CXXFLAGS="${CXXFLAGS} -fno-semantic-interposition"
   LDFLAGS="${LDFLAGS} -Wl,-Bsymbolic-functions"
+  CFLAGS=${CFLAGS/-fgraphite-identity/}
+  CXXFLAGS=${CXXFLAGS/-fgraphite-identity/}
+  CFLAGS=${CFLAGS/-floop-nest-optimize/}
+  CXXFLAGS=${CXXFLAGS/-floop-nest-optimize/}
+  CFLAGS=${CFLAGS/-ftree-loop-distribution/}
+  CXXFLAGS=${CXXFLAGS/-ftree-loop-distribution/}
+  CFLAGS=${CFLAGS/-fipa-pta/}
+  CXXFLAGS=${CXXFLAGS/-fipa-pta/}
+  CFLAGS=${CFLAGS/-fdevirtualize-at-ltrans/}
+  CXXFLAGS=${CXXFLAGS/-fdevirtualize-at-ltrans/}
+  CFLAGS=${CFLAGS/-fuse-linker-plugin/}
+  CXXFLAGS=${CXXFLAGS/-fuse-linker-plugin/}
 
   export MOZ_NOSPAM=1
   export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
