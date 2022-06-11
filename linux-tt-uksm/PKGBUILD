@@ -132,9 +132,9 @@ source=(
   "${_patchsources}/0001-ksm.patch"
   "${_patchsources}/0001-zram-entropy-calculation.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
@@ -149,20 +149,20 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('20c17fac495d5c7a9951a6e7693479294bf2ec60d82f7b97d12390a890409a8b7edd3aed346fa478069f91e99b72f86dff7cf223bbb33831953dc13e5fa80738'
+b2sums=('141cc47585905cab087910ece010c69b9f5985484df58f08da99558e51cd3707ea8ea6b12a2f6eb75a208a178724b66eb61166611ec933333b15965bc4382033'
         'SKIP'
-        'b366d5a67a75182e3d1f75360e5991260870a6e6457fabcd44e2db4e07cbb72c15ad921f970c2a6cb294faaf295c68a41c091e191dc9020e79ca7646e10a2124'
+        'b6f6834be3d50f51a0433b0cff1522fc942d68611435c0bcfcf8edf5aac7c08c2253eb269f6f2a82506c2d77b0f33bd1d24735e43b53f88f88d3d7bf3d3d49f8'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
         '5b8bbc1cea385c8ba635722c7011529bd72b7056b4de607abf18015513426941bac05467072d61529af332b98cae9de19f763b741bff50aa76d5f031339b779e'
         '7259c51dd97165f2431ad0e5d6156f6a0d44d5cac69a6f8689b3ce9cf2921db1e7c46fb8b738e1fb207f992f5ab2bac921e061db8e38c8152e3e1a92975c0be1'
         'b9c32c9ebb17d0db67220c1442b39f35e29688482713b4f4ec044adf7335792f49a688f205783fa859cb74ee0217017d89fafe58b0c2ec9ff3dadb09bc963160'
-        'e5da9dd2968a7b46143bff0bd16f196307344c874eecbb25b895775f5cf66fc546118f9b5b3f658accba762310d56eeb98d4a3dc3d026ee0eda331168f970036'
+        '44e32023e40c90ef724892b37fab9fcd3ab7388967716eb2eca0b71f8351229d035f2dde27466419463dbf0153ee2c9ce6db207f0785130241d7a0e7862a01cd'
         '7d44a5feaae8a1239543e43fee8db075894aa38f7d2be373a233111e7a039bdeada341b1b14a2927cc6bbfd2b16128714853dc6e37aa5613acc322d81f20d1c2'
         '813d22c150903d96e3117892cc192059494d9716403b7704902108d33f908e20536f8f01e4182d4a28c07031631e99e3f8a8d344238f8fd9d9750b9a28ad892e'
-        '36676d3a0cc3a291345037ea33d169dad116d25366e4a29acbe29da183a1a602629f393129e0fa71125b82668a1c9ef9ed829436b9313373c65585de6a64d69c'
+        '3c49d08243b089114a501691bc14851d4c10026ad5f9393b98040b9aaac1c2d838e696536906e94fac03969912192c05a5169e9fdc737ffdc4bcbe4ecd78d858'
+        '5a21ec32afc7762f96aa7d4e6d9e326c84e158d0380610ea4fef32ca1a18218f616ebf49fc95e5b2d89abe5cfba2c921a94a8317d3b66bf61b6774e7b19511d4'
         'fe6cadc0576fb8552bd32aa8124e1ed8ecac4ad546ffb60783659773deff656afb3414bca81bc8f6d389f34f98b1bde4d5eeedf01a8f85194a186bd4bbb0534e'
-        'ae5b2ec8c65a250bff4ab79d8670384d64d366b58e4ea68fa7d1297d62226997795674e7a886e11fc88edfba4ddf0ef46eddd0b52c16007638072b130d9f91c3'
-        '9e9c3c17c20790f39f25b3bf399d921586cb0df1e236a84833f6fb72b162afd1b31edab27e0de52166740ab2000425586181fe871b81bf8f6595f599d983176d'
+        'c6323f2989cc2aa83eb5591c9d08b4b7e6e96976a4cc5c6c5c0d8fa7946683ba5b70ad835bbd233be45affed385af6df8ef89df7e2b1d28d420e70fa153245e6'
         '359e508b4b5634d9ad646e20a4b83656c7595972766dbcda4af27c822006716c4c686e72dd3750b50894b07bc61ba03c39f42286192c9a814610ae4a4a79c5ec'
         'b710b5cba223d20bed2f9a5ceb1a91985aa1b861093afa8c509fb6b4e8ee167eee002bddeea68307aa80d935c4848fd7b6f699fd3e2fbe1e1f1f74e28390b473'
         'b5760352b7d63399209c582d1ad9746351af8df1bd169735481bc3573f3699971f0b2d100e4aaf493295c2f371d370490ee4eb161d8a7a58969db514d153a1af'
