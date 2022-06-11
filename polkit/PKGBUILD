@@ -3,19 +3,21 @@
 
 pkgname=polkit
 pkgver=0.120
-pkgrel=8
+pkgrel=9
 pkgdesc="Application development toolkit for controlling system-wide privileges"
 arch=(x86_64)
 license=(LGPL)
 url="https://www.freedesktop.org/wiki/Software/polkit/"
-depends=(glib2 pam expat systemd js78)
+depends=(glib2 pam expat systemd js91)
 makedepends=(meson gtk-doc gobject-introspection git)
 checkdepends=(python-dbusmock)
 provides=(libpolkit-{agent,gobject}-1.so)
 backup=(etc/pam.d/polkit-1)
 _commit=92b910ce2273daf6a76038f6bd764fa6958d4e8e  # tags/0.120
 source=("git+https://gitlab.freedesktop.org/polkit/polkit.git#commit=$_commit"
-        meson-0.61.diff)
+        meson-0.61.diff
+        polkit-0.120-js91.patch
+)
 sha256sums=('SKIP'
             '45d08bbb76e1e22ca8e698df04652b7aceaded34f9b76ce6b68152fb26b0de8d')
 
@@ -35,6 +37,9 @@ prepare() {
 
   # Fix build with Meson 0.61.0
   git apply -3 ../meson-0.61.diff
+
+  # Build with js 91
+  patch -p1 -i "${srcdir:?}/polkit-0.120-js91.patch"
 }
 
 build() {

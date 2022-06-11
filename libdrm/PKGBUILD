@@ -1,14 +1,14 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=libdrm
-pkgver=2.4.110
+pkgver=2.4.111
 pkgrel=1
 pkgdesc="Userspace interface to kernel DRM services"
 url="https://dri.freedesktop.org/"
 arch=(x86_64)
 license=('custom')
 depends=('libpciaccess')
-makedepends=('python-docutils' 'meson')
+makedepends=('valgrind' 'python-docutils' 'meson')
 checkdepends=('cairo')
 replaces=('libdrm-new' 'libdrm-nouveau')
 source=(https://dri.freedesktop.org/$pkgname/$pkgname-$pkgver.tar.xz{,.sig}
@@ -40,10 +40,12 @@ build() {
     -D optimization=3 \
     -D b_ndebug=true \
     -D b_lto=true \
-    -Dudev=false \
-    -Dvalgrind=false
+	-D default_library=both \
+	-D radeon=true \
+    -D udev=true \
+    -D valgrind=false
 
-  ninja -C build
+  meson compile -C build
 }
 
 check() {

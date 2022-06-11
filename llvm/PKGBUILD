@@ -78,8 +78,8 @@ build() {
 
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer'
   LDFLAGS=${LDFLAGS/-O3/-O2}
 
   cd "${srcdir:?}/llvm-project" || (
