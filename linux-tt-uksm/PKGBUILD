@@ -130,7 +130,7 @@ source=(
   "${_patchsources}/0001-fixes.patch"
   "${_patchsources}/0001-fs-patches.patch"
   "${_patchsources}/0001-futex-winesync.patch"
-  "${_patchsources}/0001-kbuild.patch"
+  # "${_patchsources}/0001-kbuild.patch"
   "${_patchsource}/ksm-patches/0001-ksm-patches.patch"
   "${_patchsources}/0001-hwmon.patch"
   "${_patchsources}/0001-lrng.patch"
