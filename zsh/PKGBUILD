@@ -3,7 +3,7 @@
 pkgbase=zsh
 pkgname=('zsh' 'zsh-doc')
 pkgver=5.9
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url='https://www.zsh.org/'
 license=('custom')
@@ -40,8 +40,8 @@ prepare() {
 }
 
 build() {
-    CFLAGS+=' -B/usr/bin/mold'
-	CXXFLAGS+=' -B/usr/bin/mold'
+    CFLAGS+=' -fuse-ld=mold'
+	CXXFLAGS+=' -fuse-ld=mold'
 	cd "${srcdir}/${pkgbase}-${pkgver}"
 
 	./configure --prefix=/usr \

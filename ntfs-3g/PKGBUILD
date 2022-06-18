@@ -5,8 +5,8 @@
 
 pkgname=ntfs-3g
 _pkgname=ntfs-3g_ntfsprogs
-pkgver=2021.8.22
-pkgrel=4
+pkgver=2022.5.17
+pkgrel=1
 pkgdesc='NTFS filesystem driver and utilities'
 url='https://www.tuxera.com/community/open-source-ntfs-3g/'
 arch=('x86_64')
