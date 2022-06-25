@@ -5,7 +5,7 @@
 
 pkgname=binutils
 pkgver=2.38
-pkgrel=4
+pkgrel=5
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -27,14 +27,16 @@ source=(https://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz{,.sig}
         binutils-use-long-long.patch
         binutils-gold-i386-gnu-property-notes.patch
         binutils-autoconf-version.patch
-        binutils-ld-default-entry-of-0-for-shared.patch
         binutils-readelf-other-sym-info.patch
-        gcc12-libtool-no-rpath.patch
+        binutils-libtool-no-rpath.patch
         binutils-section-type.patch
         binutils-2.38-fix-build.patch
         binutils-do-not-use-debuginfod.patch
         binutils-gas-loc-view.patch
         fix-incorrect-undefined-symbol.patch
+        binutils-link-following.patch
+        binutils-x86-non-canonical-references.patch
+        binutils-update-linker-manual.patch
 )
 sha256sums=('e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024'
             'SKIP'
@@ -131,11 +133,6 @@ prepare() {
   # Lifetime: Fixed in 2.39 (maybe ?)
   patch -p1 -i ../binutils-autoconf-version.patch
 
-  # Purpose:  Set the entry address of shared libraries to 0, so that they can
-  #           be detected by the loader and not run as an executable.
-  # Lifetime: Permanent.
-  patch -p1 -i ../binutils-ld-default-entry-of-0-for-shared.patch
-
   # Purpose:  Changes readelf so that when it displays extra information about
   #           a symbol, this information is placed at the end of the line.
   # Lifetime: Permanent.
@@ -150,7 +147,7 @@ prepare() {
 
   # Purpose:  Stop libtool from inserting useless runpaths into binaries.
   # Lifetime: Who knows.
-  patch -p1 -i ../gcc12-libtool-no-rpath.patch
+  patch -p1 -i ../binutils-libtool-no-rpath.patch
 
   # Purpose:  Add support for specifying section types in linker scripts.
   # Lifetime: Fixed in 2.39
@@ -165,6 +162,18 @@ prepare() {
   # Lifetime: Fixed in 2.39
   # https://sourceware.org/bugzilla/show_bug.cgi?id=28879
   patch -p1 -i ../fix-incorrect-undefined-symbol.patch
+
+  # Purpose:  Stop readelf and objdump from unnecessarily following links.
+  # Lifetime: Fixed in 2.39
+  patch -p1 -i  ../binutils-link-following.patch
+
+  # Purpose:  x86 linker: Disallow invalid relocations against protected symbols.
+  # Lifetime: Fixed in 2.39
+  patch -p1 -i  ../binutils-x86-non-canonical-references.patch
+
+  # Purpose:  Change ld man page so that it says that --enable-new-dtags is the default.
+  # Lifetime: Permanent
+  patch -p1 -i  ../binutils-update-linker-manual.patch
 
   # My patch to fix build 2.38
   patch -p1 -i ../binutils-2.38-fix-build.patch
