@@ -87,10 +87,11 @@ _1666_HZ_ticks=
 _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
-pkgbase=linux-tt-uksm
-pkgver=5.18.6
+pkgbase=linux-tt-lto
+pkgver=5.18.7
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
+replaces=("linux-tt-uksm")
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)

@@ -87,10 +87,11 @@ _1666_HZ_ticks=
 _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
-pkgbase=linux-tt-uksm-lto
-pkgver=5.18.6
+pkgbase=linux-bmq-lto
+pkgver=5.18.7
 pkgrel=1
-pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
+pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
+replaces=("linux-tt-uksm-lto")
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)
@@ -123,7 +124,7 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  "${_patchsources}/sched/0001-tt-5.18.patch"
+  "${_patchsources}/sched/0001-prjc.patch"
   "${_patchsources}/0001-bbr2.patch"
   # "${_patchsources}/0001-clearlinux.patch"
   "${_patchsources}/0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
@@ -327,9 +328,10 @@ prepare() {
   scripts/config --enable CONFIG_LRNG_SELFTEST
   scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
 
-  msg2 "Selecting TT Scheduler..."
-  scripts/config --enable TT_SCHED
-  scripts/config --enable TT_ACCOUNTING_STATS
+  msg2 "Selecting BMQ Scheduler..."
+  scripts/config --enable SCHED_ALT \
+                 --enable SCHED_BMQ \
+                 --disable SCHED_PDS
 
   ### Optionally set tickrate 
   if [ -n "$_417_HZ_ticks" ]; then
@@ -394,7 +396,7 @@ prepare() {
   scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
   scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
   scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND
 
   msg2 "Enabling tickless idle"
   scripts/config --disable HZ_PERIODIC \
@@ -450,6 +452,9 @@ prepare() {
   msg2 "Enable ZRAM_ENTROPY"
   scripts/config --enable ZRAM_ENTROPY \
                  --set-val ZRAM_ENTROPY_THRESHOLD 100000
+
+  msg2 "Enable WINE SYNC"
+  scripts/config --enable WINESYNC
 
   # these are ck's htrimer patches
   msg2 "Patching with ck hrtimer patches..."
