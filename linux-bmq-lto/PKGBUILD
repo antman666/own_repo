@@ -27,10 +27,10 @@ _417_HZ_ticks=
 
 # 833 Hz is the TT alternative to 1000 Hz. Choose 833 Hz
 #  if you want a balance between latency and performance.
-_833_HZ_ticks=
+_750_HZ_ticks=y
 
 # ck recommends 1000 Hz tick and the hrtimer patches in lieu of ck1
-_1000_HZ_ticks=y
+_1000_HZ_ticks=
  
 # 1666 Hz is for very high latency bound systems. Choose 1666 Hz
 # if you don't care about overall throughput or performance, but
@@ -111,8 +111,8 @@ options=('!strip')
 
 # https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
 # acknowledgment to xanmod for initially keeping the hrtimer patches up to date
-_ckhrtimer=linux-5.17.y
-_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+# _ckhrtimer=linux-5.17.y
+# _commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
 
 _gcc_more_v=20220315
 _patchsource="https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/5.18"
@@ -341,11 +341,11 @@ prepare() {
     scripts/config --set-val CONFIG_HZ 417
   fi 
   
-  if [ -n "$_833_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 833Hz..."
+  if [ -n "$_750_HZ_ticks" ]; then
+    msg2 "Setting tick rate to 750Hz..."
     scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_833
-    scripts/config --set-val CONFIG_HZ 833
+    scripts/config --enable CONFIG_HZ_750
+    scripts/config --set-val CONFIG_HZ 750
   fi
 
   if [ -n "$_1000_HZ_ticks" ]; then
@@ -457,11 +457,11 @@ prepare() {
   scripts/config --enable WINESYNC
 
   # these are ck's htrimer patches
-  msg2 "Patching with ck hrtimer patches..."
+  # msg2 "Patching with ck hrtimer patches..."
 
-  for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
-    patch -Np1 -i $i
-  done
+  # for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
+  #   patch -Np1 -i $i
+  # done
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
