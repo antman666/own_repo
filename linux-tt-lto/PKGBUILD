@@ -137,7 +137,6 @@ source=(
   "${_patchsources}/0001-lru-le9-spf.patch"
   "${_patchsources}/0001-rcu.patch"
   "${_patchsource}/ksm-patches/0001-ksm-patches.patch"
-  "${_patchsource}/ioprio-patches/0001-ioprio-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
