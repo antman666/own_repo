@@ -3,10 +3,10 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
-_srcver=3380500
+_srcver=3390000
 _docver=${_srcver}
-#_docver=3380500
-pkgver=3.38.5
+#_docver=3390000
+pkgver=3.39.0
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -17,7 +17,7 @@ source=(https://www.sqlite.org/2022/sqlite-src-${_srcver}.zip
         https://www.sqlite.org/2022/sqlite-doc-${_docver}.zip
         sqlite-lemon-system-template.patch
         license.txt)
-options=('!emptydirs' '!makeflags') # json extensions breaks parallel build
+options=('!emptydirs') # json extensions breaks parallel build
 # upstream now switched to sha3sums - currently not suppoerted by makepkg
 sha256sums=('177aefda817fa9f52825e1748587f7c27a9b5e6b53a481cd43461f2746d931d8'
             '5dae49bd7611777d23e9065204bf184ec454235d3f1b0c27bcab10446720df6d'
@@ -50,14 +50,12 @@ build() {
   cd sqlite-src-$_srcver
   ./configure --prefix=/usr \
 	--disable-static \
-	--disable-amalgamation \
 	--enable-fts3 \
 	--enable-fts4 \
 	--enable-fts5 \
 	--enable-rtree \
-	--enable-json1 \
 	TCLLIBDIR=/usr/lib/sqlite$pkgver
-  sed -i -e 's/ -shared / -Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu\0/g' libtool
+  # sed -i -e 's/ -shared / -Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu\0/g' libtool
   make
   # build additional tools
   make showdb showjournal showstat4 showwal sqldiff sqlite3_analyzer

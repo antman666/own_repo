@@ -1,8 +1,8 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgname=js91
-pkgver=91.10.0
-pkgrel=2
+pkgver=91.11.0
+pkgrel=1
 pkgdesc="JavaScript interpreter and libraries - Version 91"
 arch=(x86_64)
 url="https://spidermonkey.dev/"
