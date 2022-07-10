@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-bmq-lto
-pkgver=5.18.7
+pkgver=5.18.9
 pkgrel=1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm-lto")
@@ -122,30 +122,30 @@ source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
+  "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  "${_patchsources}/sched/0001-prjc.patch"
-  "${_patchsources}/0001-bbr2-5.18-introduce-BBRv2.patch"
-  # "${_patchsources}/0001-clearlinux.patch"
-  "${_patchsources}/0001-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
-  "${_patchsources}/0001-fixes.patch"
-  "${_patchsources}/0001-fs-patches.patch"
-  "${_patchsources}/0001-futex-winesync.patch"
-  "${_patchsources}/0001-kbuild.patch"
-  "${_patchsources}/0001-hwmon.patch"
-  "${_patchsources}/0001-lrng.patch"
-  "${_patchsources}/0001-lru-le9-spf.patch"
-  "${_patchsources}/0001-rcu.patch"
+  "${_patchsources}/sched/0001-tt-5.18.patch"
+  "${_patchsources}/0001-bbr2.patch"
+  "${_patchsources}/misc/0001-clearlinux.patch"
+  "${_patchsources}/0003-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
+  "${_patchsources}/0004-fixes.patch"
+  "${_patchsources}/0005-hwmon.patch"
+  "${_patchsources}/0006-lrng.patch"
+  "${_patchsources}/0007-lru-le9-spf.patch"
+  # "${_patchsources}/0008-kbuild-module.patch"
+  "${_patchsources}/0010-rcu.patch"
+  "${_patchsources}/0011-futex-winesync.patch"
+  "${_patchsources}/0014-fs-patches.patch"
   "${_patchsource}/ksm-patches/0001-ksm-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
