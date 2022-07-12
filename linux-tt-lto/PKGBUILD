@@ -124,7 +124,7 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
-  "${_patchsources}/sched/0001-tt-cachy-5.18.patch"
+  "${_patchsources}/sched/0001-tt-5.18.patch"
   "${_patchsources}/0001-bbr2.patch"
   "${_patchsources}/misc/0001-clearlinux.patch"
   "${_patchsources}/0003-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"

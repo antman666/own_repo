@@ -1,0 +1,39 @@
+name: Github Action Build PKGBUILD
+on:
+  push:
+jobs:
+  build_jemalloc:
+    strategy:
+      matrix:
+        jemalloc: [linux-tt-lto]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build jemalloc packages for arch
+        uses: actions/checkout@v2.4.0
+      - id: makepkg
+        uses: antman666/pkgbuild-action@jemalloc
+        with:
+          pkgdir: ${{ matrix.jemalloc }}
+          namcapDisable: 1
+          makepkgArgs: "--skippgpcheck"
+      - uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  update_db:
+    needs: [build_jemalloc]
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: antman666/update-db-for-repo@mine
+        with: 
+          tag: x86_64
+      - uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: True
+          tag: "x86_64"
+          artifacts: "./own-repo.*"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
