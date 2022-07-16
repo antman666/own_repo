@@ -1,11 +1,12 @@
 name: Github Action Build PKGBUILD
 on:
+  push:
   workflow_dispatch:
 jobs:
-  build_jemalloc:
+  build:
     strategy:
       matrix:
-        jemalloc: [linux-tt-lto]
+        packages: [polkit]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +25,7 @@ jobs:
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_jemalloc]
+    needs: [build]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
