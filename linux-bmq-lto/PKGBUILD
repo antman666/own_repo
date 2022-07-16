@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-bmq-lto
-pkgver=5.18.10
+pkgver=5.18.12
 pkgrel=1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm-lto")
