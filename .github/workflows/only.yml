@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.2
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
-          pkgdir: ${{ matrix.jemalloc }}
+          pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.9.0
+      - uses: ncipollo/release-action@v1.10.0
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -31,7 +31,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.9.0
+      - uses: ncipollo/release-action@v1.10.0
         with:
           allowUpdates: True
           tag: "x86_64"
