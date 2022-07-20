@@ -1,11 +1,12 @@
 name: Github Action Build PKGBUILD
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux-tt-lto, linux-bmq-lto, bash, btrfs-progs, curl, fcitx5, feh, git, ibus, ntfs-3g, numlockx, picom, wget, xorg-xinit, xorg-xsetroot, zsh]
+        jemalloc: [linux-cachy-lto, linux-tt-lto, bash, btrfs-progs, curl, fcitx5, feh, git, ibus, ntfs-3g, numlockx, picom, wget, xorg-xinit, xorg-xsetroot, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

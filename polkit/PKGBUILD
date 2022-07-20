@@ -2,7 +2,7 @@
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=polkit
-pkgver=0.121
+pkgver=121
 pkgrel=1
 pkgdesc="Application development toolkit for controlling system-wide privileges"
 arch=(x86_64)
@@ -37,8 +37,6 @@ pkgver() {
 #   # Fix build with Meson 0.61.0
 #   git apply -3 ../meson-0.61.diff
 
-#   # Build with js 91
-#   patch -p1 -i "${srcdir:?}/polkit-0.120-js91.patch"
 # }
 
 build() {
