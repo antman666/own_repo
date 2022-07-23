@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.18.12
+pkgver=5.18.13
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
@@ -123,10 +123,11 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
-  # "${_patchsource}/uksm-patches-v2/0001-UKSM-for-5.17.patch"
   "${_patchsources}/sched/0001-tt-5.18.patch"
   "${_patchsources}/0001-bbr2.patch"
   "${_patchsources}/misc/0001-clearlinux.patch"
+  "${_patchsources}/misc/0001-latency_nice.patch"
+  "${_patchsources}/misc/0001-ksm.patch"
   "${_patchsources}/0003-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
   "${_patchsources}/0004-fixes.patch"
   "${_patchsources}/0005-hwmon.patch"
@@ -136,7 +137,7 @@ source=(
   "${_patchsources}/0010-futex-winesync.patch"
   "${_patchsources}/0011-rcu.patch"
   "${_patchsources}/0013-fs-patches.patch"
-  "${_patchsource}/ksm-patches/0001-ksm-patches.patch"
+  # "${_patchsource}/ksm-patches/0001-ksm-patches.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
