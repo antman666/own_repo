@@ -26,7 +26,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [dbus, dhcpcd, duktape, js91, lib32-systemd, libdrm, lz4, mesa, perl, pixman, polkit, rtkit, sqlite, systemd, util-linux, wayland, wpa_supplicant, xorg-server, zlib, zstd]
+        nojemalloc: [dbus, dhcpcd, duktape, js91, lib32-systemd, libdrm, lz4, mesa, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, util-linux, wayland, wpa_supplicant, xorg-server, zlib, zstd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
