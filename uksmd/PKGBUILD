@@ -32,7 +32,6 @@ build() {
 }
 
 package() {
-	depends+=(UKSMD-BUILTIN)
 	cd "${_reponame}"
 
 	meson install -C build --destdir "${pkgdir}"
