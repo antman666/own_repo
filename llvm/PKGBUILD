@@ -3,7 +3,7 @@
 pkgname=llvm
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
 pkgver=14.0.6
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -143,6 +143,7 @@ build() {
     -DLIBOMP_INSTALL_ALIASES=OFF \
     -DLLVM_INSTALL_TOOLCHAIN_ONLY=OFF \
     -DPOLLY_ENABLE_GPGPU_CODEGEN=ON \
+	-DLLVM_USE_PERF=ON \
     -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
     "${_extra_build_flags[@]}"
 
