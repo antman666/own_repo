@@ -13,7 +13,7 @@ jobs:
       - name: Build packages for arch
         uses: actions/checkout@v3.0.2
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
