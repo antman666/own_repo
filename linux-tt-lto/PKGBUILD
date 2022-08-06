@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.18.16
+pkgver=5.19.0
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
