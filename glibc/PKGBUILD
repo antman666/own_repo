@@ -1,20 +1,19 @@
 pkgbase=glibc
 pkgname=(glibc lib32-glibc)
-pkgver=2.35
-pkgrel=16
+pkgver=2.36
+pkgrel=1
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
 makedepends=(git gd lib32-gcc-libs gcc-libs python)
 optdepends=('perl: for mtrace')
 options=(!strip staticlibs)
-_commit=b6aade18a7e5719c942aa2da6cf3157aca993fa4
+_commit=33f1b4c1452b33991e670f636ebe98b90a405e10
 source=("git+https://sourceware.org/git/glibc.git#commit=${_commit}"
   locale-gen
   sdt.h sdt-config.h
   glibc-newlocale-error.patch
   glibc-cs-path.patch
-  glibc-relative-relocations.patch
 )
 validpgpkeys=(
   7273542B39962DF7B299931416792B4EA25340F8 # Carlos O'Donell
@@ -43,12 +42,8 @@ prepare() {
 
   cd glibc || exit 1
 
-  _patch glibc-relative-relocations.patch
   _patch glibc-newlocale-error.patch
   _patch glibc-cs-path.patch
-
-  git cherry-pick -n 3feecd80013c822a12d4b01c5c25e155dfbc6e2f
-  git cherry-pick -n 732dd3a63d39c7ca77e817b462285c14551c8b49
 
 }
 

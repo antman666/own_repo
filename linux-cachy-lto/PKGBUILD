@@ -132,8 +132,8 @@ else
     pkgsuffix=cachyos-${_cpusched}
     pkgbase=linux-$pkgsuffix
 fi
-_major=5.18
-_minor=14
+_major=5.19
+_minor=0
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -145,7 +145,7 @@ _srcname=linux-${_stable}
 pkgdesc='Linux BMQ scheduler Kernel by CachyOS with other patches and improvements'
 pkgrel=1
 _kernver=$pkgver-$pkgrel
-arch=('x86_64' 'x86_64_v3')
+arch=('x86_64')
 url="https://github.com/CachyOS/linux-cachyos"
 license=('GPL2')
 options=('!strip')
@@ -279,7 +279,7 @@ prepare() {
     elif [ "$_cpusched" = "cfs" ]; then
         msg2 "Selecting Completely Fair Scheduler..."
     elif [ "$_cpusched" = "hardened" ]; then
-        msg2 "Selecting hardened..."
+        msg2 "Selecting hardened patches with the BORE Scheduler..."
     else
         if [ -n "$_cpusched" ]; then
             error "The value $_cpusched is invalid. Choose the correct one again."
@@ -480,32 +480,6 @@ prepare() {
             --set-str DEFAULT_TCP_CONG bbr2
     fi
 
-    ### Enable FULLCONENAT
-    if [ -n "$_nf_cone" ]; then
-        msg2 "Enabling FULLCONENAT..."
-        scripts/config --module IP_NF_TARGET_FULLCONENAT \
-            --module NETFILTER_XT_TARGET_FULLCONENAT
-    fi
-
-    ### Select SPF config
-    if [ "$_spf_config" = "standard" ]; then
-       msg2 "Enabling SPECULATIVE_PAGE_FAULT..."
-       scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT \
-           --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-    elif [ "$_spf_config" = "stats" ]; then
-       msg2 "Enabling SPECULATIVE_PAGE_FAULT with stats..."
-       scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT \
-           --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-    else
-        if [ -n "$_spf_config" ]; then
-           error "The value $_spf_config is invalid. Choose the correct one again."
-        else
-           error "The value is empty. Choose the correct one again."
-        fi
-          error "Enabling SPECULATIVE_PAGE_FAULT failed!"
-          exit
-    fi
-
     ### Select LRU config
     if [ "$_lru_config" = "standard" ]; then
        msg2 "Enabling multigenerational LRU..."
@@ -617,11 +591,7 @@ prepare() {
     ### Enable ZSTD swap/zram compression
     if [ -n "$_zstd_swap_compression" ]; then
         msg2 "Enabling zram ZSTD compression..."
-        scripts/config --disable ZRAM_DEF_COMP_LZORLE \
-            --enable ZRAM_DEF_COMP_LZ4 \
-            --set-str ZRAM_DEF_COMP lz4 \
-            --enable ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
-            --set-str ZSWAP_COMPRESSOR_DEFAULT lz4 \
+        scripts/config --disable CONFIG_ZSWAP_DEFAULT_ON \
             --enable ZRAM_ENTROPY \
             --set-val ZRAM_ENTROPY_THRESHOLD 100000
     fi
@@ -629,21 +599,19 @@ prepare() {
     ### Disable DEBUG
     if [ -n "$_disable_debug" ]; then
         scripts/config --disable DEBUG_INFO \
-            --disable CONFIG_DEBUG_INFO_BTF \
-            --disable CONFIG_DEBUG_INFO_DWARF5 \
-            --disable CONFIG_PAHOLE_HAS_SPLIT_BTF \
-            --disable CONFIG_DEBUG_INFO_BTF_MODULES \
-            --disable CONFIG_CGROUP_BPF \
-            --disable CONFIG_BPF_LSM \
-            --disable CONFIG_BPF_PRELOAD \
-            --disable CONFIG_BPF_LIRC_MODE2 \
-            --disable CONFIG_BPF_KPROBE_OVERRIDE \
-            --disable CONFIG_PM_DEBUG \
-            --disable CONFIG_PM_SLEEP_DEBUG \
-            --disable CONFIG_ACPI_DEBUG \
-            --disable CONFIG_SCHED_DEBUG \
-            --disable CONFIG_LATENCYTOP \
-            --disable CONFIG_DEBUG_PREEMPT
+            --disable DEBUG_INFO_BTF \
+            --disable DEBUG_INFO_DWARF4 \
+            --disable DEBUG_INFO_DWARF5 \
+            --disable PAHOLE_HAS_SPLIT_BTF \
+            --disable DEBUG_INFO_BTF_MODULES \
+            --disable SLUB_DEBUG \
+            --disable PM_DEBUG \
+            --disable PM_ADVANCED_DEBUG \
+            --disable PM_SLEEP_DEBUG \
+            --disable ACPI_DEBUG \
+            --disable SCHED_DEBUG \
+            --disable LATENCYTOP \
+            --disable DEBUG_PREEMPT
     fi
 
     msg2 "Enable USER_NS_UNPRIVILEGED"
@@ -695,9 +663,6 @@ prepare() {
     ### Save configuration for later reuse
     msg2 "Save configuration for later reuse..."
     cat .config > "${startdir}/config-${pkgver}-${pkgrel}${pkgbase#linux}"
-
-    ### Save configuration for later reuse
-    # cp -Tf ./.config "${startdir}/config-${pkgver}-${pkgrel}${pkgbase#linux}"
 
 }
 

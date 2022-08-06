@@ -18,7 +18,7 @@ index d97ff39..3b0af67 100644
  [D-BUS Service]
  Name=fi.w1.wpa_supplicant1
 -Exec=@BINDIR@/wpa_supplicant -u
-+Exec=@BINDIR@/wpa_supplicant -u -s -O /run/wpa_supplicant
++Exec=@BINDIR@/wpa_supplicant -u -s -O /run/wpa_supplicant -i wlp0s29f7u1 -c /etc/wpa_supplicant/internet.conf
  User=root
  SystemdService=wpa_supplicant.service
 diff --git a/wpa_supplicant/systemd/wpa_supplicant.service.in b/wpa_supplicant/systemd/wpa_supplicant.service.in
@@ -30,7 +30,7 @@ index 58a6228..bc0688a 100644
  Type=dbus
  BusName=fi.w1.wpa_supplicant1
 -ExecStart=@BINDIR@/wpa_supplicant -u
-+ExecStart=@BINDIR@/wpa_supplicant -u -s -O /run/wpa_supplicant
++ExecStart=@BINDIR@/wpa_supplicant -u -s -O /run/wpa_supplicant -i wlp0s29f7u1 -c /etc/wpa_supplicant/internet.conf
  
  [Install]
  WantedBy=multi-user.target
