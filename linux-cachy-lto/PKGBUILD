@@ -588,12 +588,12 @@ prepare() {
             --disable LRNG_SELFTEST_PANIC
     fi
 
-    ### Enable ZSTD swap/zram compression
-    if [ -n "$_zstd_swap_compression" ]; then
-        msg2 "Enabling zram ZSTD compression..."
-        scripts/config --disable CONFIG_ZSWAP_DEFAULT_ON \
-            --enable ZRAM_ENTROPY \
-            --set-val ZRAM_ENTROPY_THRESHOLD 100000
+    ### Enable LZ4 swap/zram compression
+    if [ -n "$_lz4_compression" ]; then
+        msg2 "Enabling zram LZ4 compression..."
+		scripts/config --disable CONFIG_ZSWAP \
+		               --disable CONFIG_ZRAM \
+                       --disable CONFIG_ZSWAP_DEFAULT_ON
     fi
 
     ### Disable DEBUG
