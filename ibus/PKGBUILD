@@ -2,8 +2,8 @@
 
 pkgbase=ibus
 pkgname=(ibus libibus)
-pkgver=1.5.26
-pkgrel=2
+pkgver=1.5.27
+pkgrel=1
 pkgdesc="Next Generation Input Bus for Linux"
 arch=('x86_64')
 url="https://github.com/ibus/ibus/wiki"
@@ -13,7 +13,7 @@ depends=('dconf' 'gtk3' 'hicolor-icon-theme' 'libnotify' 'python-dbus' 'python-g
 makedepends=('gobject-introspection' 'vala' 'intltool' 'gnome-common' 'gtk-doc' 'gtk4' 'gtk2'
              'qt5-base' 'unicode-cldr' 'unicode-character-database' 'unicode-emoji' 'git')
 options=('!emptydirs')
-_commit=6a70ab0338206bd1c7d01a4e1874ea0ee5b3a9d3  # 1.5.25
+_commit=e144b12c1f18ec91ddcbb5d491387d78075318f4  # 1.5.25
 source=("git+https://github.com/ibus/ibus#commit=$_commit")
 sha512sums=('SKIP')
 

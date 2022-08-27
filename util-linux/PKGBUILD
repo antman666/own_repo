@@ -5,7 +5,7 @@
 pkgbase=util-linux
 pkgname=(util-linux util-linux-libs)
 _pkgmajor=2.38
-_realver=${_pkgmajor}
+_realver=${_pkgmajor}.1
 pkgver=${_realver/-/}
 pkgrel=2
 pkgdesc='Miscellaneous system utilities for Linux'
@@ -79,10 +79,10 @@ package_util-linux() {
 
   cd "${pkgbase}-${_realver}"
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR="${pkgdir}" usrsbin_execdir=/usr/bin install
 
   # setuid chfn and chsh
-  chmod 4755 "${pkgdir}"/usr/bin/{newgrp,ch{sh,fn}}
+  chmod 4755 "${pkgdir}/usr/bin/"{newgrp,ch{sh,fn}}
 
   # install PAM files for login-utils
   install -Dm0644 "${srcdir}/pam-common" "${pkgdir}/etc/pam.d/chfn"
@@ -95,12 +95,6 @@ package_util-linux() {
 
   # TODO(dreisner): offer this upstream?
   sed -i '/ListenStream/ aRuntimeDirectory=uuidd' "${pkgdir}/usr/lib/systemd/system/uuidd.socket"
-
-  # adjust for usrmove
-  # TODO(dreisner): fix configure.ac upstream so that this isn't needed
-  cd "${pkgdir}"
-  mv usr/sbin/* usr/bin
-  rmdir usr/sbin
 
   ### runtime libs are shipped as part of util-linux-libs
   rm "${pkgdir}"/usr/lib/lib*.{a,so}*
