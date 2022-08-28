@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.18.14
-pkgrel=2
+pkgver=5.19.4
+pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
 arch=(x86_64)
@@ -115,37 +115,36 @@ _ckhrtimer=linux-5.17.y
 _commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
 
 _gcc_more_v=20220315
-_patchsources="https://raw.githubusercontent.com/ptr1337/kernel-patches/master/5.18"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/5.19"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/5.19"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
-  "${_patchsources}/sched/0001-tt-5.18.patch"
-  "${_patchsources}/0001-bbr2.patch"
-  "${_patchsources}/misc/0001-clearlinux.patch"
-  "${_patchsources}/misc/0001-latency_nice.patch"
-  "${_patchsources}/misc/0001-ksm.patch"
-  "${_patchsources}/0003-Extend-DAMOS-for-Proactive-LRU-lists-Sorting.patch"
-  "${_patchsources}/0004-fixes.patch"
-  "${_patchsources}/0005-hwmon.patch"
-  "${_patchsources}/0006-lrng.patch"
-  "${_patchsources}/0007-lru-le9-spf.patch"
-  "${_patchsources}/0010-futex-winesync.patch"
-  "${_patchsources}/0011-rcu.patch"
-  "${_patchsources}/0013-fs-patches.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.18.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
+  # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
+  "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
+  "${_patchsources}/bfq-misc-patches/0001-bfq-misc-patches.patch"
+  "${_patchsources}/fixes-miscellaneous-v12/0001-fixes-miscellaneous.patch"
+  "${_patchsources}/folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
+  "${_patchsources}/ksm-patches-v4/0001-ksm-patches.patch"
+  "${_patchsources}/lrng-patches-v3/0001-lrng-patches.patch"
+  "${_patchsources}/lru-cachyos-patches-v2/0001-lru-cachyos-patches.patch"
+  "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
+  "${_patchsources}/btrfs-cachyos-patches-v2/0001-btrfs-cachyos-patches.patch"
+  "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
+  "${_patchsource}/misc/0001-ck-hrtimer.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
 )
 
 validpgpkeys=(
@@ -153,31 +152,31 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('faeadb397c61f3adc70fb03d5ba10c203764d8a43b70cb70838d17780922bf05cd8389c19ba8d323f322d81169d11cf744d86103011c4a17606a2081e18a906f'
+b2sums=('c6c13b1b6abc8e19fc8d668b751fff395b745b3a82aecb0b95f4fcfe98bd68d8958e438d57741b18a777008ac5296b08df3418d081e807c4e8d87185b0a8a90f'
         'SKIP'
-        '72fee4d24db51ebdda5bda4d1e32cd8fa1cca1f0b2ca7c9b1ed90a3d10e18941df3520f60d494c4899cb60041beb59d2a372c50a0f54ac902811a60e06bf779c'
+        '75ce1a098c62007e425a089d8e7d1c9e863ff385cf0a40487a99117fe4c25b62927cf7ca0102c96bc5b71e8143f377a4d1cd62a092175f76a97ac19806c0ebc6'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
         '5b8bbc1cea385c8ba635722c7011529bd72b7056b4de607abf18015513426941bac05467072d61529af332b98cae9de19f763b741bff50aa76d5f031339b779e'
-        '2c3652c0eb33293502de3c9dce24fd9109f9360bd74ccd453ca9d7ee2122fc2f68a1bcf09b2952e68512b8d202e7ff691a0506b2656557ce9738c04c5c7b8dd3'
-        '350ed094d56f25f887e556474913063e8eabbd7187c14b5cb2991624e8bc57a6a25c739403081567be00bbcdedf3f708b30fd8522b5e03ae1b27fc022a5f0ca8'
-        '7d44a5feaae8a1239543e43fee8db075894aa38f7d2be373a233111e7a039bdeada341b1b14a2927cc6bbfd2b16128714853dc6e37aa5613acc322d81f20d1c2'
-        '0785959066da12d4014dcdf9e8a10ebfdd07a4f745e5a4b37a4509410b7be268d66155efa67d25412233380b9fca9515d704307f698bb4b934a9040d332ee1bb'
-        'b5760352b7d63399209c582d1ad9746351af8df1bd169735481bc3573f3699971f0b2d100e4aaf493295c2f371d370490ee4eb161d8a7a58969db514d153a1af'
-        '1782776137df454bab3eac914935ca52b827df7a1d2ad3fb1db3e36ffd70ec534bbed0213a700d5e9d864264409f9f186394adc952c40a46eb3558d62612f44d'
-        '4070a98e9732eae6b2c95db2da2042a68d11e904f70f9be88f94825f22a2162061f9368cc7888f625fdfee16c4ba387b78650e1219105ea462dac39db70188ab'
-        '9c98ccfdda43f6d857c667776f6aa746d2bf153081c51649da38cfc507449358c18a05f152829c60b9f0cf3ef53da2a8a094a2186076c7d883cfaddbaa83fcbd'
-        'bfcdc3d8b6ea54e696ad52aff6ece19c5adf33a7b5398be56d8af92440b01e08538aef2f466fd552a8137f6c02dff75cb8f8f540f794e6764387cf49236f38ae'
-        '3bbde122c494601b447f51f3cd161b7b399331daafeaf3d01af8693927439f40aab6cc5262a81335f2ed4e604709481e0baeba878699f3da8cee3a8bac80f1c4'
-        '9be3d5c9b1053c6c365479127aa222c3d70f7224eb19eaf6b286ce9ae4a0161565974d104de093331b3d0ff66d270a98513b820b0580635775bb61dfed33c868'
-        '34f9fecd4a549fdd9b26b0c1bc942b51710e8f35fd0797c7bd3a692d349327edcb3aec32aa217381d3588cc2b51826c5591656f845ecb1418786eee2f865bef6'
-        '562a8b0f80b57d802154e62781c26716b922469c6a51d9b27dcf6e609d6d68052d3a868d29745e844875d5ffe73c1dc6bb8b2f29fa248c982349b9a4aa5fc9a9'
-        '176ec08b4c0ffefc30a999a269e2790826dfee6011cea597e0ca24f9678faf4be3bd54d10686350f77d06354b5a88811f10d7ea76dc1f6c9d236f5d4664a021e'
-        '748464453a0a8c54bf75f5730d859a5b0bfeb8f1b34879519f04523a2fa582f2a781fdc02af01ab0d2ff5aedca9f99f978e0c7766de0b409450f9661a4c91303'
-        '7ae9141ccc5e3601a0027fc7f7cb30e221a566311b45648181b0c631e5635f7882d4b3ea99cb6d68c20de25be4bceea10568d9b66bca8521600431ed4767a70a'
-        '7763e2bd7b129cb7fd591876d39c22f23eeeed517cfe61e1a167dba280a709a0ec24ab6968fb41b7d750d346ee7c2f08026103bf06ddf8d9ee0c277b0cac2280'
-        '916a213214850e512e8ff191c057efa539f1f8d8d450cb1b2f1e29e4eb6ed351450175dede931428e7301b61284a067a9e8e234d40806500146e8d6221a0ef9c'
-        '7136e3534a33f1b547ce221c65302bd63fa25b953fe4609501d54e1d656c676c1e918f434b7100aa49c298cb9d8be2dc0d47b89790bca37b5449bc336a0f4b29'
-        '7fffe7ae58f1cbc67e7f92fd0d358666b32bd836e60b2f015f99439684077c446ffe04daa02f35adc52098cba33fb8da081b2f3e899d3a1bb10c7aa4840ca0e5')
+        '996fd4ff6ece3a2b453769fa44dfd0b5930dfe30fbdf5ef571336088985101d6332e73d65b0ca16a85050a879a797448cfc7b31a34bb817f84ab120c20d16370'
+        'f165c486641be0c97d108e9915be7fddf5219e7ef887a8a7392a2606254d1bf44882921ec88b2b53a868eab346b008e9614aa90e83b3b8ebcfa27b05a51bb516'
+        'fa694da0f6b605992981b1771938a8f61fde06af2bcaad2e4c6f9c70f298b2546db6666b275f2fc9ff36faa1ee39265ef9a9dc4ef7765cbe950254af28dee2b1'
+        '425d84c8bd9224b56a82e88044d15ff9de16fa3c5b568be7cd071262412a9b62895a5eafd4e006db9f5453b53f3340bc0ddd7ad0450fedf3c335fdc7a56d1aeb'
+        '91d7dafaa6a582d802e492da7a2fe9b6408221787ada7822001b287285b08f9a3b02544418e48931a85fdb15dedfb335025d308f55cc35170c3411fdcea72ef0'
+        '4703daeff50aca6f18e8efb215035e672fc467ef2b087e1e99c9621c734131b46126837472f2df2dd1484d60f7fd694e1d22a71294047e932fcb5bdd5f80f42b'
+        '45146ce20a360d2929e4209fc383f28f96c34220ad7de5f76e74020ef4457f5f4bc91bb0e0e58f0b83cb816874227d502d9ef38e13bf33985f9f5dc71d8a9128'
+        '351deddd2f4ae90fb89fdb12777b15e0a1858a8670ba362bb4caf9c02eb5f3a65fbcbd8a3848b0e58febb72be40dd8c96299885fee9262aed31e8580fb91cfa6'
+        'e0547a3998e924831bae04ef12e97e9de3a17b990623fb9c168177e10ecc62151c34bf5b1ad541955ca3393d874315e46936963fefa2ec70eed57d31da151cba'
+        '605cad98948545889ab6841ff6dec0bdeaba2ebfedfabfc71732e377cabbbdca392b80e180b0f465040087e1284324efae08185f24bdd143a2088976a94e45e0'
+        'a2b7aa1be3488c2a29a3d579af4c450fe4a093c23584c8611bc5c3e31569bbf5a2e74d4c804cfe97ff1ef62ad5973d1da4291c6ff15f90449edf743e48368cfe'
+        '32fd07b4d698e2ada99745d496d5af48f40cfc0b14b59fd1e2f8753cf51193feced1d65d3ec09c466b1a5ad5c75ab88ca5151a27dc33df7d2a1f9add281d7766'
+        'ab0535cb1e60775fa95d4ec705be785fc0551d083234794a7b7984c4c3a04e209d33758d176d089da22dffe6bd8c9079d7977a849e8cd71115b45fc3aabb289f'
+        '2e50b252dc579dd576bf80004fc785510596cf0fe36c46bc5578cefae9866a4558f7111c83c9e265ce24fa7e4829dd253f1734344dd944ac5f681eb2a47eefdb'
+        'c40d0bf09d45373b883580bf98e3f18f8a068990b64751cc7ccfc7474f0f1f6d6131d8ec4cd775b8d987e49d9439777b701116fd1c7a0a371b5074c217c43d7c'
+        'b0cf8b5335065b0f0031f7ed0176a866b64ba807b905fbd6375c1dc888f1a4d704d00b328aa04d1a5b53f38aecd260292bdef04cbac33df3841455e4955e5229'
+        '3a4feceac299140a8e8809e6d6b125d22b08ea482094122239bf38ad54a0bfc7c0e2e382aa547bafb3d19bc53971684054750c4481b9592ddf8c699d8f820207'
+        '3185319171ba59b8ddf93fa827e067b8f6907c000c7d1fd24cad4566ed0158b41277d0ff05aac9a70d4422750ea7dd33d36939917e6b69c5454f788aa76b47b7'
+        '45d6f93d744c24537f6f10dc0fcdc512e666838d6bbdeed11f123efc5065cdc8b8d861da40065b26598c2b585bf069e317832032277be8ed8ce8eb97e1cda6ce'
+        '6ddf293bc5a150b8b79d44e242b7d17fd8df34d80b4f14ed6f3c955c421f2a9dc0aaa70761ee753160d55e7e20ac1c45554fa111343426c1b6a5f06f7d42cd90')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -451,11 +450,11 @@ prepare() {
                  --set-val ZRAM_ENTROPY_THRESHOLD 100000
 
   # these are ck's htrimer patches
-  msg2 "Patching with ck hrtimer patches..."
+  # msg2 "Patching with ck hrtimer patches..."
 
-  for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
-    patch -Np1 -i $i
-  done
+  # for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
+  #   patch -Np1 -i $i
+  # done
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below

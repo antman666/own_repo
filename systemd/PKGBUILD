@@ -91,6 +91,9 @@ prepare() {
 }
 
 build() {
+  CFLAGS=${CFLAGS/-O3/}
+  CXXFLAGS=${CXXFLAGS/-O3/}
+
   local _timeservers=({0..3}.arch.pool.ntp.org)
   local _nameservers=(
     # We use these public name services, ordered by their privacy policy (hopefully):

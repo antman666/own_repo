@@ -1,14 +1,14 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgname=js91
-pkgver=91.12.0
+pkgver=91.13.0
 pkgrel=1
 pkgdesc="JavaScript interpreter and libraries - Version 91"
 arch=(x86_64)
 url="https://spidermonkey.dev/"
 license=(MPL)
 depends=(gcc-libs readline zlib sh)
-makedepends=(zip autoconf2.13 python-setuptools python-psutil rust llvm clang lld)
+makedepends=(zip autoconf2.13 python-setuptools python-psutil rustup llvm clang lld)
 checkdepends=(mercurial git)
 options=(!lto !debug)
 _relver=${pkgver}esr
@@ -21,6 +21,10 @@ validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Rel
 COMPRESSZST+=(--long)
 
 prepare() {
+  
+  rustup toolchain update --profile minimal 1.62.1
+  rustup default 1.62.1
+
   mkdir mozbuild
   cd firefox-$pkgver
 

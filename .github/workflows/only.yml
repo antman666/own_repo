@@ -1,11 +1,12 @@
 name: Github Action Build PKGBUILD
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [linux-tt-lto, linux-cachy-lto]
+        packages: [ js91, systemd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
