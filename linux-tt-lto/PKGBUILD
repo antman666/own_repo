@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.19.6
+pkgver=5.19.8
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
@@ -124,16 +124,17 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
-  "${_patchsources}/bfq-misc-patches/0001-bfq-misc-patches.patch"
-  "${_patchsources}/fixes-miscellaneous-v12/0001-fixes-miscellaneous.patch"
+  "${_patchsources}/fixes-miscellaneous-v16/0001-fixes-miscellaneous.patch"
   "${_patchsources}/folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
-  "${_patchsources}/ksm-patches-v4/0001-ksm-patches.patch"
-  "${_patchsources}/lrng-patches-v3/0001-lrng-patches.patch"
-  "${_patchsources}/lru-cachyos-patches-v2/0001-lru-cachyos-patches.patch"
+  "${_patchsources}/ksm-patches-v5/0001-ksm-patches.patch"
+  "${_patchsources}/lrng-patches-v4/0001-lrng-patches.patch"
+  "${_patchsources}/lru-cachyos-patches-v4/0001-lru-cachyos-patches.patch"
   "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-  "${_patchsources}/btrfs-cachyos-patches-v2/0001-btrfs-cachyos-patches.patch"
   "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
+  "${_patchsources}/makefile-patches/0001-arch-x86-improve-KBUILD_CFLAG.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
+  "${_patchsource}/0006-fs-patches.patch"
+  "${_patchsource}/sched/0001-tt.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
@@ -152,21 +153,22 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('c6c13b1b6abc8e19fc8d668b751fff395b745b3a82aecb0b95f4fcfe98bd68d8958e438d57741b18a777008ac5296b08df3418d081e807c4e8d87185b0a8a90f'
+b2sums=('59731fb2ceb6b1e6bb79121b0e07c755d2ce37cdf6b82458fe24bf6bb25f88f9d18dd2b657988842bb7b2a1c2ba685fdf3bf130bfca8960b801cd6ee1a973932'
         'SKIP'
-        '75ce1a098c62007e425a089d8e7d1c9e863ff385cf0a40487a99117fe4c25b62927cf7ca0102c96bc5b71e8143f377a4d1cd62a092175f76a97ac19806c0ebc6'
+        '912967de51b7aa88b81d75c716ad0352834d6dc66fc92fcec34c463ab97adea1d8b156991d97fd0a4d75fb586bc51565ed160b2e6792d2d34ee4824d05e70872'
         '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
         '996fd4ff6ece3a2b453769fa44dfd0b5930dfe30fbdf5ef571336088985101d6332e73d65b0ca16a85050a879a797448cfc7b31a34bb817f84ab120c20d16370'
-        'f165c486641be0c97d108e9915be7fddf5219e7ef887a8a7392a2606254d1bf44882921ec88b2b53a868eab346b008e9614aa90e83b3b8ebcfa27b05a51bb516'
-        'fa694da0f6b605992981b1771938a8f61fde06af2bcaad2e4c6f9c70f298b2546db6666b275f2fc9ff36faa1ee39265ef9a9dc4ef7765cbe950254af28dee2b1'
+        'ea3e0337d0d2ed69af51bf4f7848da0f943cbca879721628d00a5041c5c0fad80cfe371d81fd0b1fbb8e53be32ca3081bf6594634c4b1dadb4ded2d7306325d3'
         '425d84c8bd9224b56a82e88044d15ff9de16fa3c5b568be7cd071262412a9b62895a5eafd4e006db9f5453b53f3340bc0ddd7ad0450fedf3c335fdc7a56d1aeb'
-        '91d7dafaa6a582d802e492da7a2fe9b6408221787ada7822001b287285b08f9a3b02544418e48931a85fdb15dedfb335025d308f55cc35170c3411fdcea72ef0'
-        '4703daeff50aca6f18e8efb215035e672fc467ef2b087e1e99c9621c734131b46126837472f2df2dd1484d60f7fd694e1d22a71294047e932fcb5bdd5f80f42b'
-        '45146ce20a360d2929e4209fc383f28f96c34220ad7de5f76e74020ef4457f5f4bc91bb0e0e58f0b83cb816874227d502d9ef38e13bf33985f9f5dc71d8a9128'
+        'aec2096240922fed6ee4c2d6147de8fb0cc54bba959aadd7700488e8863ea75492849310024a2e6cb8bfc1dde7b936364aa25848f4e77833ed71ee27c0888aeb'
+        '85b2b783cc8d728a0eccd1df025fdc4927eca1397ae81900958d891d632dec78f6b804e5306592eb190f21e9de67c347a7ed4a65c56dd3f0d437cbc5e2f74bc0'
+        '5a12625fe2e26d70c7816cd8b109178b12394549765c74d430ddc0cf446c29983c36854bf674e7b20f67de371a50f2b578f079e7a9525e7a1727c2d183ccbfbc'
         '351deddd2f4ae90fb89fdb12777b15e0a1858a8670ba362bb4caf9c02eb5f3a65fbcbd8a3848b0e58febb72be40dd8c96299885fee9262aed31e8580fb91cfa6'
-        'e0547a3998e924831bae04ef12e97e9de3a17b990623fb9c168177e10ecc62151c34bf5b1ad541955ca3393d874315e46936963fefa2ec70eed57d31da151cba'
         '605cad98948545889ab6841ff6dec0bdeaba2ebfedfabfc71732e377cabbbdca392b80e180b0f465040087e1284324efae08185f24bdd143a2088976a94e45e0'
+        'cf2431f5134f3c684541be17588b4bc08d4b63ab9491b60cb35dc630c4b9f5bbc90e8d26b86269926dcd9aa3c78a769cbe880615d0451a415646015c092bb959'
         '70d39b55d7717e24740c677b78473c4176d1d8437199d1abceea3d417a53d387b3172bda0adfa291a87c9946b56e7de73147c83c8eba355f3b8bdddbd2832e82'
+        'af389789d42453cb8ee9197eac72cdcebd312ebc1c1b206738a7dea55063cfc93c501474faa3eafc5a41945beb64591bcffeaa6a5661f3a8dba7041d0c02d001'
+        '179d3f6cd83b8f7d26d24ba8e81a9b735c9bc9c84c92793d5869d1dc9b1b862893529fecdc4e454d80b82d6841cbe5cde18ccd76525b2284da97d53b8e042ff0'
         'a2b7aa1be3488c2a29a3d579af4c450fe4a093c23584c8611bc5c3e31569bbf5a2e74d4c804cfe97ff1ef62ad5973d1da4291c6ff15f90449edf743e48368cfe'
         'ab0535cb1e60775fa95d4ec705be785fc0551d083234794a7b7984c4c3a04e209d33758d176d089da22dffe6bd8c9079d7977a849e8cd71115b45fc3aabb289f'
         '2e50b252dc579dd576bf80004fc785510596cf0fe36c46bc5578cefae9866a4558f7111c83c9e265ce24fa7e4829dd253f1734344dd944ac5f681eb2a47eefdb'

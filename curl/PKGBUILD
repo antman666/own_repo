@@ -41,9 +41,6 @@ _configure_options=(
 )
 
 prepare() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
-
-  patch -Np1 < ../0001-select-do-not-return-fatal-error-on-EINTR-from-poll.patch
 }
 
 build() {
