@@ -23,6 +23,7 @@ sha512sums=('45194bb28207421afcff3e247930d2eeab77a5fea58e6be22f67525f2e0aab2f410
 validpgpkeys=('2617F6F8DEBB0A7A15C405C983FD600E340FB5FF') # Samuel Pitoiset <samuel.pitoiset@gmail.com>
 
 prepare() {
+  msg2 "Prepare"
 }
 
 build() {

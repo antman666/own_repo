@@ -41,6 +41,7 @@ _configure_options=(
 )
 
 prepare() {
+  msg2 "Prepare"
 }
 
 build() {
