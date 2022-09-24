@@ -7,11 +7,12 @@
 pkgbase=curl
 pkgname=(curl libcurl-compat libcurl-gnutls)
 pkgver=7.85.0
-pkgrel=1
+pkgrel=2
 pkgdesc='An URL retrieval utility and library'
 arch=('x86_64')
 url='https://curl.haxx.se'
 license=('MIT')
+makedepends=('patchelf')
 options=('!debug')
 depends=('ca-certificates' 'brotli' 'libbrotlidec.so' 'krb5' 'libgssapi_krb5.so'
          'libidn2' 'libidn2.so' 'libnghttp2' 'libpsl' 'libpsl.so' 'libssh2' 'libssh2.so'
@@ -75,6 +76,7 @@ build() {
     --with-gnutls='/usr'
   sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all,-ljemalloc\0/g' libtool
   make -C lib
+  patchelf --set-soname 'libcurl-gnutls.so.4' ./lib/.libs/libcurl.so
 }
 
 package_curl() {
@@ -99,6 +101,9 @@ package_libcurl-compat() {
 
   mv "${pkgdir}"/usr/lib/libcurl{,-compat}.so.4.8.0
   rm "${pkgdir}"/usr/lib/libcurl.{a,so}*
+
+  ln -s libcurl-gnutls.so.4 "${pkgdir:?}/usr/lib/libcurl-gnutls.so"
+
   for version in 3 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0 4.7.0; do
     ln -s libcurl-compat.so.4.8.0 "${pkgdir}"/usr/lib/libcurl.so.${version}
   done

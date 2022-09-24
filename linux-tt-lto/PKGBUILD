@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.19.9
+pkgver=5.19.11
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
@@ -111,8 +111,8 @@ options=('!strip')
 
 # https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
 # acknowledgment to xanmod for initially keeping the hrtimer patches up to date
-_ckhrtimer=linux-5.17.y
-_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+# _ckhrtimer=linux-5.17.y
+# _commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
 
 _gcc_more_v=20220315
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/5.19"
@@ -123,18 +123,18 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
+  "${_patchsource}/sched/0001-tt.patch"
   "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
-  "${_patchsources}/fixes-miscellaneous-v18/0001-fixes-miscellaneous.patch"
+  "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
+  "${_patchsources}/fixes-miscellaneous-v21/0001-fixes-miscellaneous.patch"
   "${_patchsources}/folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
+  "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
   "${_patchsources}/ksm-patches-v5/0001-ksm-patches.patch"
   "${_patchsources}/lrng-patches-v4/0001-lrng-patches.patch"
   "${_patchsources}/lru-cachyos-patches-v4/0001-lru-cachyos-patches.patch"
-  "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-  "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
   "${_patchsources}/makefile-patches/0001-arch-x86-improve-KBUILD_CFLAG.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0006-fs-patches.patch"
-  "${_patchsource}/sched/0001-tt.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
@@ -186,7 +186,7 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 prepare() {
   cd linux-${pkgver}
 
-  echo "Setting version..."
+  msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
@@ -219,7 +219,6 @@ prepare() {
   fi
 
   scripts/config --enable CONFIG_CGROUPS
-  scripts/config --enable CONFIG_CGROUP_SCHED
   scripts/config --enable CONFIG_RT_GROUP_SCHED
 
   # disable CONFIG_DEBUG_INFO=y at build time otherwise memory usage blows up
@@ -324,7 +323,7 @@ prepare() {
 
   msg2 "Selecting TT Scheduler..."
   scripts/config --enable TT_SCHED
-  scripts/config --enable TT_ACCOUNTING_STATS
+  scripts/config --disable TT_ACCOUNTING_STATS
 
   ### Optionally set tickrate 
   if [ -n "$_417_HZ_ticks" ]; then
