@@ -123,7 +123,6 @@ source=(
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
-  "${_patchsource}/sched/0001-tt.patch"
   "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
   "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
   "${_patchsources}/fixes-miscellaneous-v21/0001-fixes-miscellaneous.patch"
@@ -135,6 +134,7 @@ source=(
   "${_patchsources}/makefile-patches/0001-arch-x86-improve-KBUILD_CFLAG.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0006-fs-patches.patch"
+  "${_patchsource}/sched/0001-tt.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
@@ -445,9 +445,9 @@ prepare() {
                  --disable LATENCYTOP \
                  --disable DEBUG_PREEMPT
 
-  msg2 "Enable ZRAM_ENTROPY"
-  scripts/config --enable ZRAM_ENTROPY \
-                 --set-val ZRAM_ENTROPY_THRESHOLD 100000
+  # msg2 "Enable ZRAM_ENTROPY"
+  # scripts/config --enable ZRAM_ENTROPY \
+  #                --set-val ZRAM_ENTROPY_THRESHOLD 100000
 
   # these are ck's htrimer patches
   # msg2 "Patching with ck hrtimer patches..."

@@ -25,7 +25,7 @@ depends=('libelf' 'libffi' 'libedit' 'libxml2' 'ncurses')
 _ocaml_ver=4.13.1
 makedepends=(
   'git' 'ninja' 'cmake' 'clang' 'llvm' 'lld'
-  "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib'
+  "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib' 'ocaml-integers' 'ocaml-stdlib-shims'
   'python' 'python-setuptools' 'python-psutil' 'python-sphinx'
   'python-recommonmark'
 )
