@@ -1,11 +1,12 @@
 name: Github Action Build PKGBUILD
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [systemd]
+        packages: [v2raya-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

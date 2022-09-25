@@ -36,7 +36,7 @@ build() {
 	export CGO_CXXFLAGS="-O3"
     export CGO_FFLAGS="-O3"
     export CGO_LDFLAGS="-O3"
-    go build -p -ldflags '-X github.com/v2rayA/v2rayA/conf.Version=unstable-'"$(pkgver)"' -s -w' -o v2raya
+    go build -ldflags '-X github.com/v2rayA/v2rayA/conf.Version=unstable-'"$(pkgver)"' -s -w' -o v2raya
 }
 
 package() {
