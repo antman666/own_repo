@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.19.11
+pkgver=5.19.12
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 replaces=("linux-tt-uksm")
@@ -125,16 +125,17 @@ source=(
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
   "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-  "${_patchsources}/fixes-miscellaneous-v21/0001-fixes-miscellaneous.patch"
+  "${_patchsources}/fixes-miscellaneous-v24/0001-fixes-miscellaneous.patch"
   "${_patchsources}/folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
   "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
   "${_patchsources}/ksm-patches-v5/0001-ksm-patches.patch"
   "${_patchsources}/lrng-patches-v4/0001-lrng-patches.patch"
   "${_patchsources}/lru-cachyos-patches-v4/0001-lru-cachyos-patches.patch"
   "${_patchsources}/makefile-patches/0001-arch-x86-improve-KBUILD_CFLAG.patch"
+  "${_patchsources}/vma-patches/0001-vma-5.19-per-VMA-locks-proposal.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0006-fs-patches.patch"
-  "${_patchsource}/sched/0001-tt.patch"
+  "${_patchsource}/sched/0001-tt-cachy.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
