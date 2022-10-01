@@ -135,7 +135,7 @@ source=(
   "${_patchsources}/vma-patches/0001-vma-5.19-per-VMA-locks-proposal.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0006-fs-patches.patch"
-  "${_patchsource}/sched/0001-tt.patch"
+  # "${_patchsource}/sched/0001-tt.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
