@@ -37,17 +37,23 @@ build() {
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/6229
   # CFLAGS+=' -mtls-dialect=gnu'
   # CXXFLAGS+=' -mtls-dialect=gnu'
-  CFLAGS+='-fuse-ld=mold'
-  CXXFLAGS+='-fuse-ld=mold'
+  CFLAGS+=' -fuse-ld=mold'
+  CXXFLAGS+=' -fuse-ld=mold'
 
-  arch-meson mesa-$_pkgver build \
+  meson setup mesa-$_pkgver build \
+    --prefix /usr \
+    --libexecdir lib \
+    --sbindir bin \
+    --auto-features enabled \
+    --wrap-mode nodownload \
     -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,iris,crocus,zink,d3d12 \
     -D vulkan-drivers=amd,intel,swrast \
     -D vulkan-layers=device-select,intel-nullhw,overlay \
     -D b_lto=true \
-    -D b_lto_mode=full \
+    -D b_lto_mode=default \
+	-D b_lto_threads=$(nproc) \
     -D b_ndebug=true \
-    -D debug=false \
+	-D buildtype=release \
     -D dri3=enabled \
     -D egl=enabled \
     -D gallium-extra-hud=true \
@@ -67,7 +73,6 @@ build() {
     -D llvm=enabled \
     -D lmsensors=enabled \
     -D microsoft-clc=disabled \
-    -D optimization=3 \
     -D osmesa=true \
     -D platforms=x11,wayland \
     -D shared-glapi=enabled \
