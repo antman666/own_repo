@@ -8,7 +8,7 @@ pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulk
 pkgdesc="An open-source implementation of the OpenGL specification"
 pkgver=22.2.0
 _pkgver=${pkgver//_/-}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
@@ -37,8 +37,8 @@ build() {
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/6229
   # CFLAGS+=' -mtls-dialect=gnu'
   # CXXFLAGS+=' -mtls-dialect=gnu'
-  CFLAGS+=' -fuse-ld=mold'
-  CXXFLAGS+=' -fuse-ld=mold'
+  # CFLAGS+=' -fuse-ld=mold'
+  # CXXFLAGS+=' -fuse-ld=mold'
 
   meson setup mesa-$_pkgver build \
     --prefix /usr \
