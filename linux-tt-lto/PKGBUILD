@@ -89,9 +89,8 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
 pkgver=5.19.12
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
-replaces=("linux-tt-uksm")
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
 license=(GPL2)
@@ -111,8 +110,8 @@ options=('!strip')
 
 # https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
 # acknowledgment to xanmod for initially keeping the hrtimer patches up to date
-# _ckhrtimer=linux-5.17.y
-# _commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+_ckhrtimer=linux-5.17.y
+_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
 
 _gcc_more_v=20220315
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/5.19"
@@ -136,6 +135,7 @@ source=(
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0006-fs-patches.patch"
   # "${_patchsource}/sched/0001-tt.patch"
+  "0001-tt.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
