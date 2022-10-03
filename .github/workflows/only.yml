@@ -1,6 +1,5 @@
-name: Github Action Build PKGBUILD
+name: Build few packages
 on:
-  push:
   workflow_dispatch:
 jobs:
   build:

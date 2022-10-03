@@ -1,4 +1,4 @@
-name: Github Action Build PKGBUILD
+name: Build all packages
 on:
   workflow_dispatch:
 jobs:
