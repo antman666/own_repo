@@ -37,8 +37,8 @@ build() {
     -D optimization=3 \
     -D b_ndebug=true \
     -D b_lto=true \
-	-D default_library=both \
-	-D radeon=enabled \
+    -D default_library=both \
+    -D radeon=enabled \
     -D udev=true \
     -D valgrind=disabled
 

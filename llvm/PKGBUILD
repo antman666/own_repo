@@ -2,7 +2,7 @@
 
 pkgname=llvm
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld"
-pkgver=15.0.1
+pkgver=15.0.2
 pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
@@ -30,7 +30,7 @@ makedepends=(
   'python-recommonmark'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=b73d2c8c720a8c8e6e73b11be4e27afa6cb75bdf
+_commit=4bd3f3759259548e159aeba5c76efb9a0864e6fa
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit:?}"
   'llvm-config.h'

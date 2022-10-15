@@ -101,9 +101,9 @@ provides=(
   libswresample.so
   libswscale.so
 )
-_tag=1326fe9d4c85cca1ee774b072ef4fa337694f2e7
+_commit=05d6157aab34bc49f23284645a8f34ece870f44d
 source=(
-  git+https://git.ffmpeg.org/ffmpeg.git?signed#tag=${_tag}
+  git+https://git.ffmpeg.org/ffmpeg.git#commit=${_commit}
   add-av_stream_get_first_dts-for-chromium.patch
 )
 b2sums=('SKIP'
