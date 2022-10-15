@@ -155,8 +155,6 @@ build() {
     -D optimization=3
   )
 
-  meson configure build
-
   meson setup "$pkgbase-stable" build "${_meson_options[@]}"
 
   meson compile -C build

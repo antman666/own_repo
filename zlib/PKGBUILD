@@ -21,7 +21,7 @@ prepare() {
 	grep -A 24 '^  Copyright' zlib.h > LICENSE
 
 	# https://github.com/madler/zlib/issues/613
-	patch -Np1 -i ../$pkgname-handle-incorrect-crc-inputs.patch
+	# patch -Np1 -i ../$pkgname-handle-incorrect-crc-inputs.patch
 }
 
 build() {
