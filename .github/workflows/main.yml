@@ -1,5 +1,6 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -10,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.1.0
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.11.1
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -31,14 +32,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-jemalloc packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.1.0
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
         with:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.11.1
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -47,19 +48,19 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, gcc, glibc, libtool, llvm, openssl]
+        nolto: [binutils, gcc, glibc, glib2, libtool, llvm, openssl, qemu, wine]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.1.0
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.nolto }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.11.1
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -68,7 +69,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.11.1
         with:
           allowUpdates: True
           tag: "x86_64"
@@ -81,7 +82,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1.11.1
         with:
           allowUpdates: True
           tag: "x86_64"

@@ -10,7 +10,7 @@
 pkgname=(gcc gcc-libs lib32-gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go libgccjit)
 pkgver=12.2.1
 _majorver=${pkgver%%.*}
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
@@ -38,7 +38,7 @@ checkdepends=(
 )
 options=(!emptydirs !lto !debug ccache)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=55b6abd9f27c67754e1ff2549e7ea6d471493082
+_commit=3055829a4addde1fa3542c8070c87e2dd17217fc
 source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
         c89 c99
         gcc-ada-repro.patch

@@ -3,8 +3,8 @@
 # Contributor: Alexander Baldeck <alexander@archlinux.org>
 
 pkgname=pixman
-pkgver=0.40.0
-pkgrel=2
+pkgver=0.42.0
+pkgrel=1
 pkgdesc="The pixel-manipulation library for X and cairo"
 arch=(x86_64)
 url="https://cgit.freedesktop.org/pixman/"
@@ -32,6 +32,7 @@ build() {
     -D vmx=disabled \
     -D arm-simd=disabled \
     -D neon=disabled \
+    -D a64-neon=disabled \
     -D iwmmxt=disabled \
     -D mips-dspr2=disabled \
     -D gtk=disabled

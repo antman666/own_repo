@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=5.19.16
+pkgver=6.0.5
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -110,43 +110,39 @@ options=('!strip')
 
 # https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
 # acknowledgment to xanmod for initially keeping the hrtimer patches up to date
-_ckhrtimer=linux-5.17.y
-_commit=5d3a0424bdbfdf2fc4cca389bf0f1ee4876e782d
+#_ckhrtimer=linux-6.0.y
+#_commit=5be918e798e2c2cc94fa7dd0f6f031921a4f7598
 
-_gcc_more_v=20220315
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/5.19"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/5.19"
+_gcc_more_v=20221022
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.0"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.0"
 
 source=(
-  "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$pkgver.tar".{xz,sign}
+  "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
-  "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
-  "${_patchsources}/bitmap-patches-v2/0001-bitmap-5.19-merge-changes-from-dev-tree.patch"
-  "${_patchsources}/fixes-miscellaneous-v24/0001-fixes-miscellaneous.patch"
-  "${_patchsources}/folio-patches-v2/0001-folio-5.19-merge-changes-from-dev-tree.patch"
-  "${_patchsources}/futex-patches/0001-futex-5.19-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-o.patch"
-  "${_patchsources}/ksm-patches-v5/0001-ksm-patches.patch"
-  "${_patchsources}/lrng-patches-v4/0001-lrng-patches.patch"
-  "${_patchsources}/lru-cachyos-patches-v4/0001-lru-cachyos-patches.patch"
-  "${_patchsources}/makefile-patches/0001-arch-x86-improve-KBUILD_CFLAG.patch"
-  "${_patchsources}/vma-patches/0001-vma-5.19-per-VMA-locks-proposal.patch"
+  "${_patchsource}/sched/0001-tt.patch"
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
-  "${_patchsource}/0006-fs-patches.patch"
-  # "${_patchsource}/sched/0001-tt.patch"
-  "0001-tt.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0001-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0002-XANMOD-Change-rcutree.kthread_prio-to-SCHED_RR-polic.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0003-XANMOD-block-mq-deadline-Disable-front_merges-by-def.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0004-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0005-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0007-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0008-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0011-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0012-XANMOD-lib-kconfig.debug-disable-default-CONFIG_SYMB.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0013-XANMOD-init-Kconfig-Enable-O3-KBUILD_CFLAGS-optimiza.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-5.19.y-xanmod/xanmod/0014-XANMOD-Makefile-Turn-off-loop-vectorization-for-GCC-.patch"
+  "${_patchsource}/0002-bbr2.patch"
+  "${_patchsource}/0003-futex-winesync.patch"
+  "${_patchsource}/0005-mm-multi-gen-LRU.patch"
+  "${_patchsource}/0006-Introducing-the-Maple-Tree.patch"
+  "${_patchsource}/0009-lrng.patch"
+  "${_patchsource}/0010-folios.patch"
+  "${_patchsource}/0011-fixes.patch"
+  "${_patchsource}/0015-ksm.patch"
+  "${_patchsource}/0017-fs-patches.patch"
+  "${_patchsources}/bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
+  "${_patchsources}/fixes-miscellaneous-v7/0001-fixes-miscellaneous.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
 validpgpkeys=(
