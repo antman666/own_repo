@@ -50,6 +50,9 @@ build() {
                -DNON_INTERACTIVE_LOGIN_SHELLS)
   export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
 
+  CFLAGS={$CFLAGS/-fipa-pta/}
+  CXXFLAGS={$CFLAGS/-fipa-pta/}
+
   ./configure \
     --prefix=/usr \
     --with-curses \

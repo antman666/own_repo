@@ -135,12 +135,13 @@ source=(
   "${_patchsource}/0017-fs-patches.patch"
   "${_patchsources}/bitmap-cachyos-patches/0001-bitmap-6.0-merge-changes-from-dev-tree.patch"
   "${_patchsources}/fixes-miscellaneous-v7/0001-fixes-miscellaneous.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
@@ -150,31 +151,27 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('2f42b30510e8b778e78d5945b8cf0d5f67e95470414043128470108251a10a5a67841f5f508253a3bd93ebc4203a93e9947dcf7f4aabbe37e09390e7b25b52b0'
+b2sums=('71afe2e227bbab9b40ccbd3dda4aacbe1ba7f45b85c863c57a759a91d18d215cdc16c8bfd28e2d2bcd2a510c49b7fc84531d21695ad81895172ca6997ffe0f5a'
         'SKIP'
         '430669f1a3faebb5461c8088b7045677a309a4c425a805691af5c618d83e8ac0fc98fb74fca3c78417e1c271ee4ba273295935f224901aa97dc81c31bc28b1b4'
-        '20674a8fcc0a85726e06460a7dbccfe731c46bf377cc3bf511b7591175e7df892f271bc1909e77d9a02913c753d241493502c5ab15d9f78e95f31aa4399c2c27'
-        '996fd4ff6ece3a2b453769fa44dfd0b5930dfe30fbdf5ef571336088985101d6332e73d65b0ca16a85050a879a797448cfc7b31a34bb817f84ab120c20d16370'
-        'be71f4fa5aa1be9ee842d728fbc05a13a74d58e09f139f5045594bd052e23c606095968303f371e9243a00fd4ac8f32ae30a177a54e6e283aa9335bb019df051'
-        '425d84c8bd9224b56a82e88044d15ff9de16fa3c5b568be7cd071262412a9b62895a5eafd4e006db9f5453b53f3340bc0ddd7ad0450fedf3c335fdc7a56d1aeb'
-        'aec2096240922fed6ee4c2d6147de8fb0cc54bba959aadd7700488e8863ea75492849310024a2e6cb8bfc1dde7b936364aa25848f4e77833ed71ee27c0888aeb'
-        '85b2b783cc8d728a0eccd1df025fdc4927eca1397ae81900958d891d632dec78f6b804e5306592eb190f21e9de67c347a7ed4a65c56dd3f0d437cbc5e2f74bc0'
-        '5a12625fe2e26d70c7816cd8b109178b12394549765c74d430ddc0cf446c29983c36854bf674e7b20f67de371a50f2b578f079e7a9525e7a1727c2d183ccbfbc'
-        '351deddd2f4ae90fb89fdb12777b15e0a1858a8670ba362bb4caf9c02eb5f3a65fbcbd8a3848b0e58febb72be40dd8c96299885fee9262aed31e8580fb91cfa6'
-        '605cad98948545889ab6841ff6dec0bdeaba2ebfedfabfc71732e377cabbbdca392b80e180b0f465040087e1284324efae08185f24bdd143a2088976a94e45e0'
-        'cf2431f5134f3c684541be17588b4bc08d4b63ab9491b60cb35dc630c4b9f5bbc90e8d26b86269926dcd9aa3c78a769cbe880615d0451a415646015c092bb959'
-        '70d39b55d7717e24740c677b78473c4176d1d8437199d1abceea3d417a53d387b3172bda0adfa291a87c9946b56e7de73147c83c8eba355f3b8bdddbd2832e82'
-        'e3513f71dd7b254fc8e2a26986bb672fb356f34c4b52a04df4f105859c59caa8447b03266997f9ab478522878ee72fe05a8202a9e6fb6a0259da01918dce4b53'
-        '179d3f6cd83b8f7d26d24ba8e81a9b735c9bc9c84c92793d5869d1dc9b1b862893529fecdc4e454d80b82d6841cbe5cde18ccd76525b2284da97d53b8e042ff0'
-        'a2b7aa1be3488c2a29a3d579af4c450fe4a093c23584c8611bc5c3e31569bbf5a2e74d4c804cfe97ff1ef62ad5973d1da4291c6ff15f90449edf743e48368cfe'
-        'ab0535cb1e60775fa95d4ec705be785fc0551d083234794a7b7984c4c3a04e209d33758d176d089da22dffe6bd8c9079d7977a849e8cd71115b45fc3aabb289f'
-        '2e50b252dc579dd576bf80004fc785510596cf0fe36c46bc5578cefae9866a4558f7111c83c9e265ce24fa7e4829dd253f1734344dd944ac5f681eb2a47eefdb'
-        'c40d0bf09d45373b883580bf98e3f18f8a068990b64751cc7ccfc7474f0f1f6d6131d8ec4cd775b8d987e49d9439777b701116fd1c7a0a371b5074c217c43d7c'
-        'b0cf8b5335065b0f0031f7ed0176a866b64ba807b905fbd6375c1dc888f1a4d704d00b328aa04d1a5b53f38aecd260292bdef04cbac33df3841455e4955e5229'
-        '3a4feceac299140a8e8809e6d6b125d22b08ea482094122239bf38ad54a0bfc7c0e2e382aa547bafb3d19bc53971684054750c4481b9592ddf8c699d8f820207'
-        '3185319171ba59b8ddf93fa827e067b8f6907c000c7d1fd24cad4566ed0158b41277d0ff05aac9a70d4422750ea7dd33d36939917e6b69c5454f788aa76b47b7'
-        '45d6f93d744c24537f6f10dc0fcdc512e666838d6bbdeed11f123efc5065cdc8b8d861da40065b26598c2b585bf069e317832032277be8ed8ce8eb97e1cda6ce'
-        '6ddf293bc5a150b8b79d44e242b7d17fd8df34d80b4f14ed6f3c955c421f2a9dc0aaa70761ee753160d55e7e20ac1c45554fa111343426c1b6a5f06f7d42cd90')
+        'ccef83e676adde2d8d75838df1dad1a602b7d8691b75c0e961c73465608dc0ee1406fdd8773235a7abc12d508674e89a7a5fe6ab8d9cacf6395945fb2a9920cb'
+        '89896ca8ecadb5ae0b6c4087e23e2c02e55bbec97cebc43c2d08f0636f307c0b41799238b2f0170e71d7d10990e5513513eea43263403d6909300eca3034d013'
+        'beb8ad6025b2d4473c4fdc7e1dd132c963bcfc7a7f443dc2f4c989cfcb9156754c90a2dc0b833528377564c957ef1e1e10c181762284e30a8e78e580ce9c2e53'
+        'bafbecb50f523a624fca5985d7ae2002cddd43a2a0ad01ded8b271ff9cb867f1c1a2df172fe78f22727f2eff0f1cad63a8e634576c5df82be87cdfc42624e9d4'
+        '25635af6375dcb86805569b9d5b51e05d18e653d811265d7a23f9faa0ed235156fe7700b78f02a33372c139010eaa4937467c449ce70ae4671b49a987515ad06'
+        'ac11646a18f9b3ac85034b42cc944d1afaf86ee732f494e9a2c41b3e862a1b0495cf13d358ad54ba48f551b62bf861847fa67e50b9da480926a2ce10e37f262c'
+        '575a767a2d22698ca6f1a360119ab7980ba88b9882b83bf50a3070e5cbe2b0c3898e7ad0a375cb2969647e8cfce5d21f8fbb595c92d027b5324ea8652e78bf47'
+        'c30fbaf6e666115d3620f9a58b6297f8c4293fa14cd7d7c29d113dcc04db5a270af10e2710dbc023738e0aa9a79fc6dfe77da0981ddd8cb2140707912d0d9f5a'
+        '280711e5e22a4eb8ee8c67f8558b8d8d6150584ce93dd3714a257705edbe0f215fc4f652549bfd29ab488bf7f66d20625a9af08af18d1126cd0e525d187d4de4'
+        'ce8d6ff95c97bd0a7387177ab1d78f0bf93d0fd5ce8ea88824cee4f7b19799a347da1d966c578f4555ef0d4fe787b3dda077f545de2bfe52977249cce4df579e'
+        'c6beb9013dd15fa2baca980332caf5a5eb15d995ac3c453f16e09007ceeec4f1ed0f07cc4f2d8357e18b8003718912fa11c262d874cb87097730913252d28b1e'
+        'd5afa5fd40edeb4dabb765525d5ffb841a78275e0e17a99d602f56336eeae01379ed26186a5ef2efc991dce68d6b072fd14200b488d21f3db9d293d49daf51a0'
+        'be3804f4528671992f573bb42109574d774012362329fa23b06c5387a5dc2d7056fdbd92ef3716b70399c4225eaaf6ef7a98fb1616ac89582956384fc78233ea'
+        '77882833af25b03c373ef4055bfa05bb0ef1df7d8f66ba71ca80bb684dc2be0fe8c16b2f3062aa4668166040d997acc8992ce298322048b5726b9e7987fed83b'
+        'a810a565663a6fa8fbe6ae47d73844633289514882269fdd441afb27fa68aca221065ca14114e27f606452d65a594bf453c012756f16653fe849b40f47596bd6'
+        'bcf5a5e7b1b5830515cddabd40b74fe5ed0f5c797e7198e0220d6df83228f717f431f8947def8d8f3000c599e602b95679fc426b6e8fa8585494b28dc5398f00'
+        '1dc2fcec39d40c0d72354edc422acfa4a2d1e1ee81651bb337ed3b6af91a5755253b1ecc6d93354dacba6ceed9920185a760e7e97768891122ad51abc51a595e'
+        '87692fcafeade4e6266f1b1cc181288f6ddec23b6753d47a7ba0ce1989fb94a576a1fa45bdea749b7c0e2bf3bc0aced18fc3d588e1f37e5bca3b6ebb4893e0c8')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
