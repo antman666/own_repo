@@ -8,7 +8,7 @@
 
 pkgname=libtool
 pkgver=2.4.7
-pkgrel=1
+pkgrel=2
 pkgdesc='A generic library support script'
 arch=(x86_64)
 url='https://www.gnu.org/software/libtool'
@@ -25,6 +25,7 @@ source=(git+https://git.savannah.gnu.org/git/libtool.git#commit=$_commit
         git+https://git.savannah.gnu.org/git/gnulib.git
         gnulib-bootstrap::git+https://github.com/gnulib-modules/bootstrap.git
         no_hostname.patch
+        disable-lto-link-order2.patch
 )
 sha256sums=('SKIP'
             'SKIP'
@@ -45,7 +46,7 @@ prepare() {
   # test 67 is broken with lto
   # this patch removes the -flto flag for this very test
   # adapt when -ffat-lto-objects is enabled by Arch
-  # patch -Np1 -i ${srcdir}/disable-lto-link-order2.patch
+  patch -Np1 -i ${srcdir}/disable-lto-link-order2.patch
 
   git submodule init
   git config --local submodule.gnulib.url "$srcdir/gnulib"
@@ -58,7 +59,7 @@ prepare() {
 build() {
   cd libtool
   
-  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  # CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
   ./configure \
     --prefix=/usr \
