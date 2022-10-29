@@ -24,6 +24,9 @@ sha512sums=('a8e36677aab7dcd4fe92e327bfad2912254c1624adfef8120e1d143762a769ae92d
 build() {
   cd node-$pkgver
 
+  CFLAGS=${CFLAGS/-fipa-pta/}
+  CXXFLAGS=${CXXFLAGS/-fipa-pta/}
+
   ./configure \
     --prefix=/usr \
     --with-intl=system-icu \
