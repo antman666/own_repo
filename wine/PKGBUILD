@@ -155,7 +155,7 @@ build() {
     --enable-win64 \
     --with-xattr
 
-  make CROSSCFLAGS="-O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution -finline-functions" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
+  make CROSSCFLAGS="-O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
 
   msg2 "Building Wine-32..."
 
@@ -169,7 +169,7 @@ build() {
     --libdir=/usr/lib32 \
     --with-wine64="$srcdir/$pkgname-64-build"
 
-  make CROSSCFLAGS="-O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution -finline-functions" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
+  make CROSSCFLAGS="-O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
 }
 
 package() {

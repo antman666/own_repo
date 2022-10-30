@@ -52,8 +52,9 @@ build() {
 
   "${srcdir}/${pkgbase}-${pkgver}"/configure \
     "${_configure_options[@]}" \
+    --with-openssl \
     --enable-versioned-symbols
-  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all,-ljemalloc\0/g' libtool
+  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all\0/g' libtool
   make
 
   # build libcurl-compat
@@ -61,8 +62,9 @@ build() {
 
   "${srcdir}/${pkgbase}-${pkgver}"/configure \
     "${_configure_options[@]}" \
+    --with-openssl \
     --disable-versioned-symbols
-  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all,-ljemalloc\0/g' libtool
+  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all\0/g' libtool
   make -C lib
 
   # build libcurl-gnutls
@@ -71,9 +73,9 @@ build() {
   "${srcdir}/${pkgbase}-${pkgver}"/configure \
     "${_configure_options[@]}" \
     --disable-versioned-symbols \
-    --without-ssl \
-    --with-gnutls='/usr'
-  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all,-ljemalloc\0/g' libtool
+    --without-openssl \
+    --with-gnutls
+  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--strip-all\0/g' libtool
   make -C lib
   patchelf --set-soname 'libcurl-gnutls.so.4' ./lib/.libs/libcurl.so
 }

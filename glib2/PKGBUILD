@@ -43,8 +43,8 @@ build() {
   #CXXFLAGS+=' -ffat-lto-objects -g3'
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution'
+  export CFLAGS='-march=core2 -mtune=core2 -O3 -fomit-frame-pointer'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fomit-frame-pointer'
 
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
   OBJCOPY=objcopy meson setup glib build \
