@@ -5,7 +5,7 @@
 # Contributor: Giovanni Scafora <giovanni@archlinux.org>
 
 pkgname=wine-staging
-pkgver=7.19
+pkgver=7.20
 pkgrel=1
 
 #_winever=${pkgver%.*}

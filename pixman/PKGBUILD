@@ -3,7 +3,7 @@
 # Contributor: Alexander Baldeck <alexander@archlinux.org>
 
 pkgname=pixman
-pkgver=0.42.0
+pkgver=0.42.2
 pkgrel=1
 pkgdesc="The pixel-manipulation library for X and cairo"
 arch=(x86_64)
