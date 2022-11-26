@@ -8,8 +8,8 @@
 # Contributor: TIanyi Cui <tianyicui@gmail.com>
 
 pkgname=nodejs
-pkgver=19.0.0
-pkgrel=3
+pkgver=19.1.0
+pkgrel=1
 pkgdesc='Evented I/O for V8 javascript'
 arch=('x86_64')
 url='https://nodejs.org/'
