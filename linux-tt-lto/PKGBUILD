@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.0.9
+pkgver=6.0.10
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -126,7 +126,7 @@ source=(
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0002-bbr2.patch"
   "${_patchsource}/0003-futex-winesync.patch"
-  "${_patchsource}/0005-mm-multi-gen-LRU.patch"
+  "${_patchsource}/0005-MGLRU-maple-tree.patch"
   "${_patchsource}/0006-mm-demotion-Memory-tiers-and-demotion.patch"
   "${_patchsource}/0008-lrng.patch"
   "${_patchsource}/0009-folios.patch"
