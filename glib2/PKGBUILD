@@ -3,7 +3,7 @@
 
 pkgbase=glib2
 pkgname=(glib2 glib2-docs)
-pkgver=2.74.2
+pkgver=2.74.3
 pkgrel=1
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -32,7 +32,7 @@ checkdepends=(
   glib2
 )
 options=(!debug staticlibs)
-_commit=b5299ed2055aa3ccd628aceb016c1e9bda516e39  # tags/2.74.2^0
+_commit=a8ad6347a404962c3b83aca1bf50610a76618c0f  # tags/2.74.3^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
         glib-compile-schemas.hook gio-querymodules.{hook,script})
@@ -61,8 +61,8 @@ build() {
   #CXXFLAGS+=' -ffat-lto-objects -g3'
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3 -fomit-frame-pointer'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fomit-frame-pointer'
+  export CFLAGS='-march=core2 -mtune=core2 -O3'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3'
 
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
   arch-meson glib build \

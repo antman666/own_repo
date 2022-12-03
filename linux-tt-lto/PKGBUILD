@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.0.10
+pkgver=6.0.11
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -113,7 +113,7 @@ options=('!strip')
 #_ckhrtimer=linux-6.0.y
 #_commit=5be918e798e2c2cc94fa7dd0f6f031921a4f7598
 
-_gcc_more_v=20221022
+_gcc_more_v=20221104
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.0"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.0"
 
@@ -126,14 +126,14 @@ source=(
   "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/0002-bbr2.patch"
   "${_patchsource}/0003-futex-winesync.patch"
-  "${_patchsource}/0005-MGLRU-maple-tree.patch"
+  "${_patchsource}/0005-mm-Introduce-the-maple-tree-with-MG-LRU.patch"
   "${_patchsource}/0006-mm-demotion-Memory-tiers-and-demotion.patch"
   "${_patchsource}/0008-lrng.patch"
   "${_patchsource}/0009-folios.patch"
   "${_patchsource}/0010-fixes.patch"
   "${_patchsource}/0014-ksm.patch"
   "${_patchsource}/0016-fs-patches.patch"
-  "${_patchsource}/0018-block-bfq.patch"
+  "${_patchsource}/0018-bfq.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
   # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
@@ -150,23 +150,22 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('71afe2e227bbab9b40ccbd3dda4aacbe1ba7f45b85c863c57a759a91d18d215cdc16c8bfd28e2d2bcd2a510c49b7fc84531d21695ad81895172ca6997ffe0f5a'
+b2sums=('55d3fc789bd0775afc3415c3cdbdf0819f1cce599fa383a44fd62eb80734bc204ef9848b35ae7746b6fb74db58bff106639ed2ac971b12b60f0ade3fae96f404'
         'SKIP'
-        '430669f1a3faebb5461c8088b7045677a309a4c425a805691af5c618d83e8ac0fc98fb74fca3c78417e1c271ee4ba273295935f224901aa97dc81c31bc28b1b4'
-        'ccef83e676adde2d8d75838df1dad1a602b7d8691b75c0e961c73465608dc0ee1406fdd8773235a7abc12d508674e89a7a5fe6ab8d9cacf6395945fb2a9920cb'
+        '80119b554cdc94d258fedef33ab949e1c1d65849157ccdb9f0371e4bd55129b6d6cb84008d40e6206005dafebfe29c12b6ea43b3af0e92acc453dd48603d9673'
+        '05bddc2b57189d7e302f32041079bcf60a06938e9afcfd02a0085a1430255286a5b663eed7cdb7f857717c65e9e27af4d15625b17e0a36d1b4ce1cbda6baee2b'
         '89896ca8ecadb5ae0b6c4087e23e2c02e55bbec97cebc43c2d08f0636f307c0b41799238b2f0170e71d7d10990e5513513eea43263403d6909300eca3034d013'
         'beb8ad6025b2d4473c4fdc7e1dd132c963bcfc7a7f443dc2f4c989cfcb9156754c90a2dc0b833528377564c957ef1e1e10c181762284e30a8e78e580ce9c2e53'
-        'bafbecb50f523a624fca5985d7ae2002cddd43a2a0ad01ded8b271ff9cb867f1c1a2df172fe78f22727f2eff0f1cad63a8e634576c5df82be87cdfc42624e9d4'
-        '25635af6375dcb86805569b9d5b51e05d18e653d811265d7a23f9faa0ed235156fe7700b78f02a33372c139010eaa4937467c449ce70ae4671b49a987515ad06'
-        'ac11646a18f9b3ac85034b42cc944d1afaf86ee732f494e9a2c41b3e862a1b0495cf13d358ad54ba48f551b62bf861847fa67e50b9da480926a2ce10e37f262c'
-        '575a767a2d22698ca6f1a360119ab7980ba88b9882b83bf50a3070e5cbe2b0c3898e7ad0a375cb2969647e8cfce5d21f8fbb595c92d027b5324ea8652e78bf47'
-        'c30fbaf6e666115d3620f9a58b6297f8c4293fa14cd7d7c29d113dcc04db5a270af10e2710dbc023738e0aa9a79fc6dfe77da0981ddd8cb2140707912d0d9f5a'
-        '280711e5e22a4eb8ee8c67f8558b8d8d6150584ce93dd3714a257705edbe0f215fc4f652549bfd29ab488bf7f66d20625a9af08af18d1126cd0e525d187d4de4'
-        'ce8d6ff95c97bd0a7387177ab1d78f0bf93d0fd5ce8ea88824cee4f7b19799a347da1d966c578f4555ef0d4fe787b3dda077f545de2bfe52977249cce4df579e'
-        'c6beb9013dd15fa2baca980332caf5a5eb15d995ac3c453f16e09007ceeec4f1ed0f07cc4f2d8357e18b8003718912fa11c262d874cb87097730913252d28b1e'
-        'd5afa5fd40edeb4dabb765525d5ffb841a78275e0e17a99d602f56336eeae01379ed26186a5ef2efc991dce68d6b072fd14200b488d21f3db9d293d49daf51a0'
-        'be3804f4528671992f573bb42109574d774012362329fa23b06c5387a5dc2d7056fdbd92ef3716b70399c4225eaaf6ef7a98fb1616ac89582956384fc78233ea'
-        '77882833af25b03c373ef4055bfa05bb0ef1df7d8f66ba71ca80bb684dc2be0fe8c16b2f3062aa4668166040d997acc8992ce298322048b5726b9e7987fed83b'
+        'a12ebcd62096d53237f9d2de0a376d715c79666b9c6aa13eaa5a6b83d669b4c770709b78e4e6b2b5460cd03846751da024f914130e5f35f66576021e76e918bd'
+        '8dd680216f54919188b369369ef786ef2fcf55d5fa499e59a9be6a2355c80125dfa47019861190f89cf7b9ea0d91df6ad0dbd19f5dadc771f2ac2166edef1a39'
+        '7421a0eb7dd41a82601e476bb678e5e2341ccf990b2a61f3399617c10c2cd60481a57252382b3291486f7608e553497483bb307e0df261020d12e9cf74fa3b9a'
+        'b7e5309c31fe0f4c0e5bc05d5a41b1456b0f1ab1fd2fa0792082c9bad4dd2e32b4f51ee1a5117101b00f663d4595029d192dada35bbea52666f4ea7639ba2c53'
+        '04cf223374f42ca0e5627d31797756f265d84fee25bfe3bec322dc5fd0bb7736dc5975accc4ff26325c14b268660c6fbcfa7c9570ac36dd8b5cca2f83984de74'
+        '15bd64123e66ff84ad325477413bebb194fbb46b4bbc1477887317d7b0f9fd3df9bbb986b4ad86917e99b731946c08a65e116996e7551866e03172d8d2993ffb'
+        'c1a9855038561cc2dd2c53ac81492c730a67ad8426a30f4ed810a8dc3ee4f150d43f76ff8fe172f8eefe228397d4c5772c6b6f4a3901d52216730c7b894e84ab'
+        'ac0e5e3c085b6a3dc097941fcc374463e92b5a5780ad91525fdb6660f2af8ec625bd26994c181b0798566b2e532bf50aae0d224278d287272f880f09537eb8dc'
+        '0e5c49da29a0a05caab60c5d20e2d39de55302fcd794eac256d400584a77d29ec35b8213dba91e70b72bbe6d0afa5024f5e7908384b2e8e57ebc4a389140b528'
+        '283b2ef8bc0cfeb7792f32f4bfa63dd4ae254bc2581178533bb671f8da7902ca1b96a4c45fad2e571052da7b9fef56a3712499dbd0a769de13a3a7c107aa8d93'
         'a810a565663a6fa8fbe6ae47d73844633289514882269fdd441afb27fa68aca221065ca14114e27f606452d65a594bf453c012756f16653fe849b40f47596bd6'
         'bcf5a5e7b1b5830515cddabd40b74fe5ed0f5c797e7198e0220d6df83228f717f431f8947def8d8f3000c599e602b95679fc426b6e8fa8585494b28dc5398f00'
         '1dc2fcec39d40c0d72354edc422acfa4a2d1e1ee81651bb337ed3b6af91a5755253b1ecc6d93354dacba6ceed9920185a760e7e97768891122ad51abc51a595e'
@@ -414,13 +413,13 @@ prepare() {
                  --set-val NR_LRU_GENS 7 \
                  --set-val TIERS_PER_GEN 4
 
-  msg2 "Enabling DAMON"
-  scripts/config --enable DAMON \
-                 --disable DAMON_VADDR \
-                 --disable DAMON_DBGFS \
-                 --enable DAMON_SYSFS \
-                 --enable DAMON_PADDR \
-                 --enable DAMON_RECLAIM
+  # msg2 "Enabling DAMON"
+  # scripts/config --enable DAMON \
+  #                --disable DAMON_VADDR \
+  #                --disable DAMON_DBGFS \
+  #                --enable DAMON_SYSFS \
+  #                --enable DAMON_PADDR \
+  #                --enable DAMON_RECLAIM
 
   msg2 "disable debugging features to reduce the size..."
   scripts/config --disable DEBUG_INFO \
