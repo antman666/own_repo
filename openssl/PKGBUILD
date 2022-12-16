@@ -37,7 +37,6 @@ build() {
 		shared enable-ktls enable-ec_nistp_64_gcc_128 linux-x86_64 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 	unset MAKEFLAGS
-	export MAKEFLAGS="$(nproc)"
 
 	make depend
 	make
