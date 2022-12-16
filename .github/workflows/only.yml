@@ -1,23 +1,24 @@
 name: Build few packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [ffmpeg, pulseaudio]
+        packages: [rust]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.11.1
+      - uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -30,7 +31,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.11.1
+      - uses: ncipollo/release-action@v1.12.0
         with:
           allowUpdates: True
           tag: "x86_64"
