@@ -34,12 +34,12 @@ diff --git a/src/tools/rust-analyzer/crates/rust-analyzer/src/reload.rs b/src/to
 index e47f70fff39e..78c2a65aee8b 100644
 --- a/src/tools/rust-analyzer/crates/rust-analyzer/src/reload.rs
 +++ b/src/tools/rust-analyzer/crates/rust-analyzer/src/reload.rs
-@@ -321,7 +321,7 @@ fn eq_ignore_build_data<'a>(
-                             if let Some(sysroot) = sysroot.as_ref() {
-                                 tracing::debug!("Found a cargo workspace with a sysroot...");
-                                 let server_path =
--                                    sysroot.root().join("libexec").join(&standalone_server_name);
-+                                    sysroot.root().join("lib").join(&standalone_server_name);
-                                 if std::fs::metadata(&server_path).is_ok() {
-                                     tracing::debug!(
-                                         "And the server exists at {}",
+@@ -324,7 +324,7 @@ impl GlobalState {
+                                 if let Some(sysroot) = sysroot.as_ref() {
+                                     let server_path = sysroot
+                                         .root()
+-                                        .join("libexec")
++                                        .join("lib")
+                                         .join(&standalone_server_name);
+                                     if std::fs::metadata(&server_path).is_ok() {
+                                         tracing::debug!(
