@@ -142,6 +142,7 @@ build() {
 
   export RUST_BACKTRACE=1
 
+  DESTDIR="$srcdir/dest-rust" python ./x.py build -j "$(nproc)"
   DESTDIR="$srcdir/dest-rust" python ./x.py install -j "$(nproc)"
 
   cd ../dest-rust
