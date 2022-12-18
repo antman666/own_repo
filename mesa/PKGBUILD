@@ -45,7 +45,7 @@ build() {
   # CFLAGS+=' -mtls-dialect=gnu'
   # CXXFLAGS+=' -mtls-dialect=gnu'
   curl https://sh.rustup.rs -sSf > installer.sh
-  yes 1 | bash installer.sh
+  bash installer.sh -y
   source "$HOME/.cargo/env"
   # source "/github/workspace/.cargo/env"
 
