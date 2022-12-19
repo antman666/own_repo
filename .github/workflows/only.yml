@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [picom]
+        packages: [linux-tt-lto]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
