@@ -1,16 +1,17 @@
 diff --git a/Makefile b/Makefile
-index 46c6eb57b..00163e9b5 100644
+index 997b677..98c9a97 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -758,6 +758,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
- 
+@@ -823,6 +823,9 @@ KBUILD_CFLAGS       += $(call cc-disable-warning, address-of-packed-member)
  ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
  KBUILD_CFLAGS += -O2
+ KBUILD_RUSTFLAGS += -Copt-level=2
 +else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 +KBUILD_CFLAGS += -O3
++KBUILD_RUSTFLAGS += -Copt-level=3
  else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS += -Os
- endif
+ KBUILD_RUSTFLAGS += -Copt-level=s
 diff --git a/arch/arc/configs/axs101_defconfig b/arch/arc/configs/axs101_defconfig
 index e31a8ebc3..0016149f9 100644
 --- a/arch/arc/configs/axs101_defconfig

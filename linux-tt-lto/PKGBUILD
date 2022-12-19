@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.0.13
+pkgver=6.1
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -114,9 +114,9 @@ options=('!strip')
 #_commit=5be918e798e2c2cc94fa7dd0f6f031921a4f7598
 
 _gcc_more_v=20221104
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.0"
-# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.0"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.0"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1"
+# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.1"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.1"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -125,28 +125,31 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   "${_patchsource}/sched/0001-tt.patch"
-  "${_patchsource}/misc/0001-ck-hrtimer.patch"
+  # "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/misc/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
-  "${_patchsource}/0002-bbr2.patch"
-  "${_patchsource}/0003-futex-winesync.patch"
-  "${_patchsource}/0005-mm-Introduce-the-maple-tree-with-MG-LRU.patch"
-  "${_patchsource}/0006-mm-multi-gen-LRU-memcg-LRU.patch"
-  "${_patchsource}/0007-mm-demotion-Memory-tiers-and-demotion.patch"
-  "${_patchsource}/0009-lrng.patch"
-  "${_patchsource}/0010-folios.patch"
-  "${_patchsource}/0011-fixes.patch"
-  "${_patchsource}/0015-ksm.patch"
-  "${_patchsource}/0017-fs-patches.patch"
-  "${_patchsource}/0019-bfq.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
-  "https://github.com/xanmod/linux-patches/raw/master/linux-6.0.y-xanmod/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_patchsource}/0001-bbr2.patch"
+  "${_patchsource}/0002-bfq.patch"
+  "${_patchsource}/0005-fixes.patch"
+  "${_patchsource}/0006-folio.patch"
+  "${_patchsource}/0007-futex-winesync.patch"
+  "${_patchsource}/0008-fs-patches.patch"
+  # "${_patchsource}/0005-mm-Introduce-the-maple-tree-with-MG-LRU.patch"
+  # "${_patchsource}/0006-mm-multi-gen-LRU-memcg-LRU.patch"
+  # "${_patchsource}/0007-mm-demotion-Memory-tiers-and-demotion.patch"
+  "${_patchsource}/0011-ksm.patch"
+  "${_patchsource}/0012-lrng.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0005-init-wait-for-partition-and-retry-scan.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/net/ipv4/0001-Add-a-sysctl-to-skip-tcp-collapse-processing-when-th.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
+  # "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
+  "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
 validpgpkeys=(
@@ -154,29 +157,28 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('b37026b1cab3079507ff80de9a32c753552689d30fb13898b9b7dd419dfb73785259976ad13fc08b5085b71ca94b84f40b5caf236b13b435c37a3736d64130da'
+b2sums=('ae60257860b2bd1bd708d183f0443afc60ebbd2b3d535c45e44c2e541bd0928530a3b62de6385dd4e4726ebbedcc0a871d4f3ffb4105b9f1f6d8ed7467f5688e'
         'SKIP'
-        '6412d31e8c616b5f81a36890279e1f9dbcb369ad8022281e297946758b6a0086198ef118e19a39700890e33d67554c0df88d571db3089d0dddb72fc3b3641239'
-        '3ead43f3d5fea5f24a909f4204e09ca634da71979fc147cc4426a5c79b66968767c9281697983b5a09a2de416a6fcbd35d05a07af87caa82332e61af49e29c24'
+        'e806d5dfaafd36ebc7fe57219af4ccfb368a9620d4c2311461a241d2a93b22fa51ae44cde189d3d8a9e53d74a4a9ae284a23efb4b54da9e46c12f84b97c63f1c'
+        'cb82ebeca7c8e3f2532b6b13c4397d865573a48f9990ce252691547858dc06848ddc8c30e7e66f9334f068435c4dd1c0dc741e99ba9f68c1704b681d00a69254'
         '05bddc2b57189d7e302f32041079bcf60a06938e9afcfd02a0085a1430255286a5b663eed7cdb7f857717c65e9e27af4d15625b17e0a36d1b4ce1cbda6baee2b'
-        '89896ca8ecadb5ae0b6c4087e23e2c02e55bbec97cebc43c2d08f0636f307c0b41799238b2f0170e71d7d10990e5513513eea43263403d6909300eca3034d013'
-        'beb8ad6025b2d4473c4fdc7e1dd132c963bcfc7a7f443dc2f4c989cfcb9156754c90a2dc0b833528377564c957ef1e1e10c181762284e30a8e78e580ce9c2e53'
-        '102d6c471454bb87d172570b0916bcd026293fc1a8f7b647ba124ac2b2bcabe47ecb427109799310de770a136db1d2d65d62fc9b652e6a579bb24114b392e101'
-        '82808fa043b3a0ec6ce9f3b3552b8a176f41f3a39c199b74e391f08c7ec4ddb4ac9184128d1af4de4115a4945496b6f7ece47b90798036449bb1e6fba2e5daeb'
-        'b67a8cfa773a38cc9f77d83292302cb68140cb32c3c79d0378183d311973fa2d3e2caef039f850ad8aedbe992f6e150cad896ceeda48334dafd9ce04c6a2e4d5'
-        '16404790412ef633b596f2288e7b1c7394ebea2162e93b0e62fd4b6f482d211f942e2e306f4db0320218f9146b06889957332854a91f790c8d3df8fef9012ff2'
-        '41a4f4ceb7ea54a396c0a54796a7583239813cba80e8e4fe60dc8b7b6291f0e2df2b92c90f3af82b8f13885920a9702e1a4810f4b6d11618a59d4f6d9bdf47f8'
-        '60bc1c220227418a4915d8f61457b1f94c28160a17e727ef17f367d959371f7fe8d21f533a497c89bb4e79cd1e3dba12cd1647f71639f335225315c6f86eeef9'
-        'a42297b5ef4237d49313de85218a600392454dd72d20c2451b07b154d1c889e10df01ac50b619d0fd7e7976f7724eea5ff17755912c0b1170dde617ab6a7cc2a'
-        'ff166fcae321eb389cd056463077064680c0aedc6c1e610c238da3fe7365473346ab39a4594d964ad72c22cde4b72e6037dad4bf3c901ffd5055ea28531a5bb7'
-        '7db58a3243621320ab45d345e4161fb4fd0c18a01a006e75813289de1038b6da6f7645029aee5bf6e6b1b7f845e39c87117facece963edfcda93a5ecf01fd38a'
-        '1d2c31230d4a2efb2763dabcfe95f7136a7d3bdef792cedf1e40f6df2847279268f232a4996c32aab20e24166702a7ac1685b092fbe8a3dcbd3705134fd49dc3'
-        'a7b02843b29e5bc108b3d1f2b74730470764d1d2463d02c004ebda8866ef208905374df4af069a6e82b5258c48869b8b53eef9f13927030eb106dfb48e8c2d25'
-        '94b381894d34bf12ce42d67a3e5374102433606e4b5ea12d9c95b59d920aef2ee963271311bddeeed01fb9a2c11f78a054f8489eee61f4a80de1ed3a398cda18'
-        'a810a565663a6fa8fbe6ae47d73844633289514882269fdd441afb27fa68aca221065ca14114e27f606452d65a594bf453c012756f16653fe849b40f47596bd6'
-        'bcf5a5e7b1b5830515cddabd40b74fe5ed0f5c797e7198e0220d6df83228f717f431f8947def8d8f3000c599e602b95679fc426b6e8fa8585494b28dc5398f00'
-        '1dc2fcec39d40c0d72354edc422acfa4a2d1e1ee81651bb337ed3b6af91a5755253b1ecc6d93354dacba6ceed9920185a760e7e97768891122ad51abc51a595e'
-        '87692fcafeade4e6266f1b1cc181288f6ddec23b6753d47a7ba0ce1989fb94a576a1fa45bdea749b7c0e2bf3bc0aced18fc3d588e1f37e5bca3b6ebb4893e0c8')
+        '4ae446a3369e2518841a0e209f263b548fb18797ebe95b1816817c40f67e8b90a2bafe5e6a70d4fc8f57b819b6de8e512923b5a6a7d2cd8feb891ebc51306c94'
+        '1878a68062a4342b5c780027960f4a2f66d21da7e855d7c2e0ae8ae9cb166081e405bb80f69c1b7427c1480392cc0d9dbacc84497f800aade7fe3e16d6761ea9'
+        '945df65808aaa2a22bd2295869aeb6e41e3c6ec57f59c7bccb658ef81ea1a08ee734a4168b301dd99b0f657fa6bb29fd65f33869f5428d1dbc7eaf191508b484'
+        '534fabaef23687bf1a9f276d05e6f6dc39862cab668f43b6fef3707f21caaf683bf4a7994e85edfff4b6ca25318e8633232e74d6454877791e4ce74c3c4c2cce'
+        '4fb6c5a7daead504d10b7ca14aa4cf0e03a6b6c007793756445658399dbed037f5032768a71e130d6ec116e9c105f022568561574ada034831e7a947e04c8f86'
+        'aabe74afabeb31ef1d3eb34c53629734112493c00b9d803cf31869886e70588b32968d9608020e8cbb83b698fe2b5b8511deef5331bc03eaa495ca84f22ca959'
+        '0980b749b6419e970fca460262bea1046033f9739a30e1ec44e9653ad203d3a6e84e2453a9d2368f7759b738d3828d8ac2ea58b900917040273fe1a143669514'
+        'fa0500ac3a0f3bb2c8a570d6703c19b428a48e14b66084743142dc3956b4b44df683bb26d3c5e136a754af70e2592836088d2117fe3ff639f7bcca9ba98291ea'
+        'ee531f2685e2809286340f07b6244fb4731608a6695b3cfcb9f348ff83f234356fd41e465defaacf76e6c533f0cb449ef6e6129694701b7e3e1b47dac372996c'
+        '16b9b01cab42f4615688d0cd016c1f2d4ba1f3e2c024324e04aa43c0dc4f2889223ac32c3c72246a36ec483f2c68348b583b3287868e07de84b7b9ac38452503'
+        '2118a7820ebc64a8a2edc14c41ce941b335ebb551fc9ae9ab9c3d775c511a99abdd68e2477528f0e8b525fb8d67c4023573400899b022743db5b7de99e7e0027'
+        'fa28d3f0759080bb4c1e3dc8901559dd9697791cb92834e002f5e857ae4aa67b871716511d45379eb3fd0543f9d17bf0ebcd97c7cf25f1d5084d262561b00417'
+        '67f41ae57ffe48a191b4baf8b7ea68f42f862060e6debd1075b0497fc05e896140bb643c8147f40a9020820187b38f8c7d9fbaded11fbdd9e95d0d2b5d4cb350'
+        '5ef3b991a631a516948e83870e43f1876318bf80958fd94c6f3b923e25ea7e94961123657aa2f28d56e46e823eeaf000a8208875fd2f9fba0f82a9ed001cc384'
+        '12448f2a27f4448a85bb2ec3e353b7a1a22c779df9f50bf8f1d5fb8d77306eebfda5de4b779baef6df174190ce6a6530d613f82a4ad8edfc2463c38d3930e5f3'
+        '6e596f67dfb43b39d03424d49c12637deba8786ca408c9f34fe030e42dbb618d066f7512cdc8f24374fa01f360dbd49c6694b084e1a054c4283e7084a7cc2a07'
+        '5ee267759d3f315d174fd71cc13d58d41e52dcdc4b0167188692e911b1d7b7b0decde89569d1cf3b88240144ed357f5e8cfab0215906fbe7760bbd39ac3c341d')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -185,12 +187,18 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 prepare() {
   cd linux-${pkgver}
 
+  msg2 "Preparing rust which not depend on llvm 14.x.x"
+  curl https://sh.rustup.rs -sSf > installer.sh
+  bash installer.sh -y
+  source "$HOME/.cargo/env"
+
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   sed -i '/select DEBUG_KERNEL/d' init/Kconfig
+  sed -i '/depends\ on\ HAVE_KERNEL_UNCOMPRESSED/d' init/Kconfig
   local src
   for src in "${source[@]}"; do
     src="${src%%::*}"

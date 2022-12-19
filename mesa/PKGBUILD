@@ -44,6 +44,8 @@ build() {
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/6229
   # CFLAGS+=' -mtls-dialect=gnu'
   # CXXFLAGS+=' -mtls-dialect=gnu'
+
+  msg2 "Preparing rust which not depend on llvm 14.x.x"
   curl https://sh.rustup.rs -sSf > installer.sh
   bash installer.sh -y
   source "$HOME/.cargo/env"
