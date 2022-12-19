@@ -105,9 +105,6 @@ source=(
   qemu-sysusers.conf
   65-kvm.rules
   99-qemu-guest-agent.rules
-  $pkgbase-7.1.0-io_uring.patch::https://patchwork.kernel.org/project/qemu-devel/patch/20220924144815.5591-1-faithilikerun@gmail.com/raw/
-  $pkgbase-7.1.0-block1.patch::https://gitlab.com/qemu-project/qemu/-/commit/a7c5f67a78569f8c275ea4ea9962e9c79b9d03cb.diff
-  $pkgbase-7.1.0-block2.patch::https://gitlab.com/qemu-project/qemu/-/commit/25474d90aa50bd32e0de395a33d8de42dd6f2aef.diff
 )
 sha512sums=('c60c5ff8ec99b7552e485768908920658fdd8035ff7a6fa370fb6881957dc8b7e5f18ff1a8f49bd6aa22909ede2a7c084986d8244f12074ccd33ebe40a0c411f'
             'SKIP'
@@ -236,12 +233,6 @@ _pick() {
 }
 
 prepare() {
-  # fix issues with io_uring: https://gitlab.com/qemu-project/qemu/-/issues/1193
-  patch -Np1 -d $pkgbase-$pkgver -i ../$pkgbase-7.1.0-io_uring.patch
-
-  # fix issue with block alignment: https://bugs.archlinux.org/task/76220
-  patch -Np1 -d $pkgbase-$pkgver -i ../$pkgbase-7.1.0-block1.patch
-  patch -Np1 -d $pkgbase-$pkgver -i ../$pkgbase-7.1.0-block2.patch
 
   # extract licenses for TCG
   sed -n '1,23p' $pkgbase-$pkgver/tcg/tcg-internal.h > tcg.LICENSE.MIT
@@ -320,7 +311,7 @@ build() {
       --docdir=/usr/share/doc/qemu \
       --enable-modules \
       --enable-sdl \
-      --enable-slirp=system \
+      --enable-slirp \
       --enable-tpm \
       --smbd=/usr/bin/smbd \
       --with-coroutine=ucontext
@@ -338,7 +329,7 @@ package_qemu-common() {
   )
   
   license+=(BSD MIT)
-  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so hicolor-icon-theme libcap-ng libcap-ng.so)
+  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so hicolor-icon-theme libcap-ng libcap-ng.so numactl libnuma.so)
   backup=(
     etc/$pkgbase/bridge.conf
     etc/sasl2/$pkgbase.conf
@@ -664,7 +655,7 @@ package_qemu-docs() {
 
 package_qemu-guest-agent() {
   pkgdesc="QEMU Guest Agent"
-  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc liburing liburing.so systemd-libs libudev.so)
+  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc liburing liburing.so numactl libnuma.so systemd-libs libudev.so)
   backup=(
     etc/$pkgbase/$pkgbase-ga.conf
     etc/$pkgbase/fsfreeze-hook
@@ -927,13 +918,13 @@ package_qemu-hw-usb-smartcard() {
 
 package_qemu-img() {
   pkgdesc="QEMU tooling for manipulating disk images"
-  depends=(fuse3 gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls libaio liburing liburing.so pam libpam.so zlib zstd libzstd.so)
+  depends=(fuse3 gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls libaio liburing liburing.so numactl libnuma.so pam libpam.so zlib zstd libzstd.so)
   mv -v $pkgname/* "$pkgdir"
 }
 
 package_qemu-pr-helper() {
   pkgdesc="QEMU persistent reservation utility"
-  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls libcap-ng libcap-ng.so liburing liburing.so multipath-tools pam libpam.so qemu-common=$pkgver-$pkgrel)
+  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls libcap-ng libcap-ng.so liburing liburing.so multipath-tools numactl libnuma.so pam libpam.so qemu-common=$pkgver-$pkgrel)
   mv -v $pkgname/* "$pkgdir"
   install -vDm 644 $pkgbase-$pkgver/contrib/systemd/$pkgname.{service,socket} -t "$pkgdir/usr/lib/systemd/system/"
 }
@@ -946,7 +937,7 @@ package_qemu-tests() {
 
 package_qemu-tools() {
   pkgdesc="QEMU tools"
-  depends=(curl libcurl.so gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc libxkbcommon libxkbcommon.so python qemu-common=$pkgver-$pkgrel)
+  depends=(curl libcurl.so gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc libxkbcommon libxkbcommon.so numactl libnuma.so python qemu-common=$pkgver-$pkgrel)
   mv -v $pkgname/* "$pkgdir"
   install -vDm 644 $pkgbase-$pkgver/scripts/dump-guest-memory.py -t "$pkgdir/usr/share/$pkgbase/"
   install -vDm 755 $pkgbase-$pkgver/scripts/simpletrace.py -t "$pkgdir/usr/share/$pkgbase/"
@@ -1018,7 +1009,7 @@ package_qemu-ui-spice-core() {
 
 package_qemu-user() {
   pkgdesc="QEMU user mode emulation"
-  depends=(capstone gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls liburing liburing.so qemu-common=$pkgver-$pkgrel zlib)
+  depends=(capstone gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc gnutls liburing liburing.so numactl libnuma.so qemu-common=$pkgver-$pkgrel zlib)
   optdepends=('qemu-user-binfmt: for binary format rules')
   mv -v $pkgname/* "$pkgdir"
 }
@@ -1048,13 +1039,13 @@ package_qemu-user-static-binfmt() {
 
 package_qemu-vhost-user-gpu() {
   pkgdesc="QEMU vhost-user-gpu display device"
-  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc pixman libpixman-1.so mesa qemu-common=$pkgver-$pkgrel virglrenderer)
+  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc pixman libpixman-1.so mesa numactl libnuma.so qemu-common=$pkgver-$pkgrel virglrenderer)
   mv -v $pkgname/* "$pkgdir"
 }
 
 package_qemu-virtiofsd() {
   pkgdesc="QEMU virtio-fs shared filesystem daemon"
-  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc libcap-ng libcap-ng.so libseccomp libseccomp.so qemu-common=$pkgver-$pkgrel)
+  depends=(gcc-libs glib2 libglib-2.0.so libgmodule-2.0.so glibc libcap-ng libcap-ng.so libseccomp libseccomp.so numactl libnuma.so qemu-common=$pkgver-$pkgrel)
   mv -v $pkgname/* "$pkgdir"
 }
 
