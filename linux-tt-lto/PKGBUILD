@@ -198,7 +198,7 @@ prepare() {
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   sed -i '/select DEBUG_KERNEL/d' init/Kconfig
-  sed -i '/depends\ on\ HAVE_KERNEL_UNCOMPRESSED/d' init/Kconfig
+  # sed -i '/depends\ on\ HAVE_KERNEL_UNCOMPRESSED/d' init/Kconfig
   local src
   for src in "${source[@]}"; do
     src="${src%%::*}"
