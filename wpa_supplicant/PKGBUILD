@@ -5,16 +5,17 @@
 
 pkgname=wpa_supplicant
 pkgver=2.10
-pkgrel=6
+pkgrel=7
 epoch=2
 pkgdesc='A utility providing key negotiation for WPA wireless networks'
 url='https://w1.fi/wpa_supplicant/'
 arch=(x86_64)
 license=(GPL)
-depends=(openssl libdbus readline libnl)
+depends=(openssl libdbus readline libnl pcsclite)
 install=wpa_supplicant.install
 source=(
   https://w1.fi/releases/${pkgname}-${pkgver}.tar.gz{,.asc}
+  wpa_supplicant_config
   wpa_supplicant_tls.patch
   wpa_supplicant_dbus_service_syslog.patch
   wpa_supplicant_service_ignore-on-isolate.patch
@@ -22,6 +23,9 @@ source=(
   lower_security_level_for_tls_1.patch
   wpa_supplicant_config
   add_extra-ies_only_if_allowed_by_driver.patch
+  disable-eapol-werror.patch
+  add-extra-ies-only-if-allowed-by-driver.patch
+  AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
 )
 validpgpkeys=('EC4AA0A991A5F2464582D52D2B6EF432EFC895FA') # Jouni Malinen
 sha256sums=('20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f'
@@ -50,11 +54,17 @@ prepare() {
   # https://bugs.archlinux.org/task/76474
   patch -Np1 -i ../lower_security_level_for_tls_1.patch
 
+  # https://salsa.debian.org/debian/wpa/-/commit/13e1d28e4f987a220c546df94df86bb9b2371874
+  patch -Np1 -i ../disable-eapol-werror.patch
+
   # http://lists.infradead.org/pipermail/hostap/2022-January/040178.html
-  patch -Np1 -i ../add_extra-ies_only_if_allowed_by_driver.patch
+  patch -Np1 -i ../0001-nl80211-add-extra-ies-only-if-allowed-by-driver.patch
+
+  # https://lists.infradead.org/pipermail/hostap/2022-April/040352.html
+  patch -Np1 -i ../0002-AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
 
   cd "$pkgname"
-  cp "$srcdir/wpa_supplicant_config" ./.config
+  cp ../wpa_supplicant_config $pkgname/.config
 }
 
 build() {

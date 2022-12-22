@@ -15,7 +15,7 @@ arch=(x86_64)
 license=(MIT Apache)
 options=(!emptydirs !strip !lto)
 depends=(gcc-libs llvm curl libssh2 gcc)
-makedepends=(rust llvm libffi lib32-gcc-libs perl python cmake musl ninja
+makedepends=( llvm libffi lib32-gcc-libs perl python cmake musl ninja
              wasi-libc)
 checkdepends=(procps-ng gdb)
 source=(
@@ -139,10 +139,14 @@ _pick() {
 
 build() {
   cd rustc-$pkgver-src
+  
+  msg2 "Preparing rust which not depend on llvm 14.x.x"
+  curl https://sh.rustup.rs -sSf > installer.sh
+  bash installer.sh -y
+  source "$HOME/.cargo/env"
 
   export RUST_BACKTRACE=1
 
-  DESTDIR="$srcdir/dest-rust" python ./x.py build -j "$(nproc)"
   DESTDIR="$srcdir/dest-rust" python ./x.py install -j "$(nproc)"
 
   cd ../dest-rust

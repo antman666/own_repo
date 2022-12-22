@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.1
+pkgver=6.1.1
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -108,11 +108,6 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
-# https://ck-hack.blogspot.com/2021/08/514-and-future-of-muqss-and-ck-once.html
-# acknowledgment to xanmod for initially keeping the hrtimer patches up to date
-#_ckhrtimer=linux-6.0.y
-#_commit=5be918e798e2c2cc94fa7dd0f6f031921a4f7598
-
 _gcc_more_v=20221104
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1"
 # _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.1"
@@ -123,21 +118,20 @@ source=(
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "ck-hrtimer-$_commit.tar.gz::https://github.com/graysky2/linux-patches/archive/$_commit.tar.gz"
   "${_patchsource}/sched/0001-tt.patch"
   # "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/misc/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0002-bfq.patch"
-  "${_patchsource}/0005-fixes.patch"
-  "${_patchsource}/0006-folio.patch"
-  "${_patchsource}/0007-futex-winesync.patch"
-  "${_patchsource}/0008-fs-patches.patch"
-  # "${_patchsource}/0005-mm-Introduce-the-maple-tree-with-MG-LRU.patch"
-  # "${_patchsource}/0006-mm-multi-gen-LRU-memcg-LRU.patch"
-  # "${_patchsource}/0007-mm-demotion-Memory-tiers-and-demotion.patch"
-  "${_patchsource}/0011-ksm.patch"
-  "${_patchsource}/0012-lrng.patch"
+  "${_patchsource}/0003-bitmap.patch"
+  "${_patchsource}/0006-fixes.patch"
+  "${_patchsource}/0007-folio.patch"
+  "${_patchsource}/0008-futex-winesync.patch"
+  "${_patchsource}/0009-fs-patches.patch"
+  "${_patchsource}/0011-kallsyms.patch"
+  "${_patchsource}/0012-ksm.patch"
+  "${_patchsource}/0013-lrng.patch"
+  "${_patchsource}/0014-lru.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0005-init-wait-for-partition-and-retry-scan.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/net/ipv4/0001-Add-a-sysctl-to-skip-tcp-collapse-processing-when-th.patch"
