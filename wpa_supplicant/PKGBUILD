@@ -24,7 +24,7 @@ source=(
   wpa_supplicant_config
   add_extra-ies_only_if_allowed_by_driver.patch
   disable-eapol-werror.patch
-  add-extra-ies-only-if-allowed-by-driver.patch
+  add_extra_ies_only_if_allowed_by_driver.patch
   AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
 )
 validpgpkeys=('EC4AA0A991A5F2464582D52D2B6EF432EFC895FA') # Jouni Malinen
