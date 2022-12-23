@@ -58,10 +58,10 @@ prepare() {
   patch -Np1 -i ../disable-eapol-werror.patch
 
   # http://lists.infradead.org/pipermail/hostap/2022-January/040178.html
-  patch -Np1 -i ../0001-nl80211-add-extra-ies-only-if-allowed-by-driver.patch
+  patch -Np1 -i ../add_extra-ies_only_if_allowed_by_driver.patch
 
   # https://lists.infradead.org/pipermail/hostap/2022-April/040352.html
-  patch -Np1 -i ../0002-AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
+  patch -Np1 -i ../AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
 
   cd "$pkgname"
   cp ../wpa_supplicant_config $pkgname/.config
