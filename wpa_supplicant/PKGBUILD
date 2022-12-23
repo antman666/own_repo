@@ -63,7 +63,6 @@ prepare() {
   # https://lists.infradead.org/pipermail/hostap/2022-April/040352.html
   patch -Np1 -i ../AP-guard-FT-SAE-code-with-CONFIG_IEEE80211R_AP.patch
 
-  cd "$pkgname"
   cp ../wpa_supplicant_config $pkgname/.config
 }
 
