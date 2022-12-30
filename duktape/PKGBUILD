@@ -2,7 +2,7 @@
 
 pkgname=duktape
 pkgver=2.7.0
-pkgrel=6
+pkgrel=7
 pkgdesc='Embeddable Javascript engine'
 url='https://duktape.org/'
 arch=(x86_64)
@@ -21,15 +21,18 @@ _make() (
 )
 
 prepare() {
+  cd $pkgname-$pkgver
+
+  # tools/configure.py needs Python 2
+  sed -i 's/^#undef DUK_USE_FASTINT$/#define DUK_USE_FASTINT/' src/duk_config.h
+
+  # Add missing NEEDED on libm.so
+  sed -i 's/duktape\.c/& -lm/' Makefile.sharedlibrary
+
   sed '/$(CC)/ s/-Os/-O3/' -i "duktape-${pkgver}/Makefile.sharedlibrary"
-  
-  # force linking against libm
-  sed 's@\($(DUKTAPE_SRCDIR)/duktape.c\)@\1 -lm@' -i "duktape-${pkgver}/Makefile.sharedlibrary"
 }
 
 build() {
-  CFLAGS="$CFLAGS -DDUK_USE_FASTINT"
-
   cd $pkgname-$pkgver
   _make
 }

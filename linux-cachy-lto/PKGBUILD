@@ -43,7 +43,7 @@ _makegconfig=${_makegconfig-}
 # NUMA is optimized for multi-socket motherboards.
 # A single multi-core CPU actually runs slower with NUMA enabled.
 # See, https://bugs.archlinux.org/task/31187
-_NUMAdisable=${_NUMAdisable-}
+_NUMAdisable=${_NUMAdisable-y}
 
 # Compile ONLY used modules to VASTLYreduce the number of modules built
 # and the build time.
@@ -75,7 +75,7 @@ _per_gov=${_per_gov-y}
 _tcp_bbr2=${_tcp_bbr2-y}
 
 ### Running with a 1000HZ, 750Hz, 600 Hz, 500Hz, 300Hz, 250Hz and 100Hz tick rate
-_HZ_ticks=${_HZ_ticks-750}
+_HZ_ticks=${_HZ_ticks-1000}
 
 ## Choose between perodic, idle or full
 ### Full tickless can give higher performances in various cases but, depending on hardware, lower consistency.
@@ -96,6 +96,21 @@ _kyber_disable=${_kyber_disable-y}
 # 'stats' - enable multigenerational LRU with stats
 # 'none' - disable multigenerational LRU
 _lru_config=${_lru_config-'standard'}
+
+### Enable per-VMA locking
+# ATTENTION - one of three predefined values should be selected!
+# 'standard' - enable per-VMA locking
+# 'stats' - enable per-VMA locking with stats
+# 'none' - disable per-VMA locking
+_vma_config=${_vma_config-'standard'}
+
+### Transparent Hugepages
+# ATTENTION - one of two predefined values should be selected!
+# 'always' - always enable THP
+# 'madvise' - madvise, prevent applications from allocating more memory resources than necessary
+# More infos here:
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuring_transparent_huge_pages
+_hugepage=${_hugepage-'always'}
 
 ## Enable DAMON
 _damon=${_damon-}
@@ -120,7 +135,7 @@ _use_auto_optimization=${_use_auto_optimization-}
 _disable_debug=${_disable_debug-y}
 
 ## Enable zram/zswap ZSTD compression
-_zstd_compression=${_zstd_compression-y}
+_zstd_compression=${_zstd_compression-}
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -133,44 +148,37 @@ _zstd_level_value=${_zstd_level_value-'normal'}
 # Clang LTO mode, only available with the "llvm" compiler - options are "no", "full" or "thin".
 # "full: uses 1 thread for Linking, slow and uses more memory, theoretically with the highest performance gains."
 # "thin: uses multiple threads, faster and uses less memory, may have a lower runtime performance than Full."
-_use_llvm_lto=${_use_llvm_lto-}
+_use_llvm_lto=${_use_llvm_lto-"full"}
 
 # Use suffix -lto only when requested by the user
 # Enabled by default.
 # If you do not want the suffix -lto remove the "y" sign next to the flag.
 # https://github.com/CachyOS/linux-cachyos/issues/36
-_use_lto_suffix=${_use_lto_suffix-y}
+_use_lto_suffix=${_use_lto_suffix-}
+
+# ATTENTION!: Really experimental LTO implementation for GCC
+# This can improve the performance of the kernel
+# The performance difference is currently negligible
+# DEBUG and BTF needs to be disabled, otherwise the compilation is failing
+# The Kernel is bigger with GCC LTO due to more inlining
+# More informations:
+# https://lore.kernel.org/lkml/20221114114344.18650-1-jirislaby@kernel.org/T/#md8014ad799b02221b67f33584002d98ede6234eb
+_use_gcc_lto=${_use_gcc_lto-}
 
 # KCFI is a proposed forward-edge control-flow integrity scheme for
 # Clang, which is more suitable for kernel use than the existing CFI
-# scheme used by CONFIG_CFI_CLANG. KCFI doesn't require LTO, doesn't
+# scheme used by CONFIG_CFI_CLANG. kCFI doesn't require LTO, doesn't
 # alter function references to point to a jump table, and won't break
 # function address equality.
-# ATTENTION!: you do need a patched llvm for the usage of kcfi,
-# you can find a patched llvm-git in the cachyos-repo's.
-# The packagename is called "llvm-kcfi"
-# ATTENTION!: This is very experimental and could fail and the compilation or have other bugs in the kernel
+# ATTENTION!: You need llvm-git or a patched llvm 15
+# ATTENTION!: This is experimental, could fail to boot with nvidia
 _use_kcfi=${_use_kcfi-}
 
-# Build the zfs module builtin in to the kernel
+# Build the zfs module in to the kernel
 _build_zfs=${_build_zfs-}
 
 # Enable bcachefs
 _bcachefs=${_bcachefs-}
-
-# Enable RT kernel
-# Only works for CFS Scheduler and BORE Scheduler
-_rtkernel=${_rtkernel-}
-
-# Enable NEST
-# NEST is a experimental cfs scheduler you can find more about here:
-# https://www.phoronix.com/news/Nest-Linux-Scheduling-Warm-Core
-# https://gitlab.inria.fr/nest-public/nest-artifact/-/tree/main
-# ATTENTION!:NEST is only active if you start applications with
-# taskset -c $THREADS application
-# example: taskset -c 0-23 application
-# ATTENTION!:Just works together with the BORE Scheduler and CFS Scheduler
-_nest=${_nest-}
 
 # Enable LATENCY NICE
 # Latency nice is a approach to sets latency-nice as a per-task attribute
@@ -197,12 +205,12 @@ _minor=1
 #_rcver=rc8
 pkgver=${_major}.${_minor}
 _stable=${_major}.${_minor}
-# _stable=${_major}
+#_stable=${_major}
 #_stablerc=${_major}-${_rcver}
 _srcname=linux-${_stable}
 #_srcname=linux-${_major}
 pkgdesc='Linux BMQ scheduler Kernel by CachyOS with other patches and improvements'
-pkgrel=1
+pkgrel=2
 _kernver=$pkgver-$pkgrel
 arch=('x86_64')
 url="https://github.com/CachyOS/linux-cachyos"
@@ -227,11 +235,12 @@ fi
 _patchsource="https://raw.githubusercontent.com/cachyos/kernel-patches/master/${_major}"
 source=(
     "https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/${_srcname}.tar.xz"
-    "config" "auto-cpu-optimization.sh"
+    "config"
+    "auto-cpu-optimization.sh"
     "${_patchsource}/all/0001-cachyos-base-all.patch")
 ## ZFS Support
 if [ -n "$_build_zfs" ]; then
-    source+=("git+https://github.com/cachyos/zfs.git#commit=0f4ee295ba94803e5833f57481cfdbee5d1160d4")
+    source+=("git+https://github.com/cachyos/zfs.git#commit=21bd7661334cd865d17934bebbcaf8d3356279ee")
 fi
 ## Latency NICE Support
 if [ -n "$_latency_nice" ]; then
@@ -269,32 +278,26 @@ if [ "$_cpusched" = "tt" ]; then
 fi
 ## Hardened Patches with BORE Scheduler
 if [ "$_cpusched" = "hardened" ]; then
-    source+=("${_patchsource}/sched/0001-bore.patch"
+    source+=("${_patchsource}/sched/0001-bore-cachy.patch"
          "${_patchsource}/misc/0001-hardened.patch")
 fi
 ## Kernel CFI Patch
 if [ -n "$_use_kcfi" ]; then
-    source+=("${_patchsource}/misc/0001-kcfi.patch")
-    depends+=(llvm-git llvm-libs-git python)
     BUILD_FLAGS=(
         CC=clang
         LD=ld.lld
         LLVM=1
     )
 fi
-## NEST Support
-if [ -n "$_nest" ]; then
-    if [[ "$_cpusched" = "bore"  || "$_cpusched" = "cfs" || "$_cpusched" = "hardened" ]]; then
-         source+=("${_patchsource}/sched/0001-NEST.patch")
-    fi
-fi
 ## bcachefs Support
 if [ -n "$_bcachefs" ]; then
-    source+=("${_patchsource}/misc/0001-bcachefs-after-lru.patch")
+    source+=("${_patchsource}/misc/0001-bcachefs.patch")
 fi
-## rt kernel
-if [ -n "$_rtkernel" ]; then
-    source+=("${_patchsource}/misc/0001-rt.patch")
+if [ -n "$_use_gcc_lto" ]; then
+## GCC-LTO Patch
+## Fix for current gcc --enable-default-pie option
+    source+=("${_patchsource}/misc/gcc-lto/0001-gcc-LTO-support-for-the-kernel.patch"
+             "${_patchsource}/misc/gcc-lto/0002-gcc-lto-no-pie.patch")
 fi
 
 export KBUILD_BUILD_HOST=cachyos
@@ -320,11 +323,7 @@ prepare() {
     done
 
     echo "Setting config..."
-    if [ -n "$_rtkernel" ]; then
-        cp ../config-rt .config
-    else
-        cp ../config .config
-    fi
+    cp ../config .config
 
     ### Select CPU optimization
     if [ -n "$_processor_opt" ]; then
@@ -355,17 +354,6 @@ prepare() {
        error "Selecting CachyOS config failed!"
        exit
     fi
-
-    ### Selecting proper RT config
-    if [ -n "$_rtkernel" ]; then
-        echo "Setting proper RT config"
-        scripts/config --enable RCU_NOCB_CPU_CB_BOOST \
-            --disable RCU_NOCB_CPU_DEFAULT_ALL \
-            --enable HZ_1000 \
-            --set-val HZ 1000 \
-            --enable PREEMPT_RT \
-            --enable PREEMPT_LAZY
-     fi
 
     ### Selecting the CPU scheduler
     if [ "$_cpusched" = "bmq" ]; then
@@ -442,6 +430,15 @@ prepare() {
         scripts/config --enable LTO_NONE
     fi
 
+    ### Enable GCC FULL LTO
+    ### Disable LTO_CP_CLONE, its experimental
+    if [ -n "$_use_gcc_lto" ]; then
+         scripts/config --enable LTO_GCC \
+            --disable LTO_CP_CLONE
+    ### Disable DEBUG, pahole is currently broken with GCC LTO
+            _disable_debug=y
+    fi
+
     ### Select tick rate
     if [ "$_HZ_ticks" = "1000" ]; then
         echo "Setting tick rate to 1k Hz..."
@@ -510,7 +507,7 @@ prepare() {
         scripts/config --set-val NR_CPUS "$_nr_cpus"
     else
         echo "Setting default NR_CPUS..."
-        scripts/config --set-val NR_CPUS 128
+        scripts/config --set-val NR_CPUS 320
     fi
 
     ### Disable MQ Deadline I/O scheduler
@@ -643,6 +640,47 @@ prepare() {
            error "The value is empty. Choose the correct one again."
         fi
          error "Enabling multigenerational LRU failed!"
+         exit
+    fi
+
+    ### Select VMA config
+    if [ "$_vma_config" = "standard" ]; then
+       echo "Enabling per-VMA locking..."
+       scripts/config --enable PER_VMA_LOCK \
+           --disable PER_VMA_LOCK_STATS
+    elif [ "$_vma_config" = "stats" ]; then
+       echo "Enabling per-VMA locking with stats..."
+       scripts/config --enable PER_VMA_LOCK \
+           --enable PER_VMA_LOCK_STATS
+    elif [ "$_vma_config" = "none" ]; then
+       echo "Disabling per-VMA locking..."
+       scripts/config --disable PER_VMA_LOCK
+    else
+        if [ -n "$_vma_config" ]; then
+           error "The value $_vma_config is invalid. Choose the correct one again."
+        else
+           error "The value is empty. Choose the correct one again."
+        fi
+         error "Enabling per-VMA locking failed!"
+         exit
+    fi
+
+   ### Select THP
+    if [ "$_hugepage" = "always" ]; then
+       echo "Enable THP always..."
+       scripts/config --disable TRANSPARENT_HUGEPAGE_MADVISE \
+           --enable TRANSPARENT_HUGEPAGE_ALWAYS
+    elif [ "$_hugepage" = "madvise" ]; then
+       echo "Enable THP madvise..."
+       scripts/config --disable TRANSPARENT_HUGEPAGE_ALWAYS \
+           --enable TRANSPARENT_HUGEPAGE_MADVISE
+    else
+        if [ -n "$_hugepage" ]; then
+           error "The value $_hugepage is invalid. Choose the correct one again."
+        else
+           error "The value is empty. Choose the correct one again."
+        fi
+         error "Setting THP has failed!"
          exit
     fi
 
@@ -1006,9 +1044,8 @@ for _p in "${pkgname[@]}"; do
     }"
 done
 
-sha256sums=('6114a208e82739b4a1ab059ace35262be2a83be34cd1ae23cb8a09337db831c7'
-            'cf045c82aceef20747a25fe27e464b4728e5dbc24f9abfbf0ae541b810c06744'
-            'c3aae004fe02ddf781037bf95ca9994692d19eda2b6b99d5cd767ae23edfb2a5'
-            'e1d45b5842079a5f0f53d7ea2d66ffa3f1497766f3ccffcf13ed00f1ac67f95e'
-            'a0734e8dc037d4faae845f7f1c837ba1dbf304c786c1fcd4ff317a2959d64006'
-            '6a1deaacde0028ff790378c71879295d82f7c9e3663b83775aa0f1693bcfed19')
+sha256sums=('a3e61377cf4435a9e2966b409a37a1056f6aaa59e561add9125a88e3c0971dfb'
+            '76d88908c5d6187ef0441975bb0e1fc847d1089d30ea4e61b266b09a8c577809'
+            '32e77b3b71225c9f04df2d44c25f982773a8fff9927d26788366baab5e242e74'
+            '4f0aac3acf834b5fbe933ae0e133d27db23063c4ae4317c8d21e64fa624a47b5'
+            '9aeff735bbd9ae3d730f5ac0bc13a82760dade6c27cd83f0ce56cfd08f8c94ff')
