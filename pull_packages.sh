@@ -9,4 +9,3 @@ wget -c ${url}/gcc-libs-12.2.1-2-x86_64.pkg.tar.zst
 wget -c ${url}/gcc-objc-12.2.1-2-x86_64.pkg.tar.zst
 wget -c ${url}/lib32-gcc-libs-12.2.1-2-x86_64.pkg.tar.zst
 wget -c ${url}/libgccjit-12.2.1-2-x86_64.pkg.tar.zst
-wget -c ${url}/libtool-2.4.7-1-x86_64.pkg.tar.zst
