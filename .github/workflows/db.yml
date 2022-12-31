@@ -1,0 +1,31 @@
+name: Add important packages for compile packages
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  pull_packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download packages
+        uses: actions/checkout@v3.2.0
+      - run: |
+          bash pull_packages.sh
+      - uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: True
+          tag: "x86_64"
+          artifacts: "./*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+  update_db:
+    needs: pull_packages
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: antman666/update-db-for-repo@single
+        with: 
+          tag: x86_64
+      - uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: True
+          tag: "x86_64"
+          artifacts: "./action-repo.*"
+          token: ${{ secrets.GITHUB_TOKEN }}
