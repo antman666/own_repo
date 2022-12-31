@@ -6,7 +6,7 @@
 
 pkgname=bash
 _basever=5.2
-_patchlevel=018
+_patchlevel=015
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
