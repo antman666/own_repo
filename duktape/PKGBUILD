@@ -29,7 +29,7 @@ prepare() {
   # Add missing NEEDED on libm.so
   sed -i 's/duktape\.c/& -lm/' Makefile.sharedlibrary
 
-  sed '/$(CC)/ s/-Os/-O3/' -i "duktape-${pkgver}/Makefile.sharedlibrary"
+  sed '/$(CC)/ s/-Os/-O3/' -i "Makefile.sharedlibrary"
 }
 
 build() {

@@ -3,7 +3,7 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
-_srcver=3401000
+_srcver=3400100
 _docver=${_srcver}
 #_docver=3401000
 pkgver=3.40.1

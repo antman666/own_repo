@@ -1,11 +1,12 @@
 name: Build few packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [wpa_supplicant]
+        packages: [duktape, mesa, sqlite]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
