@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [linux-cachy-lto, linux-tt-lto]
+        packages: [linux-cachy-lto]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
