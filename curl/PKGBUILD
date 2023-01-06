@@ -7,7 +7,7 @@
 pkgbase=curl
 pkgname=(curl libcurl-compat libcurl-gnutls)
 pkgver=7.87.0
-pkgrel=1
+pkgrel=2
 pkgdesc='An URL retrieval utility and library'
 arch=('x86_64')
 url='https://curl.haxx.se'
@@ -18,7 +18,8 @@ depends=('ca-certificates' 'brotli' 'libbrotlidec.so' 'krb5' 'libgssapi_krb5.so'
          'libidn2' 'libidn2.so' 'libnghttp2' 'libpsl' 'libpsl.so' 'libssh2' 'libssh2.so'
          'openssl' 'zlib' 'zstd' 'libzstd.so')
 provides=('libcurl.so')
-source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz"{,.asc})
+source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz"{,.asc}
+        '0001-typecheck_accept_expressions_for_option_info_parameters.patch')
 sha512sums=('d4c4a785876e0d1ba1c1adbe65528d56a8b81fc03ff724e87819cfe51aca60f8a7bf2ac9384f30c3a6bbd28669b2bd3e9a6794737243c836c4902d085a72c474'
             'SKIP'
             '0d883c3fc267c4c5d82078e03689db31f83292cb41f3f6fab26d05fa9cbaa77ae75cfd3bbb4f6953bbc4bc9760c54b49bdfdae219cd48af92312abbb1ba70ec6'
@@ -39,6 +40,12 @@ _configure_options=(
   --with-random='/dev/urandom'
   --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'
 )
+
+prepare() {
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+
+  patch -Np1 < ../0001-typecheck_accept_expressions_for_option_info_parameters.patch
+}
 
 build() {
   mkdir build-curl{,-compat,-gnutls}

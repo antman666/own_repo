@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.1.2
+pkgver=6.1.3
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -108,7 +108,7 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
-_gcc_more_v=20221104
+_gcc_more_v=20221217
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1"
 # _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.1"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.1"
@@ -133,6 +133,7 @@ source=(
   "${_patchsource}/0012-ksm.patch"
   "${_patchsource}/0013-lrng.patch"
   "${_patchsource}/0014-lru.patch"
+  "${_patchsource}/0018-sched.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0005-init-wait-for-partition-and-retry-scan.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/net/ipv4/0001-Add-a-sysctl-to-skip-tcp-collapse-processing-when-th.patch"
@@ -226,6 +227,7 @@ prepare() {
 
   scripts/config --enable CONFIG_CGROUPS
   scripts/config --enable CONFIG_RT_GROUP_SCHED
+  scripts/config --enable CONFIG_RT_SOFTIRQ_AWARE_SCHED
 
   # disable CONFIG_DEBUG_INFO=y at build time otherwise memory usage blows up
   # and can easily overwhelm a system with 32 GB of memory using a tmpfs build

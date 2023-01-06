@@ -135,7 +135,7 @@ _use_auto_optimization=${_use_auto_optimization-}
 _disable_debug=${_disable_debug-y}
 
 ## Enable zram/zswap ZSTD compression
-_zstd_compression=${_zstd_compression-y}
+_zstd_compression=${_zstd_compression-}
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -200,7 +200,7 @@ else
     pkgbase=linux-$pkgsuffix
 fi
 _major=6.1
-_minor=2
+_minor=3
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
