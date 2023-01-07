@@ -133,7 +133,7 @@ source=(
   "${_patchsource}/0012-ksm.patch"
   "${_patchsource}/0013-lrng.patch"
   "${_patchsource}/0014-lru.patch"
-  "${_patchsource}/0018-sched.patch"
+  # "${_patchsource}/0018-sched.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/clearlinux/0005-init-wait-for-partition-and-retry-scan.patch"
   "https://github.com/xanmod/linux-patches/raw/master/linux-6.1.y-xanmod/net/ipv4/0001-Add-a-sysctl-to-skip-tcp-collapse-processing-when-th.patch"
