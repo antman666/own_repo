@@ -23,7 +23,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-
         'initcpio-hook-btrfs'
         'btrfs-scrub@.service'
         'btrfs-scrub@.timer'
-        'fd138f8678808717635a145832c1b13320ce6cd2.patch'
       )
 install=btrfs-progs.install
 options=(!staticlibs)
