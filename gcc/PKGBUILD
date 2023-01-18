@@ -10,7 +10,7 @@
 pkgname=(gcc gcc-libs lib32-gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go libgccjit)
 pkgver=12.2.1
 _majorver=${pkgver%%.*}
-pkgrel=3
+pkgrel=4
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
@@ -38,8 +38,8 @@ checkdepends=(
 )
 options=(!emptydirs !lto !debug ccache)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=e824a270d999c2718c0874d666c46dee1058f561
-source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
+_commit=eec3a65ed638a1c58fa08ddf508d2d60b64d311d
+source=(git+https://sourceware.org/git/gcc.git#commit=${_commit}
         c89 c99
         gcc-ada-repro.patch
         gcc-Wno-format-security.patch
@@ -125,15 +125,15 @@ build() {
   cd gcc-build
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O2 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
   CFLAGS=${CFLAGS/-Werror=format-security/}
   CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
-  LDFLAGS=${LDFLAGS/-O3/-O2}
+  #LDFLAGS=${LDFLAGS/-O3/-O2}
 
   "$srcdir/gcc/configure" \
     --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
@@ -283,6 +283,13 @@ package_gcc() {
 
   # many packages expect this symlink
   ln -s gcc "$pkgdir"/usr/bin/cc
+
+  # create cc-rs compatible symlinks
+  # https://github.com/rust-lang/cc-rs/blob/1.0.73/src/lib.rs#L2578-L2581
+  for binary in {c++,g++,gcc,gcc-ar,gcc-nm,gcc-ranlib}; do
+    ln -s /usr/bin/${binary} "${pkgdir}"/usr/bin/x86_64-linux-gnu-${binary}
+  done
+
 
   # POSIX conformance launcher scripts for c89 and c99
   install -Dm755 "$srcdir/c89" "$pkgdir/usr/bin/c89"
