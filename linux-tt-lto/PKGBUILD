@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.1.5
-pkgrel=2
+pkgver=6.1.8
+pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -118,8 +118,8 @@ source=(
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
+  "${_patchsources}/wine-sync-patches/0001-winesync-Introduce-the-winesync-driver-and-character.patch"
   "${_patchsource}/sched/0001-tt.patch"
-  # "${_patchsource}/misc/0001-ck-hrtimer.patch"
   "${_patchsource}/misc/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
   "${_patchsource}/misc/0001-mm-introduce-THP-Shrinker.patch"
   "${_patchsource}/misc/0001-lrng.patch"
@@ -128,8 +128,7 @@ source=(
   "${_patchsource}/0003-bitmap.patch"
   "${_patchsource}/0006-fixes.patch"
   "${_patchsource}/0007-folio.patch"
-  "${_patchsource}/0008-futex-winesync.patch"
-  "${_patchsource}/0009-fs-patches.patch"
+  "${_patchsource}/0008-fs-patches.patch"
   "${_patchsource}/0011-kallsyms.patch"
   "${_patchsource}/0012-ksm.patch"
   "${_patchsource}/0013-maple-lru.patch"
@@ -152,25 +151,25 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('b3e47f1184171febcd563285b82682e15fff8d932c8f897157e528e1195ca926153659be2defaf3fe294999625757f6efd02b0a786536b7e7c695721be7144aa'
+b2sums=('1eeab95bf09757131031ebeaa3fb66f01626ecfe3b72d0044176613d027ac6643c688a0bb8f4493ae6faa3d3bf0c89fcdff3c28d7b8375e59ed6e8bd6d856e44'
         'SKIP'
-        '324a4fe4fb28002ff7d3ee32028fa08bd65c213e9908645304cc0f75c677169bd7428a49d9f5fcacfe3125b3ced4cabf96f57c57408441bdbeff0c5ab8b4ecf0'
+        '58a9eecb5491944550724a7e243494576fb9b595f7afd1356c2d5feaa3281ed33105aa067b42e511b13be617cb58372065930055c574e7c418e4282e5617fa7e'
         '363069feea9c94cb3b706bf9529b9c23430e3ed6baa928cb9d6531ec9b0c5f8adaf8294443201d4392f84ede7d1bcf9bcb550e148883c2268c73628233bcddd7'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
+        '9f2586df7fc66ad7f5ef9e95d36f3358329f2afb0620d0d005fb9013fe49b6667d09e0d5fad70ea03ee134c676960906c6d0f0c15e2a9610d406f451eaeb887f'
         '4ae446a3369e2518841a0e209f263b548fb18797ebe95b1816817c40f67e8b90a2bafe5e6a70d4fc8f57b819b6de8e512923b5a6a7d2cd8feb891ebc51306c94'
         '1878a68062a4342b5c780027960f4a2f66d21da7e855d7c2e0ae8ae9cb166081e405bb80f69c1b7427c1480392cc0d9dbacc84497f800aade7fe3e16d6761ea9'
         '14d2650168c2fce745fb18e60b4a32adfd0d7d46e0b793ddda83bd78012cd5390b3197154ea26eb2f1cac6e2647320481fc4b9e28e94474515d1619582210c8b'
         'd8a7fac8a6423fa122544a7929c2f97d8651fae8dea39c0be1eb6972151d9d30732afbf18f986b8ea0b45c50be1be162cbe300856d625cb1eb07f75caa10b625'
-        '682cc67ae465a97646e3af93b020b4d007c432d64a30032894d33bfda77b086a2e1876fd6559601ad0b3c2ffbd63f793129296bce3579ae6db26f9951429bff4'
-        '848d4bed3c1993d427527e97d899ce9a4f8b5804b37e10a29922dd2cbc1c2b689aa609294c71e790a82883be13916024d5da48d388e516bf7e30fba9bcd9ebf7'
-        'ae736bbf441f5df429bb601b3772335379e9b3160b8a5ccbd66aff48e71f40d06e0fddb40e920a54cc347caea7761bed8d7fba117dda74406142e1c31ea25d93'
-        'c5a771f32d92cd7af1b6ba114395f788bb7e2ad22ec90ca2e538b826bda6b23d925e4cc500b5a8aa7527a84ea1f7ac30ffded10ad36491cd1b0fff07eec82366'
-        '76de57e3f5366ecc221962be2e0b00fe7ea0828229416e9120b8a58e4ff1044d4443d67ca8fdef1a03074377afdff8f4286fd2f1f6eee7ab3d1ab00f10a3566d'
-        '98bb6b3496f98e96232fcc3861e2261cf9fb747cb2f4cbc2f0fa0cef16790ada1d8ffe752bc6d60d61893d24b828895f76fa3e165996c2e354f886c2e23b154f'
-        '43ffbe7b459aac6fcb3f8057a785100ca4552d3e414cf559f111ee9a7690d557ef130dfb347eb2f01cac8e8dd91fbcb60662eabcc8c6a32e97550f4c74744f30'
-        'ad0ef746cbd423d6eafed2aaf900927dc63ab2cbb0a0c96b252b25037f103e2510a16a6b3411fc2c06223a23b6a81c36b3f9b1d5be0c6690d2c190a44c8f174f'
-        '067196729f91c57614ed6a32b94a036a0eed30ca0d5c14e730fbb307d647eb09bf92ad31faa764854683e363bc369a4e669d9b2c0d1fd8d37853a4bfe6cf46a0'
-        '4ad963b6fb2fe41d9a80d7cd9ef8bfa3790cbfee3dc471ca3efd770eea75a39acaede5a3c22fddf5511c243853b776ce7eac75ddefd4ab347d583c0de522e8d3'
+        '4286464a71fb895c64982f87ea7560d0d0c894ab5ed9eff4377882a11b0ffe5ea2498d6860e0c6bd0e3ca1f9cc380f93737d8ca210015016285f59f45411d5d3'
+        '4ea216fd77caeec5f7b4f36356c907b073d30224d488e1842987e92245853f51a27238e43ba7b2d778b06c7c89e4a8b38062e86aaac00a361222b8acfe1e6dfc'
+        '7a343dff5012e0fdc8e6616a6d0b4744542de1445936597bd8486587dd61c2d2b2fd5642cb4a089c737f1247cfe6fd24b587d9dd317be519f4631ff7f9e56052'
+        'a96baed0cd7a830d229d1bddc0214bf1d1e1132f507cb81a3cc1e78259cd62b2847897a349cbf73305f0da30cc8f00c386e004a96c137020d516d94c388d436c'
+        '6a2a0c0a06684e0396a9659ab934642fccea51b81a143c6826c56be6118a867c743f243fee316c2324055ba8e81cb3a1d0d9e574f8f726f5b61f1eb62cbeaa7a'
+        '1f96b90af6d04ba15f64e22ce216d1e5f6dba265eaf8b8f6278add9bc085b46d7e9e097914959d8c0e6f961f0e8e21ae94e14832acd43b3f75fd7e54e7b44618'
+        '159f5e7bff7f67ade6b6a0803c886b762f6990771679ab2232f2b2e5ae2eb2ca45357df1fcd351c8334f5b5c6334827cacbc3305f562f2706bfdb193b6cb2dda'
+        '6aecc90dbad2d68f5733c478597de4d44ced4ec35629afd90f0e0c8541aaad9efa6d337557d5681345d71657475fed79e9db5c40b9ef451e8c94829200aaa017'
+        '850d2aead5e6388d8dd673ef44147312686c0d2460119701052d0f1c3fca34ec8299cd1354bcb54eeb804deebbd8aa7fdc6bf03e21409ea82acdb71177f9c90e'
         '2118a7820ebc64a8a2edc14c41ce941b335ebb551fc9ae9ab9c3d775c511a99abdd68e2477528f0e8b525fb8d67c4023573400899b022743db5b7de99e7e0027'
         'fa28d3f0759080bb4c1e3dc8901559dd9697791cb92834e002f5e857ae4aa67b871716511d45379eb3fd0543f9d17bf0ebcd97c7cf25f1d5084d262561b00417'
         '67f41ae57ffe48a191b4baf8b7ea68f42f862060e6debd1075b0497fc05e896140bb643c8147f40a9020820187b38f8c7d9fbaded11fbdd9e95d0d2b5d4cb350'
