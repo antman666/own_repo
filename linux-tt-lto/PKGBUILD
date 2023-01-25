@@ -464,6 +464,8 @@ prepare() {
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
+  echo "${CFLAGS}"
+  echo "${LDFLAGS}"
   make ${BUILD_FLAGS[*]} olddefconfig
   diff -u ../config .config || :
 
