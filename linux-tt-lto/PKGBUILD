@@ -185,11 +185,6 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 prepare() {
   cd linux-${pkgver}
 
-  msg2 "Preparing rust which not depend on llvm 14.x.x"
-  curl https://sh.rustup.rs -sSf > installer.sh
-  bash installer.sh -y
-  source "$HOME/.cargo/env"
-
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel

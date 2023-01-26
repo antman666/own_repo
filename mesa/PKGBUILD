@@ -52,12 +52,6 @@ build() {
   # CFLAGS+=' -mtls-dialect=gnu'
   # CXXFLAGS+=' -mtls-dialect=gnu'
 
-  msg2 "Preparing rust which not depend on llvm 14.x.x"
-  curl https://sh.rustup.rs -sSf > installer.sh
-  bash installer.sh -y
-  source "$HOME/.cargo/env"
-  # source "/github/workspace/.cargo/env"
-
   meson setup mesa-$_pkgver build \
     --prefix /usr \
     --libexecdir lib \
