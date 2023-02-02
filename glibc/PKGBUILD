@@ -1,14 +1,14 @@
 pkgbase=glibc
 pkgname=(glibc lib32-glibc)
-pkgver=2.36
-pkgrel=7
+pkgver=2.37
+pkgrel=1
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
 makedepends=(git gd lib32-gcc-libs gcc-libs python)
 optdepends=('perl: for mtrace')
 options=(!strip staticlibs)
-_commit=93967a2a7bbdcedb73e0b246713580c7c84d001e
+_commit=a704fd9a133bfb10510e18702f48a6a9c88dbbd5
 source=("git+https://sourceware.org/git/glibc.git#commit=${_commit}"
   locale-gen
   sdt.h sdt-config.h
