@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.1.8
+pkgver=6.1.9
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -129,7 +129,7 @@ source=(
   "${_patchsource}/0006-fixes.patch"
   "${_patchsource}/0007-folio.patch"
   "${_patchsource}/0008-fs-patches.patch"
-  "${_patchsource}/0011-kallsyms.patch"
+  "${_patchsource}/0011-kallsyms-modules.patch"
   "${_patchsource}/0012-ksm.patch"
   "${_patchsource}/0013-maple-lru.patch"
   "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
