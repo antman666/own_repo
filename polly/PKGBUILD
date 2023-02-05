@@ -60,12 +60,15 @@ build() {
 
   local cmake_args=(
     -G Ninja
+    -DCMAKE_C_COMPILER=$(where clang)
+    -DCMAKE_CXX_COMPILER=$(where clang++)
+    -DCMAKE_LINKER=$(where lld)
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_DOCDIR=share/doc
     -DCMAKE_INSTALL_PREFIX=/usr
-    -DLLVM_BUILD_DOCS=ON
+    -DLLVM_BUILD_DOCS=OFF
     -DLLVM_BUILD_MAIN_SRC_DIR="$srcdir/llvm-$pkgver.src"
-    -DLLVM_BUILD_TESTS=ON
+    -DLLVM_BUILD_TESTS=OFF
     -DLLVM_ENABLE_SPHINX=ON
     -DLLVM_EXTERNAL_LIT=/usr/bin/lit
     -DLLVM_LINK_LLVM_DYLIB=ON

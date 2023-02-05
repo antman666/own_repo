@@ -55,8 +55,9 @@ build() {
     -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=$(where clang) \
+    -DCMAKE_CXX_COMPILER=$(where clang++) \
+    -DCMAKE_LINKER=$(where lld) \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
     -DLLVM_EXTERNAL_LIT=/usr/bin/lit \
     -DLLVM_ENABLE_PIC=ON \

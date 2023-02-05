@@ -102,6 +102,9 @@ build() {
 
   local cmake_args=(
     -G Ninja
+    -DCMAKE_C_COMPILER=$(where clang)
+    -DCMAKE_CXX_COMPILER=$(where clang++)
+    -DCMAKE_LINKER=$(where lld)
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=/usr
     -DCMAKE_INSTALL_DOCDIR=share/doc
