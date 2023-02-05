@@ -62,7 +62,7 @@ jobs:
   build_longtime_pkg:
     strategy:
       matrix:
-        longtime: [gcc, llvm, node]
+        longtime: [gcc, clang, compiler-rt, libc++, lld, lldb, llvm, openmp, polly, node]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
