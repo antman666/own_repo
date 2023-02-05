@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [clang, compiler-rt, libc++, lld, lldb, llvm, openmp, polly]
+        packages: [llvm]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
