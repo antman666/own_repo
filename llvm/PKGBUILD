@@ -30,6 +30,7 @@ prepare() {
 }
 
 build() {
+  cd llvm-$pkgver.src/build
 
   unset CFLAGS
   unset CXXFLAGS
@@ -56,10 +57,6 @@ build() {
   export HOSTLD=ld.lld
 
 local cmake_args=(
-    -G Ninja
-    -DCMAKE_C_COMPILER=clang
-    -DCMAKE_CXX_COMPILER=clang++
-    -DLLVM_USE_LINKER=lld
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_DOCDIR=share/doc
     -DCMAKE_INSTALL_PREFIX=/usr
@@ -68,7 +65,6 @@ local cmake_args=(
     -DLLVM_BUILD_DOCS=OFF
     -DLLVM_BUILD_LLVM_DYLIB=ON
     -DLLVM_BUILD_TESTS=OFF
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;openmp;polly;pstl"
     -DLLVM_ENABLE_BINDINGS=OFF
     -DLLVM_ENABLE_FFI=ON
     -DLLVM_ENABLE_RTTI=ON

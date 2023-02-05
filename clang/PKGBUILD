@@ -8,8 +8,10 @@ pkgdesc="C language family frontend for LLVM"
 arch=('x86_64')
 url="https://clang.llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
-depends=('llvm-libs' 'gcc' 'compiler-rt')
-makedepends=('llvm' 'cmake' 'ninja' 'python-sphinx' 'python-recommonmark')
+# depends=('llvm-libs' 'gcc' 'compiler-rt')
+depends=('llvm' 'gcc')
+# makedepends=('llvm' 'cmake' 'ninja' 'python-sphinx' 'python-recommonmark')
+makedepends=('cmake' 'ninja' 'python-sphinx' 'python-recommonmark')
 optdepends=('openmp: OpenMP support in clang with -fopenmp'
             'python: for scan-view and git-clang-format'
             'llvm: referenced by some clang headers')
@@ -100,9 +102,6 @@ build() {
 
   local cmake_args=(
     -G Ninja
-    -DCMAKE_C_COMPILER=clang
-    -DCMAKE_CXX_COMPILER=clang++
-    -DLLVM_USE_LINKER=lld
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=/usr
     -DCMAKE_INSTALL_DOCDIR=share/doc

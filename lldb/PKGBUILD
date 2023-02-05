@@ -8,8 +8,10 @@ pkgdesc="Next generation, high-performance debugger"
 arch=('x86_64')
 url="https://lldb.llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
-depends=('llvm-libs' 'clang' 'python' 'python-six')
-makedepends=('llvm' 'cmake' 'ninja' 'swig' 'python-sphinx')
+# depends=('llvm-libs' 'clang' 'python' 'python-six')
+depends=('llvm' 'python' 'python-six')
+# makedepends=('llvm' 'cmake' 'ninja' 'swig' 'python-sphinx')
+makedepends=('cmake' 'ninja' 'swig' 'python-sphinx')
 _source_base=https://github.com/llvm/llvm-project/releases/download/llvmorg-$pkgver
 source=($_source_base/lldb-$pkgver.src.tar.xz{,.sig})
 sha256sums=('f64d5533661c766a2ff97062af5a0523b9e2cd56aa3d95d9624c418e120d1427'
@@ -51,9 +53,6 @@ build() {
 
   local cmake_args=(
     -G Ninja
-    -DCMAKE_C_COMPILER=clang
-    -DCMAKE_CXX_COMPILER=clang++
-    -DLLVM_USE_LINKER=lld
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=/usr
     -DCMAKE_SKIP_RPATH=ON

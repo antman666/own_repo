@@ -7,8 +7,10 @@ pkgdesc="LLVM OpenMP Runtime Library"
 arch=('x86_64')
 url="https://openmp.llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
-depends=('llvm-libs' 'libelf' 'libffi')
-makedepends=('llvm' 'clang' 'cmake' 'ninja')
+# depends=('llvm-libs' 'libelf' 'libffi')
+depends=('llvm' 'libelf' 'libffi')
+# makedepends=('llvm' 'clang' 'cmake' 'ninja')
+makedepends=('cmake' 'ninja')
 options=('!lto') # https://bugzilla.redhat.com/show_bug.cgi?id=1988155
 _source_base=https://github.com/llvm/llvm-project/releases/download/llvmorg-$pkgver
 source=($_source_base/openmp-$pkgver.src.tar.xz{,.sig}
@@ -55,9 +57,6 @@ build() {
 
   local cmake_args=(
     -G Ninja
-    -DCMAKE_C_COMPILER=clang
-    -DCMAKE_CXX_COMPILER=clang++
-    -DLLVM_USE_LINKER=lld
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=/usr
     -DLIBOMP_INSTALL_ALIASES=OFF
