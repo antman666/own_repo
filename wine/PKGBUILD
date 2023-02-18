@@ -5,7 +5,7 @@
 # Contributor: Giovanni Scafora <giovanni@archlinux.org>
 
 pkgname=wine-staging
-pkgver=8.0
+pkgver=8.2
 pkgrel=1
 
 #_winever=${pkgver%.*}
@@ -13,7 +13,7 @@ pkgrel=1
 _pkgbasever=${pkgver/rc/-rc}
 _winever=$_pkgbasever
 
-source=(https://dl.winehq.org/wine/source/8.0/wine-$_winever.tar.xz{,.sign}
+source=(https://dl.winehq.org/wine/source/8.x/wine-$_winever.tar.xz{,.sign}
         "https://github.com/wine-staging/wine-staging/archive/v$_pkgbasever/wine-staging-v$_pkgbasever.tar.gz"
         30-win32-aliases.conf
         wine-binfmt.conf)
@@ -108,8 +108,6 @@ prepare() {
   # Doesn't compile without remove these flags as of 4.10
   export CFLAGS="${CFLAGS/-fno-plt/}"
   export LDFLAGS="${LDFLAGS/,-z,now/}"
-
-  sed 's|OpenCL/opencl.h|CL/opencl.h|g' -i $pkgname/configure*
 
   # Get rid of old build dirs
   rm -rf $pkgname-{32,64}-build

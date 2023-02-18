@@ -8,7 +8,8 @@
 # Contributor: TIanyi Cui <tianyicui@gmail.com>
 
 pkgname=nodejs
-pkgver=19.5.0
+pkgver=19.6.1
+_commit=a9d1e5059f9cc63cafc8e786a7b6332aa7ab3b2b
 pkgrel=1
 pkgdesc='Evented I/O for V8 javascript'
 arch=('x86_64')
@@ -16,21 +17,19 @@ url='https://nodejs.org/'
 license=('MIT')
 options=(!lto)
 depends=('brotli' 'openssl' 'zlib' 'icu' 'libuv' 'libnghttp2' 'c-ares') # 'http-parser' 'v8')
-makedepends=('python' 'procps-ng')
+makedepends=('git' 'python' 'procps-ng')
 optdepends=('npm: nodejs package manager')
-source=("https://github.com/nodejs/node/archive/v$pkgver/nodejs-$pkgver.tar.gz")
-sha512sums=('18cacb16c18366915220ad0000e5e44e5aed61fa17ebb18bcc33947c3b3b41492a2af977e0bdf2da91820fca0f82623123effffe1c4baea30601c1b27b85344f')
+source=("git+https://github.com/nodejs/node.git#commit=$_commit")
+sha512sums=('SKIP')
 
 build() {
-  cd node-$pkgver
-
-  CFLAGS=${CFLAGS/-fipa-pta/}
-  CXXFLAGS=${CXXFLAGS/-fipa-pta/}
+  cd node
 
   ./configure \
     --prefix=/usr \
     --with-intl=system-icu \
     --without-npm \
+    --shared \
     --shared-openssl \
     --shared-zlib \
     --shared-libuv \
@@ -45,17 +44,17 @@ build() {
 }
 
 check() {
-  cd node-$pkgver
+  cd node
   make test || :
 }
 
 package() {
-  cd node-$pkgver
-
+  cd node
   make DESTDIR="$pkgdir" install
+  install -Dm644 LICENSE -t "$pkgdir"/usr/share/licenses/nodejs/
 
-  install -D -m644 LICENSE \
-    "$pkgdir"/usr/share/licenses/nodejs/LICENSE
+  cd "$pkgdir"/usr/lib
+  ln -s libnode.so.* libnode.so
 }
 
 # vim:set ts=2 sw=2 et:

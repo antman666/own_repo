@@ -6,21 +6,21 @@
 
 pkgbase=curl
 pkgname=(curl libcurl-compat libcurl-gnutls)
-pkgver=7.87.0
+_tag='67c55cb8b3f5a530478201fd780a533fce92b2eb' # git rev-parse v${_tag_name}
+_tag_name='7_88_0'
+pkgver="${_tag_name//_/.}"
 pkgrel=3
-pkgdesc='An URL retrieval utility and library'
+pkgdesc='command line tool and library for transferring data with URLs'
 arch=('x86_64')
-url='https://curl.haxx.se'
+url='https://curl.haxx.se/'
 license=('MIT')
-makedepends=('patchelf')
+makedepends=('git' 'patchelf')
 options=('!debug')
 depends=('ca-certificates' 'brotli' 'libbrotlidec.so' 'krb5' 'libgssapi_krb5.so'
          'libidn2' 'libidn2.so' 'libnghttp2' 'libpsl' 'libpsl.so' 'libssh2' 'libssh2.so'
          'openssl' 'zlib' 'zstd' 'libzstd.so')
 provides=('libcurl.so')
-source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz"{,.asc}
-        '0001-typecheck_accept_expressions_for_option_info_parameters.patch'
-		'0002-cfilters_Curl_conn_get_select_socks_use_the_first_non_connected_filter.patch')
+source=("git+https://github.com/bagder/curl.git#tag=${_tag}?signed")
 sha512sums=('d4c4a785876e0d1ba1c1adbe65528d56a8b81fc03ff724e87819cfe51aca60f8a7bf2ac9384f30c3a6bbd28669b2bd3e9a6794737243c836c4902d085a72c474'
             'SKIP'
             '0d883c3fc267c4c5d82078e03689db31f83292cb41f3f6fab26d05fa9cbaa77ae75cfd3bbb4f6953bbc4bc9760c54b49bdfdae219cd48af92312abbb1ba70ec6'
@@ -28,34 +28,55 @@ sha512sums=('d4c4a785876e0d1ba1c1adbe65528d56a8b81fc03ff724e87819cfe51aca60f8a7b
             '394f27e8721c23b82924064df8f72aa33f6e5064d0a3798a59543fd7d9660939437f1a6f45f03370d517edf5d4a218a9d41b4d62e7498d4f520f026da68007b1')
 validpgpkeys=('27EDEAF22F3ABCEB50DB9A125CC908FDB71E12C2') # Daniel Stenberg
 
-_configure_options=(
-  --prefix='/usr'
-  --mandir='/usr/share/man'
-  --disable-ldap
-  --disable-ldaps
-  --disable-manual
-  --enable-ipv6
-  --enable-threaded-resolver
-  --with-gssapi
-  --with-libssh2
-  --with-random='/dev/urandom'
-  --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'
+_backports=(
+  # git master
+  'curl-7_88_0..8c939453f587b8565af33927361edf40b48544ea'
+)
+
+_reverts=(
 )
 
 prepare() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
+  cd "$pkgbase"
 
-  patch -Np1 < ../0001-typecheck_accept_expressions_for_option_info_parameters.patch
-  patch -Np1 < ../0002-cfilters_Curl_conn_get_select_socks_use_the_first_non_connected_filter.patch
+  local _c
+  for _c in "${_backports[@]}"; do
+    if [[ $_c == *..* ]]; then
+      git log --oneline --reverse "${_c}"
+    else
+      git log --oneline -1 "${_c}"
+    fi
+    git cherry-pick -n -m1 "${_c}"
+  done
+  for _c in "${_reverts[@]}"; do
+    git log --oneline -1 "${_c}"
+    git revert -n "${_c}"
+  done
+
+  autoreconf -fi
 }
 
 build() {
+  local _configure_options=(
+    --prefix='/usr'
+    --mandir='/usr/share/man'
+    --disable-ldap
+    --disable-ldaps
+    --disable-manual
+    --enable-ipv6
+    --enable-threaded-resolver
+    --with-gssapi
+    --with-libssh2
+    --with-random='/dev/urandom'
+    --with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'
+  )
+
   mkdir build-curl{,-compat,-gnutls}
 
   # build curl
   cd "${srcdir}"/build-curl
 
-  "${srcdir}/${pkgbase}-${pkgver}"/configure \
+  "${srcdir}/${pkgbase}"/configure \
     "${_configure_options[@]}" \
     --with-openssl \
     --enable-versioned-symbols
@@ -65,7 +86,7 @@ build() {
   # build libcurl-compat
   cd "${srcdir}"/build-curl-compat
 
-  "${srcdir}/${pkgbase}-${pkgver}"/configure \
+  "${srcdir}/${pkgbase}"/configure \
     "${_configure_options[@]}" \
     --with-openssl \
     --disable-versioned-symbols
@@ -75,7 +96,7 @@ build() {
   # build libcurl-gnutls
   cd "${srcdir}"/build-curl-gnutls
 
-  "${srcdir}/${pkgbase}-${pkgver}"/configure \
+  "${srcdir}/${pkgbase}"/configure \
     "${_configure_options[@]}" \
     --disable-versioned-symbols \
     --without-openssl \
@@ -91,15 +112,16 @@ package_curl() {
   make DESTDIR="${pkgdir}" install
   make DESTDIR="${pkgdir}" install -C scripts
 
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${srcdir}/${pkgname}"
 
   # license
-  install -Dt "${pkgdir}/usr/share/licenses/$pkgname" -m0644 COPYING
+  install -Dt "${pkgdir}/usr/share/licenses/${pkgname}" -m0644 COPYING
 }
 
 package_libcurl-compat() {
-  pkgdesc='An URL retrieval library (without versioned symbols)'
+  pkgdesc='command line tool and library for transferring data with URLs (no versioned symbols)'
   depends=('curl' 'openssl')
+  provides=('libcurl-compat.so')
 
   cd "${srcdir}"/build-curl-compat
 
@@ -119,8 +141,9 @@ package_libcurl-compat() {
 }
 
 package_libcurl-gnutls() {
-  pkgdesc='An URL retrieval library (without versioned symbols and linked against gnutls)'
+  pkgdesc='command line tool and library for transferring data with URLs (no versioned symbols, linked against gnutls)'
   depends=('curl' 'gnutls')
+  provides=('libcurl-gnutls.so')
 
   cd "${srcdir}"/build-curl-gnutls
 
