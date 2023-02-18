@@ -39,8 +39,8 @@ build() {
 		shared enable-ktls enable-ec_nistp_64_gcc_128 linux-x86_64 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
-	make depend
-	make
+	make -j1 depend
+	make -j1
 }
 
 check() {

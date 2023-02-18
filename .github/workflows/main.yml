@@ -1,6 +1,5 @@
 name: Build all packages
 on:
-  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -63,7 +62,7 @@ jobs:
   build_longtime_pkg:
     strategy:
       matrix:
-        longtime: [gcc, clang, compiler-rt, libc++, lld, lldb, llvm, openmp, polly, node]
+        longtime: [gcc, llvm, node]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
