@@ -31,7 +31,7 @@ _833_HZ_ticks=
 
 # ck recommends 1000 Hz tick and the hrtimer patches in lieu of ck1
 _1000_HZ_ticks=y
- 
+
 # 1666 Hz is for very high latency bound systems. Choose 1666 Hz
 # if you don't care about overall throughput or performance, but
 # you care more about latency (some realtime applications) require
@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.1.12
+pkgver=6.2.2
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -109,39 +109,35 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.1"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.1.y-xanmod"
+_patchsource="https://raw.githubuserconnect.com/CachyOS/kernel-patches/master/6.2"
+_patchsources="https://raw.githubuserconnect.com/sirlucjan/kernel-patches/master/6.2"
+_xanmodpatch="https://raw.githubuserconnect.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsources}/wine-sync-patches/0001-winesync-Introduce-the-winesync-driver-and-character.patch"
+  "${_patchsources}/futex-patches/0001-futex-6.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
   "${_patchsource}/sched/0001-tt.patch"
-  "${_patchsource}/misc/0001-mm-add-zblock-new-allocator-for-use-via-zpool-API.patch"
-  "${_patchsource}/misc/0001-mm-introduce-THP-Shrinker.patch"
+  "${_patchsource}/misc/0001-Introduce-per-VMA-lock.patch"
+  # "${_patchsource}/misc/0002-sched-Introduce-classes-of-tasks-for-load-balance.patch"
   "${_patchsource}/misc/0001-lrng.patch"
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0002-bfq.patch"
   "${_patchsource}/0003-bitmap.patch"
+  "${_patchsource}/0005-clr.patch"
   "${_patchsource}/0006-fixes.patch"
-  "${_patchsource}/0007-folio.patch"
-  "${_patchsource}/0008-fs-patches.patch"
-  "${_patchsource}/0011-kallsyms-modules.patch"
-  "${_patchsource}/0012-ksm.patch"
-  "${_patchsource}/0013-maple-lru.patch"
-  "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
-  "${_xanmodpatch}/clearlinux/0005-init-wait-for-partition-and-retry-scan.patch"
-  "${_xanmodpatch}/net/ipv4/0001-Add-a-sysctl-to-skip-tcp-collapse-processing-when-th.patch"
+  "${_patchsource}/0007-fs-patches.patch"
+  "${_patchsource}/0009-ksm.patch"
+  "${_patchsource}/0010-maple-lru.patch"
+  "${_patchsource}/0011-mm-kvm-lockless-accessed-bit-harvest.patch"
+  "${_patchsource}/0013-sched.patch"
+  "${_xanmodpatch}/clearlinux/0008-drivers-initialize-ata-before-graphics.patch"
+  # "${_xanmodpatch}/clearlinux/0009-init-wait-for-partition-and-retry-scan.patch"
+  "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
-  # "${_xanmodpatch}/xanmod/0002-XANMOD-fair-Remove-all-energy-efficiency-functions.patch"
-  # "${_xanmodpatch}/xanmod/0003-XANMOD-sched-core-Add-yield_type-sysctl-to-reduce-or.patch"
-  # "${_xanmodpatch}/xanmod/0005-XANMOD-block-mq-deadline-Increase-write-priority-to-.patch"
   "${_xanmodpatch}/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  # "${_xanmodpatch}/xanmod/0009-XANMOD-dcache-cache_pressure-50-decreases-the-rate-a.patch"
-  # "${_xanmodpatch}/xanmod/0011-XANMOD-sched-autogroup-Add-kernel-parameter-and-conf.patch"
   "${_xanmodpatch}/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
   "${_xanmodpatch}/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
@@ -151,32 +147,31 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('1eeab95bf09757131031ebeaa3fb66f01626ecfe3b72d0044176613d027ac6643c688a0bb8f4493ae6faa3d3bf0c89fcdff3c28d7b8375e59ed6e8bd6d856e44'
+b2sums=('7f0ace4eb3f3dbba6104adf1b64682ce3d76e96a33cd0500f9943c150b5aa17c9e25690615f9ab0bdabe33c3e13548d9cd9f1f3faecd0369554f2cb5982c44aa'
         'SKIP'
         '58a9eecb5491944550724a7e243494576fb9b595f7afd1356c2d5feaa3281ed33105aa067b42e511b13be617cb58372065930055c574e7c418e4282e5617fa7e'
         '363069feea9c94cb3b706bf9529b9c23430e3ed6baa928cb9d6531ec9b0c5f8adaf8294443201d4392f84ede7d1bcf9bcb550e148883c2268c73628233bcddd7'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
-        '9f2586df7fc66ad7f5ef9e95d36f3358329f2afb0620d0d005fb9013fe49b6667d09e0d5fad70ea03ee134c676960906c6d0f0c15e2a9610d406f451eaeb887f'
-        '4ae446a3369e2518841a0e209f263b548fb18797ebe95b1816817c40f67e8b90a2bafe5e6a70d4fc8f57b819b6de8e512923b5a6a7d2cd8feb891ebc51306c94'
-        '1878a68062a4342b5c780027960f4a2f66d21da7e855d7c2e0ae8ae9cb166081e405bb80f69c1b7427c1480392cc0d9dbacc84497f800aade7fe3e16d6761ea9'
-        '14d2650168c2fce745fb18e60b4a32adfd0d7d46e0b793ddda83bd78012cd5390b3197154ea26eb2f1cac6e2647320481fc4b9e28e94474515d1619582210c8b'
-        'd8a7fac8a6423fa122544a7929c2f97d8651fae8dea39c0be1eb6972151d9d30732afbf18f986b8ea0b45c50be1be162cbe300856d625cb1eb07f75caa10b625'
-        '4286464a71fb895c64982f87ea7560d0d0c894ab5ed9eff4377882a11b0ffe5ea2498d6860e0c6bd0e3ca1f9cc380f93737d8ca210015016285f59f45411d5d3'
-        '4ea216fd77caeec5f7b4f36356c907b073d30224d488e1842987e92245853f51a27238e43ba7b2d778b06c7c89e4a8b38062e86aaac00a361222b8acfe1e6dfc'
-        '7a343dff5012e0fdc8e6616a6d0b4744542de1445936597bd8486587dd61c2d2b2fd5642cb4a089c737f1247cfe6fd24b587d9dd317be519f4631ff7f9e56052'
-        'a96baed0cd7a830d229d1bddc0214bf1d1e1132f507cb81a3cc1e78259cd62b2847897a349cbf73305f0da30cc8f00c386e004a96c137020d516d94c388d436c'
-        '6a2a0c0a06684e0396a9659ab934642fccea51b81a143c6826c56be6118a867c743f243fee316c2324055ba8e81cb3a1d0d9e574f8f726f5b61f1eb62cbeaa7a'
-        '1f96b90af6d04ba15f64e22ce216d1e5f6dba265eaf8b8f6278add9bc085b46d7e9e097914959d8c0e6f961f0e8e21ae94e14832acd43b3f75fd7e54e7b44618'
-        '159f5e7bff7f67ade6b6a0803c886b762f6990771679ab2232f2b2e5ae2eb2ca45357df1fcd351c8334f5b5c6334827cacbc3305f562f2706bfdb193b6cb2dda'
-        '6aecc90dbad2d68f5733c478597de4d44ced4ec35629afd90f0e0c8541aaad9efa6d337557d5681345d71657475fed79e9db5c40b9ef451e8c94829200aaa017'
-        '850d2aead5e6388d8dd673ef44147312686c0d2460119701052d0f1c3fca34ec8299cd1354bcb54eeb804deebbd8aa7fdc6bf03e21409ea82acdb71177f9c90e'
-        '2118a7820ebc64a8a2edc14c41ce941b335ebb551fc9ae9ab9c3d775c511a99abdd68e2477528f0e8b525fb8d67c4023573400899b022743db5b7de99e7e0027'
-        'fa28d3f0759080bb4c1e3dc8901559dd9697791cb92834e002f5e857ae4aa67b871716511d45379eb3fd0543f9d17bf0ebcd97c7cf25f1d5084d262561b00417'
-        '67f41ae57ffe48a191b4baf8b7ea68f42f862060e6debd1075b0497fc05e896140bb643c8147f40a9020820187b38f8c7d9fbaded11fbdd9e95d0d2b5d4cb350'
-        '5ef3b991a631a516948e83870e43f1876318bf80958fd94c6f3b923e25ea7e94961123657aa2f28d56e46e823eeaf000a8208875fd2f9fba0f82a9ed001cc384'
-        '12448f2a27f4448a85bb2ec3e353b7a1a22c779df9f50bf8f1d5fb8d77306eebfda5de4b779baef6df174190ce6a6530d613f82a4ad8edfc2463c38d3930e5f3'
-        '6e596f67dfb43b39d03424d49c12637deba8786ca408c9f34fe030e42dbb618d066f7512cdc8f24374fa01f360dbd49c6694b084e1a054c4283e7084a7cc2a07'
-        '5ee267759d3f315d174fd71cc13d58d41e52dcdc4b0167188692e911b1d7b7b0decde89569d1cf3b88240144ed357f5e8cfab0215906fbe7760bbd39ac3c341d')
+        'b0c73c727cacf1ca0e550d32ff42be2e08b137b386fd621ab05b2715e9e7c5839ca2f59513de66d892a1af59d3a92acfcb13214c809ca8226530b4ed4710d882'
+        '0ca7966952fea1873c3d90b0a4bcf11a6dea4f338d38ae082cb846468db1a88fe791703e03464eb9d17c0acbeeb091f4d181c2418053fc35344f2a811470f5b4'
+        '9cce925aca69aa7f15d0d4806870a3ffcea0e427d475817bc8e44f75723c9f3f14fae479af3b76ad96400be225c594b2d9c056909760a14f205dec558124c26c'
+        '5e993c344dbabef87b9e56ceafef92548fb3ffa69292f41d496fab3f11d1259cf700feabf73eddd19eeb94d89a86fb3fa07d1be844f62f490330def1c21c0ab9'
+        '8c8d6945e2fb16fa61fefaf0a58bdd11506e197adca0740448fed40b7bde8f3e3d8ec52f0c794fc92e92b78a06d6bfea9f0381422772ea2515d46b003f9bead3'
+        '7026c0b3101985eb468a62d0bc6d5888381902eef28fdcaea1e642304ef02fd2885c4e0d3a1b4cd9fec1e1a3783f45447fda85d319a5d0e231ddc57f197fbf26'
+        'd465374bfbff3ed76c15e782524e671150466aeba4fa0c3876d6985a2353eae41eea4d7b53ecd010e4521b294cadec27f6be1fee9572f97cb26fcf0bd8fb0f4d'
+        'd71be6ecde3e30476e114d07ec275268e38e864451d39e1ba0dc2aa623da971302935d434dc4f9646639e905accf55760e763375a0ba11783960c4fc09608032'
+        '47be8bdb420562d33396b155bbcde0633ae220fa1c9cda26a5a6d88ca74cd0cbbe5dbc69369ae020bb0486518b055c43b20a4c7289ee2437bb51c63451ef8078'
+        '60eec1b8f715664a1db2188d57b03bed57e3d2b4b0ca91ada84ee94dc99347c3579a3a5e23e922c045cbc435535190aba91c046a2e9926d8ec6081bedc8db1f2'
+        '73f536ad21473e9ac7051196add4524670188739127f1d3868794769933480acdd86f0c819cbbef81bf89eed2378122d4a0dcdf50ac4762acff0727c0d38f7be'
+        'c4c0414920290e2defb6753cb1a5b6c4e1f19df2151b537f8cab34e1bdb49a1b093daf5eba0768cf3e6c5ae2286346668b8dde234f5a0b59832b40a509e44b74'
+        '0209d06cf3dc71fb27565139867f0d888eeec9db63d0d93a2811e5cd1a366dbc03b2e120d4c7c67e9889dc11a0e1f196167a1f88d103b7cadc57545447138ab2'
+        '76cfe91aa33880c477baaf12637e33d5f10f8bb3d5012623cf9d934b699e35655fd3cf656620957feec110bc7289974c7b8c05d2bb9910c5825ffc42b15f7944'
+        '7af422ee98e470137fbd1b6e1da4738922c9007a2bac0cfadd078c844fb6eb5b3ec250dfabf4a379c1ea3356d265c1d7859c9a777a3a1359c42e88832aa0f760'
+        'b43c184bf1e3a030f5b4f0bae2ca68ceb86665f1573d5d94add1ccf142687d0982391d2cd31b48930f097b775e5d892b442e4b5c852e2cd410dfd63fc1de18f5'
+        '5675f18c9d18c9df768e169ef0af1c17f2bce2250819a7addf2f201de60dea972ea4a16c2900dfc8993309301a290f5efa4c587a9c0d1e8cb4c1fa454f844a41'
+        '44f3870f1cc6e1d7fc55e77f8f34e79ac1fffa038550e45918d3f1cd54ace15114e03e1a680ebe53cfa6f6d656a1046a08e15102d7f4ccdddf06bf4d4539c64e'
+        '8166ba032100be33bb26fca69a5ebd142a56190026c10d685893eb80e3c06ebfe86117d9f627083dc4c37d332efd04646cec4cbb48567b868686e10768b2f54a'
+        '2b0c84814c324e0e84609d8a3e215ae66f3dffe57768a5a2fc70472dc44eb5d68a1067bdd87c04f2b08c0c191a1a27a6c693e6d414a915bb232cdff22a530120')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
