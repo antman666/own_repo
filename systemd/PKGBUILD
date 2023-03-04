@@ -2,8 +2,8 @@
 
 pkgbase=systemd
 pkgname=('systemd' 'systemd-libs' 'systemd-resolvconf' 'systemd-sysvcompat')
-_tag='eb0f8fc41511dda1f9e0d19e830cc8c6668a2628' # git rev-parse v${_tag_name}
-_tag_name=253
+_tag='199399bb283701b6a4aaf5ace49f56f30f38e9a3' # git rev-parse v${_tag_name}
+_tag_name=253.1
 pkgver="${_tag_name/-/}"
 pkgrel=1
 arch=('x86_64')
@@ -122,7 +122,7 @@ build() {
 
     # We disable DNSSEC by default, it still causes trouble:
     # https://github.com/systemd/systemd/issues/10579
-    
+
     -Ddbuspolicydir=/usr/share/dbus-1/system.d
     -Ddefault-dnssec=no
     -Ddefault-hierarchy=unified
@@ -166,12 +166,12 @@ package_systemd() {
            'iptables' 'kbd' 'kmod' 'libkmod.so' 'hwdata' 'libcap' 'libcap.so'
            'libgcrypt' 'libxcrypt' 'libcrypt.so' 'systemd-libs' 'libidn2' 'lz4' 'pam'
            'libelf' 'libseccomp' 'libseccomp.so' 'util-linux' 'libblkid.so'
-           'libmount.so' 'xz' 'pcre2' 'audit' 'libaudit.so' 
+           'libmount.so' 'xz' 'pcre2' 'audit' 'libaudit.so'
            'openssl' 'libcrypto.so' 'libssl.so')
   provides=('nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver")
   replaces=('nss-myhostname' 'systemd-tools' 'udev')
   conflicts=('nss-myhostname' 'systemd-tools' 'udev')
-  optdepends=('libmicrohttpd: remote journald capabilities'
+  optdepends=('libmicrohttpd: systemd-journal-gatewayd and systemd-journal-remote'
               'quota-tools: kernel-level quota management'
               'systemd-sysvcompat: symlink package to provide sysvinit binaries'
               'polkit: allow administration as unprivileged user'
@@ -206,8 +206,11 @@ package_systemd() {
   rmdir "$pkgdir"/var/log/journal/remote
 
   # runtime libraries shipped with systemd-libs
-  install -d -m0755 systemd-libs
-  mv "$pkgdir"/usr/lib/lib{nss,systemd,udev}*.so* systemd-libs
+  install -d -m0755 systemd-libs/lib/
+  mv "$pkgdir"/usr/lib/lib{nss,systemd,udev}*.so* systemd-libs/lib/
+  mv "$pkgdir"/usr/include systemd-libs/include
+  mv "$pkgdir"/usr/share/pkgconfig systemd-libs/pkgconfig
+  mv "$pkgdir"/usr/share/man/man3 systemd-libs/man3
 
   # manpages shipped with systemd-sysvcompat
   rm "$pkgdir"/usr/share/man/man8/{halt,poweroff,reboot,shutdown}.8
@@ -260,8 +263,11 @@ package_systemd-libs() {
   conflicts=('libsystemd')
   replaces=('libsystemd')
 
-  install -d -m0755 "$pkgdir"/usr
-  mv systemd-libs "$pkgdir"/usr/lib
+  install -d -m0755 "$pkgdir"/usr/share/man
+  mv systemd-libs/lib "$pkgdir"/usr/lib
+  mv systemd-libs/include "$pkgdir"/usr/include
+  mv systemd-libs/pkgconfig "$pkgdir"/usr/share/pkgconfig
+  mv systemd-libs/man3 "$pkgdir"/usr/share/man/man3
 }
 
 package_systemd-resolvconf() {

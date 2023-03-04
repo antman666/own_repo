@@ -14,12 +14,12 @@ replaces=('openssl-perl' 'openssl-doc')
 provides=('libcrypto.so' 'libssl.so')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${pkgver}.tar.gz"{,.asc}
-	'ca-dir.patch')
-sha256sums=('83049d042a260e696f62406ac5c08bf706fd84383f945cf21bd61e9ed95c396e'
+        'ca-dir.patch')
+sha256sums=('6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e'
             'SKIP'
             '0a32d9ca68e8d985ce0bfef6a4c20b46675e06178cc2d0bf6d91bd6865d648b7')
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491'
-	      '7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C'
+              '7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C'
               'A21FAB74B0088AA361152586B8EF1A6BA9DA2D5C')
 
 prepare() {
@@ -32,15 +32,13 @@ prepare() {
 build() {
 	cd "$srcdir/$pkgname-$pkgver"
 
-    unset CFLAGS
-    unset CXXFLAGS
 	# mark stack as non-executable: http://bugs.archlinux.org/task/12434
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
 		shared enable-ktls enable-ec_nistp_64_gcc_128 linux-x86_64 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
-	make -j1 depend
-	make -j1
+	make depend
+	make
 }
 
 check() {

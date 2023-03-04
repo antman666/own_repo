@@ -1,11 +1,12 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [linux-tt-lto, curl, fcitx5, feh, git, ibus, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
+        jemalloc: [ curl, fcitx5, feh, git, ibus, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -17,12 +18,11 @@ jobs:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.12.0
+      - name: Push Release
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          name: "x86_64"
+          files: "./*/*.zst"
   build_no_jemalloc:
     strategy:
       matrix:
@@ -47,7 +47,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, glibc, glib2, go, libtool, openssl, python, qemu, wine]
+        nolto: [binutils, glibc, glib2, libtool, openssl, python, qemu]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +62,7 @@ jobs:
   build_longtime_pkg:
     strategy:
       matrix:
-        longtime: [gcc, llvm, node]
+        longtime: [gcc, llvm]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

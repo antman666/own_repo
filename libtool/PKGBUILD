@@ -27,7 +27,7 @@ source=(git+https://git.savannah.gnu.org/git/libtool.git#commit=$_commit
         gnulib-bootstrap::git+https://github.com/gnulib-modules/bootstrap.git
         no_hostname.patch
         disable-lto-link-order2.patch
-		grep_3.8_fix.patch
+        grep_3.8_fix.patch
 )
 sha256sums=('SKIP'
             'SKIP'
