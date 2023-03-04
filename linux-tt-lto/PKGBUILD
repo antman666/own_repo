@@ -109,9 +109,9 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://raw.githubuserconnect.com/CachyOS/kernel-patches/master/6.2"
-_patchsources="https://raw.githubuserconnect.com/sirlucjan/kernel-patches/master/6.2"
-_xanmodpatch="https://raw.githubuserconnect.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.2"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.2"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
