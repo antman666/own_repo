@@ -1,5 +1,6 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -17,11 +18,12 @@ jobs:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - name: Push Release
-        uses: softprops/action-gh-release@v0.1.15
+      - uses: ncipollo/release-action@v1.12.0
         with:
-          name: "x86_64"
-          files: "./*/*.zst"
+          allowUpdates: true
+          tag: "x86_64"
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
   build_no_jemalloc:
     strategy:
       matrix:
