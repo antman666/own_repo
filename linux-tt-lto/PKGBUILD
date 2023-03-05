@@ -89,7 +89,7 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
 pkgver=6.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -109,10 +109,12 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-#https://raw.githubusercontent.com
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.2"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.2"
 _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
+# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.2"
+# _patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.2"
+# _xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.2.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -244,10 +246,9 @@ prepare() {
   scripts/config --enable CONFIG_KVM_INTEL
   scripts/config --disable CONFIG_KVM_AMD
 
- 
   msg2 "Enable O3"
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
-  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 
+  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
   msg2 "Enabling Linux Random Number Generator ..."
   scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
@@ -322,14 +323,14 @@ prepare() {
   scripts/config --enable TT_SCHED
   scripts/config --disable TT_ACCOUNTING_STATS
 
-  ### Optionally set tickrate 
+  ### Optionally set tickrate
   if [ -n "$_417_HZ_ticks" ]; then
     msg2 "Setting tick rate to 417Hz..."
     scripts/config --disable CONFIG_HZ_300
     scripts/config --enable CONFIG_HZ_417
     scripts/config --set-val CONFIG_HZ 417
-  fi 
-  
+  fi
+
   if [ -n "$_833_HZ_ticks" ]; then
     msg2 "Setting tick rate to 833Hz..."
     scripts/config --disable CONFIG_HZ_300
@@ -358,7 +359,7 @@ prepare() {
                  --enable TCP_CONG_BBR2 \
                  --enable DEFAULT_BBR2 \
                  --set-str DEFAULT_TCP_CONG bbr2
-  
+
   msg2 "Disabling NUMA"
   scripts/config --disable NUMA \
                  --disable AMD_NUMA \
@@ -409,7 +410,7 @@ prepare() {
                  --enable PREEMPT_COUNT \
                  --enable PREEMPTION \
                  --enable PREEMPT_DYNAMIC
-    
+
   msg2 "Enabling multigenerational LRU..."
   scripts/config --enable ARCH_HAS_NONLEAF_PMD_YOUNG \
                  --enable LRU_GEN \
@@ -455,8 +456,8 @@ prepare() {
 
   # non-interactively apply ck1 default options
   # this isn't redundant if we want a clean selection of subarch below
-  echo "${CFLAGS}"
-  echo "${LDFLAGS}"
+  # echo "${CFLAGS}"
+  # echo "${LDFLAGS}"
   make ${BUILD_FLAGS[*]} olddefconfig
   diff -u ../config .config || :
 
