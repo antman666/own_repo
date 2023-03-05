@@ -89,7 +89,7 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
 pkgver=6.2.2
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -109,12 +109,12 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.2"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.2"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
-# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.2"
-# _patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.2"
-# _xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.2.y-xanmod"
+# _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.2"
+# _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.2"
+# _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
+_patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.2"
+_patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.2"
+_xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.2.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -152,7 +152,7 @@ validpgpkeys=(
 
 b2sums=('7f0ace4eb3f3dbba6104adf1b64682ce3d76e96a33cd0500f9943c150b5aa17c9e25690615f9ab0bdabe33c3e13548d9cd9f1f3faecd0369554f2cb5982c44aa'
         'SKIP'
-        'dcb53dccbfd23f50c839a2834b59c9e74e4ba5c011ff9ff0ae595cf406d6da46b93c76de84db1b2c706a2f85f7d3acc6be1251f03c959bdf6bfb892695c3a858'
+        '95dc3b2a67b1d1093d312b370c883646f8f20e7108c138b63637189608cc7c237ecc346f5677e61929fadc67d2146f73d292ece804fb3f8b0a2bd72b71e34835'
         '363069feea9c94cb3b706bf9529b9c23430e3ed6baa928cb9d6531ec9b0c5f8adaf8294443201d4392f84ede7d1bcf9bcb550e148883c2268c73628233bcddd7'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'b0c73c727cacf1ca0e550d32ff42be2e08b137b386fd621ab05b2715e9e7c5839ca2f59513de66d892a1af59d3a92acfcb13214c809ca8226530b4ed4710d882'
