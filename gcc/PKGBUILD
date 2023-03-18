@@ -10,7 +10,7 @@
 pkgname=(gcc gcc-libs lib32-gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go libgccjit)
 pkgver=12.2.1
 _majorver=${pkgver%%.*}
-pkgrel=5
+pkgrel=6
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
@@ -117,6 +117,8 @@ build() {
       --disable-libssp
       --disable-libstdcxx-pch
       --disable-werror
+      --with-tune=core2
+      --with-arch=core2
       --with-build-config=bootstrap-lto
       --enable-link-serialization=1
   )
@@ -126,12 +128,14 @@ build() {
   unset CXXFLAGS
   export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
   export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
+  export BOOT_CXXFLAGS="$CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
-  CFLAGS=${CFLAGS/-Werror=format-security/}
-  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  export CFLAGS=${CFLAGS/-Werror=format-security/}
+  export CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
   #LDFLAGS=${LDFLAGS/-O3/-O2}
 
   "$srcdir/gcc/configure" \
