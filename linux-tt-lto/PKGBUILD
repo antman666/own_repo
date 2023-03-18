@@ -89,7 +89,7 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
 pkgver=6.2.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -121,7 +121,7 @@ source=(
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsources}/futex-patches/0001-futex-6.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
+  # "${_patchsources}/futex-patches/0001-futex-6.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
   "${_patchsource}/sched/0001-tt.patch"
   "${_patchsource}/misc/0001-Introduce-per-VMA-lock.patch"
   # "${_patchsource}/misc/0002-sched-Introduce-classes-of-tasks-for-load-balance.patch"
@@ -155,7 +155,6 @@ b2sums=('9f2b39992c9e56e37ce0544f1a19d8d5285250bd5ef25e5df726b7c865dd0ee5555f153
         '16e732b9fc1cf830e38b10f33390154066f65747db138e32f74b88674ba67994c5b07f227aa32e73f909fe6e73e36466f6cae1623ed5b417e473bf262f9102fb'
         '3b7d508a9a70e5f6b9d2fd2ca1f622680172b9f9b8380af00548eb348c06dede65a725cb3f87405b0e49d7439d54d5ed4f20973bf0e540f3db73274afc74cbac'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
-        'b0c73c727cacf1ca0e550d32ff42be2e08b137b386fd621ab05b2715e9e7c5839ca2f59513de66d892a1af59d3a92acfcb13214c809ca8226530b4ed4710d882'
         '0ca7966952fea1873c3d90b0a4bcf11a6dea4f338d38ae082cb846468db1a88fe791703e03464eb9d17c0acbeeb091f4d181c2418053fc35344f2a811470f5b4'
         '9cce925aca69aa7f15d0d4806870a3ffcea0e427d475817bc8e44f75723c9f3f14fae479af3b76ad96400be225c594b2d9c056909760a14f205dec558124c26c'
         'bd23f0cea1f2ba20fb90cab554c83d05405eb7281664666abd46e1e7d11507e022e0e80373d7816fe669381b69a85589866e3b635e07e3417da868ee52731dc9'
@@ -165,7 +164,7 @@ b2sums=('9f2b39992c9e56e37ce0544f1a19d8d5285250bd5ef25e5df726b7c865dd0ee5555f153
         '5f4487f97211f5b5bd05bd19c493159b1c397c8dc60c5f343309a32e40e860ae6cdd1b5918248c6834f92583d79712fa46a0331866849b1bbd53e605319b5514'
         '8c836b5815e71595f5c0291591b99f416ffba23db6c2432663bbae8328aa743adaff38e99965adb5971a4dedecb158d134a9ac7093d6a6213dc6d8642c2b9611'
         '74a6da23e3ef5fa23bede67fdc12850bc269c0ebefd6b1c244bb88703898fdd2c89c421cab2d01704cd5b0009ce6532828700b292efa747a13b679ae46cc74f3'
-        '73f536ad21473e9ac7051196add4524670188739127f1d3868794769933480acdd86f0c819cbbef81bf89eed2378122d4a0dcdf50ac4762acff0727c0d38f7be'
+        '4b1de0fecef416e48562e36c8459b408deb0be643aef5c76bbc2914aa5a206396e83b3e3075d9e8686914721c6af7eff9a1fa62d7224224dc020e2049eea6319'
         '044657c024c3953474e37257d46438190c056074c6806197ee6e564f85a43eb40629d9f7a4e0e9c42b697d43ad8912eee71a2d66c3652a14b37cb7b3c5cf3caa'
         '4c8bd592d066b5691a32a487394e774010c95166b37e2381872108b6cd7b64afebd3d0c4ff027a99a49cf756096cd2fc0bd840549a2582a258de450fddcabaae'
         '34ba67182d62cc2fa2d41d16cfba7b98cb96013738a1c35355537c824681e037a40d8d8d4cc4311a57e256798e23a9a38590578f88d9c7f46eed98e3a4003c53'
