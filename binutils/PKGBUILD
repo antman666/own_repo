@@ -8,7 +8,7 @@
 pkgname=binutils
 pkgver=2.40
 _commit=65dbb94214516c915df5e0fe554ea165557e7ec7
-pkgrel=4
+pkgrel=5
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -22,7 +22,10 @@ replaces=(binutils-multilib)
 backup=('etc/gprofng.rc')
 options=(staticlibs !distcc !ccache)
 source=(git+https://sourceware.org/git/binutils-gdb.git#commit=${_commit}
-        gold-warn-unsupported.patch)
+        gold-warn-unsupported.patch
+        compilespeed.patch
+        zlib-level.patch
+        )
 sha256sums=('SKIP'
             '2d430b66f84a19c154725ec535280c493be1d34f1a90f95208dce02fecd0e4e4')
 validpgpkeys=(3A24BC1E8FB409FA9F14371813FCEF89DD9E3C4F)
