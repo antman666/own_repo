@@ -89,7 +89,7 @@ _subarch=15
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
 pkgver=6.2.7
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -123,7 +123,7 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsources}/futex-patches/0001-futex-6.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
   "${_patchsource}/sched/0001-tt.patch"
-  "${_patchsource}/misc/0001-Introduce-per-VMA-lock.patch"
+  # "${_patchsource}/misc/0001-Introduce-per-VMA-lock.patch"
   # "${_patchsource}/misc/0002-sched-Introduce-classes-of-tasks-for-load-balance.patch"
   "${_patchsource}/misc/0001-lrng.patch"
   "${_patchsource}/0001-bbr2.patch"
