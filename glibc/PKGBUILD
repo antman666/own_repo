@@ -44,7 +44,7 @@ prepare() {
   cd glibc
 
   patch -Np1 -i "${srcdir}"/fmod.patch
-  patch -Np1 -i "${srcdir}"/malloc_tune.patch
+  # patch -Np1 -i "${srcdir}"/malloc_tune.patch
 
   # Re-enable `--hash-style=both` for building shared objects due to issues with EPIC's EAC
   # which relies on DT_HASH to be present in these libs.
