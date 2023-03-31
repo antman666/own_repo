@@ -1,5 +1,6 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -26,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, libdrm, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, pulseaudio, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, wayland, wpa_supplicant, xorg-server, zlib, zstd, zsh]
+        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, libdrm, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, pulseaudio, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

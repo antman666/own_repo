@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.2.7
-pkgrel=3
+pkgver=6.2.9
+pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -134,7 +134,6 @@ source=(
   "${_patchsource}/0007-fs-patches.patch"
   "${_patchsource}/0009-ksm.patch"
   "${_patchsource}/0010-maple-lru.patch"
-  "${_patchsource}/0011-mm-kvm-lockless-accessed-bit-harvest.patch"
   "${_patchsource}/0013-sched.patch"
   "${_xanmodpatch}/clearlinux/0008-drivers-initialize-ata-before-graphics.patch"
   # "${_xanmodpatch}/clearlinux/0009-init-wait-for-partition-and-retry-scan.patch"

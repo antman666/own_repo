@@ -3,7 +3,7 @@
 pkgbase=ibus
 pkgname=(ibus libibus)
 pkgver=1.5.28
-pkgrel=1
+pkgrel=3
 pkgdesc="Next Generation Input Bus for Linux"
 arch=('x86_64')
 url="https://github.com/ibus/ibus/wiki"
@@ -11,28 +11,21 @@ license=('LGPL')
 depends=('dconf' 'gtk3' 'hicolor-icon-theme' 'libnotify' 'python-dbus' 'python-gobject'
          'iso-codes' 'librsvg')
 makedepends=('gobject-introspection' 'vala' 'intltool' 'gnome-common' 'gtk-doc' 'gtk4' 'gtk2'
-             'qt5-base' 'unicode-cldr' 'unicode-character-database' 'unicode-emoji' 'git')
+             'qt5-base' 'unicode-cldr' 'unicode-character-database' 'unicode-emoji')
 options=('!emptydirs')
-_commit=e144b12c1f18ec91ddcbb5d491387d78075318f4  # 1.5.25
-source=("git+https://github.com/ibus/ibus#commit=$_commit")
-sha512sums=('SKIP')
-
-pkgver() {
-  cd ibus
-  git describe --tags | sed 's/[^-]*-g/r&/;s/-/+/g'
-}
+source=("https://github.com/ibus/ibus/releases/download/$pkgver/ibus-$pkgver.tar.gz"
+         https://github.com/ibus/ibus/commit/497f0c74.patch
+         https://github.com/ibus/ibus/commit/7c8abbe8.patch)
+sha512sums=('5bfb9158a5810d38af900775ed30406823872c431ef4772b476afa7b58c120ef508a51b961620ea6003549f1f49cf05484992beee8677b138f1162afc73ab247'
+            '1f3122187b5aead076f1fae81898a5dc2c36b96226d28683cdb313fe15c01858831726dca248f9e6b3664a4345f45eab479e5ea9e5c9eb9aa5f9ac7fd57a8073')
 
 prepare() {
-  cd ibus
-
-  # https://github.com/ibus/ibus/issues/2387
-  git cherry-pick -n 17648f0522910480b6c5dd4f5356ca1f6c160bf5
-
-  NOCONFIGURE=1 ./autogen.sh
+  patch -d $pkgbase-$pkgver -p1 < 7c8abbe8.patch
+  patch -d $pkgbase-$pkgver -p1 < 497f0c74.patch # Fix sticky keys
 }
 
 build() {
-  cd ibus
+  cd ibus-$pkgver
   ./configure \
     --prefix=/usr \
     --libexecdir=/usr/lib/ibus \
@@ -46,14 +39,14 @@ build() {
     --disable-python2 \
     --with-python=python3 \
     --with-ucd-dir=/usr/share/unicode/
-  sed -i 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--hash-style=gnu,--strip-all,-ljemalloc\0/g' libtool
+  sed -i 's/ -shared / -shared / -Wl,-O3,--as-needed,--sort-common,--hash-style=gnu,--strip-all,-Bsymbolic-functions,-lmimalloc\0/g' libtool
   make
 }
 
 package_ibus() {
   depends+=("libibus=$pkgver")
 
-  cd ibus
+  cd ibus-$pkgver
   make DESTDIR="$pkgdir" install
   make -C src DESTDIR="$pkgdir" uninstall
   make -C bindings DESTDIR="$pkgdir" uninstall
@@ -65,7 +58,7 @@ package_libibus() {
   depends=(libg{lib,object,io}-2.0.so)
   provides=('libibus-1.0.so')
 
-  cd ibus
+  cd ibus-$pkgver
   make -C src DESTDIR="$pkgdir" install
   make -C bindings DESTDIR="$pkgdir" install
   make DESTDIR="$pkgdir" install-pkgconfigDATA

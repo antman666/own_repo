@@ -105,6 +105,8 @@ source=(
   qemu-sysusers.conf
   65-kvm.rules
   99-qemu-guest-agent.rules
+  # fixes https://gitlab.com/qemu-project/qemu/-/issues/1471
+  $pkgbase-7.2.0-gen_adcox.patch::https://gitlab.com/qemu-project/qemu/-/commit/60c7dd22e1383754d5f150bc9f7c2785c662a7b6.patch
 )
 sha512sums=('c60c5ff8ec99b7552e485768908920658fdd8035ff7a6fa370fb6881957dc8b7e5f18ff1a8f49bd6aa22909ede2a7c084986d8244f12074ccd33ebe40a0c411f'
             'SKIP'
@@ -133,8 +135,10 @@ _qemu_system_deps=(
   dtc
   fuse3
   gcc-libs
+  glibc
   glib2 libgio-2.0.so libglib-2.0.so libgmodule-2.0.so
   gnutls
+  keyutils
   libaio
   libbpf libbpf.so
   libjpeg-turbo libjpeg.so

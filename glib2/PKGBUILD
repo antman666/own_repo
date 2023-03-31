@@ -3,7 +3,7 @@
 
 pkgbase=glib2
 pkgname=(glib2 glib2-docs)
-pkgver=2.76.0
+pkgver=2.76.1
 pkgrel=1
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -32,11 +32,11 @@ checkdepends=(
   glib2
 )
 options=(!debug staticlibs)
-_commit=8a9ada663923e39c0e8d7eefe65390955dc3c0d8  # tags/2.76.0^0
+_commit=180713772f4e7bcdddf2c793f2f34a498184ed15  # tags/2.76.1^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
-        glib-compile-schemas.hook gio-querymodules.{hook,script})
+        glib-compile-schemas.hook gio-querymodules.hook)
 sha256sums=('SKIP'
             '6d51eb5856268d79eee01b97a299fa9f99db18b2abb4df56f2ed9e641a09138a'
             '64ae5597dda3cc160fc74be038dbe6267d41b525c0c35da9125fbf0de27f9b25'
@@ -60,23 +60,24 @@ prepare() {
 }
 
 build() {
-  # Produce more debug info: GLib has a lot of useful macros
-  # use fat LTO objects for static libraries
-  #CFLAGS+=' -ffat-lto-objects -g3'
-  #CXXFLAGS+=' -ffat-lto-objects -g3'
-  unset CFLAGS
-  unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3'
-
-  CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
-  arch-meson glib build \
-    --default-library both \
-    -D glib_debug=disabled \
-    -D selinux=disabled \
-    -D sysprof=enabled \
-    -D man=true \
+  local meson_options=(
+    --default-library both
+    -D glib_debug=disabled
     -D gtk_doc=true
+    -D man=true
+    -D selinux=disabled
+    -D sysprof=enabled
+  )
+
+  # Produce more debug info: GLib has a lot of useful macros
+  #CFLAGS+=" -g3"
+  #CXXFLAGS+=" -g3"
+
+  # use fat LTO objects for static libraries
+  CFLAGS+=" -ffat-lto-objects"
+  CXXFLAGS+=" -ffat-lto-objects"
+
+  arch-meson glib build "${meson_options[@]}"
   meson compile -C build
 }
 
@@ -99,7 +100,7 @@ package_glib2() {
   meson install -C build --destdir "$pkgdir"
 
   install -Dt "$pkgdir/usr/share/libalpm/hooks" -m644 *.hook
-  install -D gio-querymodules.script "$pkgdir/usr/share/libalpm/scripts/gio-querymodules"
+  touch "$pkgdir/usr/lib/gio/modules/.keep"
 
   python -m compileall -d /usr/share/glib-2.0/codegen \
     "$pkgdir/usr/share/glib-2.0/codegen"
@@ -112,7 +113,7 @@ package_glib2() {
 }
 
 package_glib2-docs() {
-  pkgdesc="Documentation for GLib"
+  pkgdesc+=" - documentation"
   depends=()
   license+=(custom)
 
