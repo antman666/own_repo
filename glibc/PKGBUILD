@@ -10,7 +10,7 @@ pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.37
 _commit=6fe86ecd787a2624cd638131629ba9a824040308
-pkgrel=4
+pkgrel=5
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
@@ -21,10 +21,10 @@ source=(git+https://sourceware.org/git/glibc.git#commit=${_commit}
         locale-gen
         lib32-glibc.conf
         sdt.h sdt-config.h
-        fmod.patch
         reenable_DT_HASH.patch
 )
-#malloc_tune.patch
+# fmod.patch
+# malloc_tune.patch
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8 # Carlos O Donell
               BC7C7372637EC10C57D7AA6579C43DFBF1CF2187) # Siddhesh Poyarekar
 b2sums=('SKIP'
@@ -43,7 +43,7 @@ prepare() {
   [[ -d glibc-$pkgver ]] && ln -s glibc-$pkgver glibc
   cd glibc
 
-  patch -Np1 -i "${srcdir}"/fmod.patch
+  # patch -Np1 -i "${srcdir}"/fmod.patch
   # patch -Np1 -i "${srcdir}"/malloc_tune.patch
 
   # Re-enable `--hash-style=both` for building shared objects due to issues with EPIC's EAC
@@ -96,7 +96,7 @@ build() {
   make -O
 
   # build info pages manually for reproducibility
-  make info
+  # make info
 
   cd "${srcdir}"/lib32-glibc-build
   export CC="gcc -m32 -mstackrealign"
