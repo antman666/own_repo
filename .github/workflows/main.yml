@@ -47,7 +47,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, glibc, glib2, libtool, openssl, python, qemu]
+        nolto: [binutils, libtool, openssl, python, qemu]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
