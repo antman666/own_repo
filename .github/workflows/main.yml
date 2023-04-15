@@ -1,23 +1,24 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [ curl, fcitx5, feh, git, ibus, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
+        jemalloc: [curl, fcitx5, feh, git, ibus, libdrm, libx11, mesa, numlockx, picom, pixman, wayland, wget, xorg-server, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.2
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
           pkgdir: ${{ matrix.jemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.12.0
+      - uses: ncipollo/release-action@main
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -26,19 +27,19 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, libdrm, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, pulseaudio, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
+        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, lz4, ntfs-3g, perl, polkit, pulseaudio, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, zlib, zstd, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build non-jemalloc packages for arch
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.2
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
         with:
           pkgdir: ${{ matrix.nojemalloc }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.12.0
+      - uses: ncipollo/release-action@main
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -52,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.2
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
@@ -67,14 +68,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.2
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.longtime }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@v1.12.0
+      - uses: ncipollo/release-action@main
         with:
           allowUpdates: true
           tag: "x86_64"
@@ -83,7 +84,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.12.0
+      - uses: ncipollo/release-action@main
         with:
           allowUpdates: True
           tag: "x86_64"
@@ -96,7 +97,7 @@ jobs:
       - uses: antman666/update-db-for-repo@mine
         with: 
           tag: x86_64
-      - uses: ncipollo/release-action@v1.12.0
+      - uses: ncipollo/release-action@main
         with:
           allowUpdates: True
           tag: "x86_64"
