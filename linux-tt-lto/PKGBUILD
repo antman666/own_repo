@@ -134,7 +134,7 @@ source=(
   "${_patchsource}/0007-fs-patches.patch"
   "${_patchsource}/0009-ksm.patch"
   "${_patchsource}/0010-maple-lru.patch"
-  "${_patchsource}/0013-sched.patch"
+  "${_patchsource}/0012-sched.patch"
   "${_xanmodpatch}/clearlinux/0008-drivers-initialize-ata-before-graphics.patch"
   # "${_xanmodpatch}/clearlinux/0009-init-wait-for-partition-and-retry-scan.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
