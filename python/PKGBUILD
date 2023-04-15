@@ -8,8 +8,8 @@ shopt -s extglob
 
 pkgbase=python
 pkgname=(python python-tests)
-pkgver=3.11.2
-pkgrel=2
+pkgver=3.11.3
+pkgrel=1
 _pybasever=${pkgver%.*}
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
@@ -66,8 +66,7 @@ build() {
 }
 
 check() {
-  # test_socket: test.test_socket.RDSTest.testPeek hangs https://bugs.python.org/issue35247
-  # test_tk: tkinter.test.test_tkinter.test_colorchooser.DefaultRootTest hangs
+  # test_tk: test_askcolor tkinter.test.test_tkinter.test_colorchooser.DefaultRootTest hangs
   # test_pyexpat: our `debug` implementation rewrites source location, which breaks the build-time
   #               only test test.test_pyexpat.HandlerExceptionTest as it cannot find source file in
   #               the to-be-installed debug package
@@ -80,7 +79,7 @@ check() {
 
   LD_LIBRARY_PATH="${srcdir}/Python-${pkgver}":${LD_LIBRARY_PATH} \
   LC_CTYPE=en_US.UTF-8 xvfb-run -s "-screen 0 1920x1080x16 -ac +extension GLX" -a -n "$servernum" \
-    "${srcdir}/Python-${pkgver}/python" -m test.regrtest -v -uall -x test_socket -x test_tk -x test_pyexpat
+    "${srcdir}/Python-${pkgver}/python" -m test.regrtest -v -uall -x test_tk -x test_pyexpat
 }
 
 package_python() {
@@ -134,7 +133,7 @@ package_python-tests() {
 
   make DESTDIR="${pkgdir}" EXTRA_CFLAGS="$CFLAGS" libinstall
   cd "$pkgdir"/usr/lib/python*/
-  rm -r !(test|ctypes|distutils|idlelib|lib2to3|sqlite3|tkinter|unittest)
+  rm -r !(test|ctypes|distutils|idlelib|lib2to3|tkinter|unittest)
   cd "$pkgdir"/usr/lib/python*/test
   rm -r support
   cd "$pkgdir"/usr/lib/python*/ctypes
@@ -145,8 +144,6 @@ package_python-tests() {
   rm -r !(idle_test)
   cd "$pkgdir"/usr/lib/python*/lib2to3
   rm -r !(tests)
-  cd "$pkgdir"/usr/lib/python*/sqlite3
-  rm -r !(test)
   cd "$pkgdir"/usr/lib/python*/tkinter
   rm -r !(test)
   cd "$pkgdir"/usr/lib/python*/unittest
