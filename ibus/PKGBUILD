@@ -39,7 +39,7 @@ build() {
     --disable-python2 \
     --with-python=python3 \
     --with-ucd-dir=/usr/share/unicode/
-  sed -i 's/ -shared / -shared / -Wl,-O3,--as-needed,--sort-common,--hash-style=gnu,--strip-all,-Bsymbolic-functions,-lmimalloc\0/g' libtool
+  sed -i 's/ -shared / -Wl,-O3,--as-needed,--sort-common,--hash-style=gnu,--strip-all,-Bsymbolic-functions,-lmimalloc\0/g' libtool
   make
 }
 
