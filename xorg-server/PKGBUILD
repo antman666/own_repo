@@ -5,7 +5,7 @@ pkgbase=xorg-server
 pkgname=('xorg-server' 'xorg-server-xephyr' 'xorg-server-xvfb' 'xorg-server-xnest'
          'xorg-server-common' 'xorg-server-devel')
 pkgver=21.1.8
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 license=('custom')
 groups=('xorg')
@@ -20,6 +20,9 @@ source=(https://xorg.freedesktop.org/releases/individual/xserver/${pkgbase}-${pk
         xvfb-run # with updates from FC master
         xvfb-run.1
         xorg-xephyr_Dont_check_for_SeatId_anymore.patch
+	187.patch
+        417.patch
+	506.patch
 )
 validpgpkeys=('3C2C43D9447D5938EF4551EBE23B7E70B467F0BF'  # Peter Hutterer (Who-T) <office@who-t.net>
               '67DC86F2623FC5FD4BB5225D14706DBE1E4B4540'  # Olivier Fourdan <fourdan@xfce.org>

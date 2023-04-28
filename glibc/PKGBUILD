@@ -22,6 +22,10 @@ source=(git+https://sourceware.org/git/glibc.git#commit=${_commit}
         lib32-glibc.conf
         sdt.h sdt-config.h
         reenable_DT_HASH.patch
+	fmod.patch
+	malloc_tune.patch
+	05-mandriva-zstdcompressedlocals.patch
+	nptl.patch
 )
 # fmod.patch
 # malloc_tune.patch

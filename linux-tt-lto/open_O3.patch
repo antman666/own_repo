@@ -1,14 +1,15 @@
 diff --git a/Makefile b/Makefile
-index 416490d..af83046 100644
+index f76a4a6..7e365ca 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -834,6 +834,18 @@ KBUILD_CFLAGS      += $(call cc-disable-warning, address-of-packed-member)
+@@ -834,6 +834,20 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
  ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
  KBUILD_CFLAGS += -O2
  KBUILD_RUSTFLAGS += -Copt-level=2
 +else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 +KBUILD_CFLAGS += -O3
 +KBUILD_CFLAGS += -fopenmp
++KBUILD_CFLAGS += -rtlib=compiler-rt -unwindlib=libunwind -fno-semantic-interposition
 +KBUILD_RUSTFLAGS += -Copt-level=3
 +KBUILD_CFLAGS += $(call cc-option, -mllvm -polly) \
 +                 $(call cc-option, -mllvm -polly-run-dce) \
@@ -18,6 +19,7 @@ index 416490d..af83046 100644
 +                 $(call cc-option, -mllvm -polly-detect-keep-going) \
 +                 $(call cc-option, -mllvm -polly-vectorizer=stripmine) \
 +                 $(call cc-option, -mllvm -polly-invariant-load-hoisting)
++KBUILD_LDFLAGS += -unwindlib=libunwind -O3 --sort-common --as-needed --strip-all -Bsymbolic-functions
  else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS += -Os
  KBUILD_RUSTFLAGS += -Copt-level=s

@@ -3,7 +3,7 @@
 
 pkgbase=glib2
 pkgname=(glib2 glib2-docs)
-pkgver=2.76.1
+pkgver=2.76.2
 pkgrel=1
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -32,11 +32,14 @@ checkdepends=(
   glib2
 )
 options=(!debug staticlibs)
-_commit=180713772f4e7bcdddf2c793f2f34a498184ed15  # tags/2.76.1^0
+_commit=41ae5b5632ce9f6b2b5613ec1912821f769166c2  # tags/2.76.2^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
-        glib-compile-schemas.hook gio-querymodules.hook)
+        0002-glocalfile-Sum-apparent-size-only-for-files-and-syml.patch
+        0003-tests-file-Do-not-rely-on-du-bytes-behaviour.patch
+        gio-querymodules.hook
+        glib-compile-schemas.hook)
 sha256sums=('SKIP'
             '6d51eb5856268d79eee01b97a299fa9f99db18b2abb4df56f2ed9e641a09138a'
             '64ae5597dda3cc160fc74be038dbe6267d41b525c0c35da9125fbf0de27f9b25'

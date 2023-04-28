@@ -2,7 +2,7 @@
 
 pkgname=libx11
 pkgver=1.8.4
-pkgrel=2
+pkgrel=3
 pkgdesc="X11 client-side library"
 arch=(x86_64)
 url="https://xorg.freedesktop.org/"
@@ -28,9 +28,10 @@ validpgpkeys=('4A193C06D35E7C670FA4EF0BA2FB9E081F2D130E') # Alan Coopersmith <al
 build() {
   cd libX11-${pkgver}
   ./configure --prefix=/usr \
+    --with-queue-size=32768 \
     --disable-static \
     --disable-xf86bigfont
-  sed -i -e 's/ -shared / -Wl,-O3,--as-needed,--strip-all\0/g' libtool
+  sed -i -e 's/ -shared / -Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu,-Bsymbolic-functions\0/g' libtool
   make
 }
 

@@ -6,20 +6,22 @@
 pkgbase=mesa
 pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-swrast' 'vulkan-virtio' 'libva-mesa-driver' 'mesa-vdpau' 'mesa')
 pkgdesc="An open-source implementation of the OpenGL specification"
-pkgver=23.0.2
-pkgrel=2
+pkgver=23.0.3
+pkgrel=1
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
              'libomxil-bellagio' 'libclc' 'clang' 'libglvnd' 'libunwind' 'lm_sensors' 'libxrandr'
              'systemd' 'valgrind' 'glslang' 'vulkan-icd-loader' 'directx-headers' 'cmake' 'meson')
-makedepends+=('rust' 'rust-bindgen' 'spirv-tools' 'spirv-llvm-translator') # rusticl dependencies
+makedepends+=('python-ply' 'spirv-llvm-translator') # intel-clc dependencies
+makedepends+=('rust' 'rust-bindgen' 'spirv-tools')  # rusticl dependencies
 url="https://www.mesa3d.org/"
 license=('custom')
 source=(https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
         0001-intel-fs-fix-scheduling-of-HALT-instructions.patch
         0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch
         0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
+	0004-rusticl-Fix-bindgen-invocation.patch
         LICENSE)
 sha256sums=('1b7d3399fc6f16f030361f925d33ebc7600cbf98094582f54775b6a1180529e7'
             'SKIP'
@@ -55,6 +57,9 @@ prepare() {
   # https://bugs.archlinux.org/task/78142
   # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21647
   patch -Np1 -i ../0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
+
+  # Fix build failure with rust-bindgen 0.65.1
+  patch -Np1 -i ../0004-rusticl-Fix-bindgen-invocation.patch
 }
 
 build() {
@@ -88,6 +93,7 @@ build() {
     -D llvm=enabled \
     -D lmsensors=enabled \
     -D osmesa=true \
+    -D intel-clc=enabled \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
     -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \

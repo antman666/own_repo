@@ -9,7 +9,7 @@ pkgname=('systemd'
 _tag='54e993e2389ccdf43189f89dd7c5d5ec34f31d6b' # git rev-parse v${_tag_name}
 _tag_name=253.3
 pkgver="${_tag_name/-/}"
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
 makedepends=('acl' 'cryptsetup' 'docbook-xsl' 'gperf' 'lz4' 'xz' 'pam' 'libelf'
@@ -27,6 +27,7 @@ validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <
 source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed"
         '0001-Use-Arch-Linux-device-access-groups.patch'
+        '0002-ClearLinux.patch'
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'

@@ -2,7 +2,7 @@
 # Maintainer: Dan McGee <dan@archlinux.org>
 
 pkgname=git
-pkgver=2.40.0
+pkgver=2.40.1
 pkgrel=1
 pkgdesc='the fast distributed version control system'
 arch=('x86_64')
