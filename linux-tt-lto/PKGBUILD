@@ -98,7 +98,7 @@ makedepends=(
   bc kmod libelf cpio perl tar xz
 )
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(clang llvm lld python)
+  makedepends+=(clang llvm lld python polly)
   BUILD_FLAGS=(
     CC=clang
     LD=ld.lld
