@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index f5543ee..ec76fda 100644
+index f5543ee..4eb6f41 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -447,10 +447,10 @@ HOSTRUSTC = rustc
@@ -75,7 +75,7 @@ index f5543ee..ec76fda 100644
 +                 $(call cc-option, -mllvm -polly-detect-keep-going) \
 +                 $(call cc-option, -mllvm -polly-vectorizer=stripmine) \
 +                 $(call cc-option, -mllvm -polly-invariant-load-hoisting)
-+KBUILD_LDFLAGS += -unwindlib=libunwind -O3 --sort-common --as-needed --strip-all -Bsymbolic-functions
++KBUILD_LDFLAGS += -unwindlib=libunwind -O3 --sort-common --as-needed -Bsymbolic-functions
  else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS += -Os
  KBUILD_RUSTFLAGS += -Copt-level=s
