@@ -63,7 +63,7 @@ index f5543ee..e03355e 100644
 +                 $(call cc-option, -mllvm -polly-detect-keep-going) \
 +                 $(call cc-option, -mllvm -polly-vectorizer=stripmine) \
 +                 $(call cc-option, -mllvm -polly-invariant-load-hoisting)
-+KBUILD_LDFLAGS += -unwindlib=libunwind -O3 --sort-common --as-needed --strip-all
++KBUILD_LDFLAGS += -unwindlib=libunwind -O3 --sort-common --as-needed
  else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS += -Os
  KBUILD_RUSTFLAGS += -Copt-level=s
