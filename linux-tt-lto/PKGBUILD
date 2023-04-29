@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -88,7 +88,7 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.2.13
+pkgver=6.3
 pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -109,12 +109,12 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.2"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.2"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.2.y-xanmod"
-# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.2"
-# _patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.2"
-# _xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.2.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.3"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.3"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.3.y-xanmod"
+# _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.3"
+# _patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.3"
+# _xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.3.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -128,15 +128,16 @@ source=(
   "${_patchsource}/misc/0001-lrng.patch"
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0002-bfq.patch"
-  "${_patchsource}/0003-bitmap.patch"
-  "${_patchsource}/0005-clr.patch"
-  "${_patchsource}/0006-fixes.patch"
-  "${_patchsource}/0007-fs-patches.patch"
-  "${_patchsource}/0009-ksm.patch"
-  "${_patchsource}/0010-maple-lru.patch"
-  "${_patchsource}/0012-sched.patch"
-  "${_xanmodpatch}/clearlinux/0008-drivers-initialize-ata-before-graphics.patch"
-  # "${_xanmodpatch}/clearlinux/0009-init-wait-for-partition-and-retry-scan.patch"
+  # "${_patchsource}/0003-bitmap.patch"
+  # "${_patchsource}/0005-clr.patch"
+  "${_patchsource}/0004-fixes.patch"
+  "${_patchsource}/0005-fs-patches.patch"
+  "${_patchsource}/0007-ksm.patch"
+  # "${_patchsource}/0010-maple-lru.patch"
+  "${_patchsource}/0008-Per-VMA-locks.patch"
+  "${_patchsource}/0009-sched.patch"
+  "${_xanmodpatch}/intel/0020-drivers-initialize-ata-before-graphics.patch"
+  # "${_xanmodpatch}/intel/0021-init-wait-for-partition-and-retry-scan.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
   "${_xanmodpatch}/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
@@ -149,30 +150,26 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('9f2b39992c9e56e37ce0544f1a19d8d5285250bd5ef25e5df726b7c865dd0ee5555f1536a139583fad4d268e959c5b12b16d224e6630d621c1c10125ac6bb123'
+b2sums=('f1887c8924efa8d0cb14c4e604affd0b0168bcf20f56a37c027405c7bc11aba822a43fcb38ccb55a81a26f747d00e1ab5a6554818affbf1e1c7ef5220150fc69'
         'SKIP'
-        '16e732b9fc1cf830e38b10f33390154066f65747db138e32f74b88674ba67994c5b07f227aa32e73f909fe6e73e36466f6cae1623ed5b417e473bf262f9102fb'
-        '3b7d508a9a70e5f6b9d2fd2ca1f622680172b9f9b8380af00548eb348c06dede65a725cb3f87405b0e49d7439d54d5ed4f20973bf0e540f3db73274afc74cbac'
+        '60306fcc95ebc77197ab3297e679f9143e982484dcb65f506c37a8ab610bda00598e2d7cd7c9002ad4915255f70aa5b8719a00e44610e34ec3aa1d30c22a965c'
+        'b1f58d8e39e81a212ecb84985f8d8349b1f841444c637a0eeca1c88faa12e7a7b7cc11e9b4b03419ad23f1959d547910784a396a3bbc35a98e3be7b57687edd6'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
-        '0ca7966952fea1873c3d90b0a4bcf11a6dea4f338d38ae082cb846468db1a88fe791703e03464eb9d17c0acbeeb091f4d181c2418053fc35344f2a811470f5b4'
-        '9cce925aca69aa7f15d0d4806870a3ffcea0e427d475817bc8e44f75723c9f3f14fae479af3b76ad96400be225c594b2d9c056909760a14f205dec558124c26c'
-        'bd23f0cea1f2ba20fb90cab554c83d05405eb7281664666abd46e1e7d11507e022e0e80373d7816fe669381b69a85589866e3b635e07e3417da868ee52731dc9'
-        '1837b7e4823bf05291faa97b55b7bdc6a91095bb16b17fbcc63837da74d12af8180c307391d59d310399958a57ab63c69d98aa33e6ef0c1d9c04e12db6cfb254'
-        '0da5c41e97344755ef0ca93651b19b0b8013561ce63bd58c4fb61166e966917524027efff915bde7aa46f41b8db4e5a28ac90798e79f8599e855f55b2ab21116'
-        '344c4eed1a87340f122e1a32d152ae8c678ef6fe3b16a15b716cbaa1e32b55c9cc05bcbb9680fc07c679748889854df8d1788cc042bfc101010f1591f422284f'
-        '5f4487f97211f5b5bd05bd19c493159b1c397c8dc60c5f343309a32e40e860ae6cdd1b5918248c6834f92583d79712fa46a0331866849b1bbd53e605319b5514'
-        '8c836b5815e71595f5c0291591b99f416ffba23db6c2432663bbae8328aa743adaff38e99965adb5971a4dedecb158d134a9ac7093d6a6213dc6d8642c2b9611'
-        '74a6da23e3ef5fa23bede67fdc12850bc269c0ebefd6b1c244bb88703898fdd2c89c421cab2d01704cd5b0009ce6532828700b292efa747a13b679ae46cc74f3'
-        '4b1de0fecef416e48562e36c8459b408deb0be643aef5c76bbc2914aa5a206396e83b3e3075d9e8686914721c6af7eff9a1fa62d7224224dc020e2049eea6319'
-        '044657c024c3953474e37257d46438190c056074c6806197ee6e564f85a43eb40629d9f7a4e0e9c42b697d43ad8912eee71a2d66c3652a14b37cb7b3c5cf3caa'
-        '4c8bd592d066b5691a32a487394e774010c95166b37e2381872108b6cd7b64afebd3d0c4ff027a99a49cf756096cd2fc0bd840549a2582a258de450fddcabaae'
-        '34ba67182d62cc2fa2d41d16cfba7b98cb96013738a1c35355537c824681e037a40d8d8d4cc4311a57e256798e23a9a38590578f88d9c7f46eed98e3a4003c53'
-        '7af422ee98e470137fbd1b6e1da4738922c9007a2bac0cfadd078c844fb6eb5b3ec250dfabf4a379c1ea3356d265c1d7859c9a777a3a1359c42e88832aa0f760'
+        'c1c898d5c09b89378f03b6c675d81167276811f0305fe2e5cf77422660c3e64299d8f614ac17f091f4efa92ad62091ddd8ad949dd179c02837bbd67510dad565'
+        '9343c9be5818cc4babdb92800ffb47fd4b4a58a8c3f1915dd26030c24c2ae9d48ff9942b4625a53d644997c897df8515c27e75de9b8e9be3282fcf4979333c47'
+        '28d435bffc5e6416cbfb2b19c8a86cb6f9bf6af08425402ddc9f2a7f258f4813d75943a8bdfc417b1d5bcc3bdbabb9b83c03ddd7223fa8181ff99c8c76bce227'
+        '838897425b7fefcd35f6584eb8fee1c75bf1713db0089dfde72de90261fc143c29768793d457847c54afdc71d6cff5f2bf03db72bea96949c714368f1de96105'
+        '0e1f35183f6821c96f57bb2d60623ab5d22ca0a8b3af9b608ff21dbe33b707e788ac4337ba7a827ed331514f060d69b67a5d3ea86df28c3f73da4bf6e9e6ffa1'
+        'a3aa7951171ef9920032eb9d85f9a33d554436d8c75ec7a72fa61673c56a10798e4ee05a8555aea2d7edc72f5a41c0b44c661652b82c557865d92f4e3c9ae95b'
+        'a75d8196b08e38b7f7c5c41d5512fa3fedd12c5dbae50960cfc28b02222b44677ea9de93440986b1e7eee571bd0dc00f788a2419e21e601668530e835342e5e7'
+        '9c09e333255986bbbc20095e52f29586bec841e8d857397fb1c0c0d8479d41d8bf2d58e707b6e47d60cf7f266fb34a5d4a51504c8f033cd2077b777d63919a2b'
+        'd2fa0228cde558ff05856b9d474f56d1f630081b49e98321bafc139e0082e89acb49764bb906aa7fb9f8ed4844c6e882a01dbc20b903476c1f542ff958928227'
+        '9e2ab8ad955f956f51328c9b77f1e342d9ee86a3bfc1305867cc1f4bccf1647b9650f21d2ed942085cb291bfd74164a8baec79f7c7abea3d89b3828a53b7773f'
         'b43c184bf1e3a030f5b4f0bae2ca68ceb86665f1573d5d94add1ccf142687d0982391d2cd31b48930f097b775e5d892b442e4b5c852e2cd410dfd63fc1de18f5'
-        '5675f18c9d18c9df768e169ef0af1c17f2bce2250819a7addf2f201de60dea972ea4a16c2900dfc8993309301a290f5efa4c587a9c0d1e8cb4c1fa454f844a41'
-        '44f3870f1cc6e1d7fc55e77f8f34e79ac1fffa038550e45918d3f1cd54ace15114e03e1a680ebe53cfa6f6d656a1046a08e15102d7f4ccdddf06bf4d4539c64e'
-        '8166ba032100be33bb26fca69a5ebd142a56190026c10d685893eb80e3c06ebfe86117d9f627083dc4c37d332efd04646cec4cbb48567b868686e10768b2f54a'
-        '2b0c84814c324e0e84609d8a3e215ae66f3dffe57768a5a2fc70472dc44eb5d68a1067bdd87c04f2b08c0c191a1a27a6c693e6d414a915bb232cdff22a530120')
+        '2a3bbe994941fc0f46e7b2d99136738fc538ea7d118fccaa4356647b773828c013e4c7fe185fa75c26db39ef40ea5680b22afc747028e3fc2da9b5ae79c58e29'
+        '2c62648566288d08e880cb86c484719f2852f0778cba75718f5027322698fbf580836cda5d99fa2f30cb77346d061a878fb9b1ed309170a87360a2e0a03cfbc5'
+        '464c0be1ed6c40d013c064434bbe65254c2ce16a630580aedbff62dd5b6abee55cb45abde2d7c75d451dc34e2cc5d0dd784e71430d8d9d4e9848f0c327734928'
+        '3cd22af356611f1cde0d49bf4282d08187e7755b307dafea34bdc772f8d133bd629352fe77cd1547e92873348253eafcf574782a80617a8a213a6131acd0eb1b')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -182,7 +179,7 @@ prepare() {
   cd linux-${pkgver}
 
   msg2 "Setting version..."
-  scripts/setlocalversion --save-scmversion
+  # scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
