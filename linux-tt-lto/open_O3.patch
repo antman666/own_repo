@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index f5543ee..2821180 100644
+index f5543ee..ec76fda 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -447,10 +447,10 @@ HOSTRUSTC = rustc
@@ -8,7 +8,7 @@ index f5543ee..2821180 100644
  KBUILD_USERHOSTCFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes \
 -			 -O2 -fomit-frame-pointer -std=gnu11 \
 -			 -Wdeclaration-after-statement
-+                         -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer -mllvm -polly -mllvm -polly-run-dce -mllvm -polly-run-inliner -mllvm -polly-opt-fusion=max -mllvm -polly-ast-use-context -mllvm -polly-detect-keep-going -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting \
++                         -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer \
 +			  -Wdeclaration-after-statement
  KBUILD_USERCFLAGS  := $(KBUILD_USERHOSTCFLAGS) $(USERCFLAGS)
 -KBUILD_USERLDFLAGS := $(USERLDFLAGS)
@@ -21,7 +21,7 @@ index f5543ee..2821180 100644
  
  KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) $(HOSTCFLAGS)
 -KBUILD_HOSTCXXFLAGS := -Wall -O2 $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
-+KBUILD_HOSTCXXFLAGS := -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer -mllvm -polly -mllvm -polly-run-dce -mllvm -polly-run-inliner -mllvm -polly-opt-fusion=max -mllvm -polly-ast-use-context -mllvm -polly-detect-keep-going -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
++KBUILD_HOSTCXXFLAGS := -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
  KBUILD_HOSTRUSTFLAGS := $(rust_common_flags) -O -Cstrip=debuginfo \
  			-Zallow-features= $(HOSTRUSTFLAGS)
 -KBUILD_HOSTLDFLAGS  := $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
@@ -36,12 +36,12 @@ index f5543ee..2821180 100644
  		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
  NOSTDINC_FLAGS :=
 -CFLAGS_MODULE   =
-+CFLAGS_MODULE   = -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer -mllvm -polly -mllvm -polly-run-dce -mllvm -polly-run-inliner -mllvm -polly-opt-fusion=max -mllvm -polly-ast-use-context -mllvm -polly-detect-keep-going -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting
++CFLAGS_MODULE   = -O3 -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer
  RUSTFLAGS_MODULE =
  AFLAGS_MODULE   =
  LDFLAGS_MODULE  =
 -CFLAGS_KERNEL	=
-+CFLAGS_KERNEL	= -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer -mllvm -polly -mllvm -polly-run-dce -mllvm -polly-run-inliner -mllvm -polly-opt-fusion=max -mllvm -polly-ast-use-context -mllvm -polly-detect-keep-going -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting
++CFLAGS_KERNEL	= -march=core2 -mtune=core2 -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -fno-semantic-interposition -fomit-frame-pointer
  RUSTFLAGS_KERNEL =
  AFLAGS_KERNEL	=
 -LDFLAGS_vmlinux =
@@ -251,85 +251,3 @@ index d1d779d6b..ef817e366 100644
  
  config CC_OPTIMIZE_FOR_SIZE
  	bool "Optimize for size (-Os)"
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 67745ce..5f15912 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -226,6 +226,7 @@ config X86
- 	select HAVE_KERNEL_LZO
- 	select HAVE_KERNEL_XZ
- 	select HAVE_KERNEL_ZSTD
-+	select HAVE_KERNEL_UNCOMPRESSED
- 	select HAVE_KPROBES
- 	select HAVE_KPROBES_ON_FTRACE
- 	select HAVE_FUNCTION_ERROR_INJECTION
-diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 3a261ab..05f0326 100644
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -27,7 +27,7 @@ OBJECT_FILES_NON_STANDARD	:= y
- KCOV_INSTRUMENT		:= n
- 
- targets := vmlinux vmlinux.bin vmlinux.bin.gz vmlinux.bin.bz2 vmlinux.bin.lzma \
--	vmlinux.bin.xz vmlinux.bin.lzo vmlinux.bin.lz4 vmlinux.bin.zst
-+	vmlinux.bin.xz vmlinux.bin.lzo vmlinux.bin.lz4 vmlinux.bin.zst vmlinux.bin.none
- 
- # CLANG_FLAGS must come before any cc-disable-warning or cc-option calls in
- # case of cross compiling, as it has the '--target=' flag, which is needed to
-@@ -144,6 +144,8 @@ $(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
- 	$(call if_changed,lz4_with_size)
- $(obj)/vmlinux.bin.zst: $(vmlinux.bin.all-y) FORCE
- 	$(call if_changed,zstd22_with_size)
-+$(obj)/vmlinux.bin.none: $(vmlinux.bin.all-y) FORCE
-+	$(call if_changed,none)
- 
- suffix-$(CONFIG_KERNEL_GZIP)	:= gz
- suffix-$(CONFIG_KERNEL_BZIP2)	:= bz2
-@@ -152,6 +154,7 @@ suffix-$(CONFIG_KERNEL_XZ)	:= xz
- suffix-$(CONFIG_KERNEL_LZO) 	:= lzo
- suffix-$(CONFIG_KERNEL_LZ4) 	:= lz4
- suffix-$(CONFIG_KERNEL_ZSTD)	:= zst
-+suffix-$(CONFIG_KERNEL_UNCOMPRESSED)	:= none
- 
- quiet_cmd_mkpiggy = MKPIGGY $@
-       cmd_mkpiggy = $(obj)/mkpiggy $< > $@
-diff --git a/arch/x86/boot/compressed/misc.c b/arch/x86/boot/compressed/misc.c
-index cf690d8..c23c0f5 100644
---- a/arch/x86/boot/compressed/misc.c
-+++ b/arch/x86/boot/compressed/misc.c
-@@ -181,6 +181,19 @@ void __puthex(unsigned long value)
- 	}
- }
- 
-+#ifdef CONFIG_KERNEL_UNCOMPRESSED
-+#include <linux/decompress/mm.h>
-+static int __decompress(unsigned char *buf, long len,
-+				long (*fill)(void*, unsigned long),
-+				long (*flush)(void*, unsigned long),
-+				unsigned char *outbuf, long olen,
-+				long *pos, void (*error)(char *x))
-+{
-+	memcpy(outbuf, buf, olen);
-+	return 0;
-+}
-+#endif
-+
- #ifdef CONFIG_X86_NEED_RELOCS
- static void handle_relocations(void *output, unsigned long output_len,
- 			       unsigned long virt_addr)
-diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 3aa384c..1db22a0 100644
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -460,6 +460,11 @@ quiet_cmd_lz4 = LZ4     $@
- quiet_cmd_lz4_with_size = LZ4     $@
-       cmd_lz4_with_size = { cat $(real-prereqs) | $(LZ4) -l -c1 stdin stdout; \
-                   $(size_append); } > $@
-+# none
-+quiet_cmd_none = NONE     $@
-+      cmd_none = (cat $(filter-out FORCE,$^) && \
-+      $(call size_append, $(filter-out FORCE,$^))) > $@ || \
-+      (rm -f $@ ; false)
- 
- # U-Boot mkimage
- # ---------------------------------------------------------------------------
