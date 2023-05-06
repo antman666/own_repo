@@ -36,6 +36,8 @@ _commit=41ae5b5632ce9f6b2b5613ec1912821f769166c2  # tags/2.76.2^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
+        0002-glocalfile-Sum-apparent-size-only-for-files-and-syml.patch
+        0003-tests-file-Do-not-rely-on-du-bytes-behaviour.patch
         gio-querymodules.hook
         glib-compile-schemas.hook)
 sha256sums=('SKIP'
@@ -54,6 +56,11 @@ prepare() {
 
   # Suppress noise from glib-compile-schemas.hook
   git apply -3 ../0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
+
+  # fix test suite issues with coreutils >=9.2
+  # https://gitlab.gnome.org/GNOME/glib/-/merge_requests/3358
+  git apply -3 ../0002-glocalfile-Sum-apparent-size-only-for-files-and-syml.patch
+  git apply -3 ../0003-tests-file-Do-not-rely-on-du-bytes-behaviour.patch
 
   git submodule init
   git submodule set-url subprojects/gvdb "$srcdir/gvdb"
