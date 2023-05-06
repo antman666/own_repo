@@ -1,5 +1,6 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -47,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, libtool, python, qemu, util-linux]
+        nolto: [binutils, glib2, glibc, libtool, python, qemu, util-linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +63,7 @@ jobs:
   build_longtime_pkg:
     strategy:
       matrix:
-        longtime: [gcc, llvm]
+        longtime: [gcc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

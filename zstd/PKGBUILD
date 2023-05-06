@@ -1,6 +1,6 @@
 pkgname=zstd
 pkgver=1.5.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Zstandard - Fast real-time compression algorithm'
 url='https://facebook.github.io/zstd/'
 arch=(x86_64)
@@ -9,7 +9,10 @@ depends=(glibc gcc-libs zlib xz lz4)
 makedepends=(cmake gtest ninja)
 provides=('zstd' "zstd=${pkgver}" 'libzstd.so')
 conflicts=('zstd')
-source=("https://github.com/facebook/zstd/releases/download/v${pkgver}/zstd-${pkgver}.tar.gz"{,.sig})
+source=("https://github.com/facebook/zstd/releases/download/v${pkgver}/zstd-${pkgver}.tar.gz"{,.sig}
+        fopen-use-m.patch
+        notrace.patch
+)
 
 sha256sums=('3ea06164971edec7caa2045a1932d757c1815858e4c2b68c7ef812647535c23f'
   'SKIP')
@@ -18,6 +21,16 @@ validpgpkeys=(4EF4AC63455FC9F4545D9B7DEF8FE99528B52FFD)
 
 prepare() {
   cd ${pkgname}-${pkgver}
+
+  local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    [[ $src = *.patch ]] || continue
+    msg2 "Applying patch $src..."
+    patch -Np1 < "../$src"
+  done
+
   # avoid error on tests without static libs, we use LD_LIBRARY_PATH
   sed '/build static library to build tests/d' -i build/cmake/CMakeLists.txt
   sed 's/libzstd_static/libzstd_shared/g' -i build/cmake/tests/CMakeLists.txt

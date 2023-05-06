@@ -7,7 +7,7 @@ pkgbase=mesa
 pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-swrast' 'vulkan-virtio' 'libva-mesa-driver' 'mesa-vdpau' 'mesa')
 pkgdesc="An open-source implementation of the OpenGL specification"
 pkgver=23.0.3
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
@@ -22,6 +22,7 @@ source=(https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
         0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch
         0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
 	0004-rusticl-Fix-bindgen-invocation.patch
+	0005-multisampled.patch
         LICENSE)
 sha256sums=('1b7d3399fc6f16f030361f925d33ebc7600cbf98094582f54775b6a1180529e7'
             'SKIP'
@@ -60,6 +61,8 @@ prepare() {
 
   # Fix build failure with rust-bindgen 0.65.1
   patch -Np1 -i ../0004-rusticl-Fix-bindgen-invocation.patch
+
+  patch -Np1 -i ../0005-multisampled.patch
 }
 
 build() {

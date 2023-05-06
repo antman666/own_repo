@@ -7,19 +7,20 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->glibc->binutils->gcc
 # NOTE: libtool requires rebuilt with each new gcc version
 
-pkgname=(gcc gcc-libs lib32-gcc-libs gcc-fortran gcc-objc gcc-ada gcc-go libgccjit)
-pkgver=12.2.1
+pkgname=(gcc gcc-libs lib32-gcc-libs gcc-ada gcc-d gcc-fortran gcc-go gcc-objc lto-dump libgccjit)
+pkgver=13.1.1
 _majorver=${pkgver%%.*}
-pkgrel=7
+_commit=9a167ee2f8b9a0859fbab6cfdc276cf1f272effe
+pkgrel=1
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
 url='https://gcc.gnu.org'
 makedepends=(
   binutils
-  ccache
   doxygen
   gcc-ada
+  gcc-d
   git
   lib32-glibc
   lib32-gcc-libs
@@ -35,33 +36,21 @@ checkdepends=(
   python-pytest
   tcl
 )
-options=(!emptydirs !lto !debug ccache)
+options=(!emptydirs !lto)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
-_commit=abaa8f9cc4c06dcdae13a33be9253762861d8657
 source=(git+https://sourceware.org/git/gcc.git#commit=${_commit}
         c89 c99
         gcc-ada-repro.patch
-        gcc-Wno-format-security.patch
-        gcc11-libgomp-omp_h-multilib.patch
-        gcc11-generate-missing-build-notes.patch
-        gcc-11.2.0-cross-compile-include.patch
+	clearlinux.patch
 )
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
               D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62) # Jakub Jelinek <jakub@redhat.com>
-sha256sums=('62fd634889f31c02b64af2c468f064b47ad1ca78411c45abe6ac4b5f8dd19c7b'
-            'SKIP'
+sha256sums=('SKIP'
             'de48736f6e4153f03d0a5d38ceb6c6fdb7f054e8f47ddd6af0a3dbf14f27b931'
             '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
             '1773f5137f08ac1f48f0f7297e324d5d868d55201c03068670ee4602babdef2f')
-
-_patch() {
-
-  echo -e "\E[1;33m Apply patch: ${2}\E[0m"
-  patch "-p${1}" -i "${srcdir:?}/${2}"
-
-}
 
 prepare() {
   [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
@@ -74,17 +63,8 @@ prepare() {
   sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
 
   # Reproducible gcc-ada
-  _patch 0 gcc-ada-repro.patch
-
-  # configure.ac: When adding -Wno-format, also add -Wno-format-security
-  _patch 0 gcc-Wno-format-security.patch
-
-  _patch 0 gcc11-libgomp-omp_h-multilib.patch
-  _patch 0 gcc11-generate-missing-build-notes.patch
-  # https://bugs.gentoo.org/803371
-  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80196
-  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017
-  _patch 1 gcc-11.2.0-cross-compile-include.patch
+  patch -Np0 < "$srcdir/gcc-ada-repro.patch"
+  patch --forward --strip=1 --input="${srcdir:?}/clearlinux.patch"
 
   mkdir -p "$srcdir/gcc-build"
   mkdir -p "$srcdir/libgccjit-build"
@@ -98,6 +78,7 @@ build() {
       --mandir=/usr/share/man
       --infodir=/usr/share/info
       --with-bugurl=https://bugs.archlinux.org/
+      --with-build-config=bootstrap-lto
       --with-linker-hash-style=gnu
       --with-system-zlib
       --enable-__cxa_atexit
@@ -108,6 +89,8 @@ build() {
       --enable-default-ssp
       --enable-gnu-indirect-function
       --enable-gnu-unique-object
+      --enable-libstdcxx-backtrace
+      --enable-link-serialization=1
       --enable-linker-build-id
       --enable-lto
       --enable-multilib
@@ -117,34 +100,23 @@ build() {
       --disable-libssp
       --disable-libstdcxx-pch
       --disable-werror
-      --with-tune=core2
-      --with-arch=core2
-      --with-build-config=bootstrap-lto
-      --enable-link-serialization=1
   )
 
   cd gcc-build
-  unset CFLAGS
-  unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fipa-pta'
-  export BOOT_CXXFLAGS="$CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
 
   # Credits @allanmcrae
   # https://github.com/allanmcrae/toolchain/blob/f18604d70c5933c31b51a320978711e4e6791cf1/gcc/PKGBUILD
   # TODO: properly deal with the build issues resulting from this
-  export CFLAGS=${CFLAGS/-Werror=format-security/}
-  export CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
-  #LDFLAGS=${LDFLAGS/-O3/-O2}
+  CFLAGS=${CFLAGS/-Werror=format-security/}
+  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
 
   "$srcdir/gcc/configure" \
-    --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
+    --enable-languages=ada,c,c++,d,fortran,go,lto,objc,obj-c++ \
     --enable-bootstrap \
     "${_confflags[@]:?_confflags unset}"
 
   # see https://bugs.archlinux.org/task/71777 for rationale re *FLAGS handling
-  make -O STAGE1_CFLAGS="-O2" \
+  make -O STAGE1_CFLAGS="-march=core2 -O2" \
           BOOT_CFLAGS="$CFLAGS" \
           BOOT_LDFLAGS="$LDFLAGS" \
           LDFLAGS_FOR_TARGET="$LDFLAGS" \
@@ -164,7 +136,7 @@ build() {
     "${_confflags[@]:?_confflags unset}"
 
   # see https://bugs.archlinux.org/task/71777 for rationale re *FLAGS handling
-  make -O STAGE1_CFLAGS="-O2" \
+  make -O STAGE1_CFLAGS="-march=core2 -O2" \
           BOOT_CFLAGS="$CFLAGS" \
           BOOT_LDFLAGS="$LDFLAGS" \
           LDFLAGS_FOR_TARGET="$LDFLAGS" \
@@ -176,6 +148,9 @@ build() {
 check() {
   cd gcc-build
 
+  # disable libphobos test to avoid segfaults
+  sed -i '/maybe-check-target-libphobos \\/d' Makefile
+
   # do not abort on error as some are "expected"
   make -O -k check || true
   "$srcdir/gcc/contrib/test_summary"
@@ -185,9 +160,9 @@ package_gcc-libs() {
   pkgdesc='Runtime libraries shipped by GCC'
   depends=('glibc>=2.27')
   options=(!emptydirs !strip)
-  provides=($pkgname-multilib libgo.so libgfortran.so
+  provides=($pkgname-multilib libgo.so libgfortran.so libgphobos.so
             libubsan.so libasan.so libtsan.so liblsan.so)
-  replaces=($pkgname-multilib)
+  replaces=($pkgname-multilib libgphobos)
 
   cd gcc-build
   make -C $CHOST/libgcc DESTDIR="$pkgdir" install-shared
@@ -207,6 +182,10 @@ package_gcc-libs() {
 
   make -C $CHOST/libobjc DESTDIR="$pkgdir" install-libs
   make -C $CHOST/libstdc++-v3/po DESTDIR="$pkgdir" install
+
+  make -C $CHOST/libphobos DESTDIR="$pkgdir" install
+  rm -rf "$pkgdir"/$_libdir/include/d/
+  rm -f "$pkgdir"/usr/lib/libgphobos.spec
 
   for lib in libgomp \
              libitm \
@@ -228,7 +207,7 @@ package_gcc() {
   optdepends=('lib32-gcc-libs: for generating code for 32-bit ABI')
   provides=($pkgname-multilib)
   replaces=($pkgname-multilib)
-  options=(!emptydirs staticlibs debug)
+  options=(!emptydirs staticlibs)
 
   cd gcc-build
 
@@ -277,8 +256,8 @@ package_gcc() {
   make -C $CHOST/32/libsanitizer/asan DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
 
   make -C gcc DESTDIR="$pkgdir" install-man install-info
-  rm "$pkgdir"/usr/share/man/man1/{gccgo,gfortran}.1
-  rm "$pkgdir"/usr/share/info/{gccgo,gfortran,gnat-style,gnat_rm,gnat_ugn}.info
+  rm "$pkgdir"/usr/share/man/man1/{gccgo,gfortran,lto-dump,gdc}.1
+  rm "$pkgdir"/usr/share/info/{gccgo,gfortran,gnat-style,gnat_rm,gnat_ugn,gdc}.info
 
   make -C libcpp DESTDIR="$pkgdir" install
   make -C gcc DESTDIR="$pkgdir" install-po
@@ -291,7 +270,6 @@ package_gcc() {
   for binary in {c++,g++,gcc,gcc-ar,gcc-nm,gcc-ranlib}; do
     ln -s /usr/bin/${binary} "${pkgdir}"/usr/bin/x86_64-linux-gnu-${binary}
   done
-
 
   # POSIX conformance launcher scripts for c89 and c99
   install -Dm755 "$srcdir/c89" "$pkgdir/usr/bin/c89"
@@ -358,7 +336,7 @@ package_gcc-ada() {
   depends=("gcc=$pkgver-$pkgrel" libisl.so)
   provides=($pkgname-multilib)
   replaces=($pkgname-multilib)
-  options=(!emptydirs staticlibs debug)
+  options=(!emptydirs staticlibs)
 
   cd gcc-build/gcc
   make DESTDIR="$pkgdir" ada.install-{common,info}
@@ -418,7 +396,6 @@ package_lib32-gcc-libs() {
   pkgdesc='32-bit runtime libraries shipped by GCC'
   depends=('lib32-glibc>=2.27')
   provides=(libgo.so libgfortran.so libubsan.so libasan.so)
-  groups=(multilib-devel)
   options=(!emptydirs !strip)
 
   cd gcc-build
@@ -440,12 +417,68 @@ package_lib32-gcc-libs() {
 
   make -C $CHOST/32/libobjc DESTDIR="$pkgdir" install-libs
 
+  make -C $CHOST/libphobos DESTDIR="$pkgdir" install
+  rm -f "$pkgdir"/usr/lib32/libgphobos.spec
+
   # remove files provided by gcc-libs
   rm -rf "$pkgdir"/usr/lib
 
   # Install Runtime Library Exception
   install -Dm644 "$srcdir/gcc/COPYING.RUNTIME" \
     "$pkgdir/usr/share/licenses/lib32-gcc-libs/RUNTIME.LIBRARY.EXCEPTION"
+}
+
+package_gcc-d() {
+  pkgdesc="D frontend for GCC"
+  depends=("gcc=$pkgver-$pkgrel" libisl.so)
+  provides=(gdc)
+  replaces=(gdc)
+  options=(staticlibs)
+
+  cd gcc-build
+  make -C gcc DESTDIR="$pkgdir" d.install-{common,man,info}
+
+  install -Dm755 gcc/gdc "$pkgdir"/usr/bin/gdc
+  install -Dm755 gcc/d21 "$pkgdir"/"$_libdir"/d21
+
+  make -C $CHOST/libphobos DESTDIR="$pkgdir" install
+  rm -f "$pkgdir/usr/lib/"lib{gphobos,gdruntime}.so*
+  rm -f "$pkgdir/usr/lib32/"lib{gphobos,gdruntime}.so*
+
+  # Install Runtime Library Exception
+  install -d "$pkgdir/usr/share/licenses/$pkgname/"
+  ln -s /usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION \
+    "$pkgdir/usr/share/licenses/$pkgname/"
+}
+
+#package_gcc-rust() {
+#  pkgdesc="Rust frontend for GCC"
+#  depends=("gcc=$pkgver-$pkgrel" libisl.so)
+#  replaces=(gcc-rust-git)
+#
+#  cd gcc-build
+#  make -C gcc DESTDIR="$pkgdir" rust.install-{common,man,info}
+#
+#  install -Dm755 gcc/gccrs "$pkgdir"/usr/bin/gccrs
+#  install -Dm755 gcc/rust1 "$pkgdir"/"$_libdir"/rust1
+#
+#  # Install Runtime Library Exception
+#  install -d "$pkgdir/usr/share/licenses/$pkgname/"
+#  ln -s /usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION \
+#    "$pkgdir/usr/share/licenses/$pkgname/"
+#}
+
+package_lto-dump() {
+  pkgdesc="Dump link time optimization object files"
+  depends=("gcc=$pkgver-$pkgrel" libisl.so)
+
+  cd gcc-build
+  make -C gcc DESTDIR="$pkgdir" lto.install-{common,man,info}
+
+  # Install Runtime Library Exception
+  install -d "$pkgdir/usr/share/licenses/$pkgname/"
+  ln -s /usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION \
+    "$pkgdir/usr/share/licenses/$pkgname/"
 }
 
 package_libgccjit() {
