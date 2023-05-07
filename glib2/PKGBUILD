@@ -31,7 +31,7 @@ checkdepends=(
   desktop-file-utils
   glib2
 )
-options=(!debug staticlibs)
+options=(!debug !ccache staticlibs)
 _commit=41ae5b5632ce9f6b2b5613ec1912821f769166c2  # tags/2.76.2^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
