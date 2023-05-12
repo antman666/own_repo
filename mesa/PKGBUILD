@@ -69,7 +69,7 @@ build() {
   # CXXFLAGS+=' -g1'
 
   arch-meson mesa-$pkgver build \
-    -D android-libbacktrace=disable \
+    -D android-libbacktrace=disabled \
     -D b_ndebug=true \
     -D dri3=enabled \
     -D egl=enabled \
