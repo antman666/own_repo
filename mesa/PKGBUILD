@@ -94,7 +94,7 @@ build() {
     -D lmsensors=enabled \
     -D microsoft-clc=disabled \
     -D opengl=true \
-    -D osmesa=flase \
+    -D osmesa=false \
     -D rust_std=2021 \
     -D shared-glapi=enabled \
     -D valgrind=enabled \
