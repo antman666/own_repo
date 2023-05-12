@@ -18,11 +18,7 @@ makedepends+=('rust' 'rust-bindgen' 'spirv-tools')  # rusticl dependencies
 url="https://www.mesa3d.org/"
 license=('custom')
 source=(https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
-        0001-intel-fs-fix-scheduling-of-HALT-instructions.patch
-        0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch
-        0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
-	0004-rusticl-Fix-bindgen-invocation.patch
-	0005-multisampled.patch
+	multisampled.patch
 	306.patch
         LICENSE)
 sha256sums=('1b7d3399fc6f16f030361f925d33ebc7600cbf98094582f54775b6a1180529e7'
@@ -49,21 +45,21 @@ prepare() {
 
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/7110
   # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/20765
-  patch -Np1 -i ../0001-intel-fs-fix-scheduling-of-HALT-instructions.patch
+  #patch -Np1 -i ../0001-intel-fs-fix-scheduling-of-HALT-instructions.patch
 
   # https://bugs.archlinux.org/task/78137
   # https://bugzilla.mozilla.org/show_bug.cgi?id=1826583
   # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21646
-  patch -Np1 -i ../0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch
+  #patch -Np1 -i ../0002-egl-wayland-Fix-destruction-of-event-queue-with-prox.patch
 
   # https://bugs.archlinux.org/task/78142
   # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21647
-  patch -Np1 -i ../0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
+  #patch -Np1 -i ../0003-vulkan-wsi-wayland-Fix-destruction-of-event-queue-wi.patch
 
   # Fix build failure with rust-bindgen 0.65.1
-  patch -Np1 -i ../0004-rusticl-Fix-bindgen-invocation.patch
+  #patch -Np1 -i ../0004-rusticl-Fix-bindgen-invocation.patch
 
-  patch -Np1 -i ../0005-multisampled.patch
+  patch -Np1 -i ../multisampled.patch
   patch -Np1 -i ../306.patch
 }
 
