@@ -74,10 +74,8 @@ makedepends=(
 )
 source=(
   https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
-  22355.patch
-  23150.patch
+  10747.patch
   22921.patch
-  23112.patch
   LICENSE
 )
 sha256sums=('1b7d3399fc6f16f030361f925d33ebc7600cbf98094582f54775b6a1180529e7'
@@ -102,10 +100,8 @@ validpgpkeys=('8703B6700E7EE06D7A39B8D6EDAE37B02CEB490D'  # Emil Velikov <emil.l
 prepare() {
   cd mesa-$pkgver
 
-  patch -Np1 -i ../22355.patch
-  patch -Np1 -i ../23150.patch
+  patch -Np1 -i ../10747.patch
   patch -Np1 -i ../22921.patch
-  patch -Np1 -i ../23112.patch
 }
 
 _libdir=usr/lib
