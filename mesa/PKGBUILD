@@ -74,7 +74,6 @@ makedepends=(
 )
 source=(
   https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
-  multisampled.patch
   22355.patch
   23150.patch
   22921.patch
@@ -103,7 +102,6 @@ validpgpkeys=('8703B6700E7EE06D7A39B8D6EDAE37B02CEB490D'  # Emil Velikov <emil.l
 prepare() {
   cd mesa-$pkgver
 
-  patch -Np1 -i ../multisampled.patch
   patch -Np1 -i ../22355.patch
   patch -Np1 -i ../23150.patch
   patch -Np1 -i ../22921.patch
