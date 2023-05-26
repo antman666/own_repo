@@ -140,9 +140,9 @@ source=(
   # "${_xanmodpatch}/intel/0021-init-wait-for-partition-and-retry-scan.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
-  "${_xanmodpatch}/xanmod/0007-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "${_xanmodpatch}/xanmod/0014-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
-  "${_xanmodpatch}/xanmod/0015-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
+  "${_xanmodpatch}/xanmod/0016-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
+  "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
 validpgpkeys=(
