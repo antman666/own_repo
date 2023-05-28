@@ -24,7 +24,6 @@ makedepends=(
   lib32-gcc-libs
   libisl
   libmpc
-  libcrypt
   python
   zstd
 )
@@ -49,7 +48,8 @@ validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.
 sha256sums=('SKIP'
             'de48736f6e4153f03d0a5d38ceb6c6fdb7f054e8f47ddd6af0a3dbf14f27b931'
             '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
-            '1773f5137f08ac1f48f0f7297e324d5d868d55201c03068670ee4602babdef2f')
+            'fc61a625ef941efd94180689e0b2a01951f4a76a6c8bb68af10f6f42f8571ce3'
+            '3fb00c42348290037701c6aa893fe590a0c0d3511e302147803353841725f4e7')
 
 prepare() {
   [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
