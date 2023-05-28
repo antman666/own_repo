@@ -109,7 +109,7 @@ build() {
   CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
 
   "$srcdir/gcc/configure" \
-    --enable-languages=c,c++,d,lto \
+    --enable-languages=c,c++,lto \
     --enable-bootstrap \
     "${_confflags[@]:?_confflags unset}"
 
