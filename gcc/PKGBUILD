@@ -111,7 +111,7 @@ build() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fno-math-errno -fno-trapping-math -fno-common -finline-functions"
+  export CFLAGS="-march=core2 -mtune=core2 -O3 -fomit-frame-pointer"
   export CXXFLAGS="$CFLAGS"
   export LDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu -march=core2"
 
