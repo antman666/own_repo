@@ -98,6 +98,9 @@ build() {
       --disable-libssp
       --disable-libstdcxx-pch
       --disable-werror
+
+      #Testing option
+      --disable-bootstrap
   )
 
   cd gcc-build
@@ -111,9 +114,9 @@ build() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-march=core2 -mtune=core2 -O3 -fomit-frame-pointer"
+  export CFLAGS="-march=core2 -mtune=core2 -O2"
   export CXXFLAGS="$CFLAGS"
-  export LDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all,--hash-style=gnu -march=core2"
+  export LDFLAGS="-Wl,-O2,--sort-common,--as-needed,--strip-all,--hash-style=gnu -march=core2"
 
   "$srcdir/gcc/configure" \
     --enable-languages=c,c++,lto \
@@ -121,7 +124,7 @@ build() {
     "${_confflags[@]:?_confflags unset}"
 
   # see https://bugs.archlinux.org/task/71777 for rationale re *FLAGS handling
-  make -O STAGE1_CFLAGS="-march=core2 -O3" \
+  make -O STAGE1_CFLAGS="-march=core2 -O2" \
           BOOT_CFLAGS="$CFLAGS" \
           BOOT_LDFLAGS="$LDFLAGS" \
           LDFLAGS_FOR_TARGET="$LDFLAGS" \

@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [gcc]
+        packages: [binutils]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
