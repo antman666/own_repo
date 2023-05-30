@@ -97,10 +97,8 @@ build() {
       --enable-threads=posix
       --disable-libssp
       --disable-libstdcxx-pch
+      --with-build-config=bootstrap-lto
       --disable-werror
-
-      #Testing option
-      --disable-bootstrap
   )
 
   cd gcc-build
@@ -166,8 +164,6 @@ package_gcc-libs() {
   rm -f "$pkgdir/$_libdir/libgcc_eh.a"
 
   for lib in libatomic \
-             libgfortran \
-             libgo \
              libgomp \
              libitm \
              libquadmath \
@@ -200,7 +196,8 @@ package_gcc-libs() {
 
 package_gcc() {
   pkgdesc="The GNU Compiler Collection - C and C++ frontends"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.28' libmpc zstd libisl.so)
+  depends=("gcc-libs=$pkgver-$pkgrel" "binutils>=2.28" libmpc zstd libisl.so)
+  groups=(base-devel)
   optdepends=('lib32-gcc-libs: for generating code for 32-bit ABI')
   provides=($pkgname-multilib)
   replaces=($pkgname-multilib)
@@ -253,20 +250,11 @@ package_gcc() {
   make -C $CHOST/32/libsanitizer/asan DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
 
   make -C gcc DESTDIR="$pkgdir" install-man install-info
-  rm "$pkgdir"/usr/share/man/man1/{gccgo,gfortran,lto-dump,gdc}.1
-  rm "$pkgdir"/usr/share/info/{gccgo,gfortran,gnat-style,gnat_rm,gnat_ugn,gdc}.info
-
   make -C libcpp DESTDIR="$pkgdir" install
   make -C gcc DESTDIR="$pkgdir" install-po
 
   # many packages expect this symlink
   ln -s gcc "$pkgdir"/usr/bin/cc
-
-  # create cc-rs compatible symlinks
-  # https://github.com/rust-lang/cc-rs/blob/1.0.73/src/lib.rs#L2578-L2581
-  for binary in {c++,g++,gcc,gcc-ar,gcc-nm,gcc-ranlib}; do
-    ln -s /usr/bin/${binary} "${pkgdir}"/usr/bin/x86_64-linux-gnu-${binary}
-  done
 
   # POSIX conformance launcher scripts for c89 and c99
   install -Dm755 "$srcdir/c89" "$pkgdir/usr/bin/c89"
@@ -279,8 +267,8 @@ package_gcc() {
   rm -f "$pkgdir"/usr/lib32/lib{stdc++,gcc_s}.so
 
   # byte-compile python libraries
-  python -m compileall "$pkgdir/usr/share/gcc-${pkgver%%+*}/"
-  python -O -m compileall "$pkgdir/usr/share/gcc-${pkgver%%+*}/"
+  python -m compileall "$pkgdir/usr/share/gcc-${pkgver%_*}/"
+  python -O -m compileall "$pkgdir/usr/share/gcc-${pkgver%_*}/"
 
   # Install Runtime Library Exception
   install -d "$pkgdir/usr/share/licenses/$pkgname/"
@@ -290,8 +278,9 @@ package_gcc() {
 
 package_lib32-gcc-libs() {
   pkgdesc='32-bit runtime libraries shipped by GCC'
-  depends=('lib32-glibc>=2.27')
-  provides=(libgo.so libgfortran.so libubsan.so libasan.so)
+  depends=('lib32-glibc>=2.37')
+  provides=("lib32-gcc-libs=$pkgver-$pkgrel" libgo.so libgfortran.so libubsan.so libasan.so)
+  groups=(multilib-devel)
   options=(!emptydirs !strip)
 
   cd gcc-build
@@ -300,8 +289,6 @@ package_lib32-gcc-libs() {
   rm -f "$pkgdir/$_libdir/32/libgcc_eh.a"
 
   for lib in libatomic \
-             libgfortran \
-             libgo \
              libgomp \
              libitm \
              libquadmath \
@@ -310,11 +297,6 @@ package_lib32-gcc-libs() {
              libvtv; do
     make -C $CHOST/32/$lib DESTDIR="$pkgdir" install-toolexeclibLTLIBRARIES
   done
-
-  make -C $CHOST/32/libobjc DESTDIR="$pkgdir" install-libs
-
-  make -C $CHOST/libphobos DESTDIR="$pkgdir" install
-  rm -f "$pkgdir"/usr/lib32/libgphobos.spec
 
   # remove files provided by gcc-libs
   rm -rf "$pkgdir"/usr/lib
