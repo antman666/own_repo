@@ -71,6 +71,8 @@ makedepends=(
   # intel-clc deps
   'python-ply'
   'spirv-llvm-translator'
+
+  'wget'
 )
 source=(
   https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
