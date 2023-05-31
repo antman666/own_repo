@@ -36,7 +36,7 @@ makedepends=(
   'libxrandr'
   'libxshmfence'
   'libxxf86vm'
-  'llvm'
+  'llvm-libs'
   'lm_sensors'
   'systemd'
   'vulkan-icd-loader'
