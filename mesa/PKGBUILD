@@ -65,8 +65,8 @@ makedepends=(
 
   # gallium-rusticl deps
 #  'rust'
-#  'rust-bindgen'
-#  'spirv-tools'
+  'rust-bindgen'
+  'spirv-tools'
 
   # intel-clc deps
   'python-ply'
