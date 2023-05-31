@@ -1,12 +1,13 @@
 # Maintainer: Pierre Schmitz <pierre@archlinux.de>
 
 pkgname=openssl
-pkgver=3.1.0
+pkgver=3.1.1
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
 license=('Apache')
+options=(!ccache)
 depends=('glibc')
 makedepends=('perl')
 optdepends=('ca-certificates' 'perl')
@@ -37,8 +38,8 @@ build() {
 		shared enable-ktls enable-ec_nistp_64_gcc_128 linux-x86_64 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
-	make depend
-	make
+	make -j1 depend
+	make -j1
 }
 
 check() {
