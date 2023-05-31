@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [bash, sqlite, zstd]
+        packages: [systemd, btrfs-progs, glib2]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
