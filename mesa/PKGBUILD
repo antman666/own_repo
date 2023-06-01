@@ -112,7 +112,7 @@ build() {
 
   #Install rust manual
   wget -c https://sh.rustup.rs -O rustup-init.sh
-  yes 1 | bash ./rustup-init.sh
+  bash ./rustup-init.sh -y
   source $HOME/.cargo/env
 
   local meson_options=(
