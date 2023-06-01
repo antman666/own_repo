@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [curl, wget]
+        packages: [git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
