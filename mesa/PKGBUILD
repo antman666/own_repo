@@ -111,7 +111,7 @@ _libdir=usr/lib
 build() {
 
   #Install rust manual
-  wget -c https://sh.rustup.rs -O rushup-init.sh
+  wget -c https://sh.rustup.rs -O rustup-init.sh
   yes 1 | bash ./rustup-init.sh
   source $HOME/.cargo/env
 
