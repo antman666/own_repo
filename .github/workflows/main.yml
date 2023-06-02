@@ -5,7 +5,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl, fcitx5, feh, git, ibus, linux-tt-lto, numlockx, picom, pixman, wayland, wget, xorg-server, xorg-xinit, xorg-xsetroot]
+        jemalloc: [curl, fcitx5, feh, git, ibus, linux-tt-lto, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, glib2, libdrm, libx11, lz4, mesa, ntfs-3g, perl, polkit, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, zlib, zstd, zsh]
+        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, glib2, libdrm, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, util-linux, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
