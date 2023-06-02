@@ -19,10 +19,10 @@ makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl' 'xtrans'
 source=(https://xorg.freedesktop.org/releases/individual/xserver/${pkgbase}-${pkgver}.tar.xz{,.sig}
         xvfb-run # with updates from FC master
         xvfb-run.1
-        xorg-xephyr_Dont_check_for_SeatId_anymore.patch
 	187.patch
         417.patch
 	506.patch
+	924.patch
 )
 validpgpkeys=('3C2C43D9447D5938EF4551EBE23B7E70B467F0BF'  # Peter Hutterer (Who-T) <office@who-t.net>
               '67DC86F2623FC5FD4BB5225D14706DBE1E4B4540'  # Olivier Fourdan <fourdan@xfce.org>
@@ -39,34 +39,33 @@ sha512sums=('a39c6ba36f94241d330b679a9a6fe2c5fda73fc3f5a9308a7a9cfd0d58503e40729
 prepare() {
   cd ${pkgbase}-$pkgver
 
-  # FS#73274
-  patch -Np1 -i  ../xorg-xephyr_Dont_check_for_SeatId_anymore.patch
-
   patch -Np1 -i ../187.patch
   patch -Np1 -i ../417.patch
   patch -Np1 -i ../506.patch
+  patch -Np1 -i ../924.patch
 }
 
 build() {
   # Since pacman 5.0.2-2, hardened flags are now enabled in makepkg.conf
   # With them, module fail to load with undefined symbol.
   # See https://bugs.archlinux.org/task/55102 / https://bugs.archlinux.org/task/54845
-  # export CFLAGS=${CFLAGS/-fno-plt}
-  # export CXXFLAGS=${CXXFLAGS/-fno-plt}
-  # export LDFLAGS=${LDFLAGS/,-z,now}
+  export CFLAGS=${CFLAGS/-fno-plt}
+  export CXXFLAGS=${CXXFLAGS/-fno-plt}
+  export LDFLAGS=${LDFLAGS/,-z,now}
 
   arch-meson ${pkgbase}-$pkgver build \
     -D debug=false \
     -D optimization=3 \
     -D b_ndebug=true \
     -D b_lto=true \
-	-D b_lto_mode=full \
+    -D b_lto_mode=full \
     -D ipv6=true \
+    -D dri3=true \
     -D xvfb=true \
-    -D xnest=true \
+    -D xnest=false \
     -D xcsecurity=true \
     -D xorg=true \
-    -D xephyr=true \
+    -D xephyr=false \
     -D glamor=true \
     -D udev=true \
     -D systemd_logind=true \
@@ -74,7 +73,7 @@ build() {
     -D docs=false \
     -D xkb_dir=/usr/share/X11/xkb \
     -D xkb_output_dir=/var/lib/xkb \
-	-D libunwind=true
+    -D libunwind=true
 
   # Print config
   meson configure build
