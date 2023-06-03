@@ -2,7 +2,7 @@
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgbase=xorg-server
-pkgname=('xorg-server' 'xorg-server-xvfb' 'xorg-server-xnest'
+pkgname=('xorg-server' 'xorg-server-xvfb'
          'xorg-server-common' 'xorg-server-devel')
 pkgver=21.1.8
 pkgrel=4
@@ -144,17 +144,6 @@ package_xorg-server-xvfb() {
 
   install -m755 "${srcdir}/xvfb-run" "${pkgdir}/usr/bin/"
   install -m644 "${srcdir}/xvfb-run.1" "${pkgdir}/usr/share/man/man1/" # outda
-
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "${pkgbase}-${pkgver}"/COPYING
-}
-
-package_xorg-server-xnest() {
-  pkgdesc="A nested X server that runs as an X application"
-  depends=(libxfont2 libunwind libxext pixman xorg-server-common nettle libtirpc systemd-libs)
-
-  _install fakeinstall/usr/bin/Xnest
-  _install fakeinstall/usr/share/man/man1/Xnest.1
 
   # license
   install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "${pkgbase}-${pkgver}"/COPYING

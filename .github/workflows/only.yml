@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [xorg-server]
+        packages: [dbus, xorg-server]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
