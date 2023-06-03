@@ -127,7 +127,6 @@ build() {
     -D gallium-nine=true
     -D gallium-omx=bellagio
     -D gallium-opencl=icd
-    -D gallium-rusticl=true
     -D gallium-va=enabled
     -D gallium-vdpau=enabled
     -D gallium-xa=enabled
@@ -151,6 +150,7 @@ build() {
   )
     #-D rust_std=2021
     #-D intel-clc=enabled
+    #-D gallium-rusticl=true
 
   # Build only minimal debug info to reduce size
   # CFLAGS+=' -g1'
