@@ -111,9 +111,9 @@ _libdir=usr/lib
 build() {
 
   #Install rust manual
-  curl https://sh.rustup.rs -sSf > rustup-init.sh
-  bash ./rustup-init.sh -y
-  source "$HOME/.cargo/env"
+  #curl https://sh.rustup.rs -sSf > rustup-init.sh
+  #bash ./rustup-init.sh -y
+  #source "$HOME/.cargo/env"
   #source "/github/workspace/.cargo/env"
 
   local meson_options=(
