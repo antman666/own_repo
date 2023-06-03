@@ -49,9 +49,7 @@ prepare() {
 
 build() {
   cd $pkgname-v$pkgver
-  export LC_ALL=en_US.UTF-8
-  export LANG=en_US.UTF-8
-  ./configure --prefix=/usr --with-crypto=libgcrypt
+  ./configure --prefix=/usr --with-crypto=libgcrypt --disable-documentation
   make
 }
 
