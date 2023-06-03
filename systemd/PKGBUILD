@@ -9,7 +9,7 @@ pkgname=('systemd'
 _tag='884b34747beaab5909cd65f36ff48afc86377d48' # git rev-parse v${_tag_name}
 _tag_name=253.4
 pkgver="${_tag_name/-/}"
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
 makedepends=('acl' 'cryptsetup' 'docbook-xsl' 'gperf' 'lz4' 'xz' 'pam' 'libelf'
@@ -18,8 +18,8 @@ makedepends=('acl' 'cryptsetup' 'docbook-xsl' 'gperf' 'lz4' 'xz' 'pam' 'libelf'
              'python-jinja' 'python-lxml' 'quota-tools' 'shadow' 'gnu-efi-libs' 'git'
              'meson' 'libseccomp' 'pcre2' 'audit' 'kexec-tools' 'libxkbcommon'
              'bash-completion' 'p11-kit' 'systemd' 'libfido2' 'tpm2-tss' 'rsync'
-#             'bpf' 'libbpf' 'llvm' 'curl' 'gnutls')
-             'llvm' 'curl' 'gnutls')
+             'bpf' 'libbpf' 'llvm' 'curl' 'gnutls')
+#             'llvm' 'curl' 'gnutls')
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
@@ -120,7 +120,8 @@ build() {
     -Dshared-lib-tag="${pkgver}-${pkgrel}"
     -Dmode=release
 
-    -Dbpf-framework=false
+    #-Dbpf-framework=false
+    -Dbpf-framework=true
     -Dgnu-efi=true
     -Dima=false
     -Dlibidn2=true
