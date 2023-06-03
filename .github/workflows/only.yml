@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [systemd]
+        packages: [lua, ntfs-3g]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
