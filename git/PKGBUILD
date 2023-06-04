@@ -59,7 +59,6 @@ build() {
     "${_make_options[@]}" \
     all man
 
-  make -C contrib/credential/gnome-keyring
   make -C contrib/credential/libsecret
   make -C contrib/subtree "${_make_paths[@]}" all man
   make -C contrib/mw-to-git "${_make_paths[@]}" all
@@ -101,11 +100,6 @@ package() {
   # fancy git prompt
   mkdir -p "$pkgdir"/usr/share/git/
   install -m 0644 ./contrib/completion/git-prompt.sh "$pkgdir"/usr/share/git/git-prompt.sh
-  # gnome credentials helper (deprecated, but we will keep it as long there is no extra cost)
-  # https://gitlab.gnome.org/GNOME/libgnome-keyring/commit/6a5adea4aec93
-  install -m 0755 contrib/credential/gnome-keyring/git-credential-gnome-keyring \
-      "$pkgdir"/usr/lib/git-core/git-credential-gnome-keyring
-  make -C contrib/credential/gnome-keyring clean
   # libsecret credentials helper
   install -m 0755 contrib/credential/libsecret/git-credential-libsecret \
       "$pkgdir"/usr/lib/git-core/git-credential-libsecret
