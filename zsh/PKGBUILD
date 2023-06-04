@@ -3,7 +3,7 @@
 pkgbase=zsh
 pkgname=('zsh' 'zsh-doc')
 pkgver=5.9
-pkgrel=5
+pkgrel=6
 arch=('x86_64')
 url='https://www.zsh.org/'
 license=('custom')

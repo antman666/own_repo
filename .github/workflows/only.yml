@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [lua, ntfs-3g]
+        packages: [libdrm, libx11, uksmd, v2raya-git, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
