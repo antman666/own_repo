@@ -51,13 +51,13 @@ build() {
   export LDFLAGS="${LDFLAGS}"
 
   ## Default
-  #./configure.sh --buildtype=Release --builddir="build" --prefix=/usr --use_clang --enable_relocs --use_bpf_proc
-  #./build.sh
+  ./configure.sh --buildtype=Release --builddir="build" --prefix=/usr --use_clang --enable_relocs --use_bpf_proc
+  ./build.sh
   ## PGO
 
   ## BOLT
-  ./pgo-bolt.sh --builddir="build" --prefix=/usr --use_bpf_proc
-  mv ./bolt-binary/ananicy-cpp.bolt build/ananicy-cpp
+  #./pgo-bolt.sh --builddir="build" --prefix=/usr --use_bpf_proc
+  #mv ./bolt-binary/ananicy-cpp.bolt build/ananicy-cpp
 
   cmake -S . -B build \
              -G Ninja \
