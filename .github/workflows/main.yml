@@ -26,7 +26,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, glib2, libdrm, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
+        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, glib2, libdrm, lua, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +62,7 @@ jobs:
   build_longtime_pkg:
     strategy:
       matrix:
-        longtime: [gcc]
+        longtime: [gcc, llvm]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

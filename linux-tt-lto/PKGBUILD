@@ -88,8 +88,8 @@ _subarch=15
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.3.4
-pkgrel=7
+pkgver=6.3.5
+pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"
@@ -121,23 +121,15 @@ source=(
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "${_patchsources}/futex-patches/0001-futex-6.2-Add-entry-point-for-FUTEX_WAIT_MULTIPLE-op.patch"
   "${_patchsource}/sched/0001-tt.patch"
-  # "${_patchsource}/misc/0001-Introduce-per-VMA-lock.patch"
-  # "${_patchsource}/misc/0002-sched-Introduce-classes-of-tasks-for-load-balance.patch"
-  "${_patchsource}/misc/0001-lrng.patch"
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0002-bfq.patch"
-  # "${_patchsource}/0003-bitmap.patch"
-  # "${_patchsource}/0005-clr.patch"
   "${_patchsource}/0004-fixes.patch"
   "${_patchsource}/0005-fs-patches.patch"
   "${_patchsource}/0007-ksm.patch"
-  # "${_patchsource}/0010-maple-lru.patch"
   "${_patchsource}/0008-Per-VMA-locks.patch"
   "${_patchsource}/0009-sched.patch"
   "${_xanmodpatch}/intel/0020-drivers-initialize-ata-before-graphics.patch"
-  # "${_xanmodpatch}/intel/0021-init-wait-for-partition-and-retry-scan.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
@@ -246,75 +238,6 @@ prepare() {
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-  msg2 "Enabling Linux Random Number Generator ..."
-  scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
-  scripts/config --enable CONFIG_LRNG
-  scripts/config --enable CONFIG_LRNG_SHA256
-  scripts/config --enable CONFIG_LRNG_COMMON_DEV_IF
-  scripts/config --enable CONFIG_LRNG_DRNG_ATOMIC
-  scripts/config --enable CONFIG_LRNG_SYSCTL
-  scripts/config --enable CONFIG_LRNG_RANDOM_IF
-  scripts/config --module CONFIG_LRNG_KCAPI_IF
-  scripts/config --module CONFIG_LRNG_HWRAND_IF
-  scripts/config --enable CONFIG_LRNG_DEV_IF
-  scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
-  scripts/config --enable CONFIG_LRNG_IRQ_DFLT_TIMER_ES
-  scripts/config --disable CONFIG_LRNG_SCHED_DFLT_TIMER_ES
-  scripts/config --enable CONFIG_LRNG_TIMER_COMMON
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
-  scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
-  scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
-  scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
-  scripts/config --enable CONFIG_LRNG_HEALTH_TESTS
-  scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
-  scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
-  scripts/config --enable CONFIG_LRNG_IRQ
-  scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
-  scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
-  scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
-  scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
-  scripts/config --enable CONFIG_LRNG_JENT
-  scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
-  scripts/config --enable CONFIG_LRNG_CPU
-  scripts/config --set-val CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER 1
-  scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-  scripts/config --enable CONFIG_LRNG_SCHED
-  scripts/config --set-val CONFIG_LRNG_SCHED_ENTROPY_RATE 4294967295
-  scripts/config --enable CONFIG_LRNG_DRNG_CHACHA20
-  scripts/config --module CONFIG_LRNG_DRBG
-  scripts/config --module CONFIG_LRNG_DRNG_KCAPI
-  scripts/config --enable CONFIG_LRNG_SWITCH
-  scripts/config --enable CONFIG_LRNG_SWITCH_HASH
-  scripts/config --module CONFIG_LRNG_HASH_KCAPI
-  scripts/config --enable CONFIG_LRNG_SWITCH_DRNG
-  scripts/config --module CONFIG_LRNG_SWITCH_DRBG
-  scripts/config --module CONFIG_LRNG_SWITCH_DRNG_KCAPI
-  scripts/config --enable CONFIG_LRNG_DFLT_DRNG_CHACHA20
-  scripts/config --disable CONFIG_LRNG_DFLT_DRNG_DRBG
-  scripts/config --disable CONFIG_LRNG_DFLT_DRNG_KCAPI
-  scripts/config --enable CONFIG_LRNG_TESTING_MENU
-  scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_ARRAY
-  scripts/config --disable CONFIG_LRNG_IRQ_PERF
-  scripts/config --disable CONFIG_LRNG_RAW_SCHED_HIRES_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_SCHED_PID_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_SCHED_START_TIME_ENTROPY
-  scripts/config --disable CONFIG_LRNG_RAW_SCHED_NVCSW_ENTROPY
-  scripts/config --disable CONFIG_LRNG_SCHED_PERF
-  scripts/config --disable CONFIG_LRNG_ACVT_HASH
-  scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
-  scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
-  scripts/config --enable CONFIG_LRNG_SELFTEST
-  scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
-
   msg2 "Selecting TT Scheduler..."
   scripts/config --enable TT_SCHED
   scripts/config --disable TT_ACCOUNTING_STATS
@@ -415,14 +338,6 @@ prepare() {
                  --set-val NR_LRU_GENS 7 \
                  --set-val TIERS_PER_GEN 4
 
-  # msg2 "Enabling DAMON"
-  # scripts/config --enable DAMON \
-  #                --disable DAMON_VADDR \
-  #                --disable DAMON_DBGFS \
-  #                --enable DAMON_SYSFS \
-  #                --enable DAMON_PADDR \
-  #                --enable DAMON_RECLAIM
-
   msg2 "disable debugging features to reduce the size..."
   scripts/config --disable DEBUG_INFO \
                  --disable DEBUG_INFO_BTF \
@@ -439,21 +354,6 @@ prepare() {
                  --disable LATENCYTOP \
                  --disable DEBUG_PREEMPT
 
-  # msg2 "Enable ZRAM_ENTROPY"
-  # scripts/config --enable ZRAM_ENTROPY \
-  #                --set-val ZRAM_ENTROPY_THRESHOLD 100000
-
-  # these are ck's htrimer patches
-  # msg2 "Patching with ck hrtimer patches..."
-
-  # for i in ../linux-patches-"$_commit"/"$_ckhrtimer"/ck-hrtimer/0*.patch; do
-  #   patch -Np1 -i $i
-  # done
-
-  # non-interactively apply ck1 default options
-  # this isn't redundant if we want a clean selection of subarch below
-  # echo "${CFLAGS}"
-  # echo "${LDFLAGS}"
   make ${BUILD_FLAGS[*]} olddefconfig
   diff -u ../config .config || :
 
