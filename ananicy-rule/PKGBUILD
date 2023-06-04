@@ -1,6 +1,6 @@
 # Maintainer: Peter Jung <admin@ptr1337.dev>
 
-pkgname=ananicy-rules
+pkgname=ananicy-rules-git
 _gitname=ananicy-rules
 pkgver=1
 pkgrel=1
