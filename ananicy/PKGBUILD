@@ -40,8 +40,14 @@ build() {
   #_cpuCount=$(grep -c -w ^processor /proc/cpuinfo)
   _cpuCount=2
 
-  export CFLAGS="${CFLAGS}"
-  export CXXFLAGS="${CXXFLAGS}"
+  export CFLAGS=${CFLAGS/-fgraphite-identity/}
+  export CFLAGS=${CFLAGS/-floop-nest-optimize/}
+  export CFLAGS=${CFLAGS/-ftree-loop-distribution/}
+  export CFLAGS=${CFLAGS/-fipa-pta/}
+  export CXXFLAGS=${CXXFLAGS/-fgraphite-identity/}
+  export CXXFLAGS=${CXXFLAGS/-floop-nest-optimize/}
+  export CXXFLAGS=${CXXFLAGS/-ftree-loop-distribution/}
+  export CXXFLAGS=${CXXFLAGS/-fipa-pta/}
   export LDFLAGS="${LDFLAGS}"
 
   ## Default

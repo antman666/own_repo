@@ -9,7 +9,6 @@ license=('GPL')
 pkgdesc='CachyOS - ananicy-rules '
 source=("git+https://github.com/antman666/$gitname")
 sha256sums=('SKIP')
-replaces=(ananicy-rules-git)
 
 package() {
   cd $gitname
