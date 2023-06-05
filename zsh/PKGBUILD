@@ -1,18 +1,15 @@
 # Maintainer: Pierre Schmitz <pierre@archlinux.de>
 
-pkgbase=zsh
-pkgname=('zsh' 'zsh-doc')
+pkgname=zsh
 pkgver=5.9
 pkgrel=6
 arch=('x86_64')
 url='https://www.zsh.org/'
 license=('custom')
-makedepends=('pcre' 'libcap' 'gdbm' 'mold' 'yodl')
-source=("https://www.zsh.org/pub/zsh-${pkgver}"{,-doc}".tar.xz"{,.asc}
+makedepends=('pcre' 'libcap' 'gdbm' 'yodl')
+source=("https://www.zsh.org/pub/zsh-${pkgver}.tar.xz"{,.asc}
         'zprofile')
-sha512sums=('96198ecef498b7d7945fecebbe6bf14065fa8c5d81a7662164579eba8206b79575812d292adea1864bc7487ac0818ba900e25f9ab3802449340de80417c2c533'
-            'SKIP'
-            '38cc549818eb9c6952051b714dd2008d99605aba4ca4f614e62b033c9b067dd2031fff766ac5c1efe5bb52eae32bd482dea5df2b2d46decb7ecdb458f3da9d52'
+sha512sums=('d9138b7f379ad942a5f46819d2dd52d31f3a1129f2a0d1b53d4c5cd43c318b60396da6d37c57c477b8e958fb750209aca0ae93f8c9dd42ac958de006a0ff067e'
             'SKIP'
             'b287e00d8de4dc4cfb1c52bb2aef1d4b191de3512baad4c91dc81e78ddc3e5bb07297f43924b022ac44ff401a348d8a9fa366e19ddc8ea1ea72df311f5ed0034')
 validpgpkeys=('F7B2754C7DE2830914661F0EA71D9A9D4BDB27B3'
@@ -40,30 +37,30 @@ prepare() {
 }
 
 build() {
-  CFLAGS+=' -fuse-ld=mold'
-  CXXFLAGS+=' -fuse-ld=mold'
+  # CFLAGS+=' -fuse-ld=mold'
+  # CXXFLAGS+=' -fuse-ld=mold'
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
   ./configure --prefix=/usr \
-              --docdir=/usr/share/doc/zsh \
-	      --htmldir=/usr/share/doc/zsh/html \
-	      --enable-etcdir=/etc/zsh \
-	      --enable-zshenv=/etc/zsh/zshenv \
-	      --enable-zlogin=/etc/zsh/zlogin \
-	      --enable-zlogout=/etc/zsh/zlogout \
-	      --enable-zprofile=/etc/zsh/zprofile \
-	      --enable-zshrc=/etc/zsh/zshrc \
-	      --enable-maildir-support \
-	      --with-term-lib='ncursesw' \
-	      --enable-multibyte \
-	      --enable-function-subdirs \
-	      --enable-fndir=/usr/share/zsh/functions \
-	      --enable-scriptdir=/usr/share/zsh/scripts \
-	      --with-tcsetpgrp \
-	      --enable-pcre \
-	      --enable-gdbm \
-	      --enable-cap \
-	      --enable-zsh-secure-free
+              #--docdir=/usr/share/doc/zsh \
+	          #--htmldir=/usr/share/doc/zsh/html \
+	          --enable-etcdir=/etc/zsh \
+	          --enable-zshenv=/etc/zsh/zshenv \
+	          --enable-zlogin=/etc/zsh/zlogin \
+	          --enable-zlogout=/etc/zsh/zlogout \
+	          --enable-zprofile=/etc/zsh/zprofile \
+	          --enable-zshrc=/etc/zsh/zshrc \
+	          --enable-maildir-support \
+	          --with-term-lib='ncursesw' \
+	          --enable-multibyte \
+	          --enable-function-subdirs \
+	          --enable-fndir=/usr/share/zsh/functions \
+	          --enable-scriptdir=/usr/share/zsh/scripts \
+	          --with-tcsetpgrp \
+	          --enable-pcre \
+	          --enable-gdbm \
+	          --enable-cap \
+	          --enable-zsh-secure-free
   make
 }
 
@@ -84,11 +81,11 @@ package_zsh() {
   install -D -m644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 
-package_zsh-doc() {
-  pkgdesc='Info, HTML and PDF format of the ZSH documentation'
+# package_zsh-doc() {
+#   pkgdesc='Info, HTML and PDF format of the ZSH documentation'
 
-  cd "${srcdir}/${pkgbase}-${pkgver}"
-  make DESTDIR="${pkgdir}/" install.info install.html
-  install -D -m644 Doc/zsh.pdf "${pkgdir}/usr/share/doc/zsh/zsh.pdf"
-  install -D -m644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-}
+#   cd "${srcdir}/${pkgbase}-${pkgver}"
+#   make DESTDIR="${pkgdir}/" install.info install.html
+#   install -D -m644 Doc/zsh.pdf "${pkgdir}/usr/share/doc/zsh/zsh.pdf"
+  # install -D -m644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+# }
