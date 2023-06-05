@@ -33,6 +33,8 @@ prepare() {
 
 build() {
   mkdir -p build
+  export CFLAGS=${CFLAGS/-fno-plt}
+  export CXXFLAGS=${CXXFLAGS/-fno-plt}
   arch-meson build $pkgname -D b_ndebug=true -D with_docs=false -D b_lto=true -D b_lto_mode=full -D optimization=3
   ninja -v -C build
 }

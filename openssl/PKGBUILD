@@ -16,7 +16,7 @@ provides=('libcrypto.so' 'libssl.so')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${pkgver}.tar.gz"{,.asc}
         'ca-dir.patch')
-sha256sums=('aaa925ad9828745c4cad9d9efeb273deca820f2cdcf2c3ac7d7c1212b7c497b4'
+sha256sums=('b3aa61334233b852b63ddb048df181177c2c659eb9d4376008118f9c08d07674'
             'SKIP'
             '0a32d9ca68e8d985ce0bfef6a4c20b46675e06178cc2d0bf6d91bd6865d648b7')
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491'
@@ -38,8 +38,8 @@ build() {
 		shared enable-ktls enable-ec_nistp_64_gcc_128 linux-x86_64 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
-	make -j1 depend
-	make -j1
+	make depend
+	make 
 }
 
 check() {
