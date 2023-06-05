@@ -1,12 +1,13 @@
 # Maintainer: Peter Jung <admin@ptr1337.dev>
 
-pkgname=ananicy-rules-git
+pkgname=ananicy-rules
 _gitname=ananicy-rules
 pkgver=1
 pkgrel=1
 arch=('any')
 license=('GPL')
 pkgdesc='CachyOS - ananicy-rules '
+makedepends=('git')
 source=("git+https://github.com/antman666/$_gitname")
 sha256sums=('SKIP')
 
