@@ -10,7 +10,7 @@ pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.37
 _commit=6fe86ecd787a2624cd638131629ba9a824040308
-pkgrel=7
+pkgrel=8
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
@@ -20,15 +20,12 @@ source=(git+https://sourceware.org/git/glibc.git#commit=${_commit}
         locale.gen.txt
         locale-gen
         lib32-glibc.conf
-        sdt.h sdt-config.h
         reenable_DT_HASH.patch
-	fmod.patch
-	malloc_tune.patch
-	05-mandriva-zstdcompressedlocals.patch
-	nptl.patch
+        fmod.patch
+        malloc_tune.patch
+        05-mandriva-zstdcompressedlocals.patch
+        nptl.patch
 )
-# fmod.patch
-# malloc_tune.patch
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8 # Carlos O Donell
               BC7C7372637EC10C57D7AA6579C43DFBF1CF2187) # Siddhesh Poyarekar
 b2sums=('SKIP'
@@ -61,12 +58,12 @@ build() {
       --prefix=/usr
       --with-headers=/usr/include
       --with-bugurl=https://bugs.archlinux.org/
-      --enable-bind-now
+      --disable-bind-now
       --enable-cet
       --enable-kernel=6.2.1
       --enable-multi-arch
       --enable-stack-protector=strong
-      --enable-systemtap
+      --disable-systemtap
       --disable-crypt
       --disable-profile
       --disable-werror
@@ -128,7 +125,8 @@ build() {
 
   # pregenerate C.UTF-8 locale until it is built into glibc
   # (https://sourceware.org/glibc/wiki/Proposals/C.UTF-8, FS#74864)-
-  elf/ld.so --library-path "$PWD" locale/localedef -c -f ../glibc/localedata/charmaps/UTF-8 -i ../glibc/localedata/locales/C ../C.UTF-8/
+  # elf/ld.so --library-path "$PWD" locale/localedef -c -f ../glibc/localedata/charmaps/UTF-8 -i ../glibc/localedata/locales/C ../C.UTF-8/
+  locale/localedef -c -f ../glibc/localedata/charmaps/UTF-8 -i ../glibc/localedata/locales/C ../C.UTF-8/
 }
 
 # Credits for skip_test() and check() @allanmcrae
@@ -198,8 +196,8 @@ package_glibc() {
     "${srcdir}"/glibc/localedata/SUPPORTED >> "${pkgdir}"/etc/locale.gen
 
   # Add SUPPORTED file to pkg
-  sed -e '1,3d' -e 's|/| |g' -e 's| \\||g' \
-    "${srcdir}"/glibc/localedata/SUPPORTED > "${pkgdir}"/usr/share/i18n/SUPPORTED
+  # sed -e '1,3d' -e 's|/| |g' -e 's| \\||g' \
+  #   "${srcdir}"/glibc/localedata/SUPPORTED > "${pkgdir}"/usr/share/i18n/SUPPORTED
 
   # install C.UTF-8 so that it is always available
   install -dm755 "${pkgdir}"/usr/lib/locale
@@ -208,8 +206,8 @@ package_glibc() {
 
   # Provide tracing probes to libstdc++ for exceptions, possibly for other
   # libraries too. Useful for gdb's catch command.
-  install -Dm644 "${srcdir}"/sdt.h "${pkgdir}"/usr/include/sys/sdt.h
-  install -Dm644 "${srcdir}"/sdt-config.h "${pkgdir}"/usr/include/sys/sdt-config.h
+  # install -Dm644 "${srcdir}"/sdt.h "${pkgdir}"/usr/include/sys/sdt.h
+  # install -Dm644 "${srcdir}"/sdt-config.h "${pkgdir}"/usr/include/sys/sdt-config.h
 }
 
 package_lib32-glibc() {
