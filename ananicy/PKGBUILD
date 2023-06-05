@@ -3,7 +3,7 @@
 
 _pkgname=ananicy-cpp
 pkgname=ananicy-cpp-git
-pkgver=1.0.2.r33.g0bb695f
+pkgver=1.0.1.r12.gcafb692
 pkgrel=1
 pkgdesc="Ananicy Cpp is a full rewrite of Ananicy in C++, featuring lower CPU and RAM usage."
 arch=(x86_64 i386 armv7h)
@@ -28,7 +28,7 @@ pkgver() {
 
 prepare() {
   cd "${_pkgname}"
-  #patch -Np1 < ../patch.patch
+
   git submodule init
   git config submodule."external/std-format".url "${srcdir}/std-format"
   git -c protocol.file.allow=always submodule update
@@ -40,37 +40,19 @@ build() {
   #_cpuCount=$(grep -c -w ^processor /proc/cpuinfo)
   _cpuCount=2
 
-  export CFLAGS=${CFLAGS/-fgraphite-identity/}
-  export CFLAGS=${CFLAGS/-floop-nest-optimize/}
-  export CFLAGS=${CFLAGS/-ftree-loop-distribution/}
-  export CFLAGS=${CFLAGS/-fipa-pta/}
-  export CXXFLAGS=${CXXFLAGS/-fgraphite-identity/}
-  export CXXFLAGS=${CXXFLAGS/-floop-nest-optimize/}
-  export CXXFLAGS=${CXXFLAGS/-ftree-loop-distribution/}
-  export CXXFLAGS=${CXXFLAGS/-fipa-pta/}
+  export CFLAGS="${CFLAGS}"
+  export CXXFLAGS="${CXXFLAGS}"
   export LDFLAGS="${LDFLAGS}"
 
-  ## Default
-  ./configure.sh --buildtype=Release --builddir="build" --prefix=/usr --use_clang --enable_relocs --use_bpf_proc
-  ./build.sh
-  ## PGO
-
-  ## BOLT
-  #./pgo-bolt.sh --builddir="build" --prefix=/usr --use_bpf_proc
-  #mv ./bolt-binary/ananicy-cpp.bolt build/ananicy-cpp
-
-  cmake -S . -B build \
-             -G Ninja \
-             -D CMAKE_BUILD_TYPE=Release \
-             -D CMAKE_INSTALL_PREFIX=/usr \
-	     -D USE_EXTERNAL_JSON=OFF \
-	     -D USE_EXTERNAL_FMTLIB=OFF \
-             -D ENABLE_SYSTEMD=ON \
-             -D USE_EXPERIMENTAL_IMPL=ON \
-             -D USE_BPF_PROC_IMPL=ON \
-             -D BPF_BUILD_LIBBPF=OFF \
-             -D CMAKE_C_FLAGS=-Wno-error \
-             -D ENABLE_IPO=ON
+  cmake -S . -Bbuild \
+        -GNinja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DUSE_EXTERNAL_SPDLOG=ON \
+        -DUSE_EXTERNAL_JSON=ON \
+        -DUSE_BPF_PROC_IMPL=ON \
+        -DBPF_BUILD_LIBBPF=OFF \
+        -DUSE_EXTERNAL_FMTLIB=ON
 
   cmake --build build --target ananicy-cpp --parallel $_cpuCount
 }
