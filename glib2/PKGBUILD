@@ -71,10 +71,16 @@ build() {
   local meson_options=(
     --default-library both
     -D glib_debug=disabled
-    -D gtk_doc=true
-    -D man=true
+    -D gtk_doc=false
+    -D man=false
     -D selinux=disabled
     -D sysprof=enabled
+    -D b_ndebug=true
+    -D b_pie=false
+    -D tests=flase
+    -D c_std=gnu18
+    -D cpp_std=gnu++2a
+    --buildtype=release
   )
 
   # Produce more debug info: GLib has a lot of useful macros
@@ -82,8 +88,10 @@ build() {
   #CXXFLAGS+=" -g3"
 
   # use fat LTO objects for static libraries
-  CFLAGS+=" -ffat-lto-objects"
-  CXXFLAGS+=" -ffat-lto-objects"
+  # CFLAGS+=" -ffat-lto-objects"
+  # CXXFLAGS+=" -ffat-lto-objects"
+  export CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
+  export CXXFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 
   arch-meson glib build "${meson_options[@]}"
   meson compile -C build
@@ -116,17 +124,17 @@ package_glib2() {
     "$pkgdir/usr/share/glib-2.0/codegen"
 
   # Split docs
-  mkdir -p docs/usr/share
-  mv {"$pkgdir",docs}/usr/share/gtk-doc
+  # mkdir -p docs/usr/share
+  # mv {"$pkgdir",docs}/usr/share/gtk-doc
 }
 
-package_glib2-docs() {
-  pkgdesc+=" - documentation"
-  depends=()
-  license+=(custom)
+# package_glib2-docs() {
+#   pkgdesc+=" - documentation"
+#   depends=()
+#   license+=(custom)
 
-  mv -t "$pkgdir" docs/*
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 glib/docs/reference/COPYING
-}
+#   mv -t "$pkgdir" docs/*
+#   install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 glib/docs/reference/COPYING
+# }
 
 # vim:set sw=2 sts=-1 et:
