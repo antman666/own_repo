@@ -6,14 +6,14 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [mesa]
+        packages: [jemalloc, mimalloc]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v3.5.2
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
