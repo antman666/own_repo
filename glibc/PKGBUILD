@@ -10,7 +10,7 @@ pkgbase=glibc
 pkgname=(glibc lib32-glibc)
 pkgver=2.37
 _commit=6fe86ecd787a2624cd638131629ba9a824040308
-pkgrel=8
+pkgrel=8.1
 arch=(x86_64)
 url='https://www.gnu.org/software/libc'
 license=(GPL LGPL)
@@ -58,12 +58,12 @@ build() {
       --prefix=/usr
       --with-headers=/usr/include
       --with-bugurl=https://bugs.archlinux.org/
-      --disable-bind-now
+      --enable-bind-now
       --enable-cet
-      --enable-kernel=6.2.1
+      --enable-kernel=4.4
       --enable-multi-arch
       --enable-stack-protector=strong
-      --disable-systemtap
+      --enable-systemtap
       --disable-crypt
       --disable-profile
       --disable-werror
