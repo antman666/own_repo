@@ -55,14 +55,11 @@ build() {
     --target x64
   )
 
-  chmod +x certdata2pem.py
-  chmod +x bundle.sh
-
   cd certs
-  ../certdata2pem.py
+  python ../certdata2pem.py
 
   cd ..
-  ./bundle.sh
+  sh ./bundle.sh
 
   cd nss
   ./build.sh "${buildsh_options[@]}"
