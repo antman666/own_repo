@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [perl]
+        packages: [zlib]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
