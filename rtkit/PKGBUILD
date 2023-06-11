@@ -3,7 +3,7 @@
 
 pkgname=rtkit
 pkgver=0.13
-pkgrel=6
+pkgrel=6.1
 pkgdesc="Realtime Policy and Watchdog Daemon"
 arch=(x86_64)
 url="https://github.com/heftig/rtkit"
