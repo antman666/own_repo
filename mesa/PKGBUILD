@@ -15,8 +15,8 @@ pkgname=(
   'mesa-vdpau'
   'mesa'
 )
-pkgver=23.1.1
-pkgrel=3
+pkgver=23.1.2
+pkgrel=1
 pkgdesc="An open-source implementation of the OpenGL specification"
 url="https://www.mesa3d.org/"
 arch=('x86_64')
@@ -77,7 +77,7 @@ makedepends=(
 source=(
   https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
   10747.patch
-  22921.patch
+  12000.patch
   LICENSE
 )
 sha256sums=('1b7d3399fc6f16f030361f925d33ebc7600cbf98094582f54775b6a1180529e7'
@@ -103,7 +103,7 @@ prepare() {
   cd mesa-$pkgver
 
   patch -Np1 -i ../10747.patch
-  patch -Np1 -i ../22921.patch
+  patch -Np1 -i ../12000.patch
 }
 
 _libdir=usr/lib
