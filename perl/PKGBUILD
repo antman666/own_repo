@@ -7,7 +7,7 @@
 pkgname=perl
 pkgver=5.36.1
 _baseversion="${pkgver%.*}"
-pkgrel=2.1
+pkgrel=3
 pkgdesc="A highly capable, feature-rich programming language"
 arch=(x86_64)
 license=('GPL' 'PerlArtistic')
@@ -132,6 +132,7 @@ provides=('perl-archive-tar=2.40'
 # Add your own provides here
 provides=("${provides[@]}")
 source=(https://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz
+        https://github.com/andk/cpanpm/commit/9c98370287.patch
         config.over
         db_config.in
         perlbin.sh
@@ -157,10 +158,13 @@ prepare() {
   [ -n "${SOURCE_DATE_EPOCH}" ] && touch -h -d @$SOURCE_DATE_EPOCH patchlevel.h
 
   cp -f ../db_config.in ./cpan/DB_File/config.in
+
+  # CVE-2023-31484
+  patch -Np1 -d cpan/CPAN -i "${srcdir}"/9c98370287.patch
 }
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}"
 
   # reproducible builds overrides are only fully effective when loaded from file
   cp ../config.over .
@@ -168,11 +172,11 @@ build() {
   export TZ=UTC
   ./Configure -des \
     -Dusethreads \
-	-Duse64bitall \
-	-Duseshrplib \
-	-Doptimize="${CFLAGS}" \
+    -Duse64bitall \
+    -Duseshrplib \
+    -Doptimize="${CFLAGS}" \
     -Dprefix=/usr \
-	-Dvendorprefix=/usr \
+    -Dvendorprefix=/usr \
     -Dprivlib=/usr/share/perl5/core_perl \
     -Darchlib=/usr/lib/perl5/$_baseversion/core_perl \
     -Dsitelib=/usr/share/perl5/site_perl \
@@ -189,13 +193,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}"
 #  TEST_JOBS=$(echo "$MAKEFLAGS" | sed 's/.*-j\([0-9][0-9]*\).*/\1/') make test_harness
   make test
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}"
   make DESTDIR="$pkgdir" install
 
   ### Perl Settings ###
