@@ -26,7 +26,7 @@ makedepends=(
   'git' 'ninja' 'cmake' 'clang' 'llvm' 'lld'
   "ocaml>=${_ocaml_ver}" 'ocaml-ctypes' 'ocaml-findlib' 'ocaml-integers' 'ocaml-stdlib-shims'
   'python' 'python-setuptools' 'python-psutil' 'python-sphinx'
-  'python-recommonmark' 'which'
+  'python-recommonmark' 'which' 'openmp'
 )
 makedepends_x86_64=('lib32-gcc-libs')
 _commit=ae42196bc493ffe877a7e3dff8be32035dea4d07
