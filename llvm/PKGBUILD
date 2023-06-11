@@ -79,9 +79,9 @@ build() {
 
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
-  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer'
-  # LDFLAGS=${LDFLAGS/-O3/-O2}
+  export CFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -mllvm -interleave-small-loop-scalar-reduction'
+  export CXXFLAGS='-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -mllvm -enable-loopinterchange -mllvm -enable-loop-distribute -mllvm -enable-loop-flatten -mllvm -interleave-small-loop-scalar-reduction'
+  LDFLAGS=${LDFLAGS/--strip-all/}
 
   cd "${srcdir:?}/llvm-project" || (
         echo -e "\E[1;31mCan't cd to ${srcdir}/llvm-project directory! Build Failed! \E[0m"
