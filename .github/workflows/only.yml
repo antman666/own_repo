@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [dbus]
+        packages: [bash, sqlite, zstd, python]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
