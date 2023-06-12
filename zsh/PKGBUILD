@@ -42,8 +42,8 @@ build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
   ./configure --prefix=/usr \
-              #--docdir=/usr/share/doc/zsh \
-	          #--htmldir=/usr/share/doc/zsh/html \
+              --docdir=/usr/share/doc/zsh \
+	          --htmldir=/usr/share/doc/zsh/html \
 	          --enable-etcdir=/etc/zsh \
 	          --enable-zshenv=/etc/zsh/zshenv \
 	          --enable-zlogin=/etc/zsh/zlogin \
