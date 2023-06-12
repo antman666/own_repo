@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [ananicy, bpf, libbpf, lua, libx11, libdrm, jemalloc, mimalloc, nss, ntfs-3g, picom, neovim]
+        packages: [fcitx5, feh, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
