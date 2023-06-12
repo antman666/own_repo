@@ -2,7 +2,7 @@
 
 pkgname=zsh
 pkgver=5.9
-pkgrel=6
+pkgrel=6.1
 arch=('x86_64')
 url='https://www.zsh.org/'
 license=('custom')
