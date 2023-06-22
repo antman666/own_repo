@@ -1,11 +1,12 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl, fcitx5, feh, git, ibus, linux-tt-lto, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
+        jemalloc: [curl, fcitx5, feh, git, ibus, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, glibc, libtool, python, util-linux]
+        nolto: [binutils, libtool, python, util-linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -59,36 +60,36 @@ jobs:
           pkgdir: ${{ matrix.nolto }}
           namcapDisable: 1
           makepkgArgs: "--skippgpcheck"
-  build_longtime_pkg:
-    strategy:
-      matrix:
-        longtime: [gcc, llvm]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.5.2
-      - id: makepkg
-        uses: antman666/pkgbuild-action@non-lto
-        with:
-          pkgdir: ${{ matrix.longtime }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@main
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: antman666/update-db-for-repo@mine
-        with: 
-          tag: x86_64
-      - uses: ncipollo/release-action@main
-        with:
-          allowUpdates: True
-          tag: "x86_64"
-          artifacts: "./own-repo.*"
-          token: ${{ secrets.GITHUB_TOKEN }}
+  # build_longtime_pkg:
+  #   strategy:
+  #     matrix:
+  #       longtime: []
+  #     fail-fast: false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Build non-lto packages for arch
+  #       uses: actions/checkout@v3.5.2
+  #     - id: makepkg
+  #       uses: antman666/pkgbuild-action@non-lto
+  #       with:
+  #         pkgdir: ${{ matrix.longtime }}
+  #         namcapDisable: 1
+  #         makepkgArgs: "--skippgpcheck"
+  #     - uses: ncipollo/release-action@main
+  #       with:
+  #         allowUpdates: true
+  #         tag: "x86_64"
+  #         artifacts: "./*/*.zst"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #     - uses: antman666/update-db-for-repo@mine
+  #       with: 
+  #         tag: x86_64
+  #     - uses: ncipollo/release-action@main
+  #       with:
+  #         allowUpdates: True
+  #         tag: "x86_64"
+  #         artifacts: "./own-repo.*"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
     needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
     runs-on: ubuntu-latest

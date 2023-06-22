@@ -42,7 +42,7 @@ _1666_HZ_ticks=
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
 # option is 39.
-_subarch=16
+_subarch=36
 
 #  1. AMD Opteron/Athlon64/Hammer/K8 (MK8)
 #  2. AMD Opteron/Athlon64/Hammer/K8 with SSE3 (MK8SSE3) (NEW)
@@ -91,8 +91,8 @@ _subarch=16
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-tt-lto
-pkgver=6.3.7
-pkgrel=2
+pkgver=6.3.9
+pkgrel=1
 pkgdesc='Linux TT scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/hamadmarri/TT-CPU-Scheduler"

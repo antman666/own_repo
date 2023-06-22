@@ -1,1 +1,1 @@
-# This repo only for core2 cpu
+# This repo only for alderlake cpu

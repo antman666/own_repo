@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index f5543ee..e03355e 100644
+index f8ee723..9a620ae 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -447,10 +447,10 @@ HOSTRUSTC = rustc
@@ -8,11 +8,11 @@ index f5543ee..e03355e 100644
  KBUILD_USERHOSTCFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes \
 -			 -O2 -fomit-frame-pointer -std=gnu11 \
 -			 -Wdeclaration-after-statement
-+                         -O2 -march=core2 -fomit-frame-pointer -std=gnu11 \
++                         -O2 -march=alderlake -fomit-frame-pointer -std=gnu11 \
 +                         -Wdeclaration-after-statement
  KBUILD_USERCFLAGS  := $(KBUILD_USERHOSTCFLAGS) $(USERCFLAGS)
 -KBUILD_USERLDFLAGS := $(USERLDFLAGS)
-+KBUILD_USERLDFLAGS := -Wl,-O2,--as-needed -march=core2 $(USERLDFLAGS)
++KBUILD_USERLDFLAGS := -Wl,-O2,--as-needed -march=alderlake $(USERLDFLAGS)
  
  # These flags apply to all Rust code in the tree, including the kernel and
  # host programs.
@@ -21,11 +21,11 @@ index f5543ee..e03355e 100644
  
  KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) $(HOSTCFLAGS)
 -KBUILD_HOSTCXXFLAGS := -Wall -O2 $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
-+KBUILD_HOSTCXXFLAGS := -O2 -march=core2 -fomit-frame-pointer $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
++KBUILD_HOSTCXXFLAGS := -O2 -march=alderlake -fomit-frame-pointer $(HOST_LFS_CFLAGS) $(HOSTCXXFLAGS)
  KBUILD_HOSTRUSTFLAGS := $(rust_common_flags) -O -Cstrip=debuginfo \
  			-Zallow-features= $(HOSTRUSTFLAGS)
 -KBUILD_HOSTLDFLAGS  := $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
-+KBUILD_HOSTLDFLAGS  := -Wl,-O2,--as-needed -march=core2 $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
++KBUILD_HOSTLDFLAGS  := -Wl,-O2,--as-needed -march=alderlake $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
  KBUILD_HOSTLDLIBS   := $(HOST_LFS_LIBS) $(HOSTLDLIBS)
  
  # Make variables (CC, etc...)
@@ -34,16 +34,16 @@ index f5543ee..e03355e 100644
  		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
  NOSTDINC_FLAGS :=
 -CFLAGS_MODULE   =
-+CFLAGS_MODULE   = -O2 -march=core2 -fomit-frame-pointer
++CFLAGS_MODULE   = -O2 -march=alderlake -fomit-frame-pointer
  RUSTFLAGS_MODULE =
  AFLAGS_MODULE   =
  LDFLAGS_MODULE  =
 -CFLAGS_KERNEL	=
-+CFLAGS_KERNEL	= -march=core2 -fomit-frame-pointer
++CFLAGS_KERNEL	= -march=alderlake -fomit-frame-pointer
  RUSTFLAGS_KERNEL =
  AFLAGS_KERNEL	=
 -LDFLAGS_vmlinux =
-+LDFLAGS_vmlinux = -Wl,-O2,--as-needed -march=core2
++LDFLAGS_vmlinux = -Wl,-O2,--as-needed -march=alderlake
  
  # Use USERINCLUDE when you must reference the UAPI directories only.
  USERINCLUDE    := \
@@ -54,7 +54,7 @@ index f5543ee..e03355e 100644
 +else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 +KBUILD_CFLAGS += -O3
 +KBUILD_CFLAGS += -fopenmp
-+KBUILD_RUSTFLAGS += -Copt-level=3 -Ctarget-cpu=core2
++KBUILD_RUSTFLAGS += -Copt-level=3 -Ctarget-cpu=alderlake
 +KBUILD_CFLAGS += $(call cc-option, -mllvm -polly) \
 +                 $(call cc-option, -mllvm -polly-run-dce) \
 +                 $(call cc-option, -mllvm -polly-run-inliner) \
