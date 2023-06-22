@@ -8,7 +8,7 @@ pkgname=bash
 _basever=5.2
 _patchlevel=015
 pkgver=${_basever}.${_patchlevel}
-pkgrel=5.2
+pkgrel=5.3
 pkgdesc='The GNU Bourne Again shell'
 arch=(x86_64)
 license=(GPL)
@@ -54,7 +54,7 @@ build() {
 
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS="-march=core2 -mtune=core2 -O3 -fno-plt -fomit-frame-pointer -fno-math-errno -fno-trapping-math -fno-common -finline-functions -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution -fipa-pta -fno-semantic-interposition -fopenmp -mtls-dialect=gnu2"
+  export CFLAGS="-march=alderlake -mtune=alderlake -O3 -fno-plt -fomit-frame-pointer -fno-math-errno -fno-trapping-math -fno-common -finline-functions -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution -fipa-pta -fno-semantic-interposition -fopenmp -mtls-dialect=gnu2"
   export CXXFLAGS=$CFLAGS
 
   ./configure \
