@@ -5,7 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [llvm]
+        packages: [ananicy, ananicy-rule]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
