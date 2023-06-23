@@ -1,6 +1,5 @@
 name: Add important packages for compile packages
 on:
-  push:
   workflow_dispatch:
 jobs:
   pull_packages:

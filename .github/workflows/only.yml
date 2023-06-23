@@ -1,11 +1,12 @@
 name: Build few packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [ananicy, ananicy-rule]
+        packages: [ananicy, ananicy-rule, bpf, libbpf]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
