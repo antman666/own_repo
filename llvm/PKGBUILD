@@ -3,8 +3,8 @@
 
 pkgname=llvm
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld, bolt"
-pkgver=16.0.5
-pkgrel=1.1
+pkgver=16.0.6
+pkgrel=1
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -24,7 +24,7 @@ makedepends=(
   'python-recommonmark' 'which' 'openmp'
 )
 makedepends_x86_64=('lib32-gcc-libs')
-_commit=185b81e034ba60081023b6e59504dfffb560f3e3
+_commit=7cbf1a2591520c2491aa35339f227775f4d3adf6
 source=(
   "llvm-project::git+https://github.com/llvm/llvm-project.git#commit=${_commit:?}"
   'llvm-config.h'

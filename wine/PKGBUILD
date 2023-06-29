@@ -5,12 +5,12 @@
 # Contributor: Giovanni Scafora <giovanni@archlinux.org>
 
 pkgname=wine-staging
-pkgver=8.6.1
-pkgrel=1
+pkgver=8.11
+pkgrel=1.1
 
 _pkgbasever=${pkgver/rc/-rc}
-#_winever=$_pkgbasever
-_winever=${_pkgbasever%.*}
+_winever=$_pkgbasever
+# _winever=${_pkgbasever%.*}
 
 source=(https://dl.winehq.org/wine/source/8.x/wine-$_winever.tar.xz{,.sign}
         "https://github.com/wine-staging/wine-staging/archive/v$_pkgbasever/wine-staging-v$_pkgbasever.tar.gz"
@@ -126,7 +126,7 @@ build() {
     --enable-win64 \
     --with-xattr
 
-  make CROSSCFLAGS="-O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
+  make CROSSCFLAGS="-O3 -march=alderlake -mtune=alderlake -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all -march=alderlake"
 
   msg2 "Building Wine-32..."
 
@@ -140,7 +140,7 @@ build() {
     --libdir=/usr/lib32 \
     --with-wine64="$srcdir/$pkgname-64-build"
 
-  make CROSSCFLAGS="-m32 -O3 -march=core2 -mtune=core2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all"
+  make CROSSCFLAGS="-m32 -O3 -march=alderlake -mtune=alderlake -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution" CROSSLDFLAGS="-Wl,-O3,--sort-common,--as-needed,--strip-all -march=alderlake"
 }
 
 package() {
