@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -148,7 +148,7 @@ validpgpkeys=(
 
 b2sums=('8551ab8fb2e973855f7fe8cf0ea2f999ae943dc140291849ff89fb9870798347c07b13f9e3fbdd91122ec53d6f52d73f394e432ff0c8290c0298638ba7ccc405'
         'SKIP'
-        'd20bc38d294280c788ce9a646a914ebf89d73a1f78d5db3fd38ac50b04d15d2966e62ac0e18f2009372df535a1021bab728b4584c7fb7333118823cdbc2969f2'
+        'a3b0488a344098800c286c99d7eef47e03c4a596b302e0958285b7cc8868307689f2fb464dae0806efe3a9965096e86673a1354ea0ca61191808a5a1d440473d'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'a119e0ac92503f7e6afae1d1aaaa8608c2e65c5e67e864103d9113dfa1457f37bf7fa5bec0f3c92e0e82917c530b8efbe0b47925f86427f51a8cb8eadb9b03ce'
@@ -305,11 +305,11 @@ prepare() {
   scripts/config --disable CONFIG_ZSWAP_ZPOOL_DEFAULT_ZBUD
   scripts/config --enable CONFIG_ZSWAP_DEFAULT_ON
 
-  msg2 "Setting performance governor..."
-  scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
-  scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
-  scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-  scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+  # msg2 "Setting performance governor..."
+  # scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
+  # scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
+  # scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
+  # scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 
   msg2 "Enabling tickless idle"
   scripts/config --disable HZ_PERIODIC \
