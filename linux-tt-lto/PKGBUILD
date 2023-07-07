@@ -112,12 +112,9 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-# _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.4"
-# _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.4"
-# _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.4.y-xanmod"
-_patchsource="https://r.zhullyb.top/https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.4"
-_patchsources="https://r.zhullyb.top/https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.4"
-_xanmodpatch="https://r.zhullyb.top/https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.4.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.4"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.4"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.4.y-xanmod"
 # _patchsource="https://raw.fastgit.org/CachyOS/kernel-patches/master/6.4"
 # _patchsources="https://raw.fastgit.org/sirlucjan/kernel-patches/master/6.4"
 # _xanmodpatch="https://raw.fastgit.org/xanmod/linux-patches/master/linux-6.4.y-xanmod"
@@ -151,7 +148,7 @@ validpgpkeys=(
 
 b2sums=('8551ab8fb2e973855f7fe8cf0ea2f999ae943dc140291849ff89fb9870798347c07b13f9e3fbdd91122ec53d6f52d73f394e432ff0c8290c0298638ba7ccc405'
         'SKIP'
-        'f0089150c3bd1c53bcaa17ee8dafb1d972508611493741f4d8f5d93d5500e0fa85c50a8cca35321080c62b5a6a607f54197402de84a60d849dc7b569bbe67b59'
+        'f04301b6924693e3e7fe4fb90b92878cb1a5b7faa5ae463b6a6b1232a51b48649156280e1637e6956ed5354acb5f3b8712490bb669ebfacb54fbcdd828999580'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'a119e0ac92503f7e6afae1d1aaaa8608c2e65c5e67e864103d9113dfa1457f37bf7fa5bec0f3c92e0e82917c530b8efbe0b47925f86427f51a8cb8eadb9b03ce'
