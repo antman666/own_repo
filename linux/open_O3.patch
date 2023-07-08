@@ -43,7 +43,7 @@ index f8ee723..9a620ae 100644
  RUSTFLAGS_KERNEL =
  AFLAGS_KERNEL	=
 -LDFLAGS_vmlinux =
-+LDFLAGS_vmlinux = -Wl,--as-needed -march=alderlake
++LDFLAGS_vmlinux = -Wl,-O2,--as-needed -march=alderlake
  
  # Use USERINCLUDE when you must reference the UAPI directories only.
  USERINCLUDE    := \

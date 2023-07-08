@@ -32,7 +32,8 @@ source=(
 )
 
 sha256sums=('SKIP'
-  '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48')
+            '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48'
+            '350a1781e277ad04c85925fb62a939f045932143d14ab48bda09a8f29a0783fa')
 
 options=('staticlibs' '!ccache')
 

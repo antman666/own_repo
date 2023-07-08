@@ -4,8 +4,8 @@
 
 pkgname=uksmd-git
 _reponame=uksmd
-pkgver=0.0.0.r37.f10f38e
-pkgrel=3.1
+pkgver=0.0.0.r67.b698d76
+pkgrel=1
 pkgdesc="Userspace KSM helper daemon (git version)"
 url="https://codeberg.org/pf-kernel/uksmd"
 license=(GPL3)

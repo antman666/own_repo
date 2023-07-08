@@ -5,7 +5,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl, fcitx5, feh, git, ibus, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
+        jemalloc: [curl, fcitx5, feh, git, ibus, linux, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
