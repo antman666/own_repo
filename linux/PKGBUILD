@@ -92,7 +92,7 @@ _subarch=36
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
 pkgver=6.4.2
-pkgrel=3
+pkgrel=4
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
@@ -149,7 +149,7 @@ validpgpkeys=(
 
 b2sums=('691313012a4f20e419c1870d47f642cbadee3da739663f89575011f566b376c1a8a291ffc2db5157e30584cd0f6de444635a85bc178fa819e181ee3e6e7d1202'
         'SKIP'
-        'b686aa4a22834783df97f3427027956f1619a0546cc357a04448856187b143f60cc7df31e6e8cb0ccb357b184da6f9c7a7179df62f478418c4a40eb48f1b1f87'
+        '99dd1a0f3320852031e1dea1ab901aeb78ffe1e2b74c557f513ad7572fab0b932fc1a63408ea279b85b4818a0e9772f549a150447602ecd798cd4aea8cdfe9d2'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'fc758117a5c8d37f61a071075be408f7d56febc44ab9c19079a191c30788aa0aa84ee9b3272c9826bc00f855f417c1d77611e94629095c310aa3f62da16667f1'
