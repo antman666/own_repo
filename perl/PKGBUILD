@@ -160,7 +160,7 @@ prepare() {
   cp -f ../db_config.in ./cpan/DB_File/config.in
 
   # CVE-2023-31484
-  patch -Np1 -d cpan/CPAN -i "${srcdir}"/9c98370287.patch
+  # patch -Np1 -d cpan/CPAN -i "${srcdir}"/9c98370287.patch
 }
 
 build() {
