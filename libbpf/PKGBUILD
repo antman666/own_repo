@@ -2,8 +2,8 @@
 # Contributor:  Adrian Bacircea <adrian.bacircea@gmail.com>
 
 pkgname=libbpf
-pkgver=1.2.0
-pkgrel=2.2
+pkgver=1.2.2
+pkgrel=1.1
 pkgdesc='Library for loading eBPF programs and reading and manipulating eBPF objects from user-space'
 url='https://github.com/libbpf/libbpf'
 arch=('x86_64')

@@ -5,7 +5,7 @@
 # Contributor: Giovanni Scafora <giovanni@archlinux.org>
 
 pkgname=wine-staging
-pkgver=8.11
+pkgver=8.12
 pkgrel=1.1
 
 _pkgbasever=${pkgver/rc/-rc}
