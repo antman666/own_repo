@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
@@ -26,12 +26,12 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [bash, btrfs-progs, dbus, ffmpeg, glib2, libdrm, lua, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
+        nojemalloc: [ananicy, ananicy-rule, bash, bpf, btrfs-progs, dbus, ffmpeg, glib2, libbpf, libdrm, lua, libx11, lz4, mesa, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build non-jemalloc packages for arch
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
@@ -67,7 +67,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Build non-lto packages for arch
-  #       uses: actions/checkout@v3.5.2
+  #       uses: actions/checkout@v3.5.3
   #     - id: makepkg
   #       uses: antman666/pkgbuild-action@non-lto
   #       with:

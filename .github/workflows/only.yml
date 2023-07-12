@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [ananicy, bpf, glib2, libbpf, mesa, perl, systemd, xorg-server, zsh]
+        packages: [linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
