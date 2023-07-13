@@ -3,8 +3,8 @@
 
 _pkgname=ananicy-cpp
 pkgname=ananicy-cpp-git
-pkgver=1.0.1.r12.gcafb692
-pkgrel=1.1
+pkgver=1.1.0.r4.g348f346
+pkgrel=1
 pkgdesc="Ananicy Cpp is a full rewrite of Ananicy in C++, featuring lower CPU and RAM usage."
 arch=(x86_64 i386 armv7h)
 url="https://gitlab.com/ananicy-cpp/ananicy-cpp.git"
@@ -38,7 +38,7 @@ build() {
   cd "${srcdir}/${_pkgname}"
 
   #_cpuCount=$(grep -c -w ^processor /proc/cpuinfo)
-  _cpuCount=2
+  _cpuCount=20
 
   export CFLAGS="${CFLAGS}"
   export CXXFLAGS="${CXXFLAGS}"
@@ -52,6 +52,7 @@ build() {
         -DUSE_EXTERNAL_JSON=ON \
         -DUSE_BPF_PROC_IMPL=ON \
         -DBPF_BUILD_LIBBPF=OFF \
+        -DENABLE_SYSTEMD=ON \
         -DUSE_EXTERNAL_FMTLIB=ON
 
   cmake --build build --target ananicy-cpp --parallel $_cpuCount
