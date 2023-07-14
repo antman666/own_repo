@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -149,7 +149,7 @@ validpgpkeys=(
 
 b2sums=('d38cae9706127fa28cc55b50ceeba7601de3d1db648b934b9d33e0b439324790074b755b1de204586fa098a326f5c88f81550cff76489b2ea6505987fc243c56'
         'SKIP'
-        '99489e67fca9832a69b228734bc818d594fadc4a747e7d57d54e614eaf3e8366a70afe9ae695008a3b0c43aaceb2c824feabc6cd642ecf7a43e58cebb790ffb7'
+        '4cc7628852525b560a2ca9c6c11e9caff6d299ac02f999691fae6582f34128398b7c0523b76b784a0e834032d15ab2793ea72078bbe8a2bb43313ca81f48a672'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'fc758117a5c8d37f61a071075be408f7d56febc44ab9c19079a191c30788aa0aa84ee9b3272c9826bc00f855f417c1d77611e94629095c310aa3f62da16667f1'
