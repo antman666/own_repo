@@ -31,7 +31,7 @@ checkdepends=(
   glib2
 )
 options=(!debug !lto staticlibs)
-_commit=69e209764bcfef599a21b32f82f88f1906bf197c  # tags/2.76.3^0
+_commit=f522c3f94d67493c58e9b0e27a7862c2e7ec105b  # tags/2.76.4^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
