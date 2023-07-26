@@ -124,15 +124,11 @@ source=(
   config         # the main kernel config file
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "${_patchsource}/sched/0001-tt.patch"
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0001-bbr2.patch"
-  # "${_patchsource}/0002-bfq.patch"
   "${_patchsource}/0003-fixes.patch"
-  # "${_patchsource}/0005-fs-patches.patch"
-  "${_patchsource}/0004-ksm.patch"
-  # "${_patchsource}/0009-Per-VMA-locks.patch"
-  "${_patchsource}/0006-sched.patch"
+  "${_patchsource}/0005-ksm.patch"
+  "${_patchsource}/0007-sched.patch"
   "${_xanmodpatch}/intel/0008-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
@@ -147,16 +143,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('d38cae9706127fa28cc55b50ceeba7601de3d1db648b934b9d33e0b439324790074b755b1de204586fa098a326f5c88f81550cff76489b2ea6505987fc243c56'
+b2sums=('a395218ffd3447a9b22d248c7dd69204115567185d91d4abb712f77ce0b90571bdbcf0ea845ed4adb30d0fd448341d95c8be6e3acf46d940477d8c55d681a669'
         'SKIP'
-        '4cc7628852525b560a2ca9c6c11e9caff6d299ac02f999691fae6582f34128398b7c0523b76b784a0e834032d15ab2793ea72078bbe8a2bb43313ca81f48a672'
+        'f3aa59e19dcb0973384b1e6ae7d9d548f84faf96d72ca3350d18184ec1193f904ef909c276d589b2dcde0f52b03b83f59e83aba982810714ce082215c9291561'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         'fc758117a5c8d37f61a071075be408f7d56febc44ab9c19079a191c30788aa0aa84ee9b3272c9826bc00f855f417c1d77611e94629095c310aa3f62da16667f1'
-        '071bfa23233e75b110408e9a04740411cb947053cd2c9e4194f4148f2a4250213a569fa1764c71b35b27d482001698fd571d73cf3fb94bcd1565988f53b31878'
-        '6769d5c3b13e3e6c1df4b2b1d5f82492a94357e00c1f5ae6997677d1cf3f740f8d465b24aca2739990c846dd67de90e7465d4cedb50d4ea4c661ff83c12b367b'
-        'bd803dcd8c21893a30ca617d96752883f017011dddd1a61b169125db1171362212e350c7a50c0b259174a5b9223daba4870cb1978e02a3890570acea5e47098e'
-        '980f160988086a453decfbd8881ae1388424938f4f4b06dbf080835bd3dcc30d231b0f9e82f0d57b427b06bea574c47bbe9803b3ae94cf8eacc45eec1a4437a6'
+        'ae02a717ddcd9d0474a014d20d9a1884633d5d06f18f370f87086541716c9317726593baa6a39f2c9b79f9d6a03171418c937769a7480e252c6b31e06ddad3f8'
+        '0ced67434e904c36d7cb4c9021e9a5cf8bd9e25e70429e81e88b2c9a1b890bdeab11cf5504246a98ff1b74b0749c265f9f52e52f9956e3e67044a1da99c61be1'
+        'd3b049b5c8807905f1b0737715a172484319662e0854cc0d500eb1339ec1e08e99ce62b8d78e17053bfa1f7fa7b5334aa6f8ed3ad2b9a22bfbbebd10692aa47c'
+        'b0b080a4ed93476ddbdfcb179f24b7bddded037f1d4fe088f04eedf683a4650a333785f02199bf08573142184a0380771e7156e65e636301d9414c4fac998d10'
         '65742c310a0c5424551f96e459ef9aceb234287b2cfc5b46186a14deb5847beeaeb6cecab4ce8a96073f4fba4ea34d2ab58f438572dc1f2a4d2b4cf8452d2e74'
         '8249e5ca6feb16e8fb2cc555d5b49dbadbf524e5d0fcca6857f8dac4536d730de1d6c5bee3a7947c03eadbe54c9a1f14f238452ac662d7548f73adcbb9aa9a8a'
         '1d118db1488518dd3264de733cbd9eff1247c7af887d5006105142776b385a3bd2d45de5dad8a128d0bf308b7e153f009660d4fbd51ae44c4199c138081148a1'
