@@ -6,8 +6,8 @@ pkgname=('systemd'
          'systemd-resolvconf'
          'systemd-sysvcompat'
          'systemd-ukify')
-_tag='c017ed867787d09484ba7de75a8f025820596955' # git rev-parse v${_tag_name}
-_tag_name=253.6
+_tag='9ffd1620fb5625e5e558a63935a8786f550b7f27' # git rev-parse v${_tag_name}
+_tag_name=253.7
 pkgver="${_tag_name/-/}"
 pkgrel=1.1
 arch=('x86_64')
@@ -18,8 +18,7 @@ makedepends=('acl' 'cryptsetup' 'docbook-xsl' 'gperf' 'lz4' 'xz' 'pam' 'libelf'
              'python-jinja' 'python-lxml' 'quota-tools' 'shadow' 'gnu-efi-libs' 'git'
              'meson' 'libseccomp' 'pcre2' 'audit' 'kexec-tools' 'libxkbcommon'
              'bash-completion' 'p11-kit' 'systemd' 'libfido2' 'tpm2-tss' 'rsync'
-            'bpf' 'libbpf' 'llvm' 'curl' 'gnutls')
-             # 'llvm' 'curl' 'gnutls')
+             'bpf' 'libbpf' 'llvm' 'curl' 'gnutls')
 options=('strip')
 validpgpkeys=('63CDA1E5D3FC22B998D20DD6327F26951A015CC4'  # Lennart Poettering <lennart@poettering.net>
               'A9EA9081724FFAE0484C35A1A81CEA22BC8C7E2E'  # Luca Boccassi <luca.boccassi@gmail.com>
