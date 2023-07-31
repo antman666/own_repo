@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.4.6
+pkgver=6.4.7
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -128,9 +128,9 @@ source=(
   "${_patchsource}/0001-bbr2.patch"
   "${_patchsource}/0003-fixes.patch"
   "${_patchsource}/0005-ksm.patch"
-  "${_patchsource}/0007-sched.patch"
+  # "${_patchsource}/0007-sched.patch"
   "${_xanmodpatch}/intel/0008-drivers-initialize-ata-before-graphics.patch"
-  "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
+  "${_xanmodpatch}/intel/6.4.0-xanmod2+/0011-x86-sched-itmt-Give-all-SMT-siblings-of-a-core-the-s.patch"
   "${_xanmodpatch}/xanmod/0001-XANMOD-x86-build-Add-more-x86_64-optimizations.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
