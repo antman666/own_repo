@@ -6,8 +6,8 @@ pkgname=('systemd'
          'systemd-resolvconf'
          'systemd-sysvcompat'
          'systemd-ukify')
-_tag='9ffd1620fb5625e5e558a63935a8786f550b7f27' # git rev-parse v${_tag_name}
-_tag_name=253.7
+_tag='2c4171c3c4146fcb32253bfb6423b5a3ee42a553' # git rev-parse v${_tag_name}
+_tag_name=254.1
 pkgver="${_tag_name/-/}"
 pkgrel=1.1
 arch=('x86_64')
@@ -67,8 +67,6 @@ sha512sums=('SKIP'
             '825b9dd0167c072ba62cabe0677e7cd20f2b4b850328022540f122689d8b25315005fa98ce867cf6e7460b2b26df16b88bb3b5c9ebf721746dce4e2271af7b97')
 
 _backports=(
-  # Revert "core/service: when resetting PID also reset known flag"
-  '996b00ede87d6a870332e63974a7d4def3c2f1b0'
 )
 
 _reverts=(
@@ -119,9 +117,8 @@ build() {
     -Dshared-lib-tag="${pkgver}-${pkgrel}"
     -Dmode=release
 
-    # -Dbpf-framework=false
+    -Dbootloader=true
     -Dbpf-framework=true
-    -Dgnu-efi=true
     -Dima=false
     -Dlibidn2=true
     -Dlz4=true
@@ -173,7 +170,7 @@ package_systemd() {
            'iptables' 'kbd' 'kmod' 'libkmod.so' 'hwdata' 'libcap' 'libcap.so'
            'libgcrypt' 'libxcrypt' 'libcrypt.so' 'systemd-libs' 'libidn2' 'lz4' 'pam'
            'libelf' 'libseccomp' 'libseccomp.so' 'util-linux' 'libblkid.so'
-           'libmount.so' 'xz' 'pcre2' 'audit' 'libaudit.so'
+           'libmount.so' 'xz' 'pcre2' 'audit' 'libaudit.so' 
            'openssl' 'libcrypto.so' 'libssl.so')
   provides=('nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver")
   replaces=('nss-myhostname' 'systemd-tools' 'udev')
@@ -205,6 +202,7 @@ package_systemd() {
           etc/systemd/system.conf
           etc/systemd/timesyncd.conf
           etc/systemd/user.conf
+          etc/udev/iocost.conf
           etc/udev/udev.conf)
   install=systemd.install
 
@@ -235,7 +233,7 @@ package_systemd() {
   rm "$pkgdir"/usr/{bin/resolvconf,share/man/man1/resolvconf.1}
 
   # avoid a potential conflict with [core]/filesystem
-  #rm "$pkgdir"/usr/share/factory/etc/{issue,nsswitch.conf}
+  rm "$pkgdir"/usr/share/factory/etc/{issue,nsswitch.conf}
   sed -i -e '/^C \/etc\/nsswitch\.conf/d' \
     -e '/^C \/etc\/issue/d' "$pkgdir"/usr/lib/tmpfiles.d/etc.conf
 

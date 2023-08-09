@@ -1,11 +1,12 @@
 name: Build all packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl, fcitx5, feh, git, ibus, linux, numlockx, picom, wget, xorg-xinit, xorg-xsetroot]
+        jemalloc: [linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [ananicy, ananicy-rule, bash, bpf, btrfs-progs, dbus, ffmpeg, glib2, libbpf, libdrm, lua, libx11, lz4, mesa, neovim, nss, ntfs-3g, perl, pixman, polkit, rtkit, sqlite, systemd, uksmd, v2raya-git, wayland, xorg-server, zlib, zstd, zsh]
+        nojemalloc: [btrfs-progs, mesa, neovim, nss, polkit, systemd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [binutils, libtool, python, util-linux]
+        nolto: [binutils]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

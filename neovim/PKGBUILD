@@ -1,8 +1,8 @@
 # Maintainer: iamawacko <iamawacko@protonmail.com>
 # Contributor: Francesco La Camera <fm@lacamera.org>
 pkgname=neovim-nightly
-pkgver=0.10.0.dev.20230525
-pkgrel=1.1
+pkgver=0.10.0.dev.20230804.g3d3ec27
+pkgrel=1
 pkgdesc='hyperextensible Vim-based text editor'
 arch=('x86_64')
 url='https://github.com/neovim/neovim/releases/tag/nightly'
@@ -78,7 +78,7 @@ _pkgver=$(_pkgver)
 source=("$pkgname-$_pkgver::https://github.com/neovim/neovim/archive/refs/tags/nightly.tar.gz")
 provides=("neovim=$_pkgver" 'vim-plugin-runtime')
 conflicts=('neovim')
-sha256sums=('SKIP')
+sha256sums=('def837387f81d0e9ccf6941ae187c4058bca71f73981d54e2334536107af90b5')
 
 pkgver() {
 	printf "$_pkgver"
