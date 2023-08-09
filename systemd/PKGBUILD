@@ -117,12 +117,14 @@ build() {
     -Dshared-lib-tag="${pkgver}-${pkgrel}"
     -Dmode=release
 
-    -Dbootloader=true
     -Dbpf-framework=true
+    -Dbootloader=true
     -Dima=false
     -Dlibidn2=true
     -Dlz4=true
     -Dman=true
+    -Dtests=false
+    -Dslow-tests=false
 
     # We disable DNSSEC by default, it still causes trouble:
     # https://github.com/systemd/systemd/issues/10579
@@ -154,7 +156,11 @@ build() {
     -D optimization=3
   )
 
-  meson setup "$pkgbase-stable" build "${_meson_options[@]}"
+  arch-meson "$pkgbase-stable" build "${_meson_options[@]}" \
+      -D b_pie=false \
+      -D c_std=gnu2x \
+      -D cpp_std=gnu++2a \
+      --buildtype=release
 
   meson compile -C build
 }
