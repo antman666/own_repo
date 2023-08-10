@@ -8,7 +8,7 @@
 pkgname=binutils
 pkgver=2.41
 _commit=31b78cc991781265d9404bd55151691bedd6d556
-pkgrel=2.1
+pkgrel=2.2
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -49,6 +49,7 @@ prepare() {
   # unsupported targets.  This allows the binutils to be built with
   # BPF support enabled.
   patch -Np1 -i "${srcdir}"/gold-warn-unsupported.patch
+  patch -Np1 -i "${srcdir}"/compilespeed.patch
 }
 
 build() {
@@ -60,6 +61,7 @@ build() {
     --with-lib-path=/usr/lib:/usr/local/lib \
     --with-bugurl=https://bugs.archlinux.org/ \
     --enable-cet \
+    --enable-colored-disassembly \
     --enable-default-execstack=no \
     --enable-deterministic-archives \
     --enable-gold \
@@ -105,11 +107,13 @@ package() {
   rm -f "${pkgdir}"/usr/lib/lib{bfd,opcodes}.so
   tee "${pkgdir}"/usr/lib/libbfd.so << EOS
 /* GNU ld script */
+
 INPUT( /usr/lib/libbfd.a -lsframe -liberty -lz -lzstd -ldl )
 EOS
 
   tee "${pkgdir}"/usr/lib/libopcodes.so << EOS
 /* GNU ld script */
+
 INPUT( /usr/lib/libopcodes.a -lbfd )
 EOS
 
