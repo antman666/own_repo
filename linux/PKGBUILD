@@ -125,9 +125,10 @@ source=(
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/0001-bbr3.patch"
+  # "${_patchsource}/0001-bbr3.patch"
   "${_patchsource}/0003-fixes.patch"
   "${_patchsource}/0005-ksm.patch"
+  "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
   "${_xanmodpatch}/intel/0008-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/intel/6.4.0-xanmod2+/0011-x86-sched-itmt-Give-all-SMT-siblings-of-a-core-the-s.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
@@ -270,9 +271,9 @@ prepare() {
   msg2 "Enable BBR2"
   scripts/config --module TCP_CONG_CUBIC \
                  --disable DEFAULT_CUBIC \
-                 --enable TCP_CONG_BBR \
-                 --enable DEFAULT_BBR \
-                 --set-str DEFAULT_TCP_CONG bbr
+                 --enable TCP_CONG_BBR2 \
+                 --enable DEFAULT_BBR2 \
+                 --set-str DEFAULT_TCP_CONG bbr2
 
   msg2 "Disabling NUMA"
   scripts/config --disable NUMA \
