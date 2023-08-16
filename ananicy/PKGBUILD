@@ -9,7 +9,7 @@ pkgdesc="Ananicy Cpp is a full rewrite of Ananicy in C++, featuring lower CPU an
 arch=(x86_64 i386 armv7h)
 url="https://gitlab.com/ananicy-cpp/ananicy-cpp.git"
 license=('GPLv3')
-depends=(fmt spdlog nlohmann-json systemd libelf zlib libbpf)
+depends=(fmt nlohmann-json systemd libelf zlib libbpf) # spdlog 
 makedepends=(cmake ninja clang git nlohmann-json bpf)
 optdepends=("ananicy-rules-git: community rules"
             "ananicy-rules: Rules based for ananicy-cpp")
@@ -48,7 +48,7 @@ build() {
         -GNinja \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DUSE_EXTERNAL_SPDLOG=ON \
+        -DUSE_EXTERNAL_SPDLOG=OFF \
         -DUSE_EXTERNAL_JSON=ON \
         -DUSE_BPF_PROC_IMPL=ON \
         -DBPF_BUILD_LIBBPF=OFF \
