@@ -1,14 +1,15 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=libdrm
-pkgver=2.4.115
-pkgrel=3.2
+pkgver=2.4.116
+pkgrel=1.1
 pkgdesc="Userspace interface to kernel DRM services"
 url="https://dri.freedesktop.org/"
 arch=(x86_64)
 license=('custom')
-depends=('libpciaccess')
-makedepends=('python-docutils' 'meson' 'cairo')
+depends=('libpciaccess' 'glibc')
+makedepends=('python-docutils' 'meson')
+optdepends=('cairo: needed for modetest tool')
 checkdepends=('cairo')
 replaces=('libdrm-new' 'libdrm-nouveau')
 source=(https://dri.freedesktop.org/$pkgname/$pkgname-$pkgver.tar.xz{,.sig}

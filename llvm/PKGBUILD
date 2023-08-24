@@ -4,11 +4,11 @@
 pkgname=llvm
 pkgdesc="LLVM Toolchain with clang, clang-tools-extra, compiler-rt, openmp, polly, lldb, lld, bolt"
 pkgver=16.0.6
-pkgrel=1.1
+pkgrel=1.2
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:Apache 2.0 with LLVM Exception')
-options=(!lto)
+options=('staticlibs' '!lto' '!ccache')
 provides=('llvm' "llvm=${pkgver}" 'llvm-libs' 'llvm-ocaml' 'clang' "clang=${pkgver}" 'clang-analyzer' 'clang-tools-extra' 'openmp' 'polly' 'compiler-rt' 'lld' 'lldb' 'libc++' 'libc++abi' 'libc++experimental')
 conflicts=('llvm' 'llvm-libs' 'llvm-ocaml' 'clang' 'clang-analyzer'
   'clang-tools-extra' 'openmp' 'polly' 'compiler-rt' 'lld' 'lldb'
@@ -34,8 +34,6 @@ source=(
 sha256sums=('SKIP'
             '597dc5968c695bbdbb0eac9e8eb5117fcd2773bc91edf5ec103ecffffab8bc48'
             '350a1781e277ad04c85925fb62a939f045932143d14ab48bda09a8f29a0783fa')
-
-options=('staticlibs' '!ccache')
 
 _extra_build_flags=()
 _build_documentation=0
@@ -177,10 +175,10 @@ package() {
     exit 1
   )
 
-  if [[ "${CARCH:?}" == "x86_64" ]]; then
-    mv "${pkgdir:?}/usr/include/llvm/Config/llvm-config"{,-64}.h
-    cp "${srcdir:?}/llvm-config.h" "${pkgdir:?}/usr/include/llvm/Config/llvm-config.h"
-  fi
+  # if [[ "${CARCH:?}" == "x86_64" ]]; then
+  #   mv "${pkgdir:?}/usr/include/llvm/Config/llvm-config"{,-64}.h
+  #   cp "${srcdir:?}/llvm-config.h" "${pkgdir:?}/usr/include/llvm/Config/llvm-config.h"
+  # fi
 
   # Symlink LLVMgold.so from /usr/lib/bfd-plugins
   # https://bugs.archlinux.org/task/28479
