@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [fcitx5, git, linux]
+        jemalloc: []
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [libdrm, mesa, zlib]
+        nojemalloc: [libdrm, llvm, mesa]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [util-linux, llvm]
+        nolto: []
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
