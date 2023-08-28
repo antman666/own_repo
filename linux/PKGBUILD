@@ -92,7 +92,7 @@ _subarch=36
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
 pkgver=6.4.12
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
@@ -115,9 +115,6 @@ _gcc_more_v=20221217
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.4"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.4"
 _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.4.y-xanmod"
-# _patchsource="https://r.zhullyb.top/https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.4"
-# _patchsources="https://r.zhullyb.top/https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.4"
-# _xanmodpatch="https://r.zhullyb.top/https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.4.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -143,15 +140,15 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('d8e776a1ebc58f5f236ed3bf231336d1b1b4724f14dfafe2eeda789e022fcfc08bc6ff28c975ed94ede2145fab8aed551589873daefbd159a6fd7d8acc01e2f1'
+b2sums=('0d8b6e447a7fe390b44967ab8dc2e116de29b6fac15a91fe8398d091f5803984495dea595d53938e75f0213b5268bbdb63a86284463552c8e59ffb02cb98ce17'
         'SKIP'
-        'f3aa59e19dcb0973384b1e6ae7d9d548f84faf96d72ca3350d18184ec1193f904ef909c276d589b2dcde0f52b03b83f59e83aba982810714ce082215c9291561'
+        'd37af218085f2386c51ff25f04ddab99f594f6e190d1acb44676ab61f7b75783e163edb75d1150733a9eba2cb14eb8c122caf971ec63f2e8f95632c6215ab7f6'
         'ae97e829681419a618c69d063ba655c1fee20fb543af3ea9fd5e0c2183c6d7baeb6bdd07ab87a3d1700b1227bbe86968dc9ca798707932a5c91e980c0ab5b8bb'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         '32e117f9e7954a729a45a752c46b01aca39358d88ef88a55ebb63a91efd9eca23759a122d0f5237bc582e3999333b7a20c87a4857ed3834abb9c2e5c1ccb526e'
-        '1dc7a3e72d35a56b681f8cff61504ad0dc904d20393ab574978d3aef457f8f137a31e8401cdcceed589c1ce6ee508d7fcc024d9bc8b42033c4bbf100ab28183d'
-        '36afa201c2def4fc0e2a0df4c4fe1664546d3da38556823a040afb0433baa156555304b6f7833b9ee735e44604754c6e1f1b787b9af99c1f6310c39a2960fdd0'
-        'eb2809edfc9ddbf014965b7e37a8452085b1c938fcec232708f2404b7da0752953134f5fd9be9230ff6c672491185f1a9602d0fb89bcaa0a06290f7976d5b8b2'
+        'aa9a86a4c5bac55bd5bd2697cc3978e391b85e13cffaabfdc88967e1c0fb5db2dd68357e48607c25fc35bb24da24614b595c917c4a028987e1f2fff6bb4b4f05'
+        '870de14371812f8d3bccf45fe39762315263eebb17b459fed88be79de44bf2ffe3b51cf6e7ee6acc10cb05cc487800493f51d08826c3ec4a49a7d500428dad1a'
+        '753de3d232a767cec62cc660714338747239ebdc556c5ffbecb455a69df9fbe132158c4885cf46a78cf873fd248d54632ac42c60d89d78d3f66017ad56b7d281'
         '65742c310a0c5424551f96e459ef9aceb234287b2cfc5b46186a14deb5847beeaeb6cecab4ce8a96073f4fba4ea34d2ab58f438572dc1f2a4d2b4cf8452d2e74'
         'e6446d68a657d3d5aacd011327ddc62fb5182d913da62e8bcbb30916e0fcc6e7495c9550a54f39a2efc3b6b48112835eea8322385294e5bd267b23f1cb4e3216'
         'fcc2ca3beef4d669e32f429e4d217e0eecb23f4b63860ca7b91188df7dd02b43560f324ba0b560fb50a5dbfed9af235acdaafd59e3f34252e8eb1fdbaa8296c7'
