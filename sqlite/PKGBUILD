@@ -3,11 +3,11 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
-_srcver=3410200
+_srcver=3430000
 _docver=${_srcver}
-#_docver=3420000
-pkgver=3.42.0
-pkgrel=2.2
+#_docver=3430000
+pkgver=3.43.0
+pkgrel=1.1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
 license=('custom:Public Domain')
@@ -65,7 +65,7 @@ build() {
 package_sqlite() {
 
  pkgdesc="A C library that implements an SQL database engine"
- depends=('readline' 'zlib')
+ depends=('readline' 'zlib' 'glibc')
  provides=("sqlite3=$pkgver")
  replaces=("sqlite3")
 
@@ -89,7 +89,7 @@ package_sqlite() {
 package_sqlite-tcl() {
 
  pkgdesc="sqlite Tcl Extension Architecture (TEA)"
- depends=('sqlite')
+ depends=('sqlite' 'glibc')
  provides=("sqlite3-tcl=$pkgver")
  replaces=("sqlite3-tcl")
 
@@ -108,7 +108,7 @@ package_sqlite-tcl() {
 package_sqlite-analyzer() {
 
  pkgdesc="An analysis program for sqlite3 database files"
- depends=('sqlite' 'tcl')
+ depends=('sqlite' 'tcl' 'glibc')
 
   cd sqlite-src-$_srcver
   install -m755 -d "${pkgdir}"/usr/bin
