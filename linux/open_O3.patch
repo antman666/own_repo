@@ -2,12 +2,14 @@ diff --git a/Makefile b/Makefile
 index 313dc8e..b3666f3 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -449,9 +449,9 @@ HOSTRUSTC = rustc
+@@ -447,10 +447,10 @@ HOSTRUSTC = rustc
  HOSTPKG_CONFIG	= pkg-config
  
  KBUILD_USERHOSTCFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes \
--			 -O2 -fomit-frame-pointer -std=gnu11
-+			 -O2 -march=alderlake -fomit-frame-pointer -std=gnu11
+-			 -O2 -fomit-frame-pointer -std=gnu11 \
+-			 -Wdeclaration-after-statement
++                         -O2 -march=alderlake -fomit-frame-pointer -std=gnu11 \
++                         -Wdeclaration-after-statement
  KBUILD_USERCFLAGS  := $(KBUILD_USERHOSTCFLAGS) $(USERCFLAGS)
 -KBUILD_USERLDFLAGS := $(USERLDFLAGS)
 +KBUILD_USERLDFLAGS := -Wl,-O2,--as-needed -march=alderlake $(USERLDFLAGS)
