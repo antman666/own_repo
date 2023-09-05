@@ -122,10 +122,10 @@ source=(
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/0003-bbr3.patch"
+  # "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0004-fixes.patch"
   "${_patchsource}/0006-ksm.patch"
-  # "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
+  "${_patchsources}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
   "${_xanmodpatch}/net/tcp/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/net/tcp/0002-tcp-Add-a-sysctl-to-allow-TCP-window-shrinking-in-or.patch"
   "${_xanmodpatch}/intel/0002-sched-fair-Introduce-SIS_CURRENT-to-wake-up-short-ta.patch"
