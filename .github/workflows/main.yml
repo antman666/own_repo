@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build jemalloc packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4
       - id: makepkg
         uses: antman666/pkgbuild-action@jemalloc
         with:
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-jemalloc packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4
       - id: makepkg
         uses: antman666/pkgbuild-action@non-jemalloc
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build non-lto packages for arch
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4
       - id: makepkg
         uses: antman666/pkgbuild-action@non-lto
         with:
@@ -67,7 +67,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Build non-lto packages for arch
-  #       uses: actions/checkout@v3.5.3
+  #       uses: actions/checkout@v4
   #     - id: makepkg
   #       uses: antman666/pkgbuild-action@non-lto
   #       with:
