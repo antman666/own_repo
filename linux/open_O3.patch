@@ -1,14 +1,13 @@
 diff --git a/Makefile b/Makefile
-index 313dc8e..b3666f3 100644
+index c47558b..20a81d2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -818,6 +818,19 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
+@@ -831,6 +831,18 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
  ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
  KBUILD_CFLAGS += -O2
  KBUILD_RUSTFLAGS += -Copt-level=2
 +else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 +KBUILD_CFLAGS += -O3
-+KBUILD_CFLAGS += -fopenmp
 +KBUILD_RUSTFLAGS += -Copt-level=3 -Ctarget-cpu=alderlake
 +KBUILD_CFLAGS += $(call cc-option, -mllvm -polly) \
 +                 $(call cc-option, -mllvm -polly-run-dce) \
