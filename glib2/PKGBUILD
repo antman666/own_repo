@@ -2,8 +2,8 @@
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=glib2
-pkgver=2.76.4
-pkgrel=1.2
+pkgver=2.78.0
+pkgrel=1.1
 pkgdesc="Low level core library"
 url="https://wiki.gnome.org/Projects/GLib"
 license=(LGPL)
@@ -31,12 +31,10 @@ checkdepends=(
   glib2
 )
 options=(!debug !lto staticlibs)
-_commit=f522c3f94d67493c58e9b0e27a7862c2e7ec105b  # tags/2.76.4^0
+_commit=3c543ef69ffab7c78e29eaf383e7fe2c7df6cd49  # tags/2.78.0^0
 source=("git+https://gitlab.gnome.org/GNOME/glib.git#commit=$_commit"
         "git+https://gitlab.gnome.org/GNOME/gvdb.git"
         0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
-        0002-glocalfile-Sum-apparent-size-only-for-files-and-syml.patch
-        0003-tests-file-Do-not-rely-on-du-bytes-behaviour.patch
         gio-querymodules.hook
         glib-compile-schemas.hook)
 sha256sums=('SKIP'
@@ -55,11 +53,6 @@ prepare() {
 
   # Suppress noise from glib-compile-schemas.hook
   git apply -3 ../0001-glib-compile-schemas-Remove-noisy-deprecation-warnin.patch
-
-  # fix test suite issues with coreutils >=9.2
-  # https://gitlab.gnome.org/GNOME/glib/-/merge_requests/3358
-  git apply -3 ../0002-glocalfile-Sum-apparent-size-only-for-files-and-syml.patch
-  git apply -3 ../0003-tests-file-Do-not-rely-on-du-bytes-behaviour.patch
 
   git submodule init
   git submodule set-url subprojects/gvdb "$srcdir/gvdb"

@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=btrfs-progs
-pkgver=6.3.3
+pkgver=6.5
 pkgrel=1.1
 pkgdesc='Btrfs filesystem utilities'
 arch=('x86_64')

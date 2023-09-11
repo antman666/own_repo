@@ -1,5 +1,6 @@
-name: Build all packages
+name: Build some packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
@@ -26,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [libdrm, llvm, mesa]
+        nojemalloc: [ananicy-rule, btrfs-progs, dbus, ffmpeg, mesa, neovim, nss, systemd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: []
+        nolto: [glib2, spirv-llvm-translator]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
