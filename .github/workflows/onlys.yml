@@ -1,6 +1,5 @@
 name: Build some packages
 on:
-  push:
   workflow_dispatch:
 jobs:
   # build_jemalloc:
