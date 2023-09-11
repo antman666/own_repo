@@ -1,28 +1,29 @@
 name: Build some packages
 on:
+  push:
   workflow_dispatch:
 jobs:
-  build_jemalloc:
-    strategy:
-      matrix:
-        jemalloc: []
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build jemalloc packages for arch
-        uses: actions/checkout@v4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@jemalloc
-        with:
-          pkgdir: ${{ matrix.jemalloc }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@main
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
+  # build_jemalloc:
+  #   strategy:
+  #     matrix:
+  #       jemalloc: []
+  #     fail-fast: false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Build jemalloc packages for arch
+  #       uses: actions/checkout@v4
+  #     - id: makepkg
+  #       uses: antman666/pkgbuild-action@jemalloc
+  #       with:
+  #         pkgdir: ${{ matrix.jemalloc }}
+  #         namcapDisable: 1
+  #         makepkgArgs: "--skippgpcheck"
+  #     - uses: ncipollo/release-action@main
+  #       with:
+  #         allowUpdates: true
+  #         tag: "x86_64"
+  #         artifacts: "./*/*.zst"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
   build_no_jemalloc:
     strategy:
       matrix:
@@ -90,7 +91,8 @@ jobs:
   #         artifacts: "./own-repo.*"
   #         token: ${{ secrets.GITHUB_TOKEN }}
   update_db:
-    needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
+    # needs: [build_jemalloc, build_no_jemalloc, build_no_lto]
+    needs: [build_no_jemalloc, build_no_lto]
     runs-on: ubuntu-latest
     steps: 
       - uses: antman666/update-db-for-repo@mine
