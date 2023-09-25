@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=y
+_makenconfig=
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -42,7 +42,7 @@ _1666_HZ_ticks=
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
 # option is 39.
-_subarch=
+_subarch=36
 
 #  1. AMD Opteron/Athlon64/Hammer/K8 (MK8)
 #  2. AMD Opteron/Athlon64/Hammer/K8 with SSE3 (MK8SSE3) (NEW)
@@ -112,16 +112,16 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://r.zhullyb.top/https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.5"
-_patchsources="https://r.zhullyb.top/https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.5"
-_xanmodpatch="https://r.zhullyb.top/https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.5.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.5"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.5"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.5.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   open_O3.patch
   # bbr2.patch
-  # "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
+  "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0005-fixes.patch"
@@ -267,13 +267,13 @@ prepare() {
     scripts/config --set-val CONFIG_HZ 1666
   fi
 
-  # BBR2
-  msg2 "Enable BBR2"
+  # BBR3
+  msg2 "Enable BBR3"
   scripts/config --module TCP_CONG_CUBIC \
                  --disable DEFAULT_CUBIC \
-                 --enable TCP_CONG_BBR2 \
-                 --enable DEFAULT_BBR2 \
-                 --set-str DEFAULT_TCP_CONG bbr2
+                 --enable TCP_CONG_BBR \
+                 --enable DEFAULT_BBR \
+                 --set-str DEFAULT_TCP_CONG bbr
 
   msg2 "Disabling NUMA"
   scripts/config --disable NUMA \
@@ -355,8 +355,8 @@ prepare() {
 
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
-  # msg2 "Patching to enable GCC optimization for other uarchs..."
-  # patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.17+.patch"
+  msg2 "Patching to enable GCC optimization for other uarchs..."
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.17+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
