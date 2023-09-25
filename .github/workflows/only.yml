@@ -6,14 +6,14 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [linux]
+        packages: [glib2]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v4
       - id: makepkg
-        uses: antman666/pkgbuild-action@jemalloc
+        uses: antman666/pkgbuild-action@non-lto
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
