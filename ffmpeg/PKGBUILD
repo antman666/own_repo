@@ -6,7 +6,7 @@
 
 pkgname=ffmpeg
 pkgver=6.0
-pkgrel=6.3
+pkgrel=7.1
 epoch=2
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -63,6 +63,7 @@ depends=(
   libxvidcore.so
   libzimg.so
   ocl-icd
+  onevpl
   opencore-amr
   openjpeg2
   opus
@@ -89,7 +90,8 @@ makedepends=(
 )
 optdepends=(
   'avisynthplus: AviSynthPlus support'
-  'intel-media-sdk: Intel QuickSync support'
+  'intel-media-sdk: Intel QuickSync support (legacy)'
+  'onevpl-intel-gpu: Intel QuickSync support'
   'ladspa: LADSPA filters'
   'nvidia-utils: Nvidia NVDEC/NVENC support'
 )
@@ -154,7 +156,6 @@ build() {
     --enable-libiec61883 \
     --enable-libjack \
     --enable-libjxl \
-    --enable-libmfx \
     --enable-libmodplug \
     --enable-libmp3lame \
     --enable-libopencore_amrnb \
@@ -175,6 +176,7 @@ build() {
     --enable-libvidstab \
     --enable-libvmaf \
     --enable-libvorbis \
+    --enable-libvpl \
     --enable-libvpx \
     --enable-libwebp \
     --enable-libx264 \

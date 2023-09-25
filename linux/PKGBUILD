@@ -6,7 +6,7 @@
 # Set the next two variables to ANYTHING that is not null to enable them
 
 # Tweak kernel options prior to a build via nconfig
-_makenconfig=
+_makenconfig=y
 
 # Only compile select modules to reduce the number of modules built
 #
@@ -42,7 +42,7 @@ _1666_HZ_ticks=
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
 # option is 39.
-_subarch=36
+_subarch=
 
 #  1. AMD Opteron/Athlon64/Hammer/K8 (MK8)
 #  2. AMD Opteron/Athlon64/Hammer/K8 with SSE3 (MK8SSE3) (NEW)
@@ -92,7 +92,7 @@ _subarch=36
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
 pkgver=6.5.3
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
@@ -112,27 +112,28 @@ fi
 options=('!strip')
 
 _gcc_more_v=20221217
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.5"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.5"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.5.y-xanmod"
+_patchsource="https://r.zhullyb.top/https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.5"
+_patchsources="https://r.zhullyb.top/https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.5"
+_xanmodpatch="https://r.zhullyb.top/https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.5.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
-  open_O3.patch
+  # open_O3.patch
   # bbr2.patch
-  "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
+  # "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/0003-bbr3.patch"
+  "${_patchsource}/0004-cachy.patch"
   "${_patchsource}/0005-fixes.patch"
   "${_patchsource}/0006-ksm.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0002-sched-fair-Introduce-SIS_CURRENT-to-wake-up-short-ta.patch"
   "${_xanmodpatch}/intel/0006-locking-rwsem-spin-faster.patch"
-  "${_xanmodpatch}/intel/0007-drivers-initialize-ata-before-graphics.patch"
+  # "${_xanmodpatch}/intel/0007-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0010-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "${_xanmodpatch}/xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  # "${_xanmodpatch}/xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
   "${_xanmodpatch}/xanmod/0018-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
@@ -142,22 +143,19 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-b2sums=('74a4f998987780001e924e28f8a3f585cd50da9d87d120bcb33fe1fd4fccccc2301fbc3c84c62e914e4694b5eb138e33cacda515db51d5a3997d114154449be3'
+b2sums=('7673a5375b0a715eca2dcff5b4f6fca13c8564a930b3b7ee112b67ed51541277378408abed1e1b128610f0db3425abbb30cd3751ce30ff73795cf594fb508142'
         'SKIP'
-        '64c23e876bd8ad7e7d37bed3488fd3bd251accd951ce7d0575901a14a3600d36243ad641872fbca71f0139d889dc453d0db4dfc155fb91677a242367150cc602'
-        'bf6fd38269520cf95b2c36a7205545fd7f7a79e8fc8d9bbc20a9e96b32c3d70e2b991654521da25892acc7304319c7b8f84b2f00fda11f9dedb65afffe6f0ac0'
-        '0087d9efab6d03d19002326cead99643656cd03649d40d6005646063bb98d7e1bf5d324db0d311ebd15a8b2a2adb86ad7371ee7524ff229dfe72e7232d80e322'
-        'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
-        'c1816788d359f1074a4a05803a7161956717b35b8449c2b6a149e98ed0b7c5b14101672c9910e339f2c85762088950276d4bc84ca2b9239a2debdc124ccb1774'
-        '9c07d1c7420cea7066f47cfdd0a13168e72472186aff77c7197825d7c939fc922b196979bb9c068d33f14f9d28f7ec751613e08eeed5a3c7235918bbe429c5f4'
-        '96138f95f604b3f565983db8853a5a4cf7a9340187c1450ba345c1385cde973174bc93f6768da4b78b58369a4b3460432bd314da51bc0222e7471b34c5100ced'
+        '68142f66d24f8a3de4b8bc4a633655f36a41971a5e5d1727af1c73c654bc3f725e0645176e8c1efa8944c1ed7c76054e8b3394b93676bea5a2c9751d4f19aa78'
+        '25469003fcc58e5449491f276e1f2b2b26b3e3a15412f8c7616163cafa09f491c32fb181427ec34839467da4992152a3f9f5576c29ed3c156207566e82445f2f'
+        '959b06ac21f68ce461459af0d3df7d994b582d818d522bf8651cbc53bca0a065ddbad6c6997f272bf668d795fe81db847560484858db4b94c51aa10f5a77fdca'
+        'ce00c1a3662e32c66836fd69cb70f489e59c230b7fbc6d767ac56236a1e0fe1a10b81db42615694584307dfd7c6e17315e18addb24dbed7f721bd437f286ee60'
+        'f968002d8667160def1dcc288eb88a27d375af9fac5430b9cd76da6692b80041e0fb274d0990b0966f30360f285f23c5669a34a0ee6e07f28533a671f86fc3b4'
+        '2af3fc062a4068c1a5f42f8c45cbd7f56348286a693c62a11afae050fe5d5ad34adf1d1f082a92b831960c7e68d96c335e2254e176ada0989a9f722d754a8715'
         'eafc4a591fc8627f38af6875cc74be896cb6da5b9dcca0fb5a05d9cbe01ef2ebeb59fcc9383d234a613b9665437acd4bd34adcafba6b155e6980f9d43c740333'
         '8f90142f7d7d3c73d0c87ee04da84f9ba07c0992e50a03f9e566f6b6582546e490bb51eee3bfd9fd00f2e7c5d0fc07c143beb9abd0c6df44d92304134d0caade'
         'c392ad2e85d42e389130edcef84c2987516b51537bde0f5d23ab8ee01c792d51499a1a5c3fb6c45340fda1459ffb8374ba1566d96ff5c0be00a050f8078f976c'
-        'e63a002a56ed5f813b6e28bbe86ac3e70b30916deff1d1abfb53d22b18b92293241c26a24e819d43ebd5a955e9ca67c99a617c9742117441845f45399a0c2135'
         '36e54fee99102f9db990af92eb5fe5b4c0fa5c1bbbec801f46e57c3c23d2e15c02957ee64f002927f411b96e16b07e1e94158aad82faab6d12bf261414382e82'
         'b7ece65cd15b265adaebd01119fe70c4fd07c943aae5262dc42d82c7b418514c608bba239478872f5ff887c9fb52ae6fc32a9f846ac5de199a6419a5ff28b570'
-        '30fcb803665aaad6562e11e7f233a64a552b3a670307aa19d5d806730ac3bcd98baa710fca2cf9efa4599c9573ef446631845b1dc2cdf6633718084b08a62a98'
         '30fd6bb4eab08ea507c1a8f0f68f1d8fe96592203de33faed6e78348d11f34d193cda5faa692ea1e7a2a6d998c8b95544fba8ffbfd7e908c5736ff282d748ab3'
         '3a1142ec9cd7928e1c924996e8209f8fafb53182b0377b5346d0a7e141658cd22d950efd484481b4c8a91ce9ba4424be1d9119589b4f0a6c6d951e405c6d4432')
 
@@ -356,8 +354,8 @@ prepare() {
 
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
-  msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.17+.patch"
+  # msg2 "Patching to enable GCC optimization for other uarchs..."
+  # patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-5.17+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
