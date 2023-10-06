@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=btrfs-progs
-pkgver=6.5.1
+pkgver=6.5.2
 pkgrel=1.1
 pkgdesc='Btrfs filesystem utilities'
 arch=('x86_64')
@@ -12,11 +12,11 @@ depends=('glibc' 'util-linux-libs' 'lzo' 'zlib' 'zstd' 'libgcrypt' 'systemd-libs
 optdepends=('python: libbtrfsutil python bindings'
             'e2fsprogs: btrfs-convert'
             'reiserfsprogs: btrfs-convert')
-url='https://btrfs.wiki.kernel.org'
+url='https://btrfs.readthedocs.io'
 replaces=('btrfs-progs-unstable')
 conflicts=('btrfs-progs-unstable')
 provides=('btrfs-progs-unstable')
-license=('GPL2')
+license=('GPL-2.0-only')
 validpgpkeys=('F2B41200C54EFB30380C1756C565D5F9D76D583B')
 source=("https://cdn.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$pkgver.tar."{sign,xz}
         'initcpio-install-btrfs'

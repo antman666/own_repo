@@ -1,11 +1,12 @@
 name: Build some packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl]
+        jemalloc: [fcitx5, linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [btrfs-progs, ffmpeg, jemalloc, lua, sqlite, systemd]
+        nojemalloc: [ananicy, btrfs-progs, ffmpeg, mesa, neovim, nss, systemd, uksmd]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [glib2]
+        nolto: [bpf, glib2]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

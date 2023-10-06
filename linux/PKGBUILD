@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.5.5
+pkgver=6.5.6
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -144,7 +144,7 @@ validpgpkeys=(
 
 b2sums=('2152bdcd8799b89612e76c1b3794313f981e08eda23c0150e56297a07f326c85f2a7a08106eb4e4d502b2134ed69e4344263fe6a2b398af5b5d7ccd018c0899b'
         'SKIP'
-        '2d117566f8b2381f15aadfa6c17c610fa423eb189bd016ab5f6dd68cff9fd4cb550f26a552895ae997d6c67f51949835094a11e3fba4fdf2dbdcbe2ec1b2a1d3'
+        '7440a35477bdd83a9b67c55ef9be5b403eace1c738ae8d1a38ae379fca0932853a6957e6a9c3d71e5feb7a311453b6dced750ac4c7da0dd1fda01b46e7c855bd'
         'bf6fd38269520cf95b2c36a7205545fd7f7a79e8fc8d9bbc20a9e96b32c3d70e2b991654521da25892acc7304319c7b8f84b2f00fda11f9dedb65afffe6f0ac0'
         'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
         '25469003fcc58e5449491f276e1f2b2b26b3e3a15412f8c7616163cafa09f491c32fb181427ec34839467da4992152a3f9f5576c29ed3c156207566e82445f2f'

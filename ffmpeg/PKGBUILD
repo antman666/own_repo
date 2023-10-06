@@ -6,7 +6,7 @@
 
 pkgname=ffmpeg
 pkgver=6.0
-pkgrel=7.1
+pkgrel=7.2
 epoch=2
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -33,7 +33,6 @@ depends=(
   libgl
   libiec61883
   libjxl.so
-  libmfx
   libmodplug
   libopenmpt.so
   libpulse

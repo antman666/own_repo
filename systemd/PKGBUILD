@@ -6,8 +6,8 @@ pkgname=('systemd'
          'systemd-resolvconf'
          'systemd-sysvcompat'
          'systemd-ukify')
-_tag='2d7670ddc4473e18c92b15b4a4522e4f12a59d33' # git rev-parse v${_tag_name}
-_tag_name=254.4
+_tag='42f5ba1e56ddb81c244e0d85f13109acdb14cbee' # git rev-parse v${_tag_name}
+_tag_name=254.5
 pkgver="${_tag_name/-/}"
 pkgrel=1.1
 arch=('x86_64')
@@ -29,13 +29,17 @@ source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
         "git+https://github.com/systemd/systemd#tag=v${_tag_name%.*}?signed"
         '0001-Use-Arch-Linux-device-access-groups.patch'
         '0002-ClearLinux.patch'
+        # mkinitcpio files
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
+        # bootloader files
         'arch.conf'
         'loader.conf'
         'splash-arch.bmp'
+        # pam configuration
         'systemd-user.pam'
+        # pacman / libalpm hooks
         'systemd-hook'
         '20-systemd-sysusers.hook'
         '30-systemd-binfmt.hook'
