@@ -38,7 +38,7 @@ makedepends+=('readline' 'zlib' 'libelf' 'libcap' 'python-docutils')
 # turbostat deps
 makedepends+=('libcap')
 # bpftool
-makedepends+=('llvm')
+makedepends+=('clang')
 groups=("$pkgbase")
 source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git#tag=v${pkgver//_/-}?signed"
         "https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-$pkgver.5.xz"

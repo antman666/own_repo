@@ -3,31 +3,31 @@ on:
   push:
   workflow_dispatch:
 jobs:
-  build_jemalloc:
-    strategy:
-      matrix:
-        jemalloc: [fcitx5, linux]
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build jemalloc packages for arch
-        uses: actions/checkout@v4
-      - id: makepkg
-        uses: antman666/pkgbuild-action@jemalloc
-        with:
-          pkgdir: ${{ matrix.jemalloc }}
-          namcapDisable: 1
-          makepkgArgs: "--skippgpcheck"
-      - uses: ncipollo/release-action@main
-        with:
-          allowUpdates: true
-          tag: "x86_64"
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
+  # build_jemalloc:
+  #   strategy:
+  #     matrix:
+  #       jemalloc: [fcitx5, linux]
+  #     fail-fast: false
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Build jemalloc packages for arch
+  #       uses: actions/checkout@v4
+  #     - id: makepkg
+  #       uses: antman666/pkgbuild-action@jemalloc
+  #       with:
+  #         pkgdir: ${{ matrix.jemalloc }}
+  #         namcapDisable: 1
+  #         makepkgArgs: "--skippgpcheck"
+  #     - uses: ncipollo/release-action@main
+  #       with:
+  #         allowUpdates: true
+  #         tag: "x86_64"
+  #         artifacts: "./*/*.zst"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [ananicy, btrfs-progs, ffmpeg, mesa, neovim, nss, systemd, uksmd]
+        nojemalloc: [mesa]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [bpf, glib2]
+        nolto: [bpf]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
