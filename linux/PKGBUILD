@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.5.6
+pkgver=6.5.7
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
