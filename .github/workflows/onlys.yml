@@ -6,7 +6,7 @@ jobs:
   build_jemalloc:
     strategy:
       matrix:
-        jemalloc: [curl, linux]
+        jemalloc: [fcitx5, git, linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +27,7 @@ jobs:
   build_no_jemalloc:
     strategy:
       matrix:
-        nojemalloc: [ananicy, bash, ffmpeg, neovim, sqlite, v2raya-git]
+        nojemalloc: [bash, btrfs-progs, libdrm, neovim, sqlite, v2raya-git]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
   build_no_lto:
     strategy:
       matrix:
-        nolto: [glib2]
+        nolto: [glib2, util-linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
