@@ -1,7 +1,7 @@
 # Maintainer: Jan de Groot <jgc@archlinux.org>
 
 pkgname=libdrm
-pkgver=2.4.117
+pkgver=2.4.118
 pkgrel=1.1
 pkgdesc="Userspace interface to kernel DRM services"
 url="https://dri.freedesktop.org/"
@@ -38,9 +38,12 @@ build() {
     -D b_ndebug=true \
     -D b_lto=true \
     -D default_library=both \
-    -D radeon=enabled \
     -D udev=true \
-    -D valgrind=disabled
+	-D etnaviv=disabled \
+    -D freedreno=disabled \
+    -D vc4=disabled \
+    -D valgrind=disabled \
+    -D install-test-programs=false
 
   meson compile -C build
 }
