@@ -3,10 +3,10 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-analyzer' 'lemon' 'sqlite-doc')
-_srcver=3440000
+_srcver=3440200
 _docver=${_srcver}
 #_docver=3440000
-pkgver=3.44.0
+pkgver=3.44.2
 pkgrel=1.1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -36,16 +36,17 @@ prepare() {
 
 build() {
   export CPPFLAGS="$CPPFLAGS \
-    -DSQLITE_ENABLE_COLUMN_METADATA=1 \
-    -DSQLITE_ENABLE_UNLOCK_NOTIFY \
-    -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
-    -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
-    -DSQLITE_ENABLE_FTS3_PARENTHESIS \
-    -DSQLITE_SECURE_DELETE \
-    -DSQLITE_ENABLE_STMTVTAB \
-    -DSQLITE_MAX_VARIABLE_NUMBER=250000 \
-    -DSQLITE_MAX_EXPR_DEPTH=10000 \
-    -DSQLITE_ENABLE_MATH_FUNCTIONS"
+        -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+        -DSQLITE_ENABLE_UNLOCK_NOTIFY \
+        -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+        -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+        -DSQLITE_ENABLE_FTS3_PARENTHESIS \
+        -DSQLITE_SECURE_DELETE \
+        -DSQLITE_ENABLE_STMTVTAB \
+        -DSQLITE_ENABLE_STAT4 \
+        -DSQLITE_MAX_VARIABLE_NUMBER=250000 \
+        -DSQLITE_MAX_EXPR_DEPTH=10000 \
+        -DSQLITE_ENABLE_MATH_FUNCTIONS"
 
   # build sqlite
   cd sqlite-src-$_srcver
