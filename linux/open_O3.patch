@@ -66,7 +66,7 @@ index c47558b..fea6101 100644
  KBUILD_CFLAGS += -Os
  KBUILD_RUSTFLAGS += -Copt-level=s
 diff --git a/arch/arc/configs/axs101_defconfig b/arch/arc/configs/axs101_defconfig
-index e31a8ebc3..0016149f9 100644
+index 89720d6..8566cbd 100644
 --- a/arch/arc/configs/axs101_defconfig
 +++ b/arch/arc/configs/axs101_defconfig
 @@ -9,6 +9,7 @@ CONFIG_NAMESPACES=y
@@ -74,11 +74,11 @@ index e31a8ebc3..0016149f9 100644
  # CONFIG_PID_NS is not set
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
  # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/axs103_defconfig b/arch/arc/configs/axs103_defconfig
-index e0e8567f0..5b031582a 100644
+index 73ec01e..0a59dbc 100644
 --- a/arch/arc/configs/axs103_defconfig
 +++ b/arch/arc/configs/axs103_defconfig
 @@ -9,6 +9,7 @@ CONFIG_NAMESPACES=y
@@ -86,11 +86,11 @@ index e0e8567f0..5b031582a 100644
  # CONFIG_PID_NS is not set
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
  # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/axs103_smp_defconfig b/arch/arc/configs/axs103_smp_defconfig
-index fcbc952bc..d4eec39e0 100644
+index 4da0f62..48b0a50 100644
 --- a/arch/arc/configs/axs103_smp_defconfig
 +++ b/arch/arc/configs/axs103_smp_defconfig
 @@ -9,6 +9,7 @@ CONFIG_NAMESPACES=y
@@ -98,23 +98,11 @@ index fcbc952bc..d4eec39e0 100644
  # CONFIG_PID_NS is not set
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
- CONFIG_PERF_EVENTS=y
- # CONFIG_VM_EVENT_COUNTERS is not set
-diff --git a/arch/arc/configs/haps_hs_defconfig b/arch/arc/configs/haps_hs_defconfig
-index d87ad7e88..7337cdf4f 100644
---- a/arch/arc/configs/haps_hs_defconfig
-+++ b/arch/arc/configs/haps_hs_defconfig
-@@ -11,6 +11,7 @@ CONFIG_NAMESPACES=y
- # CONFIG_UTS_NS is not set
- # CONFIG_PID_NS is not set
- CONFIG_BLK_DEV_INITRD=y
-+CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
  CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
- # CONFIG_COMPAT_BRK is not set
+ # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/haps_hs_smp_defconfig b/arch/arc/configs/haps_hs_smp_defconfig
-index 8d82cdb7f..bc927221a 100644
+index 6fc98c1..1bb9a53 100644
 --- a/arch/arc/configs/haps_hs_smp_defconfig
 +++ b/arch/arc/configs/haps_hs_smp_defconfig
 @@ -11,6 +11,7 @@ CONFIG_NAMESPACES=y
@@ -122,21 +110,21 @@ index 8d82cdb7f..bc927221a 100644
  # CONFIG_PID_NS is not set
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
  # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/hsdk_defconfig b/arch/arc/configs/hsdk_defconfig
-index f856b03e0..aa000075a 100644
+index 9e79154..d695d06 100644
 --- a/arch/arc/configs/hsdk_defconfig
 +++ b/arch/arc/configs/hsdk_defconfig
-@@ -9,6 +9,7 @@ CONFIG_NAMESPACES=y
+@@ -8,6 +8,7 @@ CONFIG_NAMESPACES=y
+ # CONFIG_UTS_NS is not set
  # CONFIG_PID_NS is not set
  CONFIG_BLK_DEV_INITRD=y
- CONFIG_BLK_DEV_RAM=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_BLK_DEV_RAM=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
- # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/nsim_700_defconfig b/arch/arc/configs/nsim_700_defconfig
 index a1ce12bf5..326f6cde7 100644
 --- a/arch/arc/configs/nsim_700_defconfig
@@ -198,7 +186,7 @@ index d93b65008..a12656ec0 100644
  # CONFIG_AIO is not set
  CONFIG_EMBEDDED=y
 diff --git a/arch/arc/configs/vdk_hs38_defconfig b/arch/arc/configs/vdk_hs38_defconfig
-index 0c3b21416..d7c858df5 100644
+index 50c3439..b839bde 100644
 --- a/arch/arc/configs/vdk_hs38_defconfig
 +++ b/arch/arc/configs/vdk_hs38_defconfig
 @@ -4,6 +4,7 @@ CONFIG_HIGH_RES_TIMERS=y
@@ -206,11 +194,11 @@ index 0c3b21416..d7c858df5 100644
  CONFIG_IKCONFIG_PROC=y
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
  # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/arch/arc/configs/vdk_hs38_smp_defconfig b/arch/arc/configs/vdk_hs38_smp_defconfig
-index f9ad9d3ee..015c1d438 100644
+index 6d9e1d9..0d56b83 100644
 --- a/arch/arc/configs/vdk_hs38_smp_defconfig
 +++ b/arch/arc/configs/vdk_hs38_smp_defconfig
 @@ -4,6 +4,7 @@ CONFIG_HIGH_RES_TIMERS=y
@@ -218,7 +206,7 @@ index f9ad9d3ee..015c1d438 100644
  CONFIG_IKCONFIG_PROC=y
  CONFIG_BLK_DEV_INITRD=y
 +CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y
- CONFIG_EMBEDDED=y
+ CONFIG_EXPERT=y
  CONFIG_PERF_EVENTS=y
  # CONFIG_VM_EVENT_COUNTERS is not set
 diff --git a/init/Kconfig b/init/Kconfig
