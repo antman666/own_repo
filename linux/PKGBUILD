@@ -166,7 +166,6 @@ prepare() {
   cd linux-${pkgver}
 
   msg2 "Setting version..."
-  # scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
@@ -376,8 +375,8 @@ prepare() {
     fi
   fi
 
-  make ${BUILD_FLAGS[*]} -s kernelrelease > version
-  echo "Prepared $pkgbase version $(<version)"
+  make -s kernelrelease > version
+  msg2 "Prepared $pkgbase version $(<version)"
 
   [[ -z "$_makenconfig" ]] || make ${BUILD_FLAGS[*]} nconfig
 
@@ -391,19 +390,29 @@ build() {
 }
 
 _package() {
-  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with Con Kolivas' hrtimer patches and TT CPU scheduler by Hamad Al Marri and with some other patches"
-  depends=(coreutils kmod initramfs)
-  optdepends=('crda: to set the correct wireless channels of your country'
-              'linux-firmware: firmware images needed for some devices')
-  provides=(kvm winesync)
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with EEVDF CPU scheduler by Mainline and with some other patches"
+  depends=(
+    coreutils
+    kmod
+    initramfs
+  )
+  optdepends=(
+    'wireless-regdb: to set the correct wireless channels of your country'
+    'linux-firmware: firmware images needed for some devices'
+  )
+  provides=(
+    KSMBD-MODULE
+    VIRTUALBOX-GUEST-MODULES
+    WIREGUARD-MODULE
+  )
   # groups=('tt-uksm')
 
   cd linux-${pkgver}
 
   local kernver="$(<version)"
-  local modulesdir="$pkgdir/usr/lib/modules/$kernver"
+  local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
 
-  echo "Installing boot image..."
+  msg2 "Installing boot image..."
   # systemd expects to find the kernel here to allow hibernation
   # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
   #install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
@@ -415,38 +424,39 @@ _package() {
   # Used by mkinitcpio to name the kernel
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
-  echo "Installing modules..."
+  msg2 "Installing modules..."
   #make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
   # not needed since not building with CONFIG_DEBUG_INFO=y
 
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM INSTALL_MOD_PATH="$pkgdir/usr" modules_install
+  make LLVM=$_LLVM LLVM_IAS=$_LLVM INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
+    DEPMOD=/doesnt/exist modules_install
 
-  # remove build and source links
-  rm "$modulesdir"/{source,build}
+  # remove build link
+  rm "$modulesdir"/build
 }
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for ${pkgbase/linux/Linux} kernel"
-  depends=("$pkgbase") # added to keep kernel and headers packages matched
+  depends=(pahole "$pkgbase") # added to keep kernel and headers packages matched
   # groups=('tt-uksm')
 
   cd linux-${pkgver}
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
-  echo "Installing build files..."
+  msg2 "Installing build files..."
   install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
     localversion.* version vmlinux
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
   install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
   cp -t "$builddir" -a scripts
 
-  # add objtool for external module building and enabled VALIDATION_STACK option
+  # required when STACK_VALIDATION is enabled
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
-  # add xfs and shmem for aufs building
-  mkdir -p "$builddir"/{fs/xfs,mm}
+  # required when DEBUG_INFO_BTF_MODULES is enabled
+  install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
 
-  echo "Installing headers..."
+  msg2 "Installing headers..."
   cp -t "$builddir" -a include
   cp -t "$builddir/arch/x86" -a arch/x86/include
   install -Dt "$builddir/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
@@ -465,10 +475,10 @@ _package-headers() {
   # https://bugs.archlinux.org/task/71392
   install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
 
-  echo "Installing KConfig files..."
+  msg2 "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
 
-  echo "Removing unneeded architectures..."
+  msg2 "Removing unneeded architectures..."
   local arch
   for arch in "$builddir"/arch/*/; do
     [[ $arch = */x86/ ]] && continue
@@ -476,16 +486,16 @@ _package-headers() {
     rm -r "$arch"
   done
 
-  echo "Removing documentation..."
+  msg2 "Removing documentation..."
   rm -r "$builddir/Documentation"
 
-  echo "Removing broken symlinks..."
+  msg2 "Removing broken symlinks..."
   find -L "$builddir" -type l -printf 'Removing %P\n' -delete
 
-  echo "Removing loose objects..."
+  msg2 "Removing loose objects..."
   find "$builddir" -type f -name '*.o' -printf 'Removing %P\n' -delete
 
-  echo "Stripping build tools..."
+  msg2 "Stripping build tools..."
   local file
   while read -rd '' file; do
     case "$(file -bi "$file")" in
@@ -500,11 +510,10 @@ _package-headers() {
     esac
   done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
-  #echo "Stripping vmlinux..."
-  #strip -v $STRIP_STATIC "$builddir/vmlinux"
-  # not needed since not building with CONFIG_DEBUG_INFO=y
+  msg2 "Stripping vmlinux..."
+  strip -v $STRIP_STATIC "$builddir/vmlinux"
 
-  echo "Adding symlink..."
+  msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 
