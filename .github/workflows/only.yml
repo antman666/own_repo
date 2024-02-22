@@ -1,11 +1,12 @@
 name: Build few packages
 on:
+  push:
   workflow_dispatch:
 jobs:
   build:
     strategy:
       matrix:
-        packages: [linux]
+        packages: [linux, thorium]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
