@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.7.8
+pkgver=6.7.9
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -111,7 +111,7 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip')
 
-_gcc_more_v=20221217
+_gcc_more_v=20240221.2
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.7"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.7"
 _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.7.y-xanmod"
