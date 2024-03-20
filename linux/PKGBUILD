@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.7.9
+pkgver=6.8.1
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -112,9 +112,9 @@ fi
 options=('!strip')
 
 _gcc_more_v=20240221.2
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.7"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.7"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.7.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.8"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.8"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.8.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -132,8 +132,7 @@ source=(
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
-  "${_xanmodpatch}/xanmod/0016-XANMOD-Makefile-Disable-GCC-vectorization-on-trees.patch"
-  "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_xanmodpatch}/xanmod/0016-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
 validpgpkeys=(
@@ -142,23 +141,22 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('91e5abb3905ba9e8b5cdf26b89758f4454b4e573f148fb08340c60852115d95068e44420d73373a406cb47fb011fc14ee65294489f197a3f7f39d3d8e24b2f2d'
+b2sums=('2b518f8f39b4dcea1c580cb0664d59c165db989422fd6fd6b65d3dd1e4548bc6e0cedfc95c2584ae56f69ac1a1d3de6552ee61e77b08799a5275934a453ab929'
         'SKIP'
         '859ba0c0f115e97d712c29183bd6e0714a5a53fc0d6b99fa829e4d63400efe94a64e51c3dd8197aae180fea3bb61fda3725a332e3c41ad20a10bd3cebd4a8bcd'
         '8299d1450ff23c472f574a5924fa7f69da8e140a90c780c2f1a380b94aac322f612e89fc4e40addd50ec9b8f2bed5ca9a318648d66c35749bdf9a25c6832612f'
-        'd0f6d4189c0a76b0145ff2aa326ef8d38e76cabc097d8aa538dcb79a1a6ddf14172783061e84bff11ceeffe4adc63c566041aef1740a2c6ff5644b6b65366d43'
-        '51785585624ccd0ba89e7c1ba0e2a8a681465fd876de22e556b832dcea69fa2a1696c4f8855fbd72f58007e03420f20af30f8f93692758cb175e99f2be80186c'
-        '3b401a736b75df0880616dd3e11766b412018d7b0a3fecf29b6f6794c0abc405e96aa209a72d614e2a38a3a5ade7e3ce896f4f14c84a6cd0768cbe9f36b1376e'
-        '5f5613d76478bb34d823defe2111a8b38791aed4ddefc0868b4ffd1f1efcb4f65dce059e54d866f3337bf94582d8053ced29cbb57177f48592cde787a982c15a'
-        'c097d302dec5cc8c0e507139250987babe5e76b307414556d1d84cb8b5db7739b2f8d85b63023aa38429dd525f9847949ec5eda3d7a0d824413f2aaf2fa2e6b7'
-        'bab530da02b360c882c76aaf1a9c5403acafe407c2377d40c527d885a9a08ce7ec4f30f3709fe1dc45cce048592677eaed8721ccc98dbd25236c21e5d6721be2'
-        '29ecfe3d325c19a08d8a40720491806c8bd0fb7c63272fd8776f9f59e4c5a737c268b003c69c5917ab5da8fba67122ecc1966d2e1526357b78a639e5be53ea09'
-        '06492b9a5c25d36a4c30eb8e40c26e1aa19abaeeedff79a55a56d47a8c38fa2d0d04a2aab1be3cd3bdfb8396c4f46335fd19a2858dd857c184b39d9664b27276'
-        '2d658e9f7dce3a4b67abc12c90f0f17dd8457acae6efee13baf9b420a4da23d6a2b76ace8b186a07259284621564fb6ec9fc892a4dc2df822518fb6807397074'
-        '082195d0286a9177cc37978b0d32f3c13d39d3589aaedfd0046986c32733d86e3f84fec0db2c1d37330ce2af15ff00e8e1ab2dd3c86088a6b473efef075d6128'
-        'c4af463a1f8b90096943555a72da23bdcc0baf5f6756e9e4b4582303ee7351ff217bd3541020ac964a05af7977934929654c4ec121b130ab8d9d0e3a1d373676'
-        '5843c2b06e9cc4758f4a0fce2e256fdcfd7044e23714c1cc87f9da45c8bf8994d95c5b813c66d217cae971c72e1a33229fbf9ff65decdb6ae8100b425d50c987'
-        '330213ce3bcb495005bfc39147b13a8a82f41c850057459ce731b40ea70bd46bf588fcce9efcbbbbfd2d9ce60bd384954860637627f50240ce6748b440deeefa')
+        '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
+        '185539ed70a72f04dc6babc621ac0e361f1c72b37281e239d13d9fe0f2dfa1ed493db65ccd2db70d0c895c00b91b24f33c5d09f0f3c2b6cb893e6d2fcb499eda'
+        '561deb53c93eb387cd7c23f8a124a7d72e4ba30acebd2e9947674d0ba933969031e2d8cbfc3bcee5eff7106a3fc210416772b302a1fa74512ca77656d6410933'
+        '9799b4394f27bc31743ab8ac8ba5f10060159d63ac8f36a227309fe04bbf07b3dbe04d501c019396c62f7d22f24b9e4f9c936da7dd084e962d684c115b0244ba'
+        '11731e534ba7a772f1f445c90ceb9f8e5d43b5e03a4f4673a2158a12ee14ebd5ec4af7d95d57648ec218d581c602533887ff95957390e3e2b4d19876c34039cf'
+        '1c0c8d812b5fe1162861cd2a3cbfa731643d8373272afb9f8596d81f49b728265f7e15e7fa471e8492dda2924cf5c1caae35598824e3fd297c233c0e8c9e30a2'
+        '73a0b3d151077d8132015f0dfdcd29ea2ca0fb4925a28e2d7c93e1516dbd56cb921bd6dc8b18eec96b9a71e163d9d21934c93284ac9880f3a4eba1025b1f047b'
+        'c9a30a621f62b1701698861cb2641385e417efbd3301824f2da3de4dc1bd82f66b7ab28b926b3e32300f20f5e298cd6bca76a9300e820aa71efb0d0518ff96d3'
+        '49c26aceae6c6559e61555eccd9c01405e900fb2f865320a7f022938146ca2a013969c302b1bb79e136940ac1843f04197263941b298ba74d70c44c349d50ed8'
+        '8e80796a78c6cd62ad602fd5b578c37a19aa528fc1f9b5425d61d1c3b92258c8387c7e0458491f2ba3dbb52f0a1d8ae7d5b03c795433480577024acd6805f4b9'
+        '5d49d030c90956a83cc71d44de6792baa0cd3da3e2915d8296c80ac259c4060260db430c9b36a18ddef291a886aa57fd644130b6f12d7c90c5ac0d9e9a62a345'
+        'dfbb25fe89d41f12ddd61a7f23446d2771ceb988a3f8443aa0bc14dfd84f6fc8d206838e30d31957924f6759efff767296aa2ff5b4b9f092dc1690dc5e3f690f')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -355,7 +353,7 @@ prepare() {
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
   msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.1.79-6.8-rc3.patch"
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
