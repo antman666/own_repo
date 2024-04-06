@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.8.1
+pkgver=6.8.4
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -123,9 +123,10 @@ source=(
   # bbr2.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/0002-bbr3.patch"
-  "${_patchsource}/0005-fixes.patch"
-  "${_patchsource}/0006-ksm.patch"
+  "${_patchsource}/0001-aex-xts.patch"
+  "${_patchsource}/0003-bbr3.patch"
+  "${_patchsource}/0006-fixes.patch"
+  "${_patchsource}/0007-ksm.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0004-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
@@ -141,15 +142,16 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('2b518f8f39b4dcea1c580cb0664d59c165db989422fd6fd6b65d3dd1e4548bc6e0cedfc95c2584ae56f69ac1a1d3de6552ee61e77b08799a5275934a453ab929'
+b2sums=('cf58732397bfa11988b79901092887d53c3367d09f63da51ebdcc83518be3a7e9a638fbbb1ff080cd7abed633fadff03d1d7a3928b772de57b14e46e552f9462'
         'SKIP'
-        '859ba0c0f115e97d712c29183bd6e0714a5a53fc0d6b99fa829e4d63400efe94a64e51c3dd8197aae180fea3bb61fda3725a332e3c41ad20a10bd3cebd4a8bcd'
+        'd1524aff0e56c24fcfc3e11baf758ea41ac7b788127debe92188ea691586c99afeb6914c159d983c5e27f185f160476674f2f5b97e88e1cc1a0eab95c9a45084'
         '8299d1450ff23c472f574a5924fa7f69da8e140a90c780c2f1a380b94aac322f612e89fc4e40addd50ec9b8f2bed5ca9a318648d66c35749bdf9a25c6832612f'
         '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
-        '185539ed70a72f04dc6babc621ac0e361f1c72b37281e239d13d9fe0f2dfa1ed493db65ccd2db70d0c895c00b91b24f33c5d09f0f3c2b6cb893e6d2fcb499eda'
-        '561deb53c93eb387cd7c23f8a124a7d72e4ba30acebd2e9947674d0ba933969031e2d8cbfc3bcee5eff7106a3fc210416772b302a1fa74512ca77656d6410933'
-        '9799b4394f27bc31743ab8ac8ba5f10060159d63ac8f36a227309fe04bbf07b3dbe04d501c019396c62f7d22f24b9e4f9c936da7dd084e962d684c115b0244ba'
-        '11731e534ba7a772f1f445c90ceb9f8e5d43b5e03a4f4673a2158a12ee14ebd5ec4af7d95d57648ec218d581c602533887ff95957390e3e2b4d19876c34039cf'
+        '279325646f608185dc2a1516c9919d8836f56316e06bd5edf5d45caaf19aad1ab0c24e826f9202ea9c2495b13d411418bf69ba197bc11a2efbbc14923baac4a1'
+        '98b69e804c80afb9046337af075bdc4392a4138fc66869d72cfd4a6dc0b3cf211b7261981ffe3f7abc5daca60ee8235340a99ef0870b114e19f692e9461a2700'
+        'b71c5e88b9692a508a58a2a941416e61aa61b5aee456a6fc4f427ab712d8099553435a886c133a86fc3d6eb737b481da3a27f82d046bcce32cd8bd699e3cfed7'
+        'cdd9338fb81837cb434fadffe48cd063038c12d6f2812cf123a5249b82996958b7e287505eeb1836513422e7fa70b0c36400099a6accdd9b94513ce5af6b35a8'
+        '9b6a84c25739494cca05cccb828f57965dad6b22129f2b3ddd3d95ae837ed7f33df603da42949d99b196085fdf5a3facd3700aca8d6ed412a3e61131df80c3e9'
         '1c0c8d812b5fe1162861cd2a3cbfa731643d8373272afb9f8596d81f49b728265f7e15e7fa471e8492dda2924cf5c1caae35598824e3fd297c233c0e8c9e30a2'
         '73a0b3d151077d8132015f0dfdcd29ea2ca0fb4925a28e2d7c93e1516dbd56cb921bd6dc8b18eec96b9a71e163d9d21934c93284ac9880f3a4eba1025b1f047b'
         'c9a30a621f62b1701698861cb2641385e417efbd3301824f2da3de4dc1bd82f66b7ab28b926b3e32300f20f5e298cd6bca76a9300e820aa71efb0d0518ff96d3'
