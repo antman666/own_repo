@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.8.8
+pkgver=6.9.1
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -112,9 +112,9 @@ fi
 options=('!strip')
 
 _gcc_more_v=20240221.2
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.8"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.8"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.8.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.9"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.9"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.9.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
@@ -123,17 +123,17 @@ source=(
   # bbr2.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/0001-aes-xts.patch"
+  "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
-  "${_patchsource}/0006-fixes.patch"
-  "${_patchsource}/0007-ksm.patch"
+  "${_patchsource}/0007-fixes.patch"
+  "${_patchsource}/0008-ksm.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0004-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
-  "${_xanmodpatch}/xanmod/0016-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
 validpgpkeys=(
@@ -142,23 +142,23 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('cf58732397bfa11988b79901092887d53c3367d09f63da51ebdcc83518be3a7e9a638fbbb1ff080cd7abed633fadff03d1d7a3928b772de57b14e46e552f9462'
+b2sums=('388af1d13e78a424f72a961697f4b0b6a234e54ce1e4a2532fc73717301e048c6f4a6251b6e3c4541179d1382566c3f411baa6883818a10d178ef27d036b5379'
         'SKIP'
-        'd1524aff0e56c24fcfc3e11baf758ea41ac7b788127debe92188ea691586c99afeb6914c159d983c5e27f185f160476674f2f5b97e88e1cc1a0eab95c9a45084'
+        '1d8d788e4e0ea34b9c4a89a17d5df5d26db1f25636b40b51d8850eccc8091235a626c97ea955056b606ed15ba7665a2ca44775035b4f174016eb4ce21befe20c'
         '8299d1450ff23c472f574a5924fa7f69da8e140a90c780c2f1a380b94aac322f612e89fc4e40addd50ec9b8f2bed5ca9a318648d66c35749bdf9a25c6832612f'
         '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
-        '279325646f608185dc2a1516c9919d8836f56316e06bd5edf5d45caaf19aad1ab0c24e826f9202ea9c2495b13d411418bf69ba197bc11a2efbbc14923baac4a1'
-        '98b69e804c80afb9046337af075bdc4392a4138fc66869d72cfd4a6dc0b3cf211b7261981ffe3f7abc5daca60ee8235340a99ef0870b114e19f692e9461a2700'
-        'b71c5e88b9692a508a58a2a941416e61aa61b5aee456a6fc4f427ab712d8099553435a886c133a86fc3d6eb737b481da3a27f82d046bcce32cd8bd699e3cfed7'
-        'cdd9338fb81837cb434fadffe48cd063038c12d6f2812cf123a5249b82996958b7e287505eeb1836513422e7fa70b0c36400099a6accdd9b94513ce5af6b35a8'
-        '9b6a84c25739494cca05cccb828f57965dad6b22129f2b3ddd3d95ae837ed7f33df603da42949d99b196085fdf5a3facd3700aca8d6ed412a3e61131df80c3e9'
-        '1c0c8d812b5fe1162861cd2a3cbfa731643d8373272afb9f8596d81f49b728265f7e15e7fa471e8492dda2924cf5c1caae35598824e3fd297c233c0e8c9e30a2'
-        '73a0b3d151077d8132015f0dfdcd29ea2ca0fb4925a28e2d7c93e1516dbd56cb921bd6dc8b18eec96b9a71e163d9d21934c93284ac9880f3a4eba1025b1f047b'
-        'c9a30a621f62b1701698861cb2641385e417efbd3301824f2da3de4dc1bd82f66b7ab28b926b3e32300f20f5e298cd6bca76a9300e820aa71efb0d0518ff96d3'
-        '49c26aceae6c6559e61555eccd9c01405e900fb2f865320a7f022938146ca2a013969c302b1bb79e136940ac1843f04197263941b298ba74d70c44c349d50ed8'
-        '8e80796a78c6cd62ad602fd5b578c37a19aa528fc1f9b5425d61d1c3b92258c8387c7e0458491f2ba3dbb52f0a1d8ae7d5b03c795433480577024acd6805f4b9'
-        '5d49d030c90956a83cc71d44de6792baa0cd3da3e2915d8296c80ac259c4060260db430c9b36a18ddef291a886aa57fd644130b6f12d7c90c5ac0d9e9a62a345'
-        'dfbb25fe89d41f12ddd61a7f23446d2771ceb988a3f8443aa0bc14dfd84f6fc8d206838e30d31957924f6759efff767296aa2ff5b4b9f092dc1690dc5e3f690f')
+        '66617f83e0730c0ae3b20ff9f7b1b309caeae2d051888bce7ce3b0564800fb2a322f70539b9b4c836828bf8739ee63a07e24369fcbe0e0d59e38087246257090'
+        '843bfdda1114e7a50921fe5f784650c197de63e6885b9f5a3ee57b02dc1f5bf4b3bfdd227c82e2d82f0636b4b9ffecad432a7c0eaa40b27adb2221fa4a2d0212'
+        '7df3d70fdc1d79684d20ca0452c76096e20bd5de64da678cf432dca1957b20470b23831faa32bf19f335405116088c49e609528a3d32ba34c9c3fa90047afe26'
+        '35399f3f56f869f4eb8886ad93e15ee85b99f03bc690cc8ab7c2f88be80df44ee1a36899e07f63d4e3ff766e3644bb31188860505048fe73cd1a9f5b4f79a1c1'
+        'a34d2ff5ad571d485e5960ba023cc6ada0dec3b802842cc64d88ead196e18b06acbb10c107561f997c551570e76a94bd2c3c8f2dc4fc1481451de34646407af7'
+        'c12b3a20c82e54358cc387b7a4c639f744fd7032a8900e767acb96672b55fa54bffbce86f8d46784b70204c502c4d16afff626e445b5a328433a839ee304353a'
+        '811365d8734efc0e79a2c23b331480a6af47155bd048be7e767c748277f0d62f00eb7a0c351542833e6a400938fdd47d048e6ab29c63398d66fb85d43e663d22'
+        'a9419ae0c982b7a7ce6dc802cdf87e2d68b11dcfd5fc013a61b169a6d1cf1c902c7bbd441aa0e87be99a1c0e9271b6c6ba4b7da570506e1cfea8f682652939a6'
+        '5a91096071bd8ba368f79907e9f32c3dfb1ab26122417ab966f091da7ebb43acdb807c208e185fdd69356d2b50b1f5f5d8a5ae82ea67a819793ec922673cb8e7'
+        'e08b91c04a655034dccd79c6df15f210aa7d359c4721350521db563e58b5e38f46c7ac6c0b8de8dfe22574210bd4f327f90e8ec10154c288f00da87e9d5c2439'
+        'c180f5f4cef3eedd9f0c9809c6dcbc461a59074a5ea2753efe8d6989609d3820e9212b984110e2690352d91cf466e5dc53331d39908d09ee305217ebd109e78d'
+        '315e90140cba35013476590eda6d6b2e82ab2080ac236b16c4d521615a2c710199fba0e93a4210f4473f87d7b3c123fabb9568b0809079367d521eeececf99a9')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
