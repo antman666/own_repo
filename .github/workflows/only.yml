@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [libva-vdpau-driver-vp9, neovim, thorium, tree-sitter, uksmd]
+        packages: [linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

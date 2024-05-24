@@ -122,7 +122,8 @@ source=(
   open_O3.patch
   # bbr2.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsource}/sched/0001-prjc.patch"
+  # "${_patchsource}/sched/0001-prjc.patch"
+  "${_patchsource}/sched/0001-echo.patch"
   "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
@@ -132,7 +133,7 @@ source=(
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  # "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
@@ -144,20 +145,19 @@ validpgpkeys=(
 
 b2sums=('388af1d13e78a424f72a961697f4b0b6a234e54ce1e4a2532fc73717301e048c6f4a6251b6e3c4541179d1382566c3f411baa6883818a10d178ef27d036b5379'
         'SKIP'
-        '1d8d788e4e0ea34b9c4a89a17d5df5d26db1f25636b40b51d8850eccc8091235a626c97ea955056b606ed15ba7665a2ca44775035b4f174016eb4ce21befe20c'
+        '830e084d74d598ccc632f9e2e82876ddcac74d526eeec94b8cdb7fb1e08e179fe0df7d03bc561339cec26c600a4340b37a7e8eb239e6a953676d814413d8ec0e'
         '8299d1450ff23c472f574a5924fa7f69da8e140a90c780c2f1a380b94aac322f612e89fc4e40addd50ec9b8f2bed5ca9a318648d66c35749bdf9a25c6832612f'
         '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
-        '66617f83e0730c0ae3b20ff9f7b1b309caeae2d051888bce7ce3b0564800fb2a322f70539b9b4c836828bf8739ee63a07e24369fcbe0e0d59e38087246257090'
+        '1d1fc21c8ec55284815985de9507de48e9b4fba1b429a87569a98d9c98562b34aee2692f5c16a15b3b8d1a4510685a92d313eb75e9341c1affe1f80b5c9ad520'
         '843bfdda1114e7a50921fe5f784650c197de63e6885b9f5a3ee57b02dc1f5bf4b3bfdd227c82e2d82f0636b4b9ffecad432a7c0eaa40b27adb2221fa4a2d0212'
-        '7df3d70fdc1d79684d20ca0452c76096e20bd5de64da678cf432dca1957b20470b23831faa32bf19f335405116088c49e609528a3d32ba34c9c3fa90047afe26'
-        '35399f3f56f869f4eb8886ad93e15ee85b99f03bc690cc8ab7c2f88be80df44ee1a36899e07f63d4e3ff766e3644bb31188860505048fe73cd1a9f5b4f79a1c1'
-        'a34d2ff5ad571d485e5960ba023cc6ada0dec3b802842cc64d88ead196e18b06acbb10c107561f997c551570e76a94bd2c3c8f2dc4fc1481451de34646407af7'
+        'aac962b0ab9266ff8828fcf986e7435e4cc9f64279fd914d5eec42307c1c0b7d50a85b3c1d4324950c87afe469645655805117d6efd008aa9704e459508807d2'
+        '5e664a3ae3ae040841bf0f9a2b33080af4aa49a120d4f88b3de230bcd25c7bba679e7eb7619788da6de5b8b656bb70d4757b12c5730a85c694eac4ee45683bbf'
+        'b93f6c6f34e57b553ba474e1b2aaff7c4b4dca56e8e6b14691567ef24e3cfbc92807b9693aeed8abfebde1696e22cfe1d3cb0e7ca12b4b4c85ca6068fb8272d6'
         'c12b3a20c82e54358cc387b7a4c639f744fd7032a8900e767acb96672b55fa54bffbce86f8d46784b70204c502c4d16afff626e445b5a328433a839ee304353a'
         '811365d8734efc0e79a2c23b331480a6af47155bd048be7e767c748277f0d62f00eb7a0c351542833e6a400938fdd47d048e6ab29c63398d66fb85d43e663d22'
         'a9419ae0c982b7a7ce6dc802cdf87e2d68b11dcfd5fc013a61b169a6d1cf1c902c7bbd441aa0e87be99a1c0e9271b6c6ba4b7da570506e1cfea8f682652939a6'
         '5a91096071bd8ba368f79907e9f32c3dfb1ab26122417ab966f091da7ebb43acdb807c208e185fdd69356d2b50b1f5f5d8a5ae82ea67a819793ec922673cb8e7'
         'e08b91c04a655034dccd79c6df15f210aa7d359c4721350521db563e58b5e38f46c7ac6c0b8de8dfe22574210bd4f327f90e8ec10154c288f00da87e9d5c2439'
-        'c180f5f4cef3eedd9f0c9809c6dcbc461a59074a5ea2753efe8d6989609d3820e9212b984110e2690352d91cf466e5dc53331d39908d09ee305217ebd109e78d'
         '315e90140cba35013476590eda6d6b2e82ab2080ac236b16c4d521615a2c710199fba0e93a4210f4473f87d7b3c123fabb9568b0809079367d521eeececf99a9')
 
 export KBUILD_BUILD_HOST=archlinux
