@@ -18,7 +18,7 @@ _localmodcfg=
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=clang
+  _compiler=gcc
 fi
 
 #  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
