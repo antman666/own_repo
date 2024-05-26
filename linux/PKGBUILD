@@ -18,7 +18,7 @@ _localmodcfg=
 
 ## Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
-  _compiler=gcc
+  _compiler=clang
 fi
 
 #  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
@@ -91,7 +91,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.9.1
+pkgver=6.9.2
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -124,7 +124,7 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/sched/0001-echo.patch"
-  "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
+  # "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
