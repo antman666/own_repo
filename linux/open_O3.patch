@@ -32,12 +32,12 @@ index c47558b..fea6101 100644
  		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
  NOSTDINC_FLAGS :=
 -CFLAGS_MODULE   =
-+CFLAGS_MODULE   = -O2 -march=alderlake -fomit-frame-pointer
++CFLAGS_MODULE   = -O2 -march=alderlake
  RUSTFLAGS_MODULE =
  AFLAGS_MODULE   =
  LDFLAGS_MODULE  =
 -CFLAGS_KERNEL	=
-+CFLAGS_KERNEL	= -march=alderlake -fomit-frame-pointer
++CFLAGS_KERNEL	= -march=alderlake
  RUSTFLAGS_KERNEL =
  AFLAGS_KERNEL	=
 -LDFLAGS_vmlinux =
