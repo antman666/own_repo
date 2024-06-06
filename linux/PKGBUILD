@@ -21,23 +21,8 @@ if [ -z ${_compiler+x} ]; then
   _compiler=clang
 fi
 
-#  417 Hz is the TT alternative to 300 Hz. Choose 417 Hz
-# if you prefer performance over latency.
-_417_HZ_ticks=
-
-# 833 Hz is the TT alternative to 1000 Hz. Choose 833 Hz
-#  if you want a balance between latency and performance.
-_833_HZ_ticks=
-
-# ck recommends 1000 Hz tick and the hrtimer patches in lieu of ck1
-_1000_HZ_ticks=
-
-# 1666 Hz is for very high latency bound systems. Choose 1666 Hz
-# if you don't care about overall throughput or performance, but
-# you care more about latency (some realtime applications) require
-# low latency. The response and interactive processes with 1666 Hz
-# feel much snappier.
-_1666_HZ_ticks=
+# Running with a 1000HZ, 750Hz, 625Hz, 600 Hz, 500Hz, 300Hz, 250Hz and 100Hz tick rate
+_HZ_ticks=625
 
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
@@ -123,14 +108,14 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/sched/0001-echo.patch"
-  # "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
+  "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0004-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
-  # "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
+  "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
   # "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
@@ -188,14 +173,15 @@ prepare() {
   if [ "${_compiler}" = "clang" ]; then
     msg2 "Enable FULL LTO"
     scripts/config \
-            --enable LTO \
-            --enable LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG \
-            --enable ARCH_SUPPORTS_LTO_CLANG_THIN \
-            --disable LTO_NONE \
-            --enable HAS_LTO_CLANG \
-            --enable LTO_CLANG_FULL \
-            --disable LTO_CLANG_THIN
+      -e LTO \
+      -e LTO_CLANG \
+      -e ARCH_SUPPORTS_LTO_CLANG \
+      -e ARCH_SUPPORTS_LTO_CLANG_THIN \
+      -d LTO_NONE \
+      -e HAS_LTO_CLANG \
+      -e LTO_CLANG_FULL \
+      -d LTO_CLANG_THIN \
+      -e HAVE_GCC_PLUGINS
   fi
 
   scripts/config --enable CONFIG_CGROUPS
@@ -232,37 +218,15 @@ prepare() {
   scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
   scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-  # msg2 "Selecting TT Scheduler..."
-  # scripts/config --enable TT_SCHED
-  # scripts/config --disable TT_ACCOUNTING_STATS
+  msg2 "Selecting ECHO Scheduler..."
+  scripts/config --enable ECHO_SCHED
 
   ### Optionally set tickrate
-  if [ -n "$_417_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 417Hz..."
-    scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_417
-    scripts/config --set-val CONFIG_HZ 417
-  fi
-
-  if [ -n "$_833_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 833Hz..."
-    scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_833
-    scripts/config --set-val CONFIG_HZ 833
-  fi
-
-  if [ -n "$_1000_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 1000Hz..."
-    scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_1000
-    scripts/config --set-val CONFIG_HZ 1000
-  fi
-
-  if [ -n "$_1666_HZ_ticks" ]; then
-    msg2 "Setting tick rate to 1666Hz..."
-    scripts/config --disable CONFIG_HZ_300
-    scripts/config --enable CONFIG_HZ_1666
-    scripts/config --set-val CONFIG_HZ 1666
+  if [ -n "$_HZ_ticks" ]; then
+    msg2 "Setting tick rate to ${_HZ_ticks}Hz..."
+    scripts/config -d HZ_300
+    scripts/config -e "HZ_${_HZ_ticks}"
+    scripts/config --set-val HZ "${_HZ_ticks}"
   fi
 
   # BBR3
