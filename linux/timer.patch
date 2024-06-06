@@ -1,16 +1,5 @@
-From be063326c1a0ffa6c6bc47f729b37a442dd477bf Mon Sep 17 00:00:00 2001
-From: Alexandre Frade <kernel@xanmod.org>
-Date: Mon, 29 Jan 2018 17:26:15 +0000
-Subject: [PATCH 10/18] XANMOD: kconfig: add 625Hz timer interrupt kernel
- config option
-
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
----
- kernel/Kconfig.hz | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
 diff --git a/kernel/Kconfig.hz b/kernel/Kconfig.hz
-index 38ef6d06888e..0ff51d4d265c 100644
+index 38ef6d0..0e88e53 100644
 --- a/kernel/Kconfig.hz
 +++ b/kernel/Kconfig.hz
 @@ -40,6 +40,13 @@ choice
@@ -35,6 +24,3 @@ index 38ef6d06888e..0ff51d4d265c 100644
  	default 1000 if HZ_1000
  
  config SCHED_HRTICK
--- 
-2.43.0
-
