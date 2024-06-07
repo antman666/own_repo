@@ -179,8 +179,8 @@ prepare() {
       -e ARCH_SUPPORTS_LTO_CLANG_THIN \
       -d LTO_NONE \
       -e HAS_LTO_CLANG \
-      -e LTO_CLANG_FULL \
-      -d LTO_CLANG_THIN \
+      -d LTO_CLANG_FULL \
+      -e LTO_CLANG_THIN \
       -e HAVE_GCC_PLUGINS
   fi
 
