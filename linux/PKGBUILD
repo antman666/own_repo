@@ -22,7 +22,7 @@ if [ -z ${_compiler+x} ]; then
 fi
 
 # Running with a 1000HZ, 750Hz, 625Hz, 600 Hz, 500Hz, 300Hz, 250Hz and 100Hz tick rate
-_HZ_ticks=625
+_HZ_ticks=500
 
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
@@ -107,8 +107,9 @@ source=(
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/sched/0001-echo.patch"
-  "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
+  # "${_patchsource}/sched/0001-echo.patch"
+  "${_patchsource}/sched/0001-sched-ext.patch"
+  # "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
@@ -117,7 +118,7 @@ source=(
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  # "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
@@ -179,8 +180,8 @@ prepare() {
       -e ARCH_SUPPORTS_LTO_CLANG_THIN \
       -d LTO_NONE \
       -e HAS_LTO_CLANG \
-      -d LTO_CLANG_FULL \
-      -e LTO_CLANG_THIN \
+      -e LTO_CLANG_FULL \
+      -d LTO_CLANG_THIN \
       -e HAVE_GCC_PLUGINS
   fi
 
