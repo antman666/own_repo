@@ -83,10 +83,10 @@ arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
 license=(GPL2)
 makedepends=(
-  bc kmod libelf cpio perl tar xz
+  'bc' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz' 'zstd' 'gcc' 'gcc-libs' 'glibc' 'binutils' 'make' 'patch' 'python'
 )
 if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(clang llvm lld python polly)
+  makedepends+=(clang llvm lld python polly openmp)
   BUILD_FLAGS=(
     CC=clang
     LD=ld.lld
@@ -94,7 +94,7 @@ if [ "${_compiler}" = "clang" ]; then
     LLVM_IAS=1
   )
 fi
-options=('!strip')
+options=('!strip' '!debug' '!lto')
 
 _gcc_more_v=20240221.2
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.9"
@@ -107,8 +107,8 @@ source=(
   open_O3.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
-  # "${_patchsource}/sched/0001-echo.patch"
-  "${_patchsource}/sched/0001-sched-ext.patch"
+  "${_patchsource}/sched/0001-echo.patch"
+  # "${_patchsource}/sched/0001-sched-ext.patch"
   "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
@@ -222,6 +222,9 @@ prepare() {
   msg2 "Selecting ECHO Scheduler..."
   scripts/config --enable ECHO_SCHED
 
+  msg2 "Enable USER_NS_UNPRIVILEGED"
+  scripts/config -e USER_NS
+
   ### Optionally set tickrate
   if [ -n "$_HZ_ticks" ]; then
     msg2 "Setting tick rate to ${_HZ_ticks}Hz..."
@@ -318,8 +321,8 @@ prepare() {
 
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
-  msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
+  # msg2 "Patching to enable GCC optimization for other uarchs..."
+  # patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
@@ -353,6 +356,7 @@ prepare() {
 build() {
   cd linux-${pkgver}
   make ${BUILD_FLAGS[*]} all
+  make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
 _package() {
