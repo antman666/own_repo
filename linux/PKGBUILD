@@ -77,7 +77,7 @@ _subarch=36
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
 pkgver=6.9.3
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
@@ -109,7 +109,7 @@ source=(
   # "${_patchsource}/sched/0001-prjc.patch"
   # "${_patchsource}/sched/0001-echo.patch"
   "${_patchsource}/sched/0001-sched-ext.patch"
-  # "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
+  "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
