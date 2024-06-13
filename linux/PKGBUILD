@@ -22,7 +22,7 @@ if [ -z ${_compiler+x} ]; then
 fi
 
 # Running with a 1000HZ, 750Hz, 625Hz, 600 Hz, 500Hz, 300Hz, 250Hz and 100Hz tick rate
-_HZ_ticks=500
+_HZ_ticks=625
 
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
@@ -113,12 +113,13 @@ source=(
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
+  "${_patchsource}/0009-ntsync.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0004-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  # "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
