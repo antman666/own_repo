@@ -16,13 +16,29 @@ _makenconfig=
 # More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
 _localmodcfg=
 
-## Choose between GCC and CLANG config (default is GCC)
+# Choose between GCC and CLANG config (default is GCC)
 if [ -z ${_compiler+x} ]; then
   _compiler=clang
+  _use_llvm_lto=full
 fi
 
 # Running with a 1000HZ, 750Hz, 625Hz, 600 Hz, 500Hz, 300Hz, 250Hz and 100Hz tick rate
-_HZ_ticks=625
+_HZ_ticks=500
+
+# Choose between perodic, idle or full
+# Full tickless can give higher performances in various cases but, depending on hardware, lower consistency.
+_tickrate=${_tickrate-full}
+
+# Choose between full(low-latency), voluntary or server
+_preempt=${_preempt-full}
+
+# Enable TCP_CONG_BBR3
+_tcp_bbr3=${_tcp_bbr3-y}
+
+# Transparent Hugepages
+# 'always' - always enable THP
+# 'madvise' - madvise, prevent applications from allocating more memory resources than necessary
+_hugepage=${_hugepage-always}
 
 # Optionally select a sub architecture by number or leave blank which will
 # require user interaction during the build. Note that the generic (default)
@@ -76,8 +92,8 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus
-pkgver=6.9.3
-pkgrel=1.2
+pkgver=6.9.4
+pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://gitlab.com/alfredchen/projectc/"
@@ -104,12 +120,13 @@ _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linu
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
-  open_O3.patch
+  open_O3_clang.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
-  "${_patchsource}/sched/0001-echo.patch"
-  # "${_patchsource}/sched/0001-sched-ext.patch"
+  # "${_patchsource}/sched/0001-echo.patch"
+  "${_patchsource}/sched/0001-sched-ext.patch"
   "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
+  "${_patchsource}/0001-aes-crypto.patch"
   "${_patchsource}/0003-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-ksm.patch"
@@ -119,7 +136,7 @@ source=(
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
   "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
   "${_xanmodpatch}/xanmod/0009-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  # "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
   "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
 )
 
@@ -129,21 +146,24 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('388af1d13e78a424f72a961697f4b0b6a234e54ce1e4a2532fc73717301e048c6f4a6251b6e3c4541179d1382566c3f411baa6883818a10d178ef27d036b5379'
+b2sums=('8d8fe931d304458bcaa8c8b9572a5354ad272d88d1e0642e76b37247ce13bf70c49c8de6d8843fbb3037ee074ebc6cc94f0cc2b5b7e7187385a9dd0b0e2e250d'
         'SKIP'
-        '830e084d74d598ccc632f9e2e82876ddcac74d526eeec94b8cdb7fb1e08e179fe0df7d03bc561339cec26c600a4340b37a7e8eb239e6a953676d814413d8ec0e'
-        '8299d1450ff23c472f574a5924fa7f69da8e140a90c780c2f1a380b94aac322f612e89fc4e40addd50ec9b8f2bed5ca9a318648d66c35749bdf9a25c6832612f'
+        '1e94ec753866c14c07b8a6fb80e187871c88a7389160f80a0be3b6e25d85dbebc0e783d17bffbff4ea4e840e55af19bf4e8aefb11526e73aa860cd848b0c2688'
+        'f502505ec1afd8815e1091203d3d805267370988f39e4b22b800a601c288451ffc3ef0f3e94981d07c5c6c1c292b590a03b6cf96b1d0dc012eaace7876898918'
         '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
-        '1d1fc21c8ec55284815985de9507de48e9b4fba1b429a87569a98d9c98562b34aee2692f5c16a15b3b8d1a4510685a92d313eb75e9341c1affe1f80b5c9ad520'
+        'dc333f44b89f0e5a20dcfde376bd4d8c2ecac5a05d2a0c07c0325d8e1d6e383ca11fc3a3403ecef6467d53117ee0a2f8ee623ff385e0ed3523cae1935c736030'
         '843bfdda1114e7a50921fe5f784650c197de63e6885b9f5a3ee57b02dc1f5bf4b3bfdd227c82e2d82f0636b4b9ffecad432a7c0eaa40b27adb2221fa4a2d0212'
-        'aac962b0ab9266ff8828fcf986e7435e4cc9f64279fd914d5eec42307c1c0b7d50a85b3c1d4324950c87afe469645655805117d6efd008aa9704e459508807d2'
-        '5e664a3ae3ae040841bf0f9a2b33080af4aa49a120d4f88b3de230bcd25c7bba679e7eb7619788da6de5b8b656bb70d4757b12c5730a85c694eac4ee45683bbf'
-        'b93f6c6f34e57b553ba474e1b2aaff7c4b4dca56e8e6b14691567ef24e3cfbc92807b9693aeed8abfebde1696e22cfe1d3cb0e7ca12b4b4c85ca6068fb8272d6'
+        '67ef65949b08477f565f8695f32bc5e5aa9710b3c668c130971206711a646298f4071119aee93afca3bd2cc2b49a88b7723abb649b526520a1b15209809a23d9'
+        '7852876aa6efd93a4e7033d3a27ad356d0377819514c34905634a3b0e3b0804b223cb638f47fdd87979ec937427ecb7fc63c7d606079823e108e9916d8fe84d4'
+        '8c1dae442785ed6936bd242a137623a16d0cc628e3260c8161edd723775b484c4e820d66ba78318bde0b9725f97f30f5fc1b70bccba5681e3e71f23e8e682e84'
+        '9a5b5b4e401d5666229812bdf55934fc66b885057a1029dc0f32b2f0271fd7e318cd71041fdb4cb9fe1add19163cdc66e9232ac1bd61a887a328dd37b138ca18'
+        'a753ccb161f98f52e22200e5513fe95b398cdc965b842bd099f68eb500ae239f4ee27b54159573b9ced83fe0b70ccff784cbf0ca96ebd966b25de0261ef7e49b'
         'c12b3a20c82e54358cc387b7a4c639f744fd7032a8900e767acb96672b55fa54bffbce86f8d46784b70204c502c4d16afff626e445b5a328433a839ee304353a'
         '811365d8734efc0e79a2c23b331480a6af47155bd048be7e767c748277f0d62f00eb7a0c351542833e6a400938fdd47d048e6ab29c63398d66fb85d43e663d22'
         'a9419ae0c982b7a7ce6dc802cdf87e2d68b11dcfd5fc013a61b169a6d1cf1c902c7bbd441aa0e87be99a1c0e9271b6c6ba4b7da570506e1cfea8f682652939a6'
         '5a91096071bd8ba368f79907e9f32c3dfb1ab26122417ab966f091da7ebb43acdb807c208e185fdd69356d2b50b1f5f5d8a5ae82ea67a819793ec922673cb8e7'
         'e08b91c04a655034dccd79c6df15f210aa7d359c4721350521db563e58b5e38f46c7ac6c0b8de8dfe22574210bd4f327f90e8ec10154c288f00da87e9d5c2439'
+        'c180f5f4cef3eedd9f0c9809c6dcbc461a59074a5ea2753efe8d6989609d3820e9212b984110e2690352d91cf466e5dc53331d39908d09ee305217ebd109e78d'
         '315e90140cba35013476590eda6d6b2e82ab2080ac236b16c4d521615a2c710199fba0e93a4210f4473f87d7b3c123fabb9568b0809079367d521eeececf99a9')
 
 export KBUILD_BUILD_HOST=archlinux
@@ -157,8 +177,6 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
-  sed -i '/select DEBUG_KERNEL/d' init/Kconfig
-  # sed -i '/depends\ on\ HAVE_KERNEL_UNCOMPRESSED/d' init/Kconfig
   local src
   for src in "${source[@]}"; do
     src="${src%%::*}"
@@ -171,159 +189,124 @@ prepare() {
   msg2 "Setting config..."
   cp ../config .config
 
-  # clang Full LTO
-  if [ "${_compiler}" = "clang" ]; then
-    msg2 "Enable FULL LTO"
-    scripts/config \
-      -e LTO \
-      -e LTO_CLANG \
-      -e ARCH_SUPPORTS_LTO_CLANG \
-      -e ARCH_SUPPORTS_LTO_CLANG_THIN \
-      -d LTO_NONE \
-      -e HAS_LTO_CLANG \
-      -e LTO_CLANG_FULL \
-      -d LTO_CLANG_THIN \
-      -e HAVE_GCC_PLUGINS
-  fi
+  msg2 "Setting for LTO"
+  case "$_use_llvm_lto" in
+    thin)
+      scripts/config -e LTO \
+                     -e LTO_CLANG \
+                     -e ARCH_SUPPORTS_LTO_CLANG \
+                     -e ARCH_SUPPORTS_LTO_CLANG_THIN \
+                     -d LTO_NONE \
+                     -e HAS_LTO_CLANG \
+                     -d LTO_CLANG_FULL \
+                     -e LTO_CLANG_THIN \
+                     -e HAVE_GCC_PLUGINS;;
+    full)
+      scripts/config -e LTO \
+                     -e LTO_CLANG \
+                     -e ARCH_SUPPORTS_LTO_CLANG \
+                     -e ARCH_SUPPORTS_LTO_CLANG_THIN \
+                     -d LTO_NONE \
+                     -e HAS_LTO_CLANG \
+                     -e LTO_CLANG_FULL \
+                     -d LTO_CLANG_THIN \
+                     -e HAVE_GCC_PLUGINS;;
+    none)
+      scripts/config -e LTO_NONE;;
+  esac
 
-  scripts/config --enable CONFIG_CGROUPS
-  scripts/config --enable CONFIG_RT_GROUP_SCHED
-  scripts/config --enable CONFIG_RT_SOFTIRQ_AWARE_SCHED
+  case "$_HZ_ticks" in
+    100|250|500|600|625|750|1000)
+      scripts/config \
+        -d HZ_300 \
+        -e "HZ_${_HZ_ticks}" \
+        --set-val HZ "${_HZ_ticks}";;
+    300)
+      scripts/config \
+        -e HZ_300 \
+        --set-val HZ 300;;
+  esac
 
-  # disable CONFIG_DEBUG_INFO=y at build time otherwise memory usage blows up
-  # and can easily overwhelm a system with 32 GB of memory using a tmpfs build
-  # partition ... this was introduced by FS#66260, see:
-  # https://git.archlinux.org/svntogit/packages.git/commit/trunk?h=packages/linux&id=663b08666b269eeeeaafbafaee07fd03389ac8d7
-  scripts/config --disable CONFIG_DEBUG_INFO
-  scripts/config --disable CONFIG_DEBUG_KERNEL
-  scripts/config --disable CONFIG_CGROUP_BPF
-  scripts/config --disable CONFIG_BPF_LSM
-  scripts/config --disable CONFIG_BPF_PRELOAD
-  scripts/config --disable CONFIG_BPF_LIRC_MODE2
-  scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
+  case "$_tickrate" in
+    perodic)
+      scripts/config -d NO_HZ_IDLE \
+                     -d NO_HZ_FULL \
+                     -d NO_HZ \
+                     -d NO_HZ_COMMON \
+                     -e HZ_PERIODIC;;
+    idle)
+      scripts/config -d HZ_PERIODIC \
+                     -d NO_HZ_FULL \
+                     -e NO_HZ_IDLE \
+                     -e NO_HZ \
+                     -e NO_HZ_COMMON;;
+    full)
+      scripts/config -d HZ_PERIODIC \
+                     -d NO_HZ_IDLE \
+                     -d CONTEXT_TRACKING_FORCE \
+                     -e NO_HZ_FULL_NODEF \
+                     -e NO_HZ_FULL \
+                     -e NO_HZ \
+                     -e NO_HZ_COMMON \
+                     -e CONTEXT_TRACKING;;
+  esac
 
-  # https://bbs.archlinux.org/viewtopic.php?pid=1824594#p1824594
-  scripts/config --enable CONFIG_PSI_DEFAULT_DISABLED
+  case "$_preempt" in
+    full)
+      scripts/config -e PREEMPT_BUILD \
+                     -d PREEMPT_NONE \
+                     -d PREEMPT_VOLUNTARY \
+                     -e PREEMPT \
+                     -e PREEMPT_COUNT \
+                     -e PREEMPTION \
+                     -e PREEMPT_DYNAMIC;;
+    voluntary)
+      scripts/config -e PREEMPT_BUILD \
+                     -d PREEMPT_NONE \
+                     -e PREEMPT_VOLUNTARY \
+                     -d PREEMPT \
+                     -e PREEMPT_COUNT \
+                     -e PREEMPTION \
+                     -d PREEMPT_DYNAMIC;;
+    server)
+      scripts/config -e PREEMPT_NONE_BUILD \
+                     -e PREEMPT_NONE \
+                     -d PREEMPT_VOLUNTARY \
+                     -d PREEMPT \
+                     -d PREEMPTION \
+                     -d PREEMPT_DYNAMIC;;
+  esac
 
-  # https://bbs.archlinux.org/viewtopic.php?pid=1863567#p1863567
-  scripts/config --disable CONFIG_LATENCYTOP
-  scripts/config --disable CONFIG_SCHED_DEBUG
+  msg2 "Enabling KBUILD_CFLAGS -O3..."
+  scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE \
+                 -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-  # FS#66613
-  # https://bugzilla.kernel.org/show_bug.cgi?id=207173#c6
-  scripts/config --disable CONFIG_KVM_WERROR
-  scripts/config --enable CONFIG_KVM
-  scripts/config --enable CONFIG_KVM_INTEL
-  scripts/config --disable CONFIG_KVM_AMD
+  msg2 "Disabling TCP_CONG_CUBIC..."
+  scripts/config -m TCP_CONG_CUBIC \
+                 -d DEFAULT_CUBIC \
+                 -e TCP_CONG_BBR \
+                 -e DEFAULT_BBR \
+                 --set-str DEFAULT_TCP_CONG bbr
 
-  msg2 "Enable O3"
-  scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_SIZE
-  scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
-
-  msg2 "Selecting ECHO Scheduler..."
-  scripts/config --enable ECHO_SCHED
+  case "$_hugepage" in
+    always)
+      scripts/config -d TRANSPARENT_HUGEPAGE_MADVISE \
+                     -e TRANSPARENT_HUGEPAGE_ALWAYS;;
+    madvise)
+      scripts/config -d TRANSPARENT_HUGEPAGE_ALWAYS \
+                     -e TRANSPARENT_HUGEPAGE_MADVISE;;
+  esac
 
   msg2 "Enable USER_NS_UNPRIVILEGED"
   scripts/config -e USER_NS
-
-  ### Optionally set tickrate
-  if [ -n "$_HZ_ticks" ]; then
-    msg2 "Setting tick rate to ${_HZ_ticks}Hz..."
-    scripts/config -d HZ_300
-    scripts/config -e "HZ_${_HZ_ticks}"
-    scripts/config --set-val HZ "${_HZ_ticks}"
-  fi
-
-  # BBR3
-  msg2 "Enable BBR3"
-  scripts/config --module TCP_CONG_CUBIC \
-                 --disable DEFAULT_CUBIC \
-                 --enable TCP_CONG_BBR \
-                 --enable DEFAULT_BBR \
-                 --set-str DEFAULT_TCP_CONG bbr
-
-  msg2 "Disabling NUMA"
-  scripts/config --disable NUMA \
-                 --disable AMD_NUMA \
-                 --disable X86_64_ACPI_NUMA \
-                 --disable NODES_SPAN_OTHER_NODES \
-                 --disable NUMA_EMU \
-                 --disable NEED_MULTIPLE_NODES \
-                 --disable USE_PERCPU_NUMA_NODE_ID \
-                 --disable ACPI_NUMA \
-                 --disable ARCH_SUPPORTS_NUMA_BALANCING \
-                 --disable NODES_SHIFT \
-                 --undefine NODES_SHIFT \
-                 --disable NEED_MULTIPLE_NODES
-
-  msg2 "Enable zswap compression to LZ4"
-  scripts/config --enable CONFIG_ZSMALLOC
-  scripts/config --disable CONFIG_ZRAM
-  scripts/config --enable CONFIG_ZSWAP
-  scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4
-  scripts/config --enable CONFIG_ZSWAP_ZPOOL_DEFAULT_ZSMALLOC
-  scripts/config --set-str CONFIG_ZSWAP_ZPOOL_DEFAULT zsmalloc
-  scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT lz4
-  scripts/config --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZO
-  scripts/config --disable CONFIG_ZSWAP_ZPOOL_DEFAULT_ZBUD
-  scripts/config --enable CONFIG_ZSWAP_DEFAULT_ON
-
-  # msg2 "Setting performance governor..."
-  # scripts/config --enable CONFIG_CPU_FREQ_GOV_ONDEMAND
-  # scripts/config --enable CONFIG_CPU_FREQ_GOV_PERFORMANCE
-  # scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-  # scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
-
-  msg2 "Enabling tickless idle"
-  scripts/config --disable HZ_PERIODIC \
-                 --disable NO_HZ_IDLE \
-                 --disable CONTEXT_TRACKING_FORCE \
-                 --enable NO_HZ_FULL_NODEF \
-                 --enable NO_HZ_FULL \
-                 --enable NO_HZ \
-                 --enable NO_HZ_COMMON \
-                 --enable CONTEXT_TRACKING
-
-  msg2 "Enabling low latency preempt..."
-  scripts/config --enable PREEMPT_BUILD \
-                 --disable PREEMPT_NONE \
-                 --disable PREEMPT_VOLUNTARY \
-                 --enable PREEMPT \
-                 --enable PREEMPT_COUNT \
-                 --enable PREEMPTION \
-                 --enable PREEMPT_DYNAMIC
-
-  msg2 "Enabling multigenerational LRU..."
-  scripts/config --enable ARCH_HAS_NONLEAF_PMD_YOUNG \
-                 --enable LRU_GEN \
-                 --enable LRU_GEN_ENABLED \
-                 --disable LRU_GEN_STATS \
-                 --set-val NR_LRU_GENS 7 \
-                 --set-val TIERS_PER_GEN 4
-
-  msg2 "disable debugging features to reduce the size..."
-  scripts/config --disable DEBUG_INFO \
-                 --disable DEBUG_INFO_BTF \
-                 --disable DEBUG_INFO_DWARF4 \
-                 --disable DEBUG_INFO_DWARF5 \
-                 --disable PAHOLE_HAS_SPLIT_BTF \
-                 --disable DEBUG_INFO_BTF_MODULES \
-                 --disable SLUB_DEBUG \
-                 --disable PM_DEBUG \
-                 --disable PM_ADVANCED_DEBUG \
-                 --disable PM_SLEEP_DEBUG \
-                 --disable ACPI_DEBUG \
-                 --disable SCHED_DEBUG \
-                 --disable LATENCYTOP \
-                 --disable DEBUG_PREEMPT
 
   make ${BUILD_FLAGS[*]} olddefconfig
   diff -u ../config .config || :
 
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
-  # msg2 "Patching to enable GCC optimization for other uarchs..."
-  # patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
+  msg2 "Patching to enable GCC optimization for other uarchs..."
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
@@ -356,7 +339,9 @@ prepare() {
 
 build() {
   cd linux-${pkgver}
+  msg2 "Build all"
   make ${BUILD_FLAGS[*]} all
+  msg2 "Build bpf"
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
