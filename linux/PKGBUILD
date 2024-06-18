@@ -91,7 +91,7 @@ _subarch=36
 #  44. AMD-Native optimizations autodetected by the compiler (MNATIVE_AMD) (NEW)
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
-pkgbase=linux-cus
+pkgbase=linux-cus-mini
 pkgver=6.9.4
 pkgrel=1.1
 pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
@@ -119,7 +119,7 @@ _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linu
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
-  config         # the main kernel config file
+  config::config.last         # the main kernel config file
   open_O3_clang.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
@@ -128,9 +128,9 @@ source=(
   "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
   "${_patchsource}/0001-aes-crypto.patch"
   "${_patchsource}/0003-bbr3.patch"
-  "${_patchsource}/0007-fixes.patch"
-  "${_patchsource}/0008-ksm.patch"
-  "${_patchsource}/0009-ntsync.patch"
+  "${_patchsource}/0006-fixes.patch"
+  "${_patchsource}/0007-ksm.patch"
+  "${_patchsource}/0008-ntsync.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0004-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0005-drivers-initialize-ata-before-graphics.patch"
@@ -146,18 +146,18 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('8d8fe931d304458bcaa8c8b9572a5354ad272d88d1e0642e76b37247ce13bf70c49c8de6d8843fbb3037ee074ebc6cc94f0cc2b5b7e7187385a9dd0b0e2e250d'
+b2sums=('5579aef00f38e87ee9a9878ad4340aebc9c2590d8e813e2e106af59c6739e39a37267672ab7aff56160c8519d3014d139e6c849f33b9292c6fba019bc88d09da'
         'SKIP'
-        '1e94ec753866c14c07b8a6fb80e187871c88a7389160f80a0be3b6e25d85dbebc0e783d17bffbff4ea4e840e55af19bf4e8aefb11526e73aa860cd848b0c2688'
+        '6994820afd0ed67b5c7eb1e17ecabbd47a9bf7e603fb1729566a9a868c216b9be72bdc2ca9cd26864a8cbcf665ece06cb6404d5f0fad3d2c07c9fcffd653defa'
         'f502505ec1afd8815e1091203d3d805267370988f39e4b22b800a601c288451ffc3ef0f3e94981d07c5c6c1c292b590a03b6cf96b1d0dc012eaace7876898918'
         '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
         'dc333f44b89f0e5a20dcfde376bd4d8c2ecac5a05d2a0c07c0325d8e1d6e383ca11fc3a3403ecef6467d53117ee0a2f8ee623ff385e0ed3523cae1935c736030'
         '843bfdda1114e7a50921fe5f784650c197de63e6885b9f5a3ee57b02dc1f5bf4b3bfdd227c82e2d82f0636b4b9ffecad432a7c0eaa40b27adb2221fa4a2d0212'
-        '67ef65949b08477f565f8695f32bc5e5aa9710b3c668c130971206711a646298f4071119aee93afca3bd2cc2b49a88b7723abb649b526520a1b15209809a23d9'
-        '7852876aa6efd93a4e7033d3a27ad356d0377819514c34905634a3b0e3b0804b223cb638f47fdd87979ec937427ecb7fc63c7d606079823e108e9916d8fe84d4'
-        '8c1dae442785ed6936bd242a137623a16d0cc628e3260c8161edd723775b484c4e820d66ba78318bde0b9725f97f30f5fc1b70bccba5681e3e71f23e8e682e84'
-        '9a5b5b4e401d5666229812bdf55934fc66b885057a1029dc0f32b2f0271fd7e318cd71041fdb4cb9fe1add19163cdc66e9232ac1bd61a887a328dd37b138ca18'
-        'a753ccb161f98f52e22200e5513fe95b398cdc965b842bd099f68eb500ae239f4ee27b54159573b9ced83fe0b70ccff784cbf0ca96ebd966b25de0261ef7e49b'
+        'af570a0ff262a813a8a4618df2d126eb216aab205d53b3e4c131306f4dad32ff3f2763ce83c5def2e467486a37bf79dbdebe69e57fc01db63fd1f72f6934f3f1'
+        '546b035078a59a71c83d6e813380b6d4e557ebb5be88d6d6a2674cb64624868d75e95457f2a03e4720b68629c866837f3b6cf90102429086ec042c8205f3b868'
+        '5ef205bfbe664453e1c480acb7a58a4da7a6de63fb78db8da134027916f67e5960e25f67e4c947de93313e579d465eb18a1e5bd87eb477560128c51dd25a3406'
+        'b89a25fe011388ad844bdaefa58b449fecd8b59653025482c0532b6881177a445b37f6ae37e40fd5ac2d86659327f7e4e53047bc38023b80b1ae21ab82dee675'
+        '84839073138d3ed5831de5dddafb14681907922d0478c5091403d625c70eb8a9c047edcdc91cedaadd1153d0ba3db24d7a75e97b5ab8795882c12b33b80ac28d'
         'c12b3a20c82e54358cc387b7a4c639f744fd7032a8900e767acb96672b55fa54bffbce86f8d46784b70204c502c4d16afff626e445b5a328433a839ee304353a'
         '811365d8734efc0e79a2c23b331480a6af47155bd048be7e767c748277f0d62f00eb7a0c351542833e6a400938fdd47d048e6ab29c63398d66fb85d43e663d22'
         'a9419ae0c982b7a7ce6dc802cdf87e2d68b11dcfd5fc013a61b169a6d1cf1c902c7bbd441aa0e87be99a1c0e9271b6c6ba4b7da570506e1cfea8f682652939a6'
