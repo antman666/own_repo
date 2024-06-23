@@ -6,14 +6,14 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [libva-vdpau-driver-vp9, neovim, tree-sitter, uksmd]
+        packages: [linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Build packages for arch
         uses: actions/checkout@v4
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@jemalloc
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1

@@ -92,11 +92,11 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-pkgver=6.9.4
+pkgver=6.9.6
 pkgrel=1.1
-pkgdesc='Linux BMQ scheduler Kernel with other patches and improvements'
+pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
-url="https://gitlab.com/alfredchen/projectc/"
+url="https://github.com/sched-ext/scx"
 license=(GPL2)
 makedepends=(
   'bc' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz' 'zstd' 'gcc' 'gcc-libs' 'glibc' 'binutils' 'make' 'patch' 'python'
