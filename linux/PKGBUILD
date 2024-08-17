@@ -92,7 +92,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-pkgver=6.10.1
+pkgver=6.10.5
 pkgrel=1.1
 pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -129,8 +129,8 @@ source=(
   # "${_patchsource}/0001-aes-crypto.patch"
   "${_patchsource}/0002-bbr3.patch"
   "${_patchsource}/0006-fixes.patch"
-  "${_patchsource}/0007-ksm.patch"
-  "${_patchsource}/0008-ntsync.patch"
+  "${_patchsource}/0008-ksm.patch"
+  "${_patchsource}/0009-ntsync.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/intel/0003-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/intel/0004-drivers-initialize-ata-before-graphics.patch"
