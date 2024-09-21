@@ -92,7 +92,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-pkgver=6.10.7
+pkgver=6.11
 pkgrel=1.1
 pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -110,35 +110,32 @@ if [ "${_compiler}" = "clang" ]; then
     LLVM_IAS=1
   )
 fi
-options=('!strip' '!debug' '!lto')
+options=('!strip' '!debug')
 
-_gcc_more_v=20240221.2
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.10"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.10"
-_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.10.y-xanmod"
+_gcc_more_v=20240919
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.11"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.11"
+_xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.11.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   open_O3_clang.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  # "${_patchsource}/sched/0001-prjc.patch"
-  # "${_patchsource}/sched/0001-echo.patch"
-  "${_patchsource}/sched/0001-sched-ext.patch"
-  # "${_patchsource}/misc/intel/0001-intel-thread-director.patch"
-  # "${_patchsource}/0001-aes-crypto.patch"
+  "${_patchsource}/sched/0001-prjc.patch"
+  # "${_patchsource}/sched/0001-sched-ext.patch"
   "${_patchsource}/0002-bbr3.patch"
-  "${_patchsource}/0006-fixes.patch"
-  "${_patchsource}/0008-ksm.patch"
-  "${_patchsource}/0009-ntsync.patch"
+  "${_patchsource}/0005-fixes.patch"
+  "${_patchsource}/0007-ksm.patch"
+  "${_patchsource}/0008-ntsync.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
-  "${_xanmodpatch}/intel/0003-locking-rwsem-spin-faster.patch"
-  "${_xanmodpatch}/intel/0004-drivers-initialize-ata-before-graphics.patch"
-  "${_xanmodpatch}/xanmod/0002-XANMOD-x86-build-Add-more-x86-code-optimization-flag.patch"
-  "${_xanmodpatch}/xanmod/0010-XANMOD-block-set-rq_affinity-to-force-full-multithre.patch"
-  "${_xanmodpatch}/xanmod/0012-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
-  "${_xanmodpatch}/xanmod/0019-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
-  "${_xanmodpatch}/xanmod/0020-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
+  "${_xanmodpatch}/clearlinux/0003-locking-rwsem-spin-faster.patch"
+  "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
+  "${_xanmodpatch}/xanmod/0009-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
+  "${_xanmodpatch}/xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  "${_xanmodpatch}/xanmod/0018-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_xanmodpatch}/xanmod/0019-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
+  "${_xanmodpatch}/zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
 )
 
 validpgpkeys=(
@@ -147,24 +144,24 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('a177df46c43bef6a529e50af64103a40eabc9d7301f93c8e1a4ed3e6b0e03bec195838c6085f3df798b7d941c0943ba31b23b1717150785ef52cfa8bd2dc028d'
+b2sums=('e7750c0878d71a56a0ce52d4c4c912199dad5bf5e2e8f872585a6494afbb37cbd852e612a6858936d2dc9b7776a3933818f540db408d57e90d18ea5249bba7ab'
         'SKIP'
         '7d0a578032474511609c13878d3d663bd1b69ec48a5b18fb1ba22087e122ed21ab1f68eb834b4145205bf64deb332c47b11313d1d6d152eceb65302822317de8'
-        'f502505ec1afd8815e1091203d3d805267370988f39e4b22b800a601c288451ffc3ef0f3e94981d07c5c6c1c292b590a03b6cf96b1d0dc012eaace7876898918'
-        '221de3283857198a908a28b837cb542c5cf4e29868539f3f3c2c783c07c59a6868f3b1d4fe1e023e986fd3f9d17bd2e4f68b7c86fa5da76fcde25e5955b3c74d'
-        'b36978e78a9a5c4dbf759850d6277e1781e495863963dfaf6d625ea734a3b712d5b1a63a2d18745a70c6d22967c3ef901efe3817c01348f16accad90daef79e4'
-        'e41c00da426d89639e31aeb61f1acf38e1f7bafc2691c4278d2e159a9e0ee566b22f4b53ccd7f7aaaeaa3bb45b091cfaed7fa7f43c6f83972c4521cde8b6f798'
-        '49f0b92a71a9b08b7a6449ddd70556a6042a0efe95dccd01b0e13980a7d8bb5d25090bc878ef1620bac0f6af66e1590310a3b2375df9314066d7bc2dc4008776'
-        'e4202cd02b6b8809f805343601540b8f7c7ad941cbf4b7d0ca7255e93132583f6e24f04138725a40e024194ad712b5d199b33b0b08eba0bec93332bb8efd47b3'
-        'f180b2b27b01d365aab8c460df7461c3eae4c7fca8c4b20c780caa9f7eebd8456077c5652fa8ae40894f3c4a15594e9ea58c3afb43b5b1de8ecaf11a706b8d51'
-        '7eed0457d9a4d5ba72d2823e61c261467a8335451a6541cdee9ea38f735a8951925252e74030197251b2a43c5f1c1afa98cd018ba2d574527e602f2ee0125f20'
-        'c2e2db4713e5273c9418c8145f62a8cd50d7908506d517040b732785676db84b94becd47520d37977ce3f1c99de5980cd74761ad9ff49d2d48500f8fce488b69'
-        'c78918b9e65b8f1330c73c397b24779fd2d2b897731b0c1d2ffec42c5544afa7f497204760061e88f734560146db8d244c6795e1c62c18c84f2a5a2c1b5b0725'
-        '892166c50dc008e4c50d52e88a1f0b0b681e3f3f5e6cdf0bf029c04e5ceb42b49fe5462289f555f49112ecd56b5bbef21817ac100294cca7010dca945a21139c'
-        'fa5c549dca18cd48006ead12983ef7e0a9266cc6075584bd65db86b5fa0a28ba192ff0788ca61d7c6ab9b685b90ca921aa29844dd31f9bb8e694599bcf846348'
-        '1196f93c2b1892e8e3faa374b400636f603d3bb062b7e2a517645f51c8d6fe4f5f5a600789f7286022ec02343aed865a7ae97f2a1f38c2ed267e6499ba99eaa7'
-        'be23ff4fbef92daabee4a501dcaaba995bf7ad61237e65a7ea0f6f7fb004fa6b4c1d49d2ebf0be6791b78da6fd1eb7364171052b12cc7985d2615c6a8f7cd98a'
-        '8f3f255534cbd877da8d05a30205c40eac3da3909042d42206007fab5fbcee2a24ba3455f80a440bd9c3d517507b94db5703f1b41c61a4350b20d2c2e640ba14')
+        'e7e3f578877cea350a454278841154ca69312a1087960533ce7f521d23f98a6a2cf486d55ce3a4903cf451de654db5779c2011ba9fd4d3445730c5e8ef109950'
+        '1ed7206886ecf72ec0801e62e56bc5af5ea90622965974bb1f95e2cc4e6ffb2a5bbaeaa934afbc319a08dcabb5c31c8324002a859a28a8776701da37f6f7dfd3'
+        '1bbc88eea44be9cb2ec2b43cf4100154702a2ea3a0274f080a273304263ca8a8e85b7bd0d124a49dd7ea1ae71d28932a4d57789dcc589e2e3d3adc3e3e20e1d8'
+        '115251e00c44956612ac25f9f4a0238c65ecd6374dc0ea15244f388f6600883fd43bdd00cc958fa570d89044bdc383f5d10c2b24d7200bed96fc3046437d2ffc'
+        'c1ed637fc007a3d2d535312ff47b75fbd1615d97c9917f5604db34cd1b85cc1b8770b9ae8ba7b676df1bd54f2fe021abaaacbc62b230764971d0d0e9e4e2c63d'
+        '9f96b18b1e1836314cf5a4d641fecb8130732efd4ad100843d92a7e28875ad8c262cd09db98b4d14d670376e06135d699c7f064912b7a1aa47061af9f8e1c3de'
+        '994c466799c14ac64ce1cb66496587dd3dc00913cd96b1a0a7c4a83d945f091fc736eac8e0a726eb95454c674c82703b7a29d3587064cf051bbef0b804b271cc'
+        'fd8ed8b65d7659846359f4f06152cb785c8c65a113a0106b34d494aab09d433f1bc02b8ffe6ec74a701269ea87b189b80fc5bd105da842ab1992241aa6736685'
+        '88fcfb6cea77c2967ff56bd8cc9b05c8476bd0687ac60c0897c2f2ae85b1d61a72403523b7268d60e1cd8d33af12f93388878994ff788f7a6114d18e8dbd86e5'
+        'bc35b76a0cec1f7aa0f1337c8b356187875df45889e3913c1d1d1e7f3528315505dca37323f683a0d565f379d6e62feb333242b8ad4eb3efeedbd9a90bbb3aba'
+        '94148d4f200d0e69bfdb050a7ce997a29c888d925e4bdf7ae2e1a781b44e7dd9fa5f220ccc336e9370e39e4aac163698567a0eeea713763293cde48f319310be'
+        '413a647d2ab22707269a70985d2afeb764812be42ff107d20aea23e4025164754a9463a66de772e429d279942aa66db558761f291ba6dd96d0b2e4f52bae6ccd'
+        '3887dfda18ec5812d48268a4834613d05a81f1d09d627c11dfd418e52a58d6734bc8774cdfaffe66865fd8ae2285de305b75896051d234d1103f04d955047184'
+        '8d691bceb6dcfd7829f985c9234eba06c212835e087ca9566f4ce54596028b35c3fbb8df376da91823b4d791457ce1d8134814ccab302466ee487871ccae82c6'
+        '09f5eb209bbaa5c958fb948c88e8061eaab2484a3a1dd4eac654c3d4e71ebf9572e3d409e7ab02f9b0667de7cea77c4f32d15e9382b1273f9e11b905b8dd4ff8')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -306,7 +303,7 @@ prepare() {
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
   msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-uarches-for-kernel-6.8-rc4+.patch"
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-ISA-levels-and-uarches-for-kernel-6.8-rc4+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
