@@ -92,13 +92,8 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-<<<<<<< HEAD
-pkgver=6.11
-pkgrel=2.1
-=======
 pkgver=6.11.5
 pkgrel=1.1
->>>>>>> 06594f2 (update repo)
 pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/sched-ext/scx"
@@ -129,19 +124,12 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/sched/0001-sched-ext.patch"
-<<<<<<< HEAD
-  "${_patchsource}/0002-bbr3.patch"
-  "${_patchsource}/0005-fixes.patch"
-  "${_patchsource}/0007-ksm.patch"
-  "${_patchsource}/0008-ntsync.patch"
-=======
   "${_patchsource}/0005-bbr3.patch"
   "${_patchsource}/0007-fixes.patch"
   "${_patchsource}/0008-intel-pstate.patch"
   "${_patchsource}/0009-ksm.patch"
   "${_patchsource}/0010-ntsync.patch"
   "${_patchsource}/0013-thp-shrinker.patch"
->>>>>>> 06594f2 (update repo)
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/clearlinux/0003-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
