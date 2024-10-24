@@ -92,8 +92,13 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
+<<<<<<< HEAD
 pkgver=6.11
 pkgrel=2.1
+=======
+pkgver=6.11.5
+pkgrel=1.1
+>>>>>>> 06594f2 (update repo)
 pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
 url="https://github.com/sched-ext/scx"
@@ -112,7 +117,7 @@ if [ "${_compiler}" = "clang" ]; then
 fi
 options=('!strip' '!debug')
 
-_gcc_more_v=20240919
+_gcc_more_v=20241018
 _patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.11"
 _patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.11"
 _xanmodpatch="https://raw.githubusercontent.com/xanmod/linux-patches/master/linux-6.11.y-xanmod"
@@ -124,10 +129,19 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/sched/0001-sched-ext.patch"
+<<<<<<< HEAD
   "${_patchsource}/0002-bbr3.patch"
   "${_patchsource}/0005-fixes.patch"
   "${_patchsource}/0007-ksm.patch"
   "${_patchsource}/0008-ntsync.patch"
+=======
+  "${_patchsource}/0005-bbr3.patch"
+  "${_patchsource}/0007-fixes.patch"
+  "${_patchsource}/0008-intel-pstate.patch"
+  "${_patchsource}/0009-ksm.patch"
+  "${_patchsource}/0010-ntsync.patch"
+  "${_patchsource}/0013-thp-shrinker.patch"
+>>>>>>> 06594f2 (update repo)
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/clearlinux/0003-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
@@ -144,16 +158,18 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('e7750c0878d71a56a0ce52d4c4c912199dad5bf5e2e8f872585a6494afbb37cbd852e612a6858936d2dc9b7776a3933818f540db408d57e90d18ea5249bba7ab'
+b2sums=('8749d9f78cca3d64e97d081b3ededf506c07c7fe894253e7435afb37eb7c86b690a65293fb4b582ecd951229ca61f13679d10197e4629352262db776352b96dc'
         'SKIP'
-        '7d0a578032474511609c13878d3d663bd1b69ec48a5b18fb1ba22087e122ed21ab1f68eb834b4145205bf64deb332c47b11313d1d6d152eceb65302822317de8'
+        '1781a737dbe4ade4d4a3dac3a070598d9c67961cafdf009f1a8c0748a60fca872942791fa6f41ac4cdf1209913f2408f9982f4a2dd075873e8afe4ef1a6836b4'
         'e7e3f578877cea350a454278841154ca69312a1087960533ce7f521d23f98a6a2cf486d55ce3a4903cf451de654db5779c2011ba9fd4d3445730c5e8ef109950'
-        '1ed7206886ecf72ec0801e62e56bc5af5ea90622965974bb1f95e2cc4e6ffb2a5bbaeaa934afbc319a08dcabb5c31c8324002a859a28a8776701da37f6f7dfd3'
-        '1bbc88eea44be9cb2ec2b43cf4100154702a2ea3a0274f080a273304263ca8a8e85b7bd0d124a49dd7ea1ae71d28932a4d57789dcc589e2e3d3adc3e3e20e1d8'
-        '115251e00c44956612ac25f9f4a0238c65ecd6374dc0ea15244f388f6600883fd43bdd00cc958fa570d89044bdc383f5d10c2b24d7200bed96fc3046437d2ffc'
-        'c1ed637fc007a3d2d535312ff47b75fbd1615d97c9917f5604db34cd1b85cc1b8770b9ae8ba7b676df1bd54f2fe021abaaacbc62b230764971d0d0e9e4e2c63d'
-        '9f96b18b1e1836314cf5a4d641fecb8130732efd4ad100843d92a7e28875ad8c262cd09db98b4d14d670376e06135d699c7f064912b7a1aa47061af9f8e1c3de'
-        '994c466799c14ac64ce1cb66496587dd3dc00913cd96b1a0a7c4a83d945f091fc736eac8e0a726eb95454c674c82703b7a29d3587064cf051bbef0b804b271cc'
+        'f103018e7a081709e531a3548e13d7803c83f020507bbeb9642a459c79c2edfa9579d368ac2a58f8eca0fec9ab52895506cbb9f30a2e67dc8065f08986579d21'
+        '175191b1d38af840c3d087e91c55ff38853ce855731f701e13fad5845beea1702cc4aff49b9331827c72ce1b8008910d35a7c2082c0a37a04323ed499429a28a'
+        '592d208ff26def6a400ed65d470ecf01e71b464ecfaa85e30f22ca27d53febe993454b455cd6dcb996f94bce9c8734bedf8ba5371b2b4e194a4cfe4f2a94eb3f'
+        '00a9f5f2684cac09dcfe19a33a8695cba9452c61d8c6dca6fb815a80a289129c0ac97922115a7599fa3609e11004baee5f8d35f4a9f386c0f923b9766d18baac'
+        '1121d00096027fda806ed9892336470870091fba9b02fbf0e202de627d5194c2202878893ebd1f794727ee8125223c6cbaa121d94f6033690581a26b54cc799e'
+        '0767e3ac0899c6df139d05b14728c1b40f6b82ea02ca1a063c9d195f04ba94c2c8ba4e052bd2ffb4b68f1ee4645942c059bcc853373db4592808c42d0036cf55'
+        '0319d375bf02d26fed75845f86fce8ce57cdb94bb82b01fb13cd80d8ad875d98c08c49713e218c217c0c26734b0cc748c65f8a98028d29f8886d9b396f3aa852'
+        'b58bca16db43bc14cb04f76bfe3e73f1227fa63654b00de9d5f5ba57327df1698b97b552f9fc6f897d747e70ad3fa54eb766ed2584625127f0d801331f0b9a54'
         'fd8ed8b65d7659846359f4f06152cb785c8c65a113a0106b34d494aab09d433f1bc02b8ffe6ec74a701269ea87b189b80fc5bd105da842ab1992241aa6736685'
         '88fcfb6cea77c2967ff56bd8cc9b05c8476bd0687ac60c0897c2f2ae85b1d61a72403523b7268d60e1cd8d33af12f93388878994ff788f7a6114d18e8dbd86e5'
         'bc35b76a0cec1f7aa0f1337c8b356187875df45889e3913c1d1d1e7f3528315505dca37323f683a0d565f379d6e62feb333242b8ad4eb3efeedbd9a90bbb3aba'
@@ -303,7 +319,7 @@ prepare() {
   # https://github.com/graysky2/kernel_gcc_patch
   # make sure to apply after olddefconfig to allow the next section
   msg2 "Patching to enable GCC optimization for other uarchs..."
-  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-ISA-levels-and-uarches-for-kernel-6.8-rc4+.patch"
+  patch -Np1 -i "$srcdir/kernel_compiler_patch-$_gcc_more_v/more-ISA-levels-and-uarches-for-kernel-6.1.79+.patch"
 
   if [ -n "$_subarch" ]; then
     # user wants a subarch so apply choice defined above interactively via 'yes'
