@@ -92,7 +92,7 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-pkgver=6.11.5
+pkgver=6.11.9
 pkgrel=1.1
 pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
 arch=(x86_64)
@@ -124,12 +124,12 @@ source=(
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
   # "${_patchsource}/sched/0001-prjc.patch"
   "${_patchsource}/sched/0001-sched-ext.patch"
-  "${_patchsource}/0005-bbr3.patch"
-  "${_patchsource}/0007-fixes.patch"
-  "${_patchsource}/0008-intel-pstate.patch"
-  "${_patchsource}/0009-ksm.patch"
-  "${_patchsource}/0010-ntsync.patch"
-  "${_patchsource}/0013-thp-shrinker.patch"
+  "${_patchsource}/0004-bbr3.patch"
+  "${_patchsource}/0006-fixes.patch"
+  "${_patchsource}/0007-intel-pstate.patch"
+  "${_patchsource}/0008-ksm.patch"
+  "${_patchsource}/0009-ntsync.patch"
+  "${_patchsource}/0012-thp-shrinker.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/clearlinux/0003-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
@@ -146,18 +146,18 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('8749d9f78cca3d64e97d081b3ededf506c07c7fe894253e7435afb37eb7c86b690a65293fb4b582ecd951229ca61f13679d10197e4629352262db776352b96dc'
+b2sums=('97787b71bcf6a57872078e46917b3b6e339f25a0320dabe226fe5fe91e3eb829e3749b096eec4525fd1d6f25805f54f8a2d2b71a41bc94fd35c2b9c9140f25d7'
         'SKIP'
-        '1781a737dbe4ade4d4a3dac3a070598d9c67961cafdf009f1a8c0748a60fca872942791fa6f41ac4cdf1209913f2408f9982f4a2dd075873e8afe4ef1a6836b4'
+        'cafa12a6df01338acf16d3bd7bda1dcd9862120832fbe84ba8870ed30c69bb4e28341f610b6e62836408f0e72313b91f81e9d25ed97d14de418229f88974382b'
         'e7e3f578877cea350a454278841154ca69312a1087960533ce7f521d23f98a6a2cf486d55ce3a4903cf451de654db5779c2011ba9fd4d3445730c5e8ef109950'
         'f103018e7a081709e531a3548e13d7803c83f020507bbeb9642a459c79c2edfa9579d368ac2a58f8eca0fec9ab52895506cbb9f30a2e67dc8065f08986579d21'
         '175191b1d38af840c3d087e91c55ff38853ce855731f701e13fad5845beea1702cc4aff49b9331827c72ce1b8008910d35a7c2082c0a37a04323ed499429a28a'
-        '592d208ff26def6a400ed65d470ecf01e71b464ecfaa85e30f22ca27d53febe993454b455cd6dcb996f94bce9c8734bedf8ba5371b2b4e194a4cfe4f2a94eb3f'
-        '00a9f5f2684cac09dcfe19a33a8695cba9452c61d8c6dca6fb815a80a289129c0ac97922115a7599fa3609e11004baee5f8d35f4a9f386c0f923b9766d18baac'
-        '1121d00096027fda806ed9892336470870091fba9b02fbf0e202de627d5194c2202878893ebd1f794727ee8125223c6cbaa121d94f6033690581a26b54cc799e'
-        '0767e3ac0899c6df139d05b14728c1b40f6b82ea02ca1a063c9d195f04ba94c2c8ba4e052bd2ffb4b68f1ee4645942c059bcc853373db4592808c42d0036cf55'
-        '0319d375bf02d26fed75845f86fce8ce57cdb94bb82b01fb13cd80d8ad875d98c08c49713e218c217c0c26734b0cc748c65f8a98028d29f8886d9b396f3aa852'
-        'b58bca16db43bc14cb04f76bfe3e73f1227fa63654b00de9d5f5ba57327df1698b97b552f9fc6f897d747e70ad3fa54eb766ed2584625127f0d801331f0b9a54'
+        '4ec1fc66980b27d8e97fd42c7df3ae2ea6b5d40b004e59badff6a9e004aec738dccb38be1514cdb65622858660e0c135aa43bc7f6c6ba1448307fa0056337d5c'
+        '7d5d4e5906766dd6b9b10ee035b4da86a4afada179f28044b0913a9e5458f7a823cef4786ae169819268899c200208e409da04547bde2a8685e2be0caea83d42'
+        '00ab3787453426fd9fe86205c17065758ca5a642d6f1d6ee040ab8437226668b67a5a9cc5aa2616c1fe421dbcc90f31f829efa1be840b05813d0e798eba8523b'
+        '34ecb61eed8765df106f71447693751657a3c14914ae2806e56e89a3e21812801ffcb462bbefede60b0462b0b98dd3fb12ff7b524ac229bad258194baa6371ea'
+        '703c3fa6e15fb58cdc4fff38d257618997823d2c795edf062b760b92b5c79dd5611609e7dab5db754df68784220dbe44012f555e1bc909abcff135f54185c8db'
+        '1d211ee0a707ffd5b6d3b7a391e04d06f71a9c6012495fade258dbf959f503cc0e460cb6da61d6b7e1e03f6c228da75406f14db1172f3690eff34158d26b8b96'
         'fd8ed8b65d7659846359f4f06152cb785c8c65a113a0106b34d494aab09d433f1bc02b8ffe6ec74a701269ea87b189b80fc5bd105da842ab1992241aa6736685'
         '88fcfb6cea77c2967ff56bd8cc9b05c8476bd0687ac60c0897c2f2ae85b1d61a72403523b7268d60e1cd8d33af12f93388878994ff788f7a6114d18e8dbd86e5'
         'bc35b76a0cec1f7aa0f1337c8b356187875df45889e3913c1d1d1e7f3528315505dca37323f683a0d565f379d6e62feb333242b8ad4eb3efeedbd9a90bbb3aba'
