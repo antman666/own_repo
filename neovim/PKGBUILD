@@ -23,8 +23,8 @@ source=("$_pkgname-$_date.tar.gz::https://github.com/neovim/neovim/releases/down
         "$_pkgname-$_date.tar.gz.sha256sum::https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz.sha256sum"
         "$pkgname-archlinux.vim"
         "$pkgname-sysinit.vim")
-b2sums=('4a46be59e151ad51ec3055beefb3b0767633c1d3a1d8579906c3f1af420380e4a225e2c1550be8e11e1395f377ebcefa1fc0a08d96b617a4ef54e8a503560289'
-        '0b48fc96ff875499c84d5cef18bd4d39f658ec7549a5ed9ec97679ee07356f4f00707650f11ac0a6ea90eca05fb5dfd6be75ffe567633d0a567159758b0788e9'
+b2sums=('ca2f264b7b703ad1402a5497f5c8aba3c1cf7d5e8c7e8ef2118c0c475f2acee5c880046620407acf5f53ed194481a58c4cea4b17e1a084ce8deb4f71da6d4901'
+        '67a77df0475173e8197d0a536499e9cc7c117919cf8e0a990b627d764b6ab474a6f1b4be1c121706450ea0350288dcada974f64e09855eb27a96250880392514'
         'd0871e240bd9c7de7d898e1fba95364f4c4a12dbb3ac40892bbf93a49eb0e8cc2c8bc1ccae9ea5b700581a185a4df56bd28427d42a7d4b288560207b3951a15d'
         '6ed647c3a4c0907a60060fa61117d484aa091c69c73dda1f0a99aa4e67870ae2092a2c1057a15ced9fc56b08374ce8a8b86dbe531df777f9ad49302c7a9d3da0')
 install=$pkgname.install
