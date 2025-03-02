@@ -92,11 +92,11 @@ _subarch=36
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 pkgbase=linux-cus-mini
-pkgver=6.12.9
+pkgver=6.13.5
 pkgrel=1.1
-pkgdesc='Linux scx scheduler Kernel with other patches and improvements'
+pkgdesc='Linux Kernel with other patches and improvements'
 arch=(x86_64)
-url="https://github.com/sched-ext/scx"
+url="https://kernel.org"
 license=(GPL2)
 makedepends=(
   'bc' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz' 'zstd' 'gcc' 'gcc-libs' 'glibc' 'binutils' 'make' 'patch' 'python'
@@ -113,28 +113,28 @@ fi
 options=('!strip' '!debug')
 
 _gcc_more_v=20241018
-_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.12"
-_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.12"
-_xanmodpatch="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-6.12.y-xanmod"
+_patchsource="https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.13"
+_patchsources="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/6.13"
+_xanmodpatch="https://gitlab.com/xanmod/linux-patches/-/raw/master/linux-6.13.y-xanmod"
 
 source=(
   "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkgver.tar".{xz,sign}
   config         # the main kernel config file
   open_O3_clang.patch
   "more-uarches-$_gcc_more_v.tar.gz::https://github.com/graysky2/kernel_compiler_patch/archive/$_gcc_more_v.tar.gz"
-  "${_patchsource}/0005-bbr3.patch"
-  "${_patchsource}/0007-crypto.patch"
-  "${_patchsource}/0008-fixes.patch"
-  "${_patchsource}/0009-ntsync.patch"
-  "${_patchsource}/0011-pksm.patch"
+  "${_patchsource}/0003-bbr3.patch"
+  "${_patchsource}/0005-crypto.patch"
+  "${_patchsource}/0006-fixes.patch"
+  "${_patchsource}/0008-ntsync.patch"
+  "${_patchsource}/0010-pksm.patch"
   "${_xanmodpatch}/net/tcp/cloudflare/0001-tcp-Add-a-sysctl-to-skip-tcp-collapse-processing-whe.patch"
   "${_xanmodpatch}/clearlinux/0003-locking-rwsem-spin-faster.patch"
   "${_xanmodpatch}/clearlinux/0004-drivers-initialize-ata-before-graphics.patch"
-  "${_xanmodpatch}/xanmod/0008-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
-  "${_xanmodpatch}/xanmod/0010-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
-  "${_xanmodpatch}/xanmod/0016-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
-  "${_xanmodpatch}/xanmod/0017-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
-  "${_xanmodpatch}/xanmod/0018-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
+  "${_xanmodpatch}/xanmod/0009-XANMOD-block-Set-rq_affinity-to-force-complete-I-O-r.patch"
+  "${_xanmodpatch}/xanmod/0011-XANMOD-kconfig-add-500Hz-timer-interrupt-kernel-conf.patch"
+  "${_xanmodpatch}/xanmod/0017-XANMOD-lib-kconfig.debug-disable-default-SYMBOLIC_ER.patch"
+  "${_xanmodpatch}/xanmod/0018-XANMOD-scripts-setlocalversion-remove-tag-for-git-re.patch"
+  "${_xanmodpatch}/xanmod/0019-XANMOD-scripts-setlocalversion-Move-localversion-fil.patch"
   "${_xanmodpatch}/zen/0002-ZEN-dm-crypt-Disable-workqueues-for-crypto-ops.patch"
 )
 
@@ -144,25 +144,25 @@ validpgpkeys=(
   '83BC8889351B5DEBBB68416EB8AC08600F108CDF'  # Jan Alexander Steffens (heftig)
 )
 
-b2sums=('b1b992e1c03c095203a6aa8e529768c0af00fc89e1afbbcb56821465a9e78fb8f8ca19d038bc1f08c5286e1781b407d49775f28153572d3b9fe8d80b86d540bf'
+b2sums=('f8d57680d657c57bfc02a7981133e1e0dff9718f9ffdaff99be89861582cc8922884a4c8ce76acf8cc97bf407dc77b91d6c0d0cab59b210d5fa485d27eac1999'
         'SKIP'
         'de0068ac798ab371fd213b17e0245608fe979f9adb5da587938edcd977e84cb623109cb5e56b64a82a094040c2c52bec7a089b7d0c8b479ef1b70edde8d91cdd'
         'e7e3f578877cea350a454278841154ca69312a1087960533ce7f521d23f98a6a2cf486d55ce3a4903cf451de654db5779c2011ba9fd4d3445730c5e8ef109950'
         'f103018e7a081709e531a3548e13d7803c83f020507bbeb9642a459c79c2edfa9579d368ac2a58f8eca0fec9ab52895506cbb9f30a2e67dc8065f08986579d21'
-        '60b682cc32f6770068999ce2f4a7731ae1f56a77a1aace35a94fa6fb50ea427763ba93298c186a2080841175e09aa448887f11879ffdccce8a9e8730f0c014de'
-        '2f857360d4439386016ae500e86bc06d942c381f8a97a977960a238c7a7de8bc2116c642fab2be149be39073c1398ea62f86a47544255d2780700d8371492212'
-        'a64aaf67d0f52abc3c2066b9694bcd4a37615eea9c9554379447d5284ec55a9ba98e75f455dc7ebd39659a118484becbcc0e5694aabd7cdb9017825a77461098'
-        'c81e58518d59d2015d6dc48dae017f3ff1cf9515724465dffaa19f3f7d56f821d24d9a6daa8d67193f2a73f0efbd0629ac9c6dd78ca6b63e27dc0c23d3c39d01'
-        '50ee4cbe54d7a650e13726a5eeb271f457752ceb4cb137306c11b39fe5c466d297e244bed7d327db14a55b0d054c09ce378441f044ce9d723d85251f9dffea42'
-        '9103de14f41f5a2b56304f023685aa3f4b7cbe69e8d20ad98877d8e90485a029f5f392e913347e98b0757d9c6715202e128e1fbffc41c87a9fc2793b17373e35'
-        '679e8bb52932468c024b920800a4a31a4cc1f4c9253b162d02d320d4ba0e508061c22b18619c75e4431a7bd42df674cce27278fcd3434598149d4b74e4eb84c1'
-        '473a8a2d80d9a1aa327a3c1a9c78b807f3c72842a457266041824856fba5689dc89aebb3f76446f5b79ac107bd2edbda4b9a3147d811bcb76028334f970155a6'
-        '2cb8ae08b4407602b6ae09e1d36aef70a57219f7e39ed59ec397bbf924060b0b9c5f3e0f394ad530b2e55527d98ad00a3a31637d471feb9d635ad4d0195d5963'
-        '23446e7c022897d997223ad5a9b8a8ceb073db38135a08b6fe55023560e8da6b210b28dcbb38c7a5576677600e267859c5922390bbb1c20d800215db64ab8df4'
-        '79ad9301fd782c210fb72b9ef70a1e6fb835e68b36580ab90a1c1bebe431ca88fca0304a94186af04691bad772e89e30ca5ac20dbc9382610cb5155176747b5b'
-        'a73278090c49e5c336b54699f4c13b0b6cb02ebb5989c81f9e664b418d30930dfc3d51e4dfed437c9e931d8cccbc1720949d6843c6c94da905ba1f24a0c892fa'
-        'd736fbf9b801113514fc6b2c59e2f8a7c555850e9bc7d2c2f835529f995823e7300af95cc8bb223dd34ebce47ec8a4640391473bd1cc4ae9fd2a568703445cd8'
-        '88ea132320f4e46d91e710d2c9b2d5033ca354fe6cdda652c1bdf9dc8eb6474d563aa810c498b1c47342f6be27601ff878e912a9bf6a8d0bf9d6022d0f19d48b')
+        '738e5fe578cbb8217caef8d97255c8523d1975e31126b7e3c3f1368feaa827c35ca3b9fa9f91006885ea7623413cd312bf132c047a091261a0530994ea7134b3'
+        '2726067992f16c4a475980ad9ccb2c07299340bac1d69c9ac3a8441080f489779dcc2fd45213f3e8628061b4ac78aded36573ef31e723b88bd9518c08300feb5'
+        '1b44003d783e6cc38068cd3eeb80dc95140d537ee7b14e10500f83364bcd1725b40e2409fe4be8a36ddc87a85388b98aff64a682d28faeed8208e3519d527a35'
+        '65552593e39c4a900dc1a39aa7ef24cef7ec890296c30a09406b141b086819427d81b9b09856fa281d7a56da7fd47d78817b2ab46deef6c7e695fd1dd59351eb'
+        '574f23b5db9e7f7f272ebdcac7fcaf283e8f8b973953caaf1311792a1afa43d65f8fa8896451f8e3fc0e4b04dcecf356ac553b2a96761cedc1bd073433b65fad'
+        '04e53edd8ab09debd6c24920d9cb23978d777433b7709b898ca3ac91e2e8a9fee8810c63f4567b05547624f9d85e5ba7fcfc4cdda967b4f5654d9009a3ff8148'
+        '432c01a9a768cf965d8b5ed00e0a2ba263b25cc81d9add15df3c00402c72776c9c5d43ace5e05d1ad2b4a966336913eebdd740129d3222392dd659e3485c15bd'
+        '4ea4e6bd8966a7ceae38d9a3c676c8fa1573f3b10e230ec4f3f5482ed1baa5700adf775038655b0ecddf9dd8ebb2e36ba1c7744151f405b7298c6dc6e58c15bb'
+        '09e3f0b977aa3b86f9a73393aee2978f34fd53477924f1378a41b49cc273d501c33a5c565816dcca5183f6b6936b387e5f258685dc902f2d0830bf8879724923'
+        '6835c4c499bac1775c55932a6c38dfc7193646aa85d2754005c1324b40fa11df7ceb186cd775e5ec6632cc5132ee75c21e5459512232b66bb473a6da08eca6fe'
+        'ec751f124ac4bf5cb69ad519343955a40da01d903b63741fc2a1faa6c57bab03bf61e02a797dcaa6a6b37eabcd63012a68c32ca83847918a20acc4c588aab90a'
+        '36029c3e730a2847282b6bdb292e63dd7a5ccaefee2f1b07fcfc9be5bd1562d69e2dc64de83dc9b1d425aa354a7bea9e0389908e34b1b45d5625647e95894c90'
+        '65e2a85c4598d6b1aa80438ccb0ad004adea016493fd03c37c3f8382cc1e38d38660cb9c663d407449ab49ee75b17599eaff8eec03021091ce7cb5b7933f1a86'
+        '33aa022499897c5aa95f77623caa718abaf5420dc7a26ecb0aacab58a997e5ebc62d2c086e53c3cd97e1686ea0cfbea4b82600eb1d127d80395b619738be4aa8')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
