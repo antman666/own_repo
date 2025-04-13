@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [uksmd, libva-vdpau-driver-vp9]
+        packages: [linux]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +15,7 @@ jobs:
       - name: Build packages for arch
         uses: actions/checkout@v4
       - id: makepkg
-        uses: antman666/pkgbuild-action@non-jemalloc
+        uses: antman666/pkgbuild-action@jemalloc
         with:
           pkgdir: ${{ matrix.packages }}
           namcapDisable: 1
