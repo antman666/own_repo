@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages: [linux]
+        packages: [uksmd, libva-vdpau-driver-vp9]
       fail-fast: false
     runs-on: ubuntu-latest
     steps:

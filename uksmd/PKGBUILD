@@ -7,32 +7,31 @@ _reponame=uksmd
 pkgver=0.0.0.r80.ba1086b
 pkgrel=1
 pkgdesc="Userspace KSM helper daemon (git version)"
-url="https://codeberg.org/pf-kernel/uksmd"
+url=https://codeberg.org/pf-kernel/uksmd
 license=(GPL3)
 arch=(x86_64)
 depends=(systemd procps-ng libcap-ng)
+optdepends=('uksmdstats: for parsing /sys KSM statistics')
 makedepends=(meson)
 makedepends+=(git)
-source=(${_reponame}::git+${url}.git)
+source=(${pkgname}::git+${url}.git)
 sha256sums=('SKIP')
-conflicts=("${_reponame}")
-provides=("${_reponame}")
+conflicts=(${_pkgname})
+provides=(${_pkgname})
 
 pkgver() {
-  cd "${_reponame}"
-  printf "0.0.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd "${pkgname}"
+	git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-	cd "${_reponame}"
-
+	cd ${pkgname}
 	arch-meson . build
-
 	meson compile -C build
 }
 
 package() {
-	cd "${_reponame}"
-
+	depends+=(UKSMD-BUILTIN)
+	cd ${pkgname}
 	meson install -C build --destdir "${pkgdir}"
 }
