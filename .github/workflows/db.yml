@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download packages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - run: |
           bash pull_packages.sh
       - uses: ncipollo/release-action@main
