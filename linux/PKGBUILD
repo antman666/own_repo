@@ -75,23 +75,17 @@
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuring_transparent_huge_pages
 : "${_hugepage:=always}"
 
-# CPU compiler optimizations - Defaults to prompt at kernel config if left empty
-# AMD CPUs : "k8" "k8sse3" "k10" "barcelona" "bobcat" "jaguar" "bulldozer" "piledriver" "steamroller" "excavator" "zen" "zen2" "zen3" "zen4"
-# Intel CPUs : "mpsc"(P4 & older Netburst based Xeon) "atom" "core2" "nehalem" "westmere" "silvermont" "sandybridge" "ivybridge" "haswell" "broadwell" "skylake" "skylakex" "cannonlake" "icelake" "goldmont" "goldmontplus" "cascadelake" "cooperlake" "tigerlake" "sapphirerapids" "rocketlake" "alderlake"
-# Other options :
-# - "native_amd" (use compiler autodetection - Selecting your arch manually in the list above is recommended instead of this option)
-# - "native_intel" (use compiler autodetection and will prompt for P6_NOPS - Selecting your arch manually in the list above is recommended instead of this option)
+# CPU compiler optimizations - Defaults to native if left empty
+# - "native" (use compiler autodetection)
+# - "zen4" (Use znver4 compiler optimizations)
 # - "generic" (kernel's default - to share the package between machines with different CPU µarch as long as they are x86-64)
-#
-: "${_processor_opt:=alderlake}"
-
-# This does automatically detect your supported CPU and optimizes for it
-: "${_use_auto_optimization:=no}"
+: "${_processor_opt:=generic_v3}"
 
 # Clang LTO mode, only available with the "llvm" compiler - options are "none", "full" or "thin".
 # ATTENTION - one of three predefined values should be selected!
 # "full: uses 1 thread for Linking, slow and uses more memory, theoretically with the highest performance gains."
 # "thin: uses multiple threads, faster and uses less memory, may have a lower runtime performance than Full."
+# "thin-dist: Similar to thin, but uses a distributed model rather than in-process: https://discourse.llvm.org/t/rfc-distributed-thinlto-build-for-kernel/85934"
 # "none: disable LTO
 : "${_use_llvm_lto:=full}"
 
@@ -125,14 +119,20 @@
 # Builds the open nvidia module and package it into a own base
 # This does replace the requirement of nvidia-open-dkms
 # Use this only if you have Turing+ GPU
-: "${_build_nvidia_open:=no}"
+: "${_build_nvidia_open:=yes}"
 
 # Build a debug package with non-stripped vmlinux
 : "${_build_debug:=no}"
 
+# ATTENTION: Do not modify after this line
+_is_lto_kernel() {
+    [[ "$_use_llvm_lto" = "thin" || "$_use_llvm_lto" = "full"  || "$_use_llvm_lto" = "thin-dist" ]]
+    return $?
+}
+
 pkgbase="linux-cus-mini"
-_major=6.15
-_minor=3
+_major=6.16
+_minor=1
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -157,31 +157,43 @@ makedepends=(
   pahole
   perl
   python
+  rust
+  rust-bindgen
+  rust-src
   tar
   xz
   zstd
 )
 
 _patchsource="https://raw.githubusercontent.com/cachyos/kernel-patches/master/${_major}"
+_nv_ver=580.76.05
+_nv_open_pkg="NVIDIA-kernel-module-source-${_nv_ver}"
 source=(
     "https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/${_srcname}.tar.xz"
     "config"
-    "${_patchsource}/0003-async-shutdown.patch"
-    "${_patchsource}/0004-bbr3.patch"
-    "${_patchsource}/0005-block.patch"
-    "${_patchsource}/0006-cachy.patch"
-    "${_patchsource}/0007-fixes.patch"
+    "${_patchsource}/0002-bbr3.patch"
+    "${_patchsource}/0003-block.patch"
+    "${_patchsource}/0004-cachy.patch"
+    "${_patchsource}/0005-fixes.patch"
 )
 
 # LLVM makedepends
-makedepends+=(clang llvm lld)
-source+=("${_patchsource}/misc/dkms-clang.patch")
-BUILD_FLAGS=(
-    CC=clang
-    LD=ld.lld
-    LLVM=1
-    LLVM_IAS=1
-)
+if _is_lto_kernel; then
+    makedepends+=(clang llvm lld)
+    source+=("${_patchsource}/misc/dkms-clang.patch")
+    BUILD_FLAGS=(
+        CC=clang
+        LD=ld.lld
+        LLVM=1
+        LLVM_IAS=1
+    )
+fi
+
+if [ "$_build_nvidia_open" = "yes" ]; then
+    source+=("https://download.nvidia.com/XFree86/${_nv_open_pkg%"-$_nv_ver"}/${_nv_open_pkg}.tar.xz"
+             "${_patchsource}/misc/nvidia/0001-Enable-atomic-kernel-modesetting-by-default.patch"
+             "${_patchsource}/misc/nvidia/0002-Add-IBT-support.patch")
+fi
 
 ## List of CachyOS schedulers
 case "$_cpusched" in
@@ -196,7 +208,7 @@ case "$_cpusched" in
 esac
 
 export KBUILD_BUILD_HOST=archlinux
-export KBUILD_BUILD_USER=$pkgbase
+export KBUILD_BUILD_USER="$pkgbase"
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
 _die() { error "$@" ; exit 1; }
@@ -227,15 +239,20 @@ prepare() {
     if [ -n "$_processor_opt" ]; then
         MARCH="${_processor_opt^^}"
 
-        if [ "$MARCH" != "GENERIC" ]; then
-            if [[ "$MARCH" =~ GENERIC_V[1-4] ]]; then
-                X86_64_LEVEL="${MARCH//GENERIC_V}"
-                scripts/config --set-val X86_64_VERSION "${X86_64_LEVEL}"
-            else
-                scripts/config -k -d CONFIG_GENERIC_CPU
-                scripts/config -k -e "CONFIG_M${MARCH}"
-            fi
-        fi
+        case "$MARCH" in
+            generic_v[1-4]) scripts/config -e GENERIC_CPU -d MZEN4 -d X86_NATIVE_CPU \
+                --set-val X86_64_VERSION "${MARCH//GENERIC_V}";;
+            zen4) scripts/config -d GENERIC_CPU -e MZEN4 -d X86_NATIVE_CPU;;
+            native) scripts/config -d GENERIC_CPU -d MZEN4 -e X86_NATIVE_CPU;;
+        esac
+    else
+        scripts/config -d GENERIC_CPU -d MZEN4 -e X86_NATIVE_CPU
+    fi
+
+    ### Selecting CachyOS config
+    if [ "$_cachy_config" = "yes" ]; then
+        echo "Enabling CachyOS config..."
+        scripts/config -e CACHY
     fi
 
     ### Selecting the CPU scheduler
@@ -259,12 +276,20 @@ prepare() {
     ### Select LLVM level
     case "$_use_llvm_lto" in
         thin) scripts/config -e LTO_CLANG_THIN;;
+        thin-dist) scripts/config -e LTO_CLANG_THIN_DIST;;
         full) scripts/config -e LTO_CLANG_FULL;;
         none) scripts/config -e LTO_NONE;;
         *) _die "The value '$_use_llvm_lto' is invalid. Choose the correct one again.";;
     esac
 
     echo "Selecting '$_use_llvm_lto' LLVM level..."
+
+    if ! _is_lto_kernel; then
+        echo "Enabling QR Code Panic for GCC Kernels"
+        scripts/config --set-str DRM_PANIC_SCREEN qr_code -e DRM_PANIC_SCREEN_QR_CODE \
+            --set-str DRM_PANIC_SCREEN_QR_CODE_URL https://panic.archlinux.org/panic_report# \
+            --set-val CONFIG_DRM_PANIC_SCREEN_QR_VERSION 40
+    fi
 
     ### Select tick rate
     case "$_HZ_ticks" in
@@ -298,7 +323,7 @@ prepare() {
     ### Select preempt type
 
     # We should not set up the PREEMPT for RT kernels
-    if [[ "$_cpusched" != "rt" || "$_cpusched" != "rt-bore" ]]; then
+    if [[ "$_cpusched" != "rt" && "$_cpusched" != "rt-bore" ]]; then
         case "$_preempt" in
             full) scripts/config -e PREEMPT_DYNAMIC -e PREEMPT -d PREEMPT_VOLUNTARY -d PREEMPT_LAZY -d PREEMPT_NONE;;
             lazy) scripts/config -e PREEMPT_DYNAMIC -d PREEMPT -d PREEMPT_VOLUNTARY -e PREEMPT_LAZY -d PREEMPT_NONE;;
@@ -403,6 +428,25 @@ prepare() {
     echo "Save configuration for later reuse..."
     local basedir="$(dirname "$(readlink "${srcdir}/config")")"
     cat .config > "${basedir}/config-${pkgver}-${pkgrel}${pkgbase#linux}"
+
+    if [ "$_build_nvidia_open" = "yes" ]; then
+        patch -Np1 -i "${srcdir}/0001-Enable-atomic-kernel-modesetting-by-default.patch" -d "${srcdir}/${_nv_open_pkg}/kernel-open"
+        patch -Np1 -i "${srcdir}/0002-Add-IBT-support.patch" -d "${srcdir}/${_nv_open_pkg}/"
+    fi
+}
+
+_sign_modules() {
+    msg2 "Signing modules in $1"
+    local sign_script="${srcdir}/${_srcname}/scripts/sign-file"
+    local sign_key="$(grep -Po 'CONFIG_MODULE_SIG_KEY="\K[^"]*' "${srcdir}/${_srcname}/.config")"
+    if [[ ! "$sign_key" =~ ^/ ]]; then
+        sign_key="${srcdir}/${_srcname}/${sign_key}"
+    fi
+    local sign_cert="${srcdir}/${_srcname}/certs/signing_key.x509"
+    local hash_algo="$(grep -Po 'CONFIG_MODULE_SIG_HASH="\K[^"]*' "${srcdir}/${_srcname}/.config")"
+
+    find "$1" -type f -name '*.ko' -print -exec \
+        "${sign_script}" "${hash_algo}" "${sign_key}" "${sign_cert}" '{}' \;
 }
 
 build() {
@@ -416,6 +460,11 @@ build() {
        SYSSRC="${srcdir}/${_srcname}"
        SYSOUT="${srcdir}/${_srcname}"
     )
+    if [ "$_build_nvidia_open" = "yes" ]; then
+        cd "${srcdir}/${_nv_open_pkg}"
+        MODULE_FLAGS+=(IGNORE_CC_MISMATCH=yes)
+        CFLAGS= CXXFLAGS= LDFLAGS= make "${BUILD_FLAGS[@]}" "${MODULE_FLAGS[@]}" -j"$(nproc)" modules
+    fi
 }
 
 _package() {
@@ -425,7 +474,7 @@ _package() {
                 'linux-firmware: firmware images needed for some devices'
                 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig'
                 'scx-scheds: to use sched-ext schedulers')
-    provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE KSMBD-MODULE UKSMD-BUILTIN NTSYNC-MODULE VHBA-MODULE ADIOS-MODULE)
+    provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE KSMBD-MODULE V4L2LOOPBACK-MODULE NTSYNC-MODULE VHBA-MODULE ADIOS-MODULE)
 
     cd "$_srcname"
 
@@ -440,7 +489,7 @@ _package() {
     echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
     echo "Installing modules..."
-    ZSTD_CLEVEL=10 make "${BUILD_FLAGS[@]}" INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
+    ZSTD_CLEVEL=19 make "${BUILD_FLAGS[@]}" INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
         DEPMOD=/doesnt/exist  modules_install  # Suppress depmod
 
     # remove build links
@@ -492,6 +541,20 @@ _package-headers() {
     echo "Installing KConfig files..."
     find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
 
+    # Install .rmeta files if they exist
+    if compgen -G "rust/*.rmeta" 1>/dev/null; then
+        install -Dt "$builddir/rust" -m644 rust/*.rmeta
+    fi
+
+    # Install .so files if they exist
+    if compgen -G "rust/*.so" 1>/dev/null; then
+        install -Dt "$builddir/rust" rust/*.so
+    fi
+
+    echo "Installing unstripped VDSO..."
+    make INSTALL_MOD_PATH="$pkgdir/usr" vdso_install \
+      link=  # Suppress build-id symlinks
+
     echo "Removing unneeded architectures..."
     local arch
     for arch in "$builddir"/arch/*/; do
@@ -532,8 +595,28 @@ _package-headers() {
     ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
 
+_package-nvidia-open(){
+    pkgdesc="nvidia open modules of ${_nv_ver} driver for the ${pkgbase} kernel"
+    depends=("$pkgbase=$_kernver" "nvidia-utils=${_nv_ver}" "libglvnd")
+    provides=('NVIDIA-MODULE')
+    conflicts=("$pkgbase-nvidia")
+    license=('MIT AND GPL-2.0-only')
+
+    cd "$_srcname"
+    local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
+
+    cd "${srcdir}/${_nv_open_pkg}"
+    install -dm755 "${modulesdir}"
+    install -m644 kernel-open/*.ko "${modulesdir}"
+    install -Dt "$pkgdir/usr/share/licenses/${pkgname}" -m644 COPYING
+
+    _sign_modules "${modulesdir}"
+    find "$pkgdir" -name '*.ko' -exec zstd --rm -19 -T0 {} +
+}
+
 pkgname=("$pkgbase")
 pkgname+=("$pkgbase-headers")
+[ "$_build_nvidia_open" = "yes" ] && pkgname+=("$pkgbase-nvidia-open")
 for _p in "${pkgname[@]}"; do
     eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
@@ -541,7 +624,14 @@ for _p in "${pkgname[@]}"; do
     }"
 done
 
-b2sums=('ebba8a341d180887bbe125b23a3ac54ca7439eded877930f7b7df9a5ed3378701523e0cde972b520eaedf7f24d70d4d8db62db103e21943abeb35f9c1c91e4a7'
-        '2993c417170e35dca3171263ecc4857bc65de3d037e9ed047d05fd342007ee7965534ef60f6ccbb72042333d63b1012322d77e062b259cac5d292cb9a89ac89c'
-        '390c7b80608e9017f752b18660cc18ad1ec69f0aab41a2edfcfc26621dcccf5c7051c9d233d9bdf1df63d5f1589549ee0ba3a30e43148509d27dafa9102c19ab'
-        '2b8fdcc4de9a8f1987ded51290c550336ad487358ad33fb6a6a22bfa70bcebd000fe4168075b143125d60dc99c5cd9a099e9a3dd4f646bbaf94d2fcd2c5982bb')
+b2sums=('280386f483f3f181fd0e45789815621f6f6bed208b7c10b05a7e2c2eed102d53928ce3f0e28cdd58d1e3c69f9977f60f7b6e832c3a00c0f4524aa45f83ec9491'
+        '8035bc3fe3a42d592b290f28e300c5d08db87bcf7b54f77d7c0e7ed5323946c5b0e094be45754d82a28e78575a12f93f502b3d1cc7ce5db12abaf795cd29826d'
+        '7ce38cd55989e03e03a8b29afe97c77c7bcc5a4b6fe4c71c31f90017e05d908e6c051e1f68e1397d9b1ef6375a61cd330b92c79e9297de5e4947aeffb6a07034'
+        'cb89d209c98303d7c1b0a44c981807a69865528a7f406a7ed9828b66f8e7beb38457822381c8a26bd0cb9db3890c678cece58191b8e5c7c4bb258422aea5956e'
+        '0d14bd7fbf6df2c5500808d4668c86e3c9bd00c85b9842340ffead6df9ac6f4188f10c84be27cfe02035642369b6f0a2ce79e9dc57672e128c91b5b2e4a1168e'
+        'b787b7bec1cf58fb206c12de82b88034a9b5f1cf7f20cfd88248cf991b2570f0be225446d1d80ac5b34c74013bad7e2de60af0a9cbb5531b49f46a8db6684fe6'
+        'c7294a689f70b2a44b0c4e9f00c61dbd59dd7063ecbe18655c4e7f12e21ed7c5bb4f5169f5aa8623b1c59de7b2667facb024913ecb9f4c650dabce4e8a7e5452'
+        '421529ddce1e11a10937ee71eb2fb2f59150dc3692fbd001288fc72d072103ca06353fad1f49d7d83f5200d15ea561ef8f9ef6713324ce250242ea0f1adaf529'
+        '05a3cc4954a37897d08e93e8ea1726fc395a12cfb1509f09560bdcf0ae14ed4ca518fda566a618c92db0fb6573e3ed7d02172dd76a3b145982060e060525365b'
+        'bccb4169c43e556f10cddaf8f101cc0b29209f984b9f681f266602a359bc6b4765b48d192006decd23667bd2b899fad9c1fd5b742251014dacc7c077ea023e0f'
+        'b8d0a52afbe6545c1d300e1a8ee2c74dcf97316a691cd5902b3356dc5f9ed28255b2515218ae2282a0a0bbd092b1cbb4a7f9cf04f786bf7df7067b0c72f7e4d3')
