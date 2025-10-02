@@ -131,13 +131,13 @@ _is_lto_kernel() {
 }
 
 pkgbase="linux-cus-mini"
-_major=6.16
-_minor=1
+_major=6.17
+_minor=0
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
-_stable=${_major}.${_minor}
-#_stable=${_major}
+#_stable=${_major}.${_minor}
+_stable=${_major}
 #_stablerc=${_major}-${_rcver}
 _srcname=linux-${_stable}
 #_srcname=linux-${_major}
@@ -181,6 +181,7 @@ source=(
 if _is_lto_kernel; then
     makedepends+=(clang llvm lld)
     source+=("${_patchsource}/misc/dkms-clang.patch")
+    source+=("${_patchsource}/misc/0001-clang-polly.patch")
     BUILD_FLAGS=(
         CC=clang
         LD=ld.lld
