@@ -142,7 +142,7 @@ _stable=${_major}
 _srcname=linux-${_stable}
 #_srcname=linux-${_major}
 pkgdesc='Linux EEVDF scheduler + Cachy Sauce Kernel by CachyOS with other patches and improvements'
-pkgrel=1.2
+pkgrel=1.3
 _kernver="$pkgver-$pkgrel"
 _kernuname="${pkgver}-${_pkgsuffix}"
 arch=('x86_64')
@@ -238,14 +238,11 @@ prepare() {
 
     ### Select CPU optimization
     if [ -n "$_processor_opt" ]; then
-        MARCH="${_processor_opt^^}"
-
-        case "$MARCH" in
-            generic_v[1-4]) scripts/config -e GENERIC_CPU -d MZEN4 -d X86_NATIVE_CPU \
-                --set-val X86_64_VERSION "${MARCH//GENERIC_V}";;
-            zen4) scripts/config -d GENERIC_CPU -e MZEN4 -d X86_NATIVE_CPU;;
-            native) scripts/config -d GENERIC_CPU -d MZEN4 -e X86_NATIVE_CPU;;
-        esac
+        scripts/config \
+			-e GENERIC_CPU \
+			-d MZEN4 \
+			-d X86_NATIVE_CPU \
+			--set-val X86_64_VERSION 3
     else
         scripts/config -d GENERIC_CPU -d MZEN4 -e X86_NATIVE_CPU
     fi
@@ -626,7 +623,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 b2sums=('0edb2324be5638aa75984128aafdba3e50824187d2fcdff8794eab99d85c10c3a17d1e840053c2c83df5ee11fdf69f1c9452c57ecc9dae01c4af38180fe7821a'
-        'eed81db2b3b273b38d4326b90c26510700fd2a9efb377cfb1be1fd20b05a0506de3d2eb4f34480099c742409af24c052f17cbcd93eb54834cdf8c26c98f4f76d'
+        'cdbfc4f1ab7459e7da68c97b39149d4134f1515c9a662ff8ff90e0738ea3f44d5e5cce8979cfc140813a5c12c574223ad833bb1a41dbc760599f5380b628089f'
         '095751970369c21b987f0d777a569a2a2993fb47ba91c80b3f8d9f1eb1652c6913790699eef94f8a946a22a8ec778928560c5d868e8cf6d222fa8ee24d5486e3'
         'b0309557cb8eebf54709ac1419c5ea3603074aafc9f581330844d66d3e495e59b67b498c5e0cbf34685fa481fa442c346daa31a25c7566fa8c98efbdfd48f5ec'
         '007449e841fae8652284347170b0385b13f4ab9ed3cb7fc1b9f3c6313592b18e9baa57fe247b1807ee40d6c9742ef7e869cd8940ba404b0229e2af5d805a2ac5'
